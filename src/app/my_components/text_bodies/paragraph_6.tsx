@@ -1,0 +1,11 @@
+import React from 'react'
+
+const Paragraph_6 = () => {
+  return (
+    <div className='paragraph-container text-container'>
+      <p>Yet, the exploration of the political within the personal remains largely obscure. Can there be interactive art forms that inspire frameworks and lenses to examine personal archives, revealing the strong undertones of our inherited emotions? Can a digital experience derived from personal digital diaries—distinct from a social media feed—compete for your attention/reflection in a meaningful way? Can we begin to view websites as an art form? In the coming years, through a multitude of collaborative projects with other artists, I will be writing code every day in pursuit of these questions.</p>
+    </div>
+  )
+}
+
+export default Paragraph_6
