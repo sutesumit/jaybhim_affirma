@@ -121,4 +121,10 @@
   animation: typing 8s steps(47, end) infinite, blink-cursor 0.75s step-end infinite;
 }
 
+.text-[--primary-white\/50] {
+  color: rgb(var(--primary-white) / 0.5);
+  /* OR */
+  color: rgba(var(--primary-white), 0.5);
+}
+
 

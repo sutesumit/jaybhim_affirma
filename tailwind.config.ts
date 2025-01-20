@@ -19,7 +19,10 @@ const config: Config = {
   			],
         jaibhim: [
           'var(--font-vesper_libre)'
-        ]
+        ],
+        rajdhani: [
+          'var(--font-rajdhani)'
+        ]	
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

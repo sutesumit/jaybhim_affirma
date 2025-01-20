@@ -1,4 +1,4 @@
-import { Lora, Merriweather, Vesper_Libre } from 'next/font/google';
+import { Lora, Merriweather, Vesper_Libre, Rajdhani } from 'next/font/google';
 import type { Metadata } from 'next';
 import React from 'react';
 import Footer from './my_components/Footer';
@@ -28,6 +28,13 @@ const vesper_libre = Vesper_Libre({
   weight: ['400', '700', '900'],
 });
 
+const rajdhani = Rajdhani({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-rajdhani',
+  weight: ['400', '500', '600', '700'],
+});
+
 export const metadata: Metadata = {
   title: 'Sumit Sute for AFFIRMA',
   description: 'AFFIRMA Application',
@@ -35,7 +42,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${lora.variable} ${merriweather.variable} ${vesper_libre.variable}`}>
+    <html lang="en" className={`${lora.variable} ${merriweather.variable} ${vesper_libre.variable} ${rajdhani.variable}`}>
       <body className="min-h-screen">
         {children}
         <Footer />

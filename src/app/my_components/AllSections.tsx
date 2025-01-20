@@ -7,6 +7,7 @@ import Paragraph_5 from './text_bodies/paragraph_5'
 import Paragraph_6 from './text_bodies/paragraph_6'
 import Paragraph_7 from './text_bodies/paragraph_7'
 import FathersAndFigures from './image_bodies/fathers_and_figures'
+import MarathiWritings from './image_bodies/marathi_writings'
 
 const AllSections = () => {
   return (
@@ -14,7 +15,9 @@ const AllSections = () => {
       <Paragraph_1 />
       <FathersAndFigures />
       <Paragraph_2 />
+      
       <Paragraph_3 />
+      <MarathiWritings />
       <Paragraph_4 />
       <Paragraph_5 />
       <Paragraph_6 />

@@ -36,11 +36,11 @@ const FathersAndFigures = () => {
   return (
     <section
       ref={containerRef}
-      className="fathers-and-figures-container overflow-hidden relative h-[25vh] max-w-[80ch] mb-10 m-auto rounded-lg"
+      className="fathers-and-figures-container overflow-hidden relative h-[25vh] max-w-[80ch] mx-auto m-10 rounded-lg"
     >
       <div
         ref={imageContainerRef}
-        className="fathers-and-figures-image-container absolute w-full h-[500%] top-0"
+        className="fathers-and-figures-image-container w-full h-[500%]"
       >
         <Image
           src={'/FathersAndFigures.png'}
