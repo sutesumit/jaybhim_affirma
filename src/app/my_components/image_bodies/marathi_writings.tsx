@@ -15,7 +15,7 @@ const MarathiWritings = () => {
                 <h4 className="date text-xs text-white opacity-50 text-center p-1">{fiction.date}</h4>
                 <p className="card-para text-xs leading-relaxed whitespace-pre-wrap px-4">{fiction.content}</p>
               </div>
-              <div className="image-wrapper aspect-square md w-full md:w-[50%] sm:w-[50%] relative">
+              <div className="image-wrapper rounded-sm overflow-hidden aspect-square md w-full md:w-[50%] sm:w-[50%] relative">
                 <Image 
                   className='object-contain' 
                   src={fiction.imageUrl}
