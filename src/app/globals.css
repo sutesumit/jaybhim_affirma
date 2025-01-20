@@ -121,10 +121,39 @@
   animation: typing 8s steps(47, end) infinite, blink-cursor 0.75s step-end infinite;
 }
 
+
 .text-[--primary-white\/50] {
   color: rgb(var(--primary-white) / 0.5);
   /* OR */
   color: rgba(var(--primary-white), 0.5);
 }
 
+/* WebKit Browsers */
+::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
 
+::-webkit-scrollbar-track {
+  background: var(--primary-white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-blue) var(--primary-white);
+}
+
+.card-content, .all-cards {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-white) var(--primary-blue);
+}
