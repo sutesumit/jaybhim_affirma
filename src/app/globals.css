@@ -95,7 +95,7 @@
 
 @layer utilities {
   .text-container {
-    @apply max-w-[60ch] px-8 md:p-2 m-auto text-left text-[--primary-blue] font-body text-base
+    @apply max-w-[60ch] px-8 md:p-2 mx-auto text-left text-[--primary-blue] font-body text-base
 }
 
 }
@@ -135,16 +135,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--primary-white);
+  background: var(--primary-white)/50;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-blue);
+  background: var(--primary-blue)/50;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-blue);
+  background: var(--primary-blue)/50;
 }
 
 /* Firefox */

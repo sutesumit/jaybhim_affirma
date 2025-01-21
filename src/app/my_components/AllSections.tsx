@@ -12,12 +12,15 @@ import MarathiWritings from './image_bodies/marathi_writings'
 const AllSections = () => {
   return (
     <div>
-      <Paragraph_1 />
-      <FathersAndFigures />
+      <section className="min-h-screen m-2">
+        <Paragraph_1 />
+        <FathersAndFigures />
+      </section>
       <Paragraph_2 />
-      
-      <Paragraph_3 />
-      <MarathiWritings />
+      <section className="min-h-screen flex flex-col justify-evenly">
+        <Paragraph_3 />
+        <MarathiWritings />
+      </section>
       <Paragraph_4 />
       <Paragraph_5 />
       <Paragraph_6 />

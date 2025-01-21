@@ -5,7 +5,7 @@ import { flashFictions } from './flash_fiction_object';
 
 const MarathiWritings = () => {
   return (
-    <div className='marathi-writings-container font-rajdhani text-[--primary-white] max-w-[100ch] mx-auto m-2 px-4 sm:px-6'>
+    <div className='marathi-writings-container font-rajdhani text-[--primary-white] max-w-[100ch] w-full mx-auto m-2 px-4 sm:px-6'>
       <div className="all-cards flex overflow-x-auto snap-x snap-mandatory w-full scrollbar-hide gap-4 py-[1px]">
         {flashFictions.map((fiction, index) => (
           <div key={index} className="card bg-[--primary-blue] rounded-sm w-full flex-shrink-0 snap-center">

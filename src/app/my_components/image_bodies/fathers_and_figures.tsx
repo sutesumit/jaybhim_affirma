@@ -36,7 +36,7 @@ const FathersAndFigures = () => {
   return (
     <section
       ref={containerRef}
-      className="fathers-and-figures-container overflow-hidden relative h-[25vh] max-w-[80ch] mx-auto m-10 rounded-lg"
+      className="fathers-and-figures-container overflow-hidden relative h-[calc(80vh-10rem)] max-w-[70ch] mx-auto m-10 rounded-lg"
     >
       <div
         ref={imageContainerRef}
