@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import React from 'react';
 import Footer from './my_components/Footer';
 import './globals.css';
+import Navbar from './my_components/navbar/navbar';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${lora.variable} ${merriweather.variable} ${vesper_libre.variable} ${rajdhani.variable}`}>
       <body className="min-h-screen">
+        <Navbar /> 
         {children}
         <Footer />
       </body>

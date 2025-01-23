@@ -5,6 +5,7 @@ import { RiScrollToBottomFill } from "react-icons/ri"
 import { motion } from 'framer-motion'
 import Image from 'next/image';
 import React from 'react'
+import Seperator from './Seperator'
 
 
 const Hero = () => {
@@ -35,12 +36,11 @@ const Hero = () => {
             }}
       >
         <RiScrollToBottomFill className='w-full h-full animate-bounce'/>
+       
       </div>
-      <div className='absolute bottom-0 hero-border-container h-[1px] w-full overflow-clip'>
-        <div className='h-full w-full bg-gradient-to-r from-[var(--primary-white)] via-[var(--primary-blue)] to-[var(--primary-white)]'/>
-      </div>
-
+      <Seperator />
     </section>
+    
   )
 }
 
