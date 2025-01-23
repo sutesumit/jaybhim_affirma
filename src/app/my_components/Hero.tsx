@@ -36,10 +36,11 @@ const Hero = () => {
             }}
       >
         <RiScrollToBottomFill className='w-full h-full animate-bounce'/>
+       
       </div>
       <Seperator />
-
     </section>
+    
   )
 }
 
