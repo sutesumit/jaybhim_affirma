@@ -2,7 +2,6 @@
 import { EvervaultCard } from '@/components/ui/evervault-card'
 import { MaskContainer } from '@/components/ui/svg-mask-effect'
 import { RiScrollToBottomFill } from "react-icons/ri"
-import { motion } from 'framer-motion'
 import Image from 'next/image';
 import React from 'react'
 import Seperator from './Seperator'

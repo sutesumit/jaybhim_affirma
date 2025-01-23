@@ -13,7 +13,7 @@ const Navbar = () => {
     
   return (
     <>
-        <a href="./">
+        <a href="/">
             <div className='relative text-[var(--primary-blue)] z-30 p-2 w-screen cursor-pointer'
                 onMouseEnter={toggleMenu}>
                 <div className='nav-content flex justify-between px-4 py-2 rounded-sm border-[1px] opacity-40 text-xs font-title hover:opacity-100 hover:border-[var(--primary-blue)]'>
