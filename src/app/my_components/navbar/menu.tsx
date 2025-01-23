@@ -1,6 +1,7 @@
 import React from 'react'
 import linkObject from './linkObject'
 import Image from 'next/image';
+import Link from 'next/link';
 
 
     interface MenuLinkProps {
@@ -17,9 +18,9 @@ import Image from 'next/image';
                                 {
                                     linkObject.map((object, index) => {
                                         return (
-                                            <a  href={object.href} 
+                                            <Link  href={object.href} 
                                             key={index}
-                                                className="link-card relative h-28 w-28 flex flex-1 border border-[var(--primary-blue)] rounded-lg p-2 m-2 justify-center items-center overflow-clip"
+                                                className="link-card font-rajdhani relative h-28 w-28 flex flex-1 rounded-lg p-2 m-2 justify-center items-center overflow-clip"
                                             >
                                                 <p>{object.title}</p>
                                                 <Image  src={object.image} 
@@ -28,11 +29,13 @@ import Image from 'next/image';
                                                         height={100}
                                                         style={{
                                                             position: 'absolute',
-                                                            objectFit: 'cover',
+                                                            objectFit: 'contain',
+                                                            width: '100%',
                                                             visibility: 'visible',
+                                                            opacity: '0.3',
                                                         }}
                                                 />
-                                            </a>
+                                            </Link>
                                         )
                                     }
                                     )
