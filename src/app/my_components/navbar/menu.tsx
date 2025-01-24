@@ -36,30 +36,23 @@ import Link from 'next/link';
 
         const useMousePostion = () => {
             const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
-
             useEffect(()=> {
-                
-                const updateMouseCords = (event) => {
-                    setMouseCords({ x: event.clientX, y: event.clientY})
+                const updateMouseCords = (event: MouseEvent) => {
+                    setMouseCords({ x: event.clientX, y: event.clientY })
                 }
-                
                 window.addEventListener('mousemove', updateMouseCords)
-
-
                 return () => {
-                    window.addEventListener('mousemove', updateMouseCords)
+                    window.removeEventListener('mousemove', updateMouseCords)
                 }
             }, [])
-
             return mouseCords
-
         }
 
 
         return (
             
             <div 
-                className="menu-container relative"
+                className="menu-container relative overflow-visible"
             >
                     <div 
                         className="menu-content absolute h-[35vh] w-full z-20 my-2 flex rounded-lg snap-x snap-mandatory overflow-x-auto"
@@ -74,32 +67,21 @@ import Link from 'next/link';
                                 
                                 {
                                     linkObject.map((object, index) => {
-
-                                        const {x, y} = useMousePostion()
-                                        console.log(x, y)
                                         return (
-                                            <Link  href={object.href} 
-                                            key={index}
-                                                className="link-card relative h-full w-[30%] flex-shrink-0 flex rounded-lg p-5 mx-2 justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-95 transition-transition duration-300 ease-in-out"
+                                        
+                                            <Link   href={object.href} 
+                                                    key={object.id}
+                                                    className="link-card relative h-full w-[30%] flex-shrink-0 flex rounded-lg p-5 mx-2 justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-95 hover:shadow-2xl transition-transition duration-300 ease-in-out"
                                             >
                                                 <p>{object.title}</p>
-                                                <Image  src={object.image} 
-                                                        alt={object.title} 
-                                                        width={100} 
-                                                        height={100}
-                                                        style={{
-                                                            position: 'absolute',
-                                                            objectFit: 'contain',
-                                                            width: '100%',
-                                                            visibility: 'visible',
-                                                            opacity: '0',
-                                                        }}
-                                                />
+                        
                                             </Link>
+                                        
                                         )
                                     }
                                     )
                                 }
+
 
                         
 
@@ -125,7 +107,35 @@ import Link from 'next/link';
                     >
                         &#10095;
                     </button>
-                    
+
+                    {
+                                    linkObject.map((object) => {
+
+                                        const {x, y } = useMousePostion()
+
+                                        return (
+                                            <Image
+                                                // className='checkbox'  
+                                                src={object.image} 
+                                                key={object.id}
+                                                alt={object.title} 
+                                                width={100} 
+                                                height={100}
+                                                style={{
+                                                    position: 'absolute',
+                                                    objectFit: 'contain',
+                                                    visibility: 'visible',
+                                                    width: '30vw',
+                                                    opacity: '10',
+                                                    zIndex: 0,
+                                                    left: x,
+                                                    top: y
+                                                }}
+                                            />
+                                        )
+                                    })
+                                }
+
                         
             </div>
             
