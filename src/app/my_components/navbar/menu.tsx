@@ -48,6 +48,8 @@ import Link from 'next/link';
             return mouseCords
         }
 
+        
+
         const {x, y } = useMousePostion()
 
         return (
@@ -68,22 +70,23 @@ import Link from 'next/link';
                         onMouseLeave={toggleMenu}>
                             
                                 
-                                {
-                                    linkObject.map((object, index) => {
-                                        return (
-                                        
-                                            <Link   href={object.href} 
-                                                    key={object.id}
-                                                    className="link-card relative h-full w-[30%] flex-shrink-0 flex rounded-lg p-5 mx-2 justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-95 hover:shadow-2xl transition-transition duration-300 ease-in-out"
-                                            >
-                                                <p>{object.title}</p>
-                        
-                                            </Link>
-                                        
-                                        )
-                                    }
-                                    )
-                                }
+                        {
+                            linkObject.map((object, index) => {
+                                return (
+                                
+                                    <Link   href={object.href} 
+                                            key={object.id}
+                                            className="link-card relative h-full w-[30%] flex-shrink-0 flex rounded-lg p-5 mx-2 justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)]
+ transition-transition duration-300 ease-in-out"
+                                    >
+                                        <p>{object.title}</p>
+                
+                                    </Link>
+                                
+                                )
+                            }
+                            )
+                        }
 
 
                         
@@ -112,31 +115,32 @@ import Link from 'next/link';
                     </button>
 
                     {
-                                    linkObject.map((object) => {
+                        linkObject.map((object) => {
 
-                                        
+                            
 
-                                        return (
-                                            <Image
-                                                // className='checkbox'  
-                                                src={object.image} 
-                                                key={object.id}
-                                                alt={object.title} 
-                                                width={100} 
-                                                height={100}
-                                                style={{
-                                                    position: 'absolute',
-                                                    objectFit: 'contain',
-                                                    visibility: 'visible',
-                                                    width: '30vw',
-                                                    opacity: '10',
-                                                    zIndex: 0,
-                                                    left: x,
-                                                    top: y
-                                                }}
-                                            />
-                                        )
-                                    })
+                            return (
+                                <Image
+                                    // className='checkbox'  
+                                    src={object.image} 
+                                    key={object.id}
+                                    alt={object.title} 
+                                    width={100} 
+                                    height={100}
+                                    style={{
+                                        position: 'absolute',
+                                        objectFit: 'contain',
+                                        visibility: 'visible',
+                                        width: '20vw',
+                                        opacity: '10',
+                                        zIndex: 0,
+                                        pointerEvents: 'none',
+                                        left: x - 200,
+                                        top: y - 200
+                                    }}
+                                />
+                            )
+                        })
                                 }
 
                         
