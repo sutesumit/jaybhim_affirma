@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 
     interface MenuLinkProps {
-        
+        isMenuOpen: boolean,
         setMenuOpen: (isMenuOpen: boolean) => void,
         toggleMenu: () => void;
     }
@@ -13,8 +13,8 @@ import Link from 'next/link';
     const MenuLinks: React.FC<MenuLinkProps> = ({ toggleMenu, setMenuOpen }) => {
         return (
             
-            <div className="menu-container relative mx-2">
-                    <div className='menu-content absolute h-[35vh] w-full z-20 flex bg-white/50 backdrop-blur-sm rounded-lg snap-y snap-mandatory overflow-x-auto overflow-y-hidden'
+            <div className="menu-container relative">
+                    <div className='menu-content absolute h-[35vh] w-full z-20 mt-2 flex bg-white/50 backdrop-blur-sm rounded-lg snap-y snap-mandatory overflow-x-auto overflow-y-hidden'
                             onMouseEnter={() => setMenuOpen(true)}
                             onMouseLeave={toggleMenu}>
                                 
@@ -23,7 +23,7 @@ import Link from 'next/link';
                                         return (
                                             <Link  href={object.href} 
                                             key={index}
-                                                className="link-card relative h-full w-[50%] flex-shrink-0 flex rounded-lg p-5 justify-center items-center font-rajdhani text-center overflow-clip hover:scale-105 hover:z-50"
+                                                className="link-card relative h-full w-[30%] flex-shrink-0 flex rounded-lg p-5 mx-2 justify-center items-center font-rajdhani text-center overflow-clip border-[1px] border-[var(--primary-blue)]"
                                             >
                                                 <p>{object.title}</p>
                                                 <Image  src={object.image} 
@@ -35,7 +35,7 @@ import Link from 'next/link';
                                                             objectFit: 'contain',
                                                             width: '100%',
                                                             visibility: 'visible',
-                                                            opacity: '0.3',
+                                                            opacity: '0.1',
                                                         }}
                                                 />
                                             </Link>
@@ -49,7 +49,7 @@ import Link from 'next/link';
                     </div>
 
                     
-                    <button className='prev-button absolute z-20 h-[35vh] left-2 transform -translate-y-1 p-2'
+                    <button className='prev-button absolute z-20 h-[35vh] left-2 transform -translate-y-1 p-2 hover:scale-150'
                             onMouseEnter={() => setMenuOpen(true)}
                             onClick={() => {
                                 const menuCard = document.querySelector('.menu-content')
@@ -59,7 +59,7 @@ import Link from 'next/link';
                         &#10094;
                     </button>
 
-                    <button className='next-button absolute z-20 h-[35vh] right-2 transform -translate-y-1 p-2'
+                    <button className='next-button absolute z-20 h-[35vh] right-2 transform -translate-y-1 p-2 hover:scale-150'
                             onMouseEnter={() => setMenuOpen(true)}
                             onClick={() => {
                                 const menuCard = document.querySelector('.menu-content')

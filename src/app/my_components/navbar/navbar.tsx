@@ -27,7 +27,7 @@ const Navbar = () => {
         </Link>
         
         {isMenuOpen &&
-            <MenuLinks toggleMenu={toggleMenu} setMenuOpen={setMenuOpen}/>
+            <MenuLinks toggleMenu={toggleMenu} setMenuOpen={setMenuOpen} isMenuOpen={isMenuOpen}/>
         }
     </>
     
