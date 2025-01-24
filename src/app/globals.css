@@ -89,7 +89,7 @@
   }
 
   .link-text:hover {
-    @apply bg-gradient-to-t hover:bg-gradient-to-bl from-[var(--primary-blue)] to-[var(--primary-white)] bg-clip-text text-transparent
+    @apply bg-gradient-to-t hover:bg-gradient-to-bl from-[var(--primary-blue)] to-[var(--primary-white)] bg-clip-text text-transparent transition-all duration-1000 ease-in-out 
   }
 }
 
