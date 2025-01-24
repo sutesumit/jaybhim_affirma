@@ -20,7 +20,7 @@ const Paragraph_7 = () => {
       <div className='relative overflow-hidden mb-10'>
         {/* Top layer (paragraph) */}
         <p 
-          className='relative z-10 pb-4'
+          className='relative z-10 pb-4 transition-all duration-200 ease-in-out'
           style={{
             clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)`,
           }}
@@ -30,7 +30,7 @@ const Paragraph_7 = () => {
 
         {/* Bottom layer (code) */}
         <div 
-          className="absolute inset-0 z-0 bg-[var(--primary-blue)] rounded-md"
+          className="absolute inset-0 z-0 bg-[var(--primary-blue)] rounded-md transition-all duration-200 ease-in-out"
           style={{
             clipPath: `polygon(${sliderPosition}% 0, 100% 0, 100% 100%, ${sliderPosition}% 100%)`,
           }}
