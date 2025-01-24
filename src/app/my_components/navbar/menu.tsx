@@ -48,8 +48,11 @@ import Link from 'next/link';
             return mouseCords
         }
 
+        const {x, y } = useMousePostion()
 
         return (
+
+            
             
             <div 
                 className="menu-container relative overflow-visible"
@@ -111,7 +114,7 @@ import Link from 'next/link';
                     {
                                     linkObject.map((object) => {
 
-                                        const {x, y } = useMousePostion()
+                                        
 
                                         return (
                                             <Image
