@@ -34,6 +34,28 @@ import Link from 'next/link';
 
         }, [])
 
+        const useMousePostion = () => {
+            const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
+
+            useEffect(()=> {
+                
+                const updateMouseCords = (event) => {
+                    setMouseCords({ x: event.clientX, y: event.clientY})
+                }
+                
+                window.addEventListener('mousemove', updateMouseCords)
+
+
+                return () => {
+                    window.addEventListener('mousemove', updateMouseCords)
+                }
+            }, [])
+
+            return mouseCords
+
+        }
+
+
         return (
             
             <div 
@@ -52,6 +74,9 @@ import Link from 'next/link';
                                 
                                 {
                                     linkObject.map((object, index) => {
+
+                                        const {x, y} = useMousePostion()
+                                        console.log(x, y)
                                         return (
                                             <Link  href={object.href} 
                                             key={index}
