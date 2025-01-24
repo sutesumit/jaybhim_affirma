@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import linkObject from './linkObject'
 import Image from 'next/image';
 import Link from 'next/link';
@@ -34,10 +34,41 @@ import Link from 'next/link';
 
         }, [])
 
+        const useMousePostion = (imageRef: React.RefObject<HTMLImageElement | null>) => {
+            const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
+            
+            useEffect(()=> {
+                const updateMouseCords = (event: MouseEvent) => {
+
+                    const imageW: number = (window.innerWidth*0.2);
+                    const imageH: number = (window.innerHeight*0.4);
+                    
+                    
+                    setMouseCords({ x: (event.clientX - imageW/2), y: (event.clientY - imageH/2) })
+                    // console.log(event.clientX, imageW, event.clientY, imageH)
+                }
+                window.addEventListener('mousemove', updateMouseCords)
+                return () => {
+                    window.removeEventListener('mousemove', updateMouseCords)
+                }
+            }, [imageRef])
+            return mouseCords
+        }
+
+        const [ hoveredCard, setHoveredCard] = useState<number | null>(null) 
+
+        
+
+        
+        const imageRef = useRef<HTMLImageElement>(null);
+        const { x, y } = useMousePostion(imageRef);
+
         return (
+
+            
             
             <div 
-                className="menu-container relative"
+                className="menu-container relative overflow-visible"
             >
                     <div 
                         className="menu-content absolute h-[35vh] w-full z-20 my-2 flex rounded-lg snap-x snap-mandatory overflow-x-auto"
@@ -50,31 +81,24 @@ import Link from 'next/link';
                         onMouseLeave={toggleMenu}>
                             
                                 
-                                {
-                                    linkObject.map((object, index) => {
-                                        return (
-                                            <Link  href={object.href} 
-                                            key={index}
-                                                className="link-card relative h-full w-[30%] flex-shrink-0 flex rounded-lg p-5 mx-2 justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-95 transition-transition duration-300 ease-in-out"
-                                            >
-                                                <p>{object.title}</p>
-                                                <Image  src={object.image} 
-                                                        alt={object.title} 
-                                                        width={100} 
-                                                        height={100}
-                                                        style={{
-                                                            position: 'absolute',
-                                                            objectFit: 'contain',
-                                                            width: '100%',
-                                                            visibility: 'visible',
-                                                            opacity: '0',
-                                                        }}
-                                                />
-                                            </Link>
-                                        )
-                                    }
-                                    )
-                                }
+                        {
+                            linkObject.map((object, index) => {
+                                return (
+                                
+                                    <Link   href={object.href} 
+                                            key={object.id}
+                                            onMouseEnter={()=>setHoveredCard(object.id)}
+                                            onMouseLeave={()=>setHoveredCard(null)}
+                                            className="link-card relative h-full w-[30%] flex-shrink-0 flex rounded-lg p-5 mx-2 justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
+                                    >
+                                        <p>{object.title}</p>
+                                    </Link>
+                                
+                                )
+                            }
+                            )
+                        }
+
 
                         
 
@@ -100,7 +124,41 @@ import Link from 'next/link';
                     >
                         &#10095;
                     </button>
-                    
+
+                    {
+                        linkObject.map((object) => {
+
+                            
+
+                            return (
+
+                                <div key={object.id}>
+                                {hoveredCard === object.id && (
+                                  <Image
+                                    src={object.image}
+                                    alt={object.title}
+                                    width={100}
+                                    height={100}
+                                    style={{
+                                      borderRadius: '10px',
+                                      position: 'absolute',
+                                      objectFit: 'contain',
+                                      visibility: 'visible',
+                                      width: '20vw',
+                                      opacity: '10',
+                                      zIndex: 0,
+                                      pointerEvents: 'none',
+                                      left: x,
+                                      top: y,
+                                    }}
+                                  />
+                                )}
+                              </div>
+                              
+                            )
+                        })
+                                }
+
                         
             </div>
             
