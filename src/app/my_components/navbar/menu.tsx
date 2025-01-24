@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import linkObject from './linkObject'
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,12 +11,36 @@ import Link from 'next/link';
     }
 
     const MenuLinks: React.FC<MenuLinkProps> = ({ toggleMenu, setMenuOpen }) => {
+
+        const handleWheel = (event: any) => {
+            if (event.deltaY !== 0){
+                event.preventDefault()
+                event.currentTarget.scrollLeft += event.deltaY
+            }
+        }
+
+        useEffect(()=>{
+
+            const menuContent = document.querySelector('.menu-content')
+            if(menuContent){
+                menuContent.addEventListener('wheel', handleWheel, { passive: false })
+            }
+
+            return () => {
+                if(menuContent){
+                    menuContent.removeEventListener('wheel', handleWheel)
+                }
+            }
+
+        }, [])
+
         return (
             
             <div className="menu-container relative">
                     <div className='menu-content absolute h-[35vh] w-full z-20 mt-2 flex bg-white/50 backdrop-blur-sm rounded-lg snap-y snap-mandatory overflow-x-auto overflow-y-hidden'
                             onMouseEnter={() => setMenuOpen(true)}
                             onMouseLeave={toggleMenu}>
+                            
                                 
                                 {
                                     linkObject.map((object, index) => {
