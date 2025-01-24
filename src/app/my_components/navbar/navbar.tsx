@@ -17,7 +17,7 @@ const Navbar = () => {
         <Link href="/">
             <div className='relative text-[var(--primary-blue)] z-30 p-2 cursor-pointer'
                 onMouseEnter={toggleMenu}>
-                <div className='nav-content flex justify-between px-4 py-2 rounded-sm border-[1px] opacity-40 text-xs font-title hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-all duration-1000 ease-in-out'>
+                <div className='nav-content flex justify-between px-4 py-2 rounded-sm border-[1px] opacity-40 text-xs font-title hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-all duration-1000 ease-out'>
                     <h2>sumit sute</h2>
                     <h2>works + projects</h2>
                     <h2>bengaluru, in</h2>
