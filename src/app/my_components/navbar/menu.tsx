@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import linkObject from './linkObject'
 import Image from 'next/image';
 import Link from 'next/link';
@@ -34,17 +34,24 @@ import Link from 'next/link';
 
         }, [])
 
-        const useMousePostion = () => {
+        const useMousePostion = (imageRef: React.RefObject<HTMLImageElement | null>) => {
             const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
+            
             useEffect(()=> {
                 const updateMouseCords = (event: MouseEvent) => {
-                    setMouseCords({ x: event.clientX, y: event.clientY })
+
+                    const imageW: number = (window.innerWidth*0.2);
+                    const imageH: number = (window.innerHeight*0.4);
+                    
+                    
+                    setMouseCords({ x: (event.clientX - imageW/2), y: (event.clientY - imageH/2) })
+                    // console.log(event.clientX, imageW, event.clientY, imageH)
                 }
                 window.addEventListener('mousemove', updateMouseCords)
                 return () => {
                     window.removeEventListener('mousemove', updateMouseCords)
                 }
-            }, [])
+            }, [imageRef])
             return mouseCords
         }
 
@@ -52,7 +59,9 @@ import Link from 'next/link';
 
         
 
-        const {x, y } = useMousePostion()
+        
+        const imageRef = useRef<HTMLImageElement>(null);
+        const { x, y } = useMousePostion(imageRef);
 
         return (
 
@@ -122,7 +131,7 @@ import Link from 'next/link';
                             
 
                             return (
-                                
+
                                 <div key={object.id}>
                                 {hoveredCard === object.id && (
                                   <Image
@@ -131,6 +140,7 @@ import Link from 'next/link';
                                     width={100}
                                     height={100}
                                     style={{
+                                      borderRadius: '10px',
                                       position: 'absolute',
                                       objectFit: 'contain',
                                       visibility: 'visible',
@@ -138,8 +148,8 @@ import Link from 'next/link';
                                       opacity: '10',
                                       zIndex: 0,
                                       pointerEvents: 'none',
-                                      left: x - 200,
-                                      top: y - 200,
+                                      left: x,
+                                      top: y,
                                     }}
                                   />
                                 )}
