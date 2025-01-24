@@ -40,8 +40,12 @@ import Link from 'next/link';
                 className="menu-container relative"
             >
                     <div 
-                        className="menu-content absolute h-[35vh] w-full z-20 my-2 flex rounded-lg snap-x snap-mandatory overflow-x-auto overflow-y-hidden transition-opacity duration-500 ease-in-out opacity-0"
-                        style={{ opacity: isMenuOpen ? 1 : 0 }}
+                        className="menu-content absolute h-[35vh] w-full z-20 my-2 flex rounded-lg snap-x snap-mandatory overflow-x-auto"
+                        style={{ 
+                            transition: 'all 0.3s ease-in-out',
+                            opacity: isMenuOpen ? 1 : 0, 
+                            transform: isMenuOpen ? 'translateY(0)' : 'translateY(-100%)'
+                        }}
                         onMouseEnter={() => setMenuOpen(true)}
                         onMouseLeave={toggleMenu}>
                             
@@ -87,7 +91,7 @@ import Link from 'next/link';
                         &#10094;
                     </button>
 
-                    <button className="next-button absolute z-20 h-[35vh] right-2 transform -translate-y-1 p-2 hover:scale-150 transition-transform duration-500 ease-in-out"
+                    <button className="next-button absolute z-20 h-[35vh] right-2 transform -translate-y-1 p-2 hover:scale-150 transition-all duration-500 ease-in-out"
                             onMouseEnter={() => setMenuOpen(true)}
                             onClick={() => {
                                 const menuCard = document.querySelector('.menu-content')
