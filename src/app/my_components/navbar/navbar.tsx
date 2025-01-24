@@ -6,16 +6,16 @@ import Link from 'next/link';
 
 const Navbar = () => {
 
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [isMenuOpen, setMenuOpen] = React.useState(false);
 
     const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
+        setMenuOpen(!isMenuOpen);
     }
     
   return (
     <>
         <Link href="/">
-            <div className='relative text-[var(--primary-blue)] z-30 p-2 w-screen cursor-pointer'
+            <div className='relative text-[var(--primary-blue)] z-30 p-2 cursor-pointer'
                 onMouseEnter={toggleMenu}>
                 <div className='nav-content flex justify-between px-4 py-2 rounded-sm border-[1px] opacity-40 text-xs font-title hover:opacity-100 hover:border-[var(--primary-blue)]'>
                     <h2>sumit sute</h2>
@@ -27,7 +27,7 @@ const Navbar = () => {
         </Link>
         
         {isMenuOpen &&
-            <MenuLinks toggleMenu={toggleMenu}/>
+            <MenuLinks toggleMenu={toggleMenu} setMenuOpen={setMenuOpen}/>
         }
     </>
     
