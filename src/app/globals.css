@@ -157,3 +157,8 @@
   scrollbar-width: thin;
   scrollbar-color: var(--primary-white) var(--primary-blue);
 }
+
+.menu-content {
+  scrollbar-width: none;
+  scrollbar: smooth;
+}
