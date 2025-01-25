@@ -39,13 +39,10 @@ import Link from 'next/link';
             
             useEffect(()=> {
                 const updateMouseCords = (event: MouseEvent) => {
-
-                    const imageW: number = (window.innerWidth*0.2);
-                    const imageH: number = (window.innerHeight*0.4);
                     
                     
-                    setMouseCords({ x: (event.clientX - imageW/2), y: (event.clientY - imageH/2) })
-                    // console.log(event.clientX, imageW, event.clientY, imageH)
+                    setMouseCords({ x: (event.clientX), y: (event.clientY) })
+    
                 }
                 window.addEventListener('mousemove', updateMouseCords)
                 return () => {
@@ -132,9 +129,13 @@ import Link from 'next/link';
 
                             return (
 
-                                <div key={object.id}>
+                                <div 
+                                    key={object.id}
+                                    
+                                >
                                 {hoveredCard === object.id && (
                                   <Image
+                                    className='menu-image'
                                     src={object.image}
                                     alt={object.title}
                                     width={100}
