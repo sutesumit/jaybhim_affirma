@@ -96,6 +96,10 @@
     @apply translate-x-[-50%] translate-y-[-50%]
   }
 
+  .nav-pointer {
+    @apply w-4 h-4 bg-[var(--primary-white)] bg-blend-difference rounded-full
+  }
+
 }
 
 @layer utilities {
