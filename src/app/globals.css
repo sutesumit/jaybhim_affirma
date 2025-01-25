@@ -97,7 +97,7 @@
   }
 
   .nav-pointer {
-    @apply w-4 h-4 bg-[var(--primary-white)] bg-blend-difference rounded-full
+    @apply w-5 h-5 bg-[var(--primary-white)] translate-x-[-50%] translate-y-[-50%] bg-blend-difference rounded-full 
   }
 
 }
