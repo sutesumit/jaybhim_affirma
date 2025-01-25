@@ -91,6 +91,15 @@
   .link-text:hover {
     @apply bg-gradient-to-t hover:bg-gradient-to-bl from-[var(--primary-blue)] to-[var(--primary-white)] bg-clip-text text-transparent transition-all duration-1000 ease-in-out 
   }
+
+  .menu-image {
+    @apply translate-x-[-50%] translate-y-[-50%]
+  }
+
+  .nav-pointer {
+    @apply w-5 h-5 bg-[var(--primary-white)] translate-x-[-50%] translate-y-[-50%] bg-blend-difference rounded-full 
+  }
+
 }
 
 @layer utilities {
