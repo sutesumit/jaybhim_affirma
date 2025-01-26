@@ -17,7 +17,7 @@ const Paragraph_7 = () => {
       style={{ height: 'fit-content' }}
     >
       {/* Container for both text layers */}
-      <div className='relative overflow-hidden mb-10'>
+      <div className='relative overflow-hidden'>
         {/* Top layer (paragraph) */}
         <p 
           className='relative z-10 pb-4 transition-all duration-200 ease-in-out'
