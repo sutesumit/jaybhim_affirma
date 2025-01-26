@@ -9,7 +9,7 @@ export default function NotFound() {
         <div className='loader mb-5'></div>
         <div className="space-y-6">
           <p className="text-container !text-center">
-            Oops! This page is under construction.
+            Arre! This page is under construction.
           </p>
           <p className="text-container !text-xs !text-center !leading-relaxed"><span className='italic opacity-50'>Or just classic 404 moment?</span><br />But worry not, sumit is rolling up his sleeves, 
           chasing down time and resources, and will bring this page to life soon.<br />Hang tight!</p>
