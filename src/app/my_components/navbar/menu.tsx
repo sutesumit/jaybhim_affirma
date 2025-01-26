@@ -86,9 +86,10 @@ import Link from 'next/link';
                                             key={object.id}
                                             onMouseEnter={()=>setHoveredCard(object.id)}
                                             onMouseLeave={()=>setHoveredCard(null)}
-                                            className="link-card relative h-full w-[30%] flex-shrink-0 flex rounded-lg p-5 mx-2 justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
+                                            className="link-card relative h-full w-[30%] flex-shrink-0 rounded-lg p-5 mx-2 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
                                     >
-                                        <p>{object.title}</p>
+                                        <p className={hoveredCard === object.id ? 'text-[var(--primary-white)] bg-[var(--primary-blue)] px-2 py-1 rounded-sm' : ''}>{object.title}</p>
+                                        <p className='text-[var(--primary-blue)] text-sm p-2'>{hoveredCard === object.id && object.description}</p>
                                     </Link>
                                 
                                 )
