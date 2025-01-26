@@ -5,9 +5,11 @@ import Paragraph_3 from './text_bodies/paragraph_3'
 import Paragraph_4 from './text_bodies/paragraph_4'
 import Paragraph_5 from './text_bodies/paragraph_5'
 import Paragraph_6 from './text_bodies/paragraph_6'
+import Paragraph_6_extended from './text_bodies/paragraph_6_extended'
 import Paragraph_7 from './text_bodies/paragraph_7'
 import FathersAndFigures from './image_bodies/fathers_and_figures'
 import MarathiWritings from './image_bodies/marathi_writings'
+import Paragraph_7_extended from './text_bodies/paragraph_7_extended'
 
 const AllSections = () => {
   return (
@@ -24,7 +26,9 @@ const AllSections = () => {
       <Paragraph_4 />
       <Paragraph_5 />
       <Paragraph_6 />
+      <Paragraph_6_extended />
       <Paragraph_7 />
+      <Paragraph_7_extended />
     </div>
   )
 }

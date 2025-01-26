@@ -103,9 +103,14 @@
 }
 
 @layer utilities {
+
   .text-container {
     @apply max-w-[60ch] px-8 md:p-2 mx-auto text-left text-[--primary-blue] font-body text-base
-}
+  }
+
+  .accent-text {
+    @apply hover:text-blue-200
+  }
 
 }
 
