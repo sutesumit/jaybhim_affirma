@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Videoscape = ({src}: {src: string}) => {
+const Videoscape = ({src, bg_value}: {src: string, bg_value?: string | undefined}) => {
   return (
       <>
         <div className='absolute inset-0 z-[-10] pointer-events-none'>
@@ -12,6 +12,7 @@ const Videoscape = ({src}: {src: string}) => {
               allow="accelerometer; autoplay; loop; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               style={{
+                objectFit: 'fill',
                 pointerEvents: 'none',
                 border: 'none'  // Remove iframe border
               }}
@@ -19,7 +20,7 @@ const Videoscape = ({src}: {src: string}) => {
           </div>
         </div>
 
-        <div className='absolute inset-0 bg-black opacity-60'></div>
+        <div className={`absolute inset-0 ${bg_value} opacity-60`}></div>
 
         <div 
           className='absolute inset-0 opacity-80'

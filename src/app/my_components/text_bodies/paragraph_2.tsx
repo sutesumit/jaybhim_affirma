@@ -4,7 +4,10 @@ const Paragraph_2 = () => {
   return (
     <div className='relative flex w-screen h-auto md:aspect-video md:max-h-screen py-4'>
       
-      <Videoscape src={'https://www.youtube.com/embed/INBzyeMpWzo?autoplay=1&mute=1&controls=0&loop=1&playlist=INBzyeMpWzo&modestbranding=1&showinfo=0&version=3&playlist=INBzyeMpWzo&rel=0'} />
+      <Videoscape 
+        src={'https://www.youtube.com/embed/INBzyeMpWzo?autoplay=1&mute=1&controls=0&loop=1&playlist=INBzyeMpWzo&modestbranding=1&showinfo=0&version=3&playlist=INBzyeMpWzo&rel=0'}
+        bg_value='bg-black' 
+      />
 
       {/* Text Container */}
       <div className='flex items-center justify-center text-container'>
