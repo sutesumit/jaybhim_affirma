@@ -1,25 +1,11 @@
-import HomePhotobook from '../image_bodies/home_photobook';
+import Videoscape from '../image_bodies/videoscape';
 
 const Paragraph_2 = () => {
   return (
     <div className='relative flex w-screen h-auto md:aspect-video md:max-h-screen py-4'>
-      {/* Video Background Container */}
-      <div className='absolute inset-0'>
-        <HomePhotobook />
-      </div>
       
-      {/* Blue Overlay */}
-      <div className='absolute inset-0 bg-black opacity-60'></div>
-      
-      {/* Dotted Pattern Overlay */}
-      <div 
-        className='absolute inset-0 opacity-80'
-        style={{
-          backgroundImage: 'radial-gradient(circle, var(--primary-blue) 1px, transparent 1px)',
-          backgroundSize: '20px 20px',
-        }}
-      ></div>
-      
+      <Videoscape src={'https://www.youtube.com/embed/INBzyeMpWzo?autoplay=1&mute=1&controls=0&loop=1&playlist=INBzyeMpWzo&modestbranding=1&showinfo=0&version=3&playlist=INBzyeMpWzo&rel=0'} />
+
       {/* Text Container */}
       <div className='flex items-center justify-center text-container'>
           <p className='mix-blend-difference text-[var(--primary-white)] opacity-100'>
