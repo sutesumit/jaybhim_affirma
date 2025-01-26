@@ -36,13 +36,15 @@ export default function NotFound() {
           
             <div className='text-container flex justify-center gap-2 font-title bg-blend-difference transition-colors duration-1000 ease-out'>
               <Link
-                href="/"
+                href="https://youtu.be/llARFMPOTB0?t=1119"
+                target="_blank"
                 className="flex justify-center items-center flex-1 px-4 py-2 text-center rounded-sm border-[1px] border-[var(--primary-blue)] text-xs hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]"
               >
                 Watch the old walkthrough video here.
               </Link>
               <Link
-                href="/"
+                href="https://www.sumitsute.com/Fathers-and-Figures"
+                target="_blank"
                 className="flex justify-center items-center flex-1 px-4 py-2 text-center rounded-sm border-[1px] border-[var(--primary-blue)] text-xs hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]"
               >
                 Check out the work on the old site.
