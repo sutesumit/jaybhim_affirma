@@ -1,31 +1,65 @@
+'use client'
 import Link from 'next/link';
-import Videoscape from '../my_components/image_bodies/videoscape';
+import React, { useEffect } from 'react';
 
 export default function NotFound() {
+
+  const useMousePostion = () => {
+    const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
+    
+    useEffect(()=> {
+        const updateMouseCords = (event: MouseEvent): void => {
+            if (event) {
+                setMouseCords({ x: event.clientX, y: event.clientY });
+            }
+        }
+        window.addEventListener('mousemove', updateMouseCords)
+        return () => {
+            window.removeEventListener('mousemove', updateMouseCords)
+        }
+    }, [])
+    return mouseCords
+  }
+
+  const [isHovered, setIsHovered] = React.useState(true)
+
+  const {x, y} = useMousePostion()
+
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center px-4">
 
-        <div className='reel-container absolute z-[-10] aspect-[9/16] rounded-lg overflow-clip pointer-events-none'>
-            <iframe
+        <div 
+          className='reel-container absolute z-[-10] aspect-[9/16] rounded-lg overflow-clip pointer-events-none'
+          style={{
+            top: `${y}px`,
+            left: `${x}px`,
+          }}
+        >
+            { isHovered &&
+              
+              <iframe
               className='overflow-hidden pointer-events-none'
               src='https://www.youtube.com/embed/4yjNqLRRPxE?autoplay=1&mute=1&controls=0&loop=1&playlist=4yjNqLRRPxE&modestbranding=1&showinfo=0&version=3&rel=0&cc_load_policy=3&hl=en'
               title="Maraa Mirrors Reel"
               allow="accelerometer; autoplay; loop; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               style={{
-                objectFit: 'fill',
                 width: '100%',
                 height: '100%',
-                top: '20',
-                left: '20',
                 pointerEvents: 'none',
                 border: 'none'
               }}
-            ></iframe>
+              ></iframe>
+
+            }
             
         </div>
 
-        <div className="404-container flex flex-col items-center justify-center mx-2 p-10 rounded-lg font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out">
+        <div 
+          className="404-container flex flex-col items-center justify-center mx-2 p-10 rounded-lg font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <div className='loader mb-5'></div>
           <div className="space-y-6">
             <p className="text-container !text-center">
