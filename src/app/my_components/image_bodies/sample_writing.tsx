@@ -40,7 +40,7 @@ const SampleWriting = () => {
             url="https://jaybhim-affirma.vercel.app/Marathi-Short-Stories"
             className='text-white'
           >
-            {'link to the full collection'}
+            link to the full collection.
           </LinkPreview>
         </p>
       </div>
