@@ -4,6 +4,9 @@ import WritingsSnapscroll from "../my_components/image_bodies/writings_snapscrol
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col align-middle justify-center">
+
+      <div className="text-container title m-10">Imagining Images</div>
+
       <WritingsSnapscroll />
       
       <div className="text-container m-5">
