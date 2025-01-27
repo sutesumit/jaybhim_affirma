@@ -4,7 +4,10 @@ import React, { useEffect } from 'react';
 
 export default function NotFound() {
 
-  const useMousePostion = () => {
+  const frame = globalThis.window
+
+  const useMousePostion = ( ) => {
+    
     const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
     
     useEffect(()=> {
@@ -21,7 +24,7 @@ export default function NotFound() {
     return mouseCords
   }
 
-  const [isHovered, setIsHovered] = React.useState(true)
+  const [isHovered, setIsHovered] = React.useState(false)
 
   const {x, y} = useMousePostion()
 
