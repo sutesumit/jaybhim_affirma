@@ -8,7 +8,7 @@ import Paragraph_6 from './text_bodies/paragraph_6'
 import Paragraph_6_extended from './text_bodies/paragraph_6_extended'
 import Paragraph_7 from './text_bodies/paragraph_7'
 import FathersAndFigures from './image_bodies/fathers_and_figures'
-import MarathiWritings from './image_bodies/marathi_writings'
+import SampleWriting from './image_bodies/sample_writing'
 import Paragraph_7_extended from './text_bodies/paragraph_7_extended'
 
 const AllSections = () => {
@@ -21,7 +21,7 @@ const AllSections = () => {
       <Paragraph_2 />
       <section className="min-h-screen flex flex-col justify-evenly">
         <Paragraph_3 />
-        <MarathiWritings />
+        <SampleWriting />
       </section>
       <Paragraph_4 />
       <Paragraph_5 />
