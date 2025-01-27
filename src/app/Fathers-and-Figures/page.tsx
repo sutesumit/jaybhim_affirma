@@ -2,9 +2,10 @@
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 
-export default function NotFound() {
+export default function Home() {
 
-  const useMousePostion = () => {
+  const useMousePostion = ( ) => {
+    
     const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
     
     useEffect(()=> {
@@ -21,7 +22,7 @@ export default function NotFound() {
     return mouseCords
   }
 
-  const [isHovered, setIsHovered] = React.useState(true)
+  const [isHovered, setIsHovered] = React.useState(false)
 
   const {x, y} = useMousePostion()
 
@@ -66,7 +67,7 @@ export default function NotFound() {
               Arre! This page is under construction.
             </p>
             <p className="text-container !text-xs !text-center !leading-relaxed">But worry not, sumit is rolling up his sleeves,
-            chasing down time and resources, and will bring this page to life soon.<br />Hang tight!</p>
+            chasing down time and resources, and will bring this <span className='opacity-50'>Fathers and Figures</span> page to life soon.<br />Hang tight!</p>
           
             <div className='text-container flex justify-center gap-2 font-title bg-blend-difference transition-colors duration-1000 ease-out'>
               <Link
@@ -77,7 +78,7 @@ export default function NotFound() {
                 Watch the old walkthrough video here.
               </Link>
               <Link
-                href="https://www.sumitsute.com/Fathers-and-Figures"
+                href="https://sumitupall.tumblr.com/"
                 target="_blank"
                 className="flex justify-center items-center flex-1 px-4 py-2 text-center rounded-sm border-[1px] border-[var(--primary-blue)] text-xs hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]"
               >
