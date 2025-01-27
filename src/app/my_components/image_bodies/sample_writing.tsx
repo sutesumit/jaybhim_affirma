@@ -33,11 +33,14 @@ const SampleWriting = () => {
       
       <div className="full-collection-link w-full h-5 bg-[--primary-blue] rounded-sm text-xs flex justify-center items-center">
         <p>
+          <ExternalLink 
+            className='text-white inline p-2 link-text'
+          />
           <LinkPreview 
             url="https://jaybhim-affirma.vercel.app/Marathi-Short-Stories"
             className='text-white'
           >
-            <ExternalLink className='p-2 inline'/>link to the full collection
+            {'link to the full collection'}
           </LinkPreview>
         </p>
       </div>
