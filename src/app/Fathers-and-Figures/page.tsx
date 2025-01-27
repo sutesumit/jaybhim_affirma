@@ -80,7 +80,7 @@ export default function NotFound() {
                 Watch the old walkthrough video here.
               </Link>
               <Link
-                href="https://www.sumitsute.com/Fathers-and-Figures"
+                href="https://sumitupall.tumblr.com/"
                 target="_blank"
                 className="flex justify-center items-center flex-1 px-4 py-2 text-center rounded-sm border-[1px] border-[var(--primary-blue)] text-xs hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]"
               >
