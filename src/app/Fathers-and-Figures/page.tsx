@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 
-export default function NotFound() {
+export default function Home() {
 
   const frame = globalThis.window
 
