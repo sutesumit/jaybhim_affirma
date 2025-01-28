@@ -205,3 +205,38 @@
   60%,70%  {border-radius:50%}
   90%,100% {border-radius:0 50%}
 }
+
+/* 404 loader */
+
+.loader2,
+.loader2:before,
+.loader2:after{
+  width: 35px;
+  aspect-ratio: 1;
+  box-shadow: 0 0 0 3px inset var(--primary-blue);
+  position: relative;
+  /* animation: 1.5s infinite 0.5s; */
+  animation-name: l7-1,l7-2;
+  animation-duration: 1.5s;
+  animation-delay: 0.5s;
+  animation-iteration-count: infinite;
+}
+.loader2:before,
+.loader2:after{
+  content: "";
+  position: absolute;
+  left: calc(100% + 5px);
+  animation-delay: 1s,0s;
+}
+.loader2:after{
+  left: -40px;
+  animation-delay: 0s,1s;
+}
+@keyframes l7-1 {
+  0%,55%,100%  {border-top-left-radius:0;  border-bottom-right-radius:0}
+  20%,30%      {border-top-left-radius:50%;border-bottom-right-radius:50%}
+}
+@keyframes l7-2 {
+  0%,55%,100%  {border-bottom-left-radius:0;  border-top-right-radius:0}
+  20%,30%      {border-bottom-left-radius:50%;border-top-right-radius:50%}
+}
