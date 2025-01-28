@@ -148,7 +148,7 @@ import Link from 'next/link';
                                       visibility: 'visible',
                                       width: '20vw',
                                       opacity: '10',
-                                      zIndex: 0,
+                                      zIndex: 10,
                                       pointerEvents: 'none',
                                       left: x,
                                       top: y,
