@@ -8,7 +8,7 @@ export default function NotFound() {
           <div className='loader2 mb-5'></div>
           <div className="space-y-6">
             <p className="text-container !text-center">
-            Arre! Looks like you've lost your way.
+            Arre! Looks like you&#39;ve lost your way.
             </p>
             <p className="text-container !text-xs !text-center !leading-relaxed"><span className='italic opacity-50'>Or maybe there used to be something here?</span><br />This might be because work titles and URLs were recently rearranged. Check out the Works + Projects section to find what you need!</p>
             <div className='text-container flex justify-center gap-2 font-title bg-blend-difference transition-colors duration-1000 ease-out'>
