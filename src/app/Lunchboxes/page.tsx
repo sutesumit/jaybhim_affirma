@@ -3,13 +3,11 @@ import Flipbook from '../my_components/flipbook/flipbook'
 
 const Home = () => {
   return (
-    <div className='flipbook-container items-center justify-center flex flex-col'>
+    <div className='flipbook-container items-center flex flex-col'>
       <div className="title text-container m-10">
         Lunchboxes in the age of mechanical reproduction
       </div>
-      
       <Flipbook />
-      
       <div className="text-container m-5">
         <p className='font-rajdhani flex-1 whitespace-pre-line'>
           ||<br /><br />
@@ -22,7 +20,6 @@ const Home = () => {
 
           But my lunchboxes and my emotionalities aren&apos;t really divorced from that same repetition and mechanization. The hand-drawn screenshots of the conversations here are sucked back into this very digital screen ultimately. Our protests are also in osmosis with the protested. And our intimacies have a trauma bond with the inactivity. Yet the process of humanization of the self did not turn around yet and it keeps seeking more and more nuances.
         </p>
-
         <p className='font-rajdhani flex-1 whitespace-pre-line'>
           ||<br /><br />
           
