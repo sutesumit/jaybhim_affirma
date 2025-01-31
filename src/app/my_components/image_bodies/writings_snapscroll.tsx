@@ -11,9 +11,9 @@ const WritingsSnapscroll = () => {
           <div key={index} className="card bg-[--primary-white] rounded-sm w-full flex-shrink-0 snap-center">
             <div className="flex flex-col-reverse md:flex-row sm:flex-row items-start gap-4 p-6">
               <div className="card-content md:w-[50%] sm:w-[50%] aspect-square overflow-y-auto scrollbar-hide scrollbar-thin border-[1px] border-[--primary-blue] rounded-sm">
-                <h3 className='card-title text-center sticky top-0 bg-[--primary-white] p-1'>{fiction.title}</h3>
-                <h4 className="date text-xs text-[--primary-blue] opacity-50 text-center p-1">{fiction.date}</h4>
-                <p className="card-para text-xs leading-relaxed whitespace-pre-wrap px-4">{fiction.content}</p>
+                <div className='card-title text-center sticky top-0 bg-[--primary-white] p-1'>{fiction.title}</div>
+                <div className="date text-xs text-[--primary-blue] opacity-50 text-center p-1">{fiction.date}</div>
+                <div className="card-para text-xs leading-relaxed whitespace-pre-wrap px-4">{fiction.content}</div>
               </div>
               <div className="image-wrapper rounded-sm overflow-clip aspect-square md w-full md:w-[50%] sm:w-[50%] relative">
                 <Image 
@@ -38,9 +38,11 @@ const WritingsSnapscroll = () => {
           className="bg-[--primary-white] hover:bg-[--primary-blue] hover:text-[--primary-white] transition-all z-10 flex justify-center items-center w-full rounded-sm"
           aria-label="Previous card"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-          </svg>
+          <span aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </span>
         </button>
 
         <button 
@@ -48,12 +50,14 @@ const WritingsSnapscroll = () => {
             const container = document.querySelector('.all-cards');
             container?.scrollBy({ left: container.clientWidth, behavior: 'smooth' });
           }}
-        className="bg-[--primary-white] hover:bg-[--primary-blue] hover:text-[--primary-white] transition-all z-10 flex justify-center items-center w-full rounded-sm"
+          className="bg-[--primary-white] hover:bg-[--primary-blue] hover:text-[--primary-white] transition-all z-10 flex justify-center items-center w-full rounded-sm"
           aria-label="Next card"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>
+          <span aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </span>
         </button>
       </div>
     </div>

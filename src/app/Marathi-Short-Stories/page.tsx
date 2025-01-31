@@ -7,8 +7,9 @@ export default function Home() {
       <div className="text-container title m-10">Imagining Images</div>
       <WritingsSnapscroll />
       <div className="text-container m-5">
-        <p className="font-rajdhani">
-        Few convoluted flash-fictions titled by abstract visuals, in a secret pursuit of articulating & visualizing disturbed relationships with the self and others.</p>
+        <div className="font-rajdhani">
+          Few convoluted flash-fictions titled by abstract visuals, in a secret pursuit of articulating & visualizing disturbed relationships with the self and others.
+        </div>
       </div>
     </div> 
 
