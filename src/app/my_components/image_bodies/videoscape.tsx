@@ -14,7 +14,7 @@ const Videoscape = ({src, bg_value}: {src: string, bg_value?: string | undefined
               style={{
                 objectFit: 'fill',
                 pointerEvents: 'none',
-                border: 'none'
+                border: 'none'  // Remove iframe border
               }}
             ></iframe>
           </div>
