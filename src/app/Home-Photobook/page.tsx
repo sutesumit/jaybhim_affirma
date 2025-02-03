@@ -13,11 +13,13 @@ export default function Home() {
         >
           <div className='loader mb-5'></div>
           <div className="space-y-6">
-            <p className="text-container !text-center">
+            <div className="text-container !text-center">
               Arre! This page is under construction.
-            </p>
-            <p className="text-container !text-xs !text-center !leading-relaxed">But worry not, sumit is rolling up his sleeves,
-            chasing down time and resources, and will bring this <span className='opacity-50'>Home Photobook</span> page to life soon.<br />Hang tight!</p>
+            </div>
+            <div className="text-container !text-xs !text-center !leading-relaxed">
+              But worry not, sumit is rolling up his sleeves,
+              chasing down time and resources, and will bring this <span className='opacity-50'>Home Photobook</span> page to life soon.<br />Hang tight!
+            </div>
           
             <div className='text-container flex justify-center gap-2 font-title bg-blend-difference transition-colors duration-1000 ease-out'>
               <Link
@@ -35,8 +37,7 @@ export default function Home() {
                 Check out the work on the old blog.
               </Link>
             </div>
-        </div>
-
+          </div>
         </div>
       
     </div>

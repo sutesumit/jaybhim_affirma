@@ -66,6 +66,8 @@ import Link from 'next/link';
             
             <div 
                 className="menu-container relative overflow-visible"
+                onMouseEnter={() => setMenuOpen(true)}
+                onMouseLeave={toggleMenu}
             >
                     <div 
                         className="menu-content absolute h-[35vh] w-full z-20 my-2 flex rounded-lg snap-x snap-mandatory overflow-x-auto"
@@ -74,10 +76,7 @@ import Link from 'next/link';
                             opacity: isMenuOpen ? 1 : 0, 
                             transform: isMenuOpen ? 'translateY(0)' : 'translateY(-100%)'
                         }}
-                        onMouseEnter={() => setMenuOpen(true)}
-                        onMouseLeave={toggleMenu}>
-                            
-                                
+                    >
                         {
                             linkObject.map((object, index) => {
                                 return (
@@ -88,8 +87,8 @@ import Link from 'next/link';
                                             onMouseLeave={()=>setHoveredCard(null)}
                                             className="link-card relative h-full w-[30%] flex-shrink-0 rounded-lg p-5 mx-2 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
                                     >
-                                        <p className={hoveredCard === object.id ? 'text-[var(--primary-white)] bg-[var(--primary-blue)] px-2 py-1 rounded-sm' : ''}>{object.title}</p>
-                                        <p className='text-[var(--primary-blue)] text-sm p-2'>{hoveredCard === object.id && object.description}</p>
+                                        <span className={hoveredCard === object.id ? 'text-[var(--primary-white)] bg-[var(--primary-blue)] px-2 py-1 rounded-sm' : ''}>{object.title}</span>
+                                        {hoveredCard === object.id && <span className='text-[var(--primary-blue)] text-sm p-2'>{object.description}</span>}
                                     </Link>
                                 
                                 )
@@ -103,24 +102,26 @@ import Link from 'next/link';
                     </div>
 
                     
-                    <button className='prev-button absolute z-20 h-[35vh] left-2 transform -translate-y-1 p-2 hover:scale-150 transition-transform duration-500 ease-in-out'
-                            onMouseEnter={() => setMenuOpen(true)}
-                            onClick={() => {
-                                const menuCard = document.querySelector('.menu-content')
-                                menuCard?.scrollBy({ left: -menuCard.clientWidth, behavior: 'smooth'})
-                            }}
+                    <button 
+                        className='prev-button absolute z-20 h-[35vh] left-2 transform -translate-y-1 p-2 hover:scale-150 transition-transform duration-500 ease-in-out'
+                        onMouseEnter={() => setMenuOpen(true)}
+                        onClick={() => {
+                            const menuCard = document.querySelector('.menu-content')
+                            menuCard?.scrollBy({ left: -menuCard.clientWidth, behavior: 'smooth'})
+                        }}
                     >
-                        &#10094;
+                        <span aria-hidden="true">&#10094;</span>
                     </button>
 
-                    <button className="next-button absolute z-20 h-[35vh] right-2 transform -translate-y-1 p-2 hover:scale-150 transition-all duration-500 ease-in-out"
-                            onMouseEnter={() => setMenuOpen(true)}
-                            onClick={() => {
-                                const menuCard = document.querySelector('.menu-content')
-                                menuCard?.scrollBy({ left: menuCard.clientWidth, behavior: 'smooth'})
-                            }}
+                    <button 
+                        className="next-button absolute z-20 h-[35vh] right-2 transform -translate-y-1 p-2 hover:scale-150 transition-all duration-500 ease-in-out"
+                        onMouseEnter={() => setMenuOpen(true)}
+                        onClick={() => {
+                            const menuCard = document.querySelector('.menu-content')
+                            menuCard?.scrollBy({ left: menuCard.clientWidth, behavior: 'smooth'})
+                        }}
                     >
-                        &#10095;
+                        <span aria-hidden="true">&#10095;</span>
                     </button>
 
                     {
@@ -132,7 +133,7 @@ import Link from 'next/link';
 
                                 <div 
                                     key={object.id}
-                                    
+                                    className="image-container"
                                 >
                                 {hoveredCard === object.id && (
                                   <Image
