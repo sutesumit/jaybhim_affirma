@@ -12,7 +12,7 @@ const Flipbook = () => {
     
 
   return (
-    <div className='flipbook-container font-rajdhani text-[--primary-white] max-w-[80ch] w-full mx-auto m-2 px-4 sm:px-6'>
+    <div className='flipbook-container font-rajdhani text-[--primary-white] max-w-[80ch] w-full mx-auto py-10 px-4 sm:px-6'>
           <div className="spread flex overflow-x-auto snap-x snap-mandatory w-full scrollbar-hide gap-4 p-[1px]">
             {evenLunchboxPages(69).map((page, index) => (
               <div key={page} className="border-[1px] border-[--primary-blue] rounded-sm w-full flex-shrink-0 snap-center">
