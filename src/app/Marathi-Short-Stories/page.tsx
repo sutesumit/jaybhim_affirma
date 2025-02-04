@@ -24,9 +24,7 @@ const background = (
       <motion.div 
         key={index}
         className='background-image-container opacity-30'
-        animate={{ y: ["0%", "-1000%"], x: ["-0%", "0%"], scale: [1, 2, 1], rotate: [-90, 90] }}
-        whileHover={{ y: "0%", x: "0%", scale: 1, rotate: "0"}}
-        
+        animate={{ y: ["0%", "-1000%"], x: ["-0%", "0%"], scale: [1, 2, 1], rotate: [-90, 90] }}        
         transition={{ duration: 300, repeat: Infinity, repeatType: "reverse" }}
       >
           <Image
