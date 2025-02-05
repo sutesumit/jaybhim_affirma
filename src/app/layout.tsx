@@ -37,8 +37,8 @@ const rajdhani = Rajdhani({
 });
 
 export const metadata: Metadata = {
-  title: 'Sumit Sute for AFFIRMA',
-  description: 'AFFIRMA Application',
+  title: 'art.sumitsute',
+  description: 'Art and Web Portfolio of Sumit Sute',
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
