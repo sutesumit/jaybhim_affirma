@@ -5,6 +5,7 @@ import Footer from './my_components/Footer';
 import './globals.css';
 import Navbar from './my_components/navbar/navbar';
 
+
 interface RootLayoutProps {
   children: React.ReactNode;
 }

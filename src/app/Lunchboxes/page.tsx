@@ -1,6 +1,8 @@
 import React from 'react'
 import Flipbook from '../my_components/flipbook/flipbook'
 import TitleDiscription from '../my_components/common/TitleDiscription'
+import PageFlip from '../my_components/flipbook/PageFlip'
+
 
 const content = {
   title: "Lunchboxes in the age of mechanical reproduction",
@@ -20,7 +22,7 @@ const Home = () => {
 
   
   return (
-    <div className='flipbook-container items-center flex flex-col'>
+    <div className='flipbook-container items-center flex flex-col gap-10'>
       <TitleDiscription 
         title={content.title}
         description={content.description}
@@ -28,6 +30,9 @@ const Home = () => {
 
 
       />
+      
+      <PageFlip />
+      
       <Flipbook />
       
     </div>
