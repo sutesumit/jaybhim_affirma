@@ -108,7 +108,7 @@ const PageFlip = () => {
     //   size='stretch'
     >
       {pages.map((page, index) => (
-        <div className="demoPage shadow-[--primary-blue] shadow-sm border-[1px] border-[--primary-blue] rounded-sm overflow-hidden" key={index}>
+        <div className="demoPage shadow-[--primary-blue] shadow-sm rounded-sm overflow-hidden" key={index}>
           <Image src={page} alt={`Page ${index}`} width={300} height={400} style={{ height: '100%' , width: '100%'}} priority={index < 4} />
         </div>
       ))}

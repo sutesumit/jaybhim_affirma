@@ -58,7 +58,9 @@ export default function Home() {
           background={isBgOn && <>{background()}</>}
         />
       </div>
-      <WritingsSnapscroll />
+      <div className='flex h-screen w-screen items-center justify-center bg-gradient-to-br from-blue-100 via-[--primary-white] to-blue-100'>
+        <WritingsSnapscroll />
+      </div>
     </div>
   )
 }
