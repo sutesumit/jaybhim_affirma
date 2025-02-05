@@ -1,5 +1,10 @@
+'use client';
 import WritingsSnapscroll from "../my_components/image_bodies/writings_snapscroll";
 import TitleDiscription from "../my_components/common/TitleDiscription";
+import { flashFictions } from "../my_components/image_bodies/flash_fiction_object";
+import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useState } from "react";
 
 const content = {
   title: "Imagining Images",
@@ -9,22 +14,51 @@ const content = {
   },
 };
 
-const background = (
-  <div className='bg-slate-200 h-full w-full'></div>
-)
+
+
+const background = () => {
+  return (
+    <motion.div 
+      className='h-full w-auto py-6 gap-6 inline-flex items-center overflow-hidden filter'
+      animate={{ x: ["0%", "-50%"] }}
+      transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
+    >
+      <div className="absolute inset-0 z-50 bg-[--primary-blue] opacity-20"></div>
+      {[...flashFictions, ...flashFictions].map((fiction, index) => (
+        <motion.div 
+          key={index}
+          className='background-image-container h-full aspect-square grayscale opacity-70'
+          initial={{ scale: 3.1, rotate: 0 }}
+          animate={{ scale: ["5.1", "3.1", "5.1"], rotate: 360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: "easeInOut" }}
+        
+        >
+            <Image
+              src={fiction.imageUrl}
+              alt={fiction.title}
+              width={800}
+              height={800}
+              style={{ objectFit: "cover" }}
+            />
+        </motion.div>
+      ))}
+    </motion.div>
+  )
+}
 
 
 export default function Home() {
+  const [isBgOn, setIsBgOn] = useState(true);
   return (
     <div className="min-h-screen">
-      <TitleDiscription
-        title={content.title}
-        description={content.description}
-        background={background}
-      >
-      </TitleDiscription>
+      <div onMouseEnter={() => setIsBgOn(true)} onMouseLeave={() => setIsBgOn(false)}>
+        <TitleDiscription
+          title={content.title}
+          description={content.description}
+          background={isBgOn && <>{background()}</>}
+        />
+      </div>
       <WritingsSnapscroll />
-    </div> 
-
+    </div>
   )
 }
