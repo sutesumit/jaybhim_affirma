@@ -11,20 +11,21 @@ const content = {
 }
 
 const background = (
-  <div className='bg-slate-200 h-full w-full'></div>
+  <div className='h-full w-full'></div>
 )
 
 const Home = () => {
 
   return (
-    <div className='flipbook-container items-center flex flex-col gap-10'>
+    <div className='flipbook-container items-center flex flex-col'>
       <TitleDiscription 
         title={content.title}
         description={content.description}
         background={background}
       />
-      <PageFlip />
-      <div className='h-1 w-screen'></div>
+      <div className='flex h-screen w-screen justify-center bg-gradient-to-br from-blue-100 via-[--primary-white] to-blue-100'>
+        <PageFlip />
+      </div>
     </div>
   )
 }
