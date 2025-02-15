@@ -52,7 +52,7 @@ import { motion, AnimatePresence } from 'framer-motion';
                 <AnimatePresence>
                     <motion.div
                         key="menu-content"
-                        className={`menu-content absolute max-h-screen w-full z-20 top-10 p-5 grid md:grid-cols-3 gap-4 rounded-lg overflow-y-scroll ${!isMenuOpen ? 'pointer-events-none' : ''}`}
+                        className={`menu-content absolute max-h-screen w-full z-20 p-2 grid md:grid-cols-3 gap-4 rounded-lg overflow-y-scroll ${!isMenuOpen ? 'pointer-events-none' : ''}`}
                         initial={{ y: "-100%" }}
                         animate={{ y: isMenuOpen ? 0 : "-100%" }}
                         transition={{ 
