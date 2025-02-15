@@ -50,7 +50,7 @@ const background = () => {
 export default function Home() {
   const [isBgOn, setIsBgOn] = useState(true);
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-12">
       <div onMouseEnter={() => setIsBgOn(true)} onMouseLeave={() => setIsBgOn(false)}>
         <TitleDiscription
           title={content.title}
