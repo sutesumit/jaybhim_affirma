@@ -12,12 +12,12 @@ const Paragraph_7 = () => {
 
   return (
     <div 
-      className='relative text-container paragraph-container cursor-ew-resize'
+      className='relative text-container paragraph-container overflow-visible cursor-ew-resize'
       onMouseMove={handleMouseMove}
       style={{ height: 'fit-content' }}
     >
       {/* Container for both text layers */}
-      <div className='relative overflow-hidden'>
+      <div className='relative overflow-visible'>
         {/* Top layer (paragraph) */}
         <p 
           className='relative z-10 pb-4 transition-all duration-200 ease-in-out'
@@ -28,9 +28,16 @@ const Paragraph_7 = () => {
           So, I used to be an artist.
         </p>
 
-        {/* Bottom layer (code) */}
+        {/* Bottom layer (code) */} 
         <div 
-          className="absolute inset-0 z-0 bg-[var(--primary-blue)] rounded-md transition-all duration-200 ease-in-out"
+          className="absolute z-10 top-7 translate-y-[-50%] translate-x-[-50%] h-8 w-3 shadow-[-1px_0px_3px_1px_#131857] border-[1px] border-[var(--primary-white)] bg-[var(--primary-blue)] rounded-full"
+          style={{
+            left: `${sliderPosition}%`,
+          }}
+        >
+        </div>
+        <div 
+          className="absolute inset-0 z-0 bg-[var(--primary-blue)] rounded-md transition-all duration-100 ease-in-out"
           style={{
             clipPath: `polygon(${sliderPosition}% 0, 100% 0, 100% 100%, ${sliderPosition}% 100%)`,
           }}
