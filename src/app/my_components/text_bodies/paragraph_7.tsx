@@ -12,7 +12,7 @@ const Paragraph_7 = () => {
 
   return (
     <div 
-      className='relative text-container paragraph-container overflow-visible cursor-ew-resize'
+      className='relative text-container paragraph-container overflow-visible cursor-grabbing'
       onMouseMove={handleMouseMove}
       style={{ height: 'fit-content' }}
     >
@@ -30,14 +30,14 @@ const Paragraph_7 = () => {
 
         {/* Bottom layer (code) */} 
         <div 
-          className="absolute z-10 top-7 translate-y-[-50%] translate-x-[-50%] h-8 w-3 shadow-[-1px_0px_3px_1px_#131857] border-[1px] border-[var(--primary-white)] bg-[var(--primary-blue)] rounded-full"
+          className="absolute z-10 top-7 translate-y-[-50%] translate-x-[-50%] shadow-[0px_2px_6px_-2px_#131857] h-12 w-3 hover:w-4 border-4 border-[var(--primary-blue)] bg-[var(--primary-white)] transition-transform duration-500 ease-in-out rounded-full"
           style={{
             left: `${sliderPosition}%`,
           }}
         >
         </div>
         <div 
-          className="absolute inset-0 z-0 bg-[var(--primary-blue)] rounded-md transition-all duration-100 ease-in-out"
+          className="absolute inset-0 z-0 bg-[var(--primary-blue)] rounded-md"
           style={{
             clipPath: `polygon(${sliderPosition}% 0, 100% 0, 100% 100%, ${sliderPosition}% 100%)`,
           }}
