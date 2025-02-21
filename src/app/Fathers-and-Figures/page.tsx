@@ -42,13 +42,19 @@ export default function Home() {
 
   return (
     <>
-
-      <div className='flipbook-container items-center flex flex-col'>
-        <TitleDiscription 
+      <div className="z-0">
+        <TitleDiscription
           title={content.title}
           description={content.description}
           background={background}
         />
+        {/* <Seperator /> */}
+      </div>
+      
+      <div className='playground flex items-center justify-center h-screen w-screen'>
+      <Seperator />
+        Drag Playground
+      
       </div>
       <Seperator />
       <div className="relative min-h-screen flex flex-col items-center justify-center px-4">

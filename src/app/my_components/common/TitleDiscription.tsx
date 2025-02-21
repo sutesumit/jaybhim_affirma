@@ -3,7 +3,7 @@ import React from 'react'
 const TitleDiscription = ({ title, description, background }: { title: string, description: { eng?: string | undefined, mar?: string | undefined }, background?: React.ReactNode }) => {
   return (
     <>
-        <div className='title-container relative w-full p-4 sm:p-7 m-auto overflow-hidden'>
+        <div className='title-container z-0 relative w-full p-4 sm:p-7 m-auto overflow-hidden'>
             {background && <div className='absolute inset-0 z-[-10]'>{background}</div>}
             <div className='max-w-[90ch] md:m-auto text-[--primary-blue] bg-white/50 backdrop-blur-sm border-[1px] border-[--primary-blue] rounded-sm'>
               <div className='font-title text-center pt-6'>{title}</div>
