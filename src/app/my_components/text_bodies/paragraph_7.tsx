@@ -30,7 +30,7 @@ const Paragraph_7 = () => {
 
         {/* Bottom layer (code) */} 
         <div 
-          className="absolute z-10 top-7 translate-y-[-50%] translate-x-[-50%] shadow-[0px_2px_6px_-2px_#131857] h-12 w-3 hover:w-4 border-4 border-[var(--primary-blue)] bg-[var(--primary-white)] transition-transform duration-500 ease-in-out rounded-full"
+          className="absolute z-10 top-7 translate-y-[-50%] translate-x-[-50%] shadow-[0px_2px_6px_-2px_#131857] h-12 w-4 hover:w-6 border-4 border-[var(--primary-blue)] bg-transparent transition-transform duration-500 ease-in-out rounded-full"
           style={{
             left: `${sliderPosition}%`,
           }}
