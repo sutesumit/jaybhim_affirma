@@ -1,4 +1,5 @@
 import React from 'react'
+import Seperator from '../Seperator';
 
 const TitleDiscription = ({ title, description, background }: { title: string, description: { eng?: string | undefined, mar?: string | undefined }, background?: React.ReactNode }) => {
   return (
@@ -12,6 +13,7 @@ const TitleDiscription = ({ title, description, background }: { title: string, d
                 {description.mar && <p className='mar-description flex-1 font-rajdhani whitespace-pre-wrap z-0'>{description.mar}</p>}
               </div>
             </div>
+            <Seperator />
         </div>
     </>
     

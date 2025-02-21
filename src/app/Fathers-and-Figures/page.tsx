@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useEffect } from 'react';
 import TitleDiscription from '../my_components/common/TitleDiscription';
 import Seperator from '../my_components/Seperator'
+import Image from 'next/image';
 
 export default function Home() {
 
@@ -42,21 +43,28 @@ export default function Home() {
 
   return (
     <>
-      <div className="z-0">
-        <TitleDiscription
-          title={content.title}
-          description={content.description}
-          background={background}
-        />
-        {/* <Seperator /> */}
-      </div>
+
+      <TitleDiscription
+        title={content.title}
+        description={content.description}
+        background={background}
+      />
+
       
-      <div className='playground flex items-center justify-center h-screen w-screen'>
-      <Seperator />
-        Drag Playground
-      
+      <div className='playground relative flex flex-wrap items-center justify-center h-screen w-screen'>
+        {Array.from({ length: 23 }, (_, i) => i).map((i) => (
+          
+          <Image
+            key={i}
+            src={`/fathersandfigures/${i + 1}.jpg`}
+            alt={`Image ${i + 1}`}
+            width={100}
+            height={100}
+            className=""
+          />
+        ))}
+        <Seperator />
       </div>
-      <Seperator />
       <div className="relative min-h-screen flex flex-col items-center justify-center px-4">
 
           <div 
