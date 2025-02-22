@@ -5,6 +5,7 @@ import TitleDiscription from '../my_components/common/TitleDiscription';
 import Seperator from '../my_components/Seperator'
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Background from './background';
 
 
 export default function Home() {
@@ -39,23 +40,6 @@ export default function Home() {
     },
   }
   
-  const background = (
-    <div className='h-full w-full flex flex-wrap gap-2'>
-      {
-        Array.from({ length: 23 }, (_, i) => (
-          <Image 
-            key={i} 
-            src={`/fathersandfigures/${i + 1}.jpg`} 
-            alt={`Father and Figure ${i + 1}`} 
-            width={200}
-            height={200}
-            className="object-contain shadow-[1px_1px_5px_0px_var(--primary-blue)]"
-          />
-        ))
-      }
-    </div>
-  )
-
   const playgroundRef = useRef<HTMLDivElement | null>(null)
 
   type imageSizeProp = {
@@ -80,7 +64,7 @@ export default function Home() {
       <TitleDiscription
         title={content.title}
         description={content.description}
-        background={background}
+        background={<Background />}
       />
 
       
@@ -90,7 +74,7 @@ export default function Home() {
       >
         {Array.from({ length: 23 }, (_, i) => i).map((i) => (
           <motion.div
-            key={i}
+            key={i+200}
             className=''
             drag
             dragConstraints={playgroundRef}

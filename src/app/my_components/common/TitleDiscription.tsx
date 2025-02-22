@@ -1,7 +1,7 @@
 import React from 'react'
 import Seperator from '../Seperator';
 
-const TitleDiscription = ({ title, description, background }: { title: string, description: { eng?: string | undefined, mar?: string | undefined }, background?: React.ReactNode }) => {
+const TitleDiscription = ({ title, description, background }: { title: string, description: { eng?: string | undefined, mar?: string | undefined }, background?: React.ReactNode | React.ReactElement }) => {
   return (
     <>
         <div className='title-container z-0 relative w-full p-4 sm:p-7 m-auto overflow-hidden'>
