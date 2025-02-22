@@ -1,9 +1,10 @@
 'use client'
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import TitleDiscription from '../my_components/common/TitleDiscription';
 import Seperator from '../my_components/Seperator'
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function Home() {
 
@@ -41,6 +42,8 @@ export default function Home() {
     <div className='h-full w-full'></div>
   )
 
+  const playgroundRef = useRef<HTMLDivElement | null>(null)
+
   return (
     <>
 
@@ -51,17 +54,25 @@ export default function Home() {
       />
 
       
-      <div className='playground relative flex flex-wrap items-center justify-center h-screen w-screen'>
+      <div 
+        className='playground relative flex flex-wrap gap-5 items-center justify-center h-screen w-screen overflow-hidden'
+        ref={playgroundRef}
+      >
         {Array.from({ length: 23 }, (_, i) => i).map((i) => (
-          
-          <Image
+          <motion.div
             key={i}
-            src={`/fathersandfigures/${i + 1}.jpg`}
-            alt={`Image ${i + 1}`}
-            width={100}
-            height={100}
-            className=""
-          />
+            className=''
+            drag
+            dragConstraints={playgroundRef}
+          >
+            <Image
+              src={`/fathersandfigures/${i + 1}.jpg`}
+              alt={`Image ${i + 1}`}
+              width={100}
+              height={100}
+              className="pointer-events-none"
+            />
+          </motion.div>
         ))}
         <Seperator />
       </div>
