@@ -40,7 +40,20 @@ export default function Home() {
   }
   
   const background = (
-    <div className='h-full w-full'></div>
+    <div className='h-full w-full flex flex-wrap gap-2'>
+      {
+        Array.from({ length: 23 }, (_, i) => (
+          <Image 
+            key={i} 
+            src={`/fathersandfigures/${i + 1}.jpg`} 
+            alt={`Father and Figure ${i + 1}`} 
+            width={200}
+            height={200}
+            className="object-contain shadow-[1px_1px_5px_0px_var(--primary-blue)]"
+          />
+        ))
+      }
+    </div>
   )
 
   const playgroundRef = useRef<HTMLDivElement | null>(null)
