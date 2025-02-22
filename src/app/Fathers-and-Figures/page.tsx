@@ -1,10 +1,11 @@
 'use client'
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import TitleDiscription from '../my_components/common/TitleDiscription';
 import Seperator from '../my_components/Seperator'
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+
 
 export default function Home() {
 
@@ -44,6 +45,22 @@ export default function Home() {
 
   const playgroundRef = useRef<HTMLDivElement | null>(null)
 
+  type imageSizeProp = {
+    scale: number
+    rotate: number
+    cursor: string
+  }
+
+  const [imageStyle, setImageStyle] = useState<imageSizeProp[]>([])
+
+  useEffect(() => {
+    setImageStyle(Array.from({ length: 23 }, (_, i) => ({
+      scale: Math.random() * .6 + .8,
+      rotate: Math.random() * 60 - 30,
+      cursor: 'grab'
+    })));
+  }, []);
+
   return (
     <>
 
@@ -55,7 +72,7 @@ export default function Home() {
 
       
       <div 
-        className='playground relative flex flex-wrap gap-5 items-center justify-center h-screen w-screen overflow-hidden'
+        className='playground relative flex flex-wrap gap-5 items-center justify-center h-[250vh] w-screen overflow-hidden'
         ref={playgroundRef}
       >
         {Array.from({ length: 23 }, (_, i) => i).map((i) => (
@@ -64,13 +81,15 @@ export default function Home() {
             className=''
             drag
             dragConstraints={playgroundRef}
+            style={{ ...imageStyle[i] }}
+            dragElastic={0.1}
           >
             <Image
               src={`/fathersandfigures/${i + 1}.jpg`}
               alt={`Image ${i + 1}`}
-              width={100}
-              height={100}
-              className="pointer-events-none"
+              width={200}
+              height={200}
+              className="rounded-sm shadow-[1px_1px_5px_0px_var(--primary-blue)] pointer-events-none"
             />
           </motion.div>
         ))}
