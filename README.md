@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# A Digital Art Showcase by Sumit Sute
+#### Photography, Politics, and Digital Expression
 
-## Getting Started
+[![Static Badge](https://img.shields.io/badge/🔗-Live-blue?style=flat-square&)](https://www.sumitsute.com/) [![Static Badge](https://img.shields.io/badge/</>-Repo-blue?style=flat-square)](https://github.com/sutesumit/jaybhim_affirma)
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## About the Project
+
+[art.sumitsute.com](https://art.sumitsute.com/) is the portfolio website of lens-based visual artist Sumit Sute, showcasing his artistic practice over the past few years. Sute, whose career began in documentary photography for media, governments, and NGOs, and who later served as a photo editor at a leading Indian news organization, has developed a practice deeply informed by photography and the feminist principle that "the personal is political." This website, thoughtfully crafted with web technologies, invites viewers to reflect, engage, and respond.
+
+## Screenshots
+
+![Screenshot 1](/artsumitsute.gif)
+
+## Features
+
+- **Interactive and Experiential Design**: The website is designed not just as a static portfolio but as a dynamic space for artistic self-reflection and expression.
+
+- **Responsive UI**: Ensures a seamless experience across devices.
+
+- **Innovative Web Technologies**: Implements modern frameworks to push the boundaries of web-based artistic expression.
+
+## Tech Stack
+
+This project is built using Next.js and React, with additional UI and animation libraries to enhance the interactive experience.
+
+### Frontend
+
+- **Framework**: Next.js, React
+
+- **UI Components**: Radix UI, Lucide React, React Icons
+
+- **Animations**: Framer Motion, Tailwind CSS Animate
+
+- **Styling**: Tailwind CSS, Tailwind Merge
+
+- **Interactive Elements**: React Pageflip, Turn.js
+
+## Backend & Utilities
+
+- **State Management**: QSS
+
+- **Loading Indicators**: React Loading Indicators
+
+- **jQuery Support**: jQuery
+
+## Development Tools
+
+- **Linting & Code Quality**: ESLint, ESLint Config Next
+
+- **Type Support**: TypeScript, @types for React, Node, and jQuery
+
+- **Build & Styling**: PostCSS, Autoprefixer, PostCSS Loader
+
+## Installation & Setup
+
+To set up the project locally:
+
+1. **Clone the repository**:
+```
+git clone https://github.com/yourusername/jaybhim_affirma.git
+
+cd jaybhim_affirma
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install dependencies**:
+```
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3. **Run the development server**:
+```
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. **Build for production**:
+```
+npm run build
+```
 
-## Learn More
+5. **License**:
 
-To learn more about Next.js, take a look at the following resources:
+This project is licensed under the MIT License.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+This website invites visitors to engage with Sumit Sute's artistic reflections, navigating through his work as a photographer and digital artist. Feel free to explore, interact, and reflect!
