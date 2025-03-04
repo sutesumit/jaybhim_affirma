@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import React from 'react';
 import Footer from './my_components/common/Footer';
 import './globals.css';
-import Navbar from './my_components/common/navbar/navbar';
+import Navbar from './my_components/common/navbar';
 
 
 interface RootLayoutProps {

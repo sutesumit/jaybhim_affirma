@@ -1,5 +1,5 @@
 import React from 'react'
-import Seperator from '../specific/Seperator';
+import Seperator from './Seperator';
 
 const TitleDiscription = ({ title, description, background }: { title: string, description: { eng?: string | undefined, mar?: string | undefined }, background?: React.ReactNode | React.ReactElement }) => {
   return (

@@ -1,9 +1,9 @@
 'use client';
 import React from 'react'
-import Seperator from '../../specific/Seperator'
-import MenuLinks from './menu';
+import Seperator from '../shared/Seperator'
+import MenuLinks from './navbar/menu';
 import Link from 'next/link';
-import Pointer from './nav_pointer';
+import Pointer from './navbar/nav_pointer';
 
 const Navbar = () => {
 

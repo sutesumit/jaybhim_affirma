@@ -3,7 +3,7 @@ import linkObject from './linkObject'
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import Seperator from '../../specific/Seperator';
+import Seperator from '../../shared/Seperator';
 
 
     interface MenuLinkProps {
@@ -53,7 +53,7 @@ import Seperator from '../../specific/Seperator';
                 <AnimatePresence>
                     <motion.div
                         key="menu-content"
-                        className={`menu-content absolute max-h-screen w-full z-20 p-2 grid md:grid-cols-3 sm:grid-cols-2 gap-4 rounded-lg overflow-y-scroll ${!isMenuOpen ? 'pointer-events-none' : ''}`}
+                        className={`menu-content relative max-h-screen w-full z-20 p-2 grid md:grid-cols-3 sm:grid-cols-2 gap-4 rounded-lg overflow-y-scroll ${!isMenuOpen ? 'pointer-events-none' : ''}`}
                         initial={{ y: "-100%" }}
                         animate={{ y: isMenuOpen ? 0 : "-100%" }}
                         transition={{ 
