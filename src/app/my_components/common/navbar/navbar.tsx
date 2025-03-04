@@ -1,6 +1,6 @@
 'use client';
 import React from 'react'
-import Seperator from '../Seperator'
+import Seperator from '../../specific/Seperator'
 import MenuLinks from './menu';
 import Link from 'next/link';
 import Pointer from './nav_pointer';

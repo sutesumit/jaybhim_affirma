@@ -1,7 +1,7 @@
 'use client';
-import WritingsSnapscroll from "../my_components/image_bodies/writings_snapscroll";
-import TitleDiscription from "../my_components/common/TitleDiscription";
-import { flashFictions } from "../my_components/image_bodies/flash_fiction_object";
+import WritingsSnapscroll from "../my_components/specific/image_bodies/writings_snapscroll";
+import TitleDiscription from "../my_components/shared/TitleDiscription";
+import { flashFictions } from "../my_components/specific/image_bodies/flash_fiction_object";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useState } from "react";

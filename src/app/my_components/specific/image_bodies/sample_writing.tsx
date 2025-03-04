@@ -2,7 +2,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { flashFictions } from './flash_fiction_object';
-import { LinkPreview } from '../../../components/ui/link-preview';
+import { LinkPreview } from '../../../../components/ui/link-preview';
 import { ExternalLink, Link, Pointer } from 'lucide-react';
 
 const SampleWriting = () => {

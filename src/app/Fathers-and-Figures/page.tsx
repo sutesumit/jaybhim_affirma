@@ -1,8 +1,8 @@
 'use client'
 import Link from 'next/link';
 import React, { useEffect, useState, useRef } from 'react';
-import TitleDiscription from '../my_components/common/TitleDiscription';
-import Seperator from '../my_components/Seperator'
+import TitleDiscription from '../my_components/shared/TitleDiscription';
+import Seperator from '../my_components/specific/Seperator'
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Background from './background';

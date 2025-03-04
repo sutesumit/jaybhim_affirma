@@ -1,9 +1,9 @@
 import { Lora, Merriweather, Vesper_Libre, Rajdhani } from 'next/font/google';
 import type { Metadata } from 'next';
 import React from 'react';
-import Footer from './my_components/Footer';
+import Footer from './my_components/common/Footer';
 import './globals.css';
-import Navbar from './my_components/navbar/navbar';
+import Navbar from './my_components/common/navbar/navbar';
 
 
 interface RootLayoutProps {

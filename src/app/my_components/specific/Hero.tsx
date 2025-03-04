@@ -4,7 +4,7 @@ import { MaskContainer } from '@/components/ui/svg-mask-effect'
 import { RiScrollToBottomFill } from "react-icons/ri"
 import Image from 'next/image';
 import React from 'react'
-import Seperator from './Seperator'
+import Seperator from './Seperator';
 
 
 const Hero = () => {
