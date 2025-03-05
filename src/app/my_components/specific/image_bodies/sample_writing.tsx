@@ -37,7 +37,7 @@ const SampleWriting = () => {
             className='text-white inline p-2 link-text'
           />
           <LinkPreview 
-            url="https://jaybhim-affirma.vercel.app/Marathi-Short-Stories"
+            url="https://www.art.sumitsute.com/marathi-short-stories"
             className='text-white'
           >
             link to the full flash fiction collection.
