@@ -14,12 +14,14 @@ const Navbar = () => {
     }
     
   return (
-    <nav className="navbar">
+    <nav className="navbar fixed isolate top-0 z-20 w-full">
         <Link href="/">
-            <div className='fixed top-0 w-full text-[var(--primary-blue)] z-30 p-2 cursor-pointer'
-                onMouseEnter={toggleMenu}>
-                <div className='nav-content cursor-none flex justify-between px-4 py-2 rounded-sm border-[1px] opacity-40 text-xs font-title bg-blend-difference hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-colors duration-1000 ease-out'>
-                    <span>sumitsute + {isMenuOpen && 'Open'}</span>
+            <div 
+                className='relative w-full text-[var(--primary-blue)] z-30 p-2 cursor-pointer'
+                onMouseEnter={toggleMenu}
+            >
+                <div className='nav-content relative cursor-none flex justify-between px-4 py-2 rounded-sm border-[1px] opacity-40 text-xs font-title bg-blend-difference hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-colors duration-1000 ease-out'>
+                    <span>sumitsute</span>
                     <span>works + projects</span>
                     <span>bengaluru, in</span>
                     <Pointer />
@@ -29,14 +31,12 @@ const Navbar = () => {
                 </div>
             </div>
         </Link>
-        
         {isMenuOpen &&
             <MenuLinks 
                 toggleMenu={toggleMenu} 
                 setMenuOpen={setMenuOpen} 
                 isMenuOpen={isMenuOpen}
             />
-            
         }
         
     </nav>
