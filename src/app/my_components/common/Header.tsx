@@ -3,14 +3,12 @@ import React from 'react'
 import { usePathname } from 'next/navigation';
 import MenuLinks from './navbar/menu';
 import Link from 'next/link';
-import Pointer from './navbar/nav_pointer';
 
 
 const Navbar = () => {
 
-
-    const pathName = usePathname().split('/').pop()
-
+    const pathName = usePathname()
+    var tabName = pathName ? pathName.split('/').pop() : ""
 
     const [isMenuOpen, setMenuOpen] = React.useState(false);
 
@@ -20,7 +18,7 @@ const Navbar = () => {
     
   return (
     <nav className="navbar fixed isolate top-0 z-20 w-full">
-        <Link href="/">
+        <>
             <div 
                 className='w-full relative text-[var(--primary-blue)] z-30 p-2 pb-1 cursor-pointer'
                 onMouseEnter={toggleMenu}
@@ -29,7 +27,7 @@ const Navbar = () => {
                     <span>sumitsute</span>
                     <span>
                         <Link href='/' className='router-tab'>{'works + projects'}</Link>
-                        {   pathName &&  <><span>{':'}</span><Link href={usePathname()} className='router-tab'>{pathName}</Link></>  }
+                        {   pathName !=='/' &&  <><span>{':'}</span><Link href={pathName} className='router-tab'>{tabName}</Link></>  }
                     </span>
                     <span>bengaluru, in</span>
                     {/* <Pointer /> */}
@@ -38,7 +36,7 @@ const Navbar = () => {
                     <Seperator />
                 </div> */}
             </div>
-        </Link>
+        </>
         {isMenuOpen &&
             <MenuLinks 
                 toggleMenu={toggleMenu} 
