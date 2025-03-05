@@ -20,8 +20,7 @@ import Seperator from '../../shared/Seperator';
             
             useEffect(()=> {
                 const updateMouseCords = (event: MouseEvent) => {
-                    
-                    
+
                     setMouseCords({ x: (event.clientX), y: (event.clientY) })
     
                 }
@@ -46,7 +45,7 @@ import Seperator from '../../shared/Seperator';
             
             
             <div 
-                className="menu-container relative overflow-visible"
+                className="menu-container mt-12 relative overflow-visible"
                 onMouseEnter={() => setMenuOpen(true)}
                 onMouseLeave={() => setMenuOpen(false)}
             >
