@@ -26,7 +26,7 @@ const Hero = () => {
         <div className='absolute bottom-[6vh] m-auto h-[1.5rem] cursor-pointer'
               onClick={() => {
                 window.scrollTo({
-                  top: window.innerHeight,
+                  top: window.innerHeight - 30,
                   behavior: 'smooth'
                 })
               }}

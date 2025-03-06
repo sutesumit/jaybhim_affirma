@@ -7,7 +7,9 @@ export default function Home() {
       <div className="flex min-h-screen items-center justify-center">
         <Hero />
       </div>
-      <AllSections />
+      <div className="" id='all-sections'>
+        <AllSections />
+      </div>
     </> 
 
   )
