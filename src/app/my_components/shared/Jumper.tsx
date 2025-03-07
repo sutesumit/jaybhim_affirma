@@ -18,7 +18,7 @@ const Jumper = () => {
                     }
                   }}
             >
-              <RiScrollToBottomFill className='w-full h-full hover:text-white animate-bounce'/>
+              <RiScrollToBottomFill className='w-full h-full animate-bounce hover:text-slate-500'/>
               <div className="w-full">
                   <Seperator ref={seperatorRef} />
               </div>
