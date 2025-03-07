@@ -1,4 +1,6 @@
+'use client'
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function NotFound() {
   return (
@@ -10,6 +12,7 @@ export default function NotFound() {
             <p className="text-container !text-center">
             Arre! Looks like you&#39;ve lost your way.
             </p>
+            <p className='line-through opacity-70'>art.sumitsute.com{usePathname()}</p>
             <p className="text-container !text-xs !text-center !leading-relaxed"><span className='italic opacity-50'>Or maybe there used to be something here?</span><br />This might be because work titles and URLs were recently rearranged. Check out the Works + Projects section to find what you need!</p>
             <div className='text-container flex justify-center gap-2 font-title bg-blend-difference transition-colors duration-1000 ease-out'>
               <Link
@@ -18,12 +21,6 @@ export default function NotFound() {
               >
                 Let&#39;s take you back home.
               </Link>
-              {/* <Link
-                href="/"
-                className="flex justify-center items-center flex-1 px-4 py-2 text-center rounded-sm border-[1px] border-[var(--primary-blue)] text-xs hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]"
-              >
-                Check out the work on the old site.
-              </Link> */}
             </div>
         </div>
       </div> 

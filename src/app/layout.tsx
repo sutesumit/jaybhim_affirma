@@ -1,9 +1,10 @@
 import { Lora, Merriweather, Vesper_Libre, Rajdhani } from 'next/font/google';
 import type { Metadata } from 'next';
 import React from 'react';
-import Footer from './my_components/Footer';
+import Footer from './my_components/common/Footer';
 import './globals.css';
-import Navbar from './my_components/navbar/navbar';
+import Navbar from './my_components/common/Header';
+
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -37,8 +38,8 @@ const rajdhani = Rajdhani({
 });
 
 export const metadata: Metadata = {
-  title: 'Sumit Sute for AFFIRMA',
-  description: 'AFFIRMA Application',
+  title: 'art.sumitsute',
+  description: 'Art and Web Portfolio of Sumit Sute',
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {

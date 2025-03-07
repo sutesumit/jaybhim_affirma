@@ -84,6 +84,10 @@
     @apply border-2 border-pink-400 z-50
   }
 
+  .router-tab {
+    @apply hover:bg-[var(--primary-white)] hover:text-[var(--primary-blue)] hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300
+  }
+
   .link-text {
     @apply transition-all duration-1000 ease-in-out bg-gradient-to-tr from-[var(--primary-blue)] to-[var(--primary-white)] bg-clip-text text-transparent
   }
