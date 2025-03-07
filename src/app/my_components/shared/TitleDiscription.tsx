@@ -1,5 +1,4 @@
 import React from 'react'
-import Seperator from './Seperator';
 import Jumper from './Jumper';
 
 const TitleDiscription = ({ title, description, background }: { title: string, description: { eng?: string | undefined, mar?: string | undefined }, background?: React.ReactNode | React.ReactElement }) => {

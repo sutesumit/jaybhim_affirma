@@ -10,4 +10,6 @@ const Seperator = React.forwardRef<HTMLDivElement>((_,ref) => {
   )
 })
 
+Seperator.displayName = 'Seperator'
+
 export default Seperator
