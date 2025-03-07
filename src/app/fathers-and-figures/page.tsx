@@ -10,27 +10,27 @@ import Background from './background';
 
 export default function Home() {
 
-  const useMousePostion = ( ) => {
+  // const useMousePostion = ( ) => {
     
-    const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
+  //   const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
     
-    useEffect(()=> {
-        const updateMouseCords = (event: MouseEvent): void => {
-            if (event) {
-                setMouseCords({ x: event.clientX, y: event.clientY });
-            }
-        }
-        window.addEventListener('mousemove', updateMouseCords)
-        return () => {
-            window.removeEventListener('mousemove', updateMouseCords)
-        }
-    }, [])
-    return mouseCords
-  }
+  //   useEffect(()=> {
+  //       const updateMouseCords = (event: MouseEvent): void => {
+  //           if (event) {
+  //               setMouseCords({ x: event.clientX, y: event.clientY });
+  //           }
+  //       }
+  //       window.addEventListener('mousemove', updateMouseCords)
+  //       return () => {
+  //           window.removeEventListener('mousemove', updateMouseCords)
+  //       }
+  //   }, [])
+  //   return mouseCords
+  // }
 
-  const [isHovered, setIsHovered] = React.useState(false)
+  // // const [isHovered, setIsHovered] = React.useState(false)
 
-  const {x, y} = useMousePostion()
+  // const {x, y} = useMousePostion()
 
   const content = {
     title: "Fathers and Figures",
@@ -92,34 +92,24 @@ export default function Home() {
         ))}
         <Seperator />
       </div>
-      <div className="relative min-h-screen flex flex-col items-center justify-center px-4">
 
-          <div 
-            className='reel-container absolute z-[-10] aspect-[9/16] rounded-lg overflow-clip pointer-events-none'
-            style={{
-              top: `${y}px`,
-              left: `${x}px`,
-            }}
-          >
-              { true &&
-                
-                <iframe
-                className='overflow-hidden pointer-events-none'
-                src='https://www.youtube.com/embed/4yjNqLRRPxE?autoplay=1&mute=1&controls=0&loop=1&playlist=4yjNqLRRPxE&modestbranding=1&showinfo=0&version=3&rel=0&cc_load_policy=3&hl=en'
-                title="Maraa Mirrors Reel"
-                allow="accelerometer; autoplay; loop; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  pointerEvents: 'none',
-                  border: 'none'
-                }}
-                ></iframe>
-
-              }
-              
-          </div>
+      <div className="relative min-h-screen w-screen flex md:flex-row flex-col items-center justify-center gap-5 p-5">
+        <iframe
+          className='checkbox flex-1'
+          src='https://www.youtube.com/embed/4yjNqLRRPxE?&controls=0&loop=1&playlist=4yjNqLRRPxE&modestbranding=1&showinfo=0&hl=en'
+          title="Maraa Mirrors Reel"
+          allow="accelerometer; autoplay; loop; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          style={{
+            width: '100%',
+            height: '100%',
+            border: 'none'
+          }}
+          ></iframe>
+        <div className='flex-1'>
+          <textarea defaultValue={'Describe your story here!'} className='text-center w-full h-1/2 p-5 bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] rounded-sm' readOnly></textarea>
+          <button className=''>submit</button>  
+        </div>   
 
           {/* <div 
             className="404-container flex flex-col items-center justify-center mx-2 p-10 rounded-lg font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
