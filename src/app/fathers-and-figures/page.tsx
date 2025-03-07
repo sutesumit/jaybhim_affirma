@@ -101,7 +101,7 @@ export default function Home() {
               left: `${x}px`,
             }}
           >
-              { isHovered &&
+              { true &&
                 
                 <iframe
                 className='overflow-hidden pointer-events-none'
@@ -121,7 +121,7 @@ export default function Home() {
               
           </div>
 
-          <div 
+          {/* <div 
             className="404-container flex flex-col items-center justify-center mx-2 p-10 rounded-lg font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -155,7 +155,7 @@ export default function Home() {
             </div>
 
           
-          </div>
+          </div> */}
         
       </div>
     </>
