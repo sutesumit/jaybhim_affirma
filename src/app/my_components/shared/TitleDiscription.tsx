@@ -1,5 +1,6 @@
 import React from 'react'
 import Seperator from './Seperator';
+import Jumper from './Jumper';
 
 const TitleDiscription = ({ title, description, background }: { title: string, description: { eng?: string | undefined, mar?: string | undefined }, background?: React.ReactNode | React.ReactElement }) => {
   return (
@@ -13,7 +14,9 @@ const TitleDiscription = ({ title, description, background }: { title: string, d
                 {description.mar && <p className='mar-description flex-1 font-rajdhani whitespace-pre-wrap z-0'>{description.mar}</p>}
               </div>
             </div>
-            <Seperator />
+            <div className='mt-7'>
+              <Jumper />
+            </div>
         </div>
     </>
     
