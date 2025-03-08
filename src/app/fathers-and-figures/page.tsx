@@ -1,5 +1,4 @@
 'use client'
-import Link from 'next/link';
 import React, { useEffect, useState, useRef } from 'react';
 import TitleDiscription from '../my_components/shared/TitleDiscription';
 import Seperator from '../my_components/shared/Seperator'
@@ -9,29 +8,6 @@ import Background from './background';
 
 
 export default function Home() {
-
-  const useMousePostion = ( ) => {
-    
-    const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
-    
-    useEffect(()=> {
-        const updateMouseCords = (event: MouseEvent): void => {
-            if (event) {
-                setMouseCords({ x: event.clientX, y: event.clientY });
-            }
-        }
-        window.addEventListener('mousemove', updateMouseCords)
-        return () => {
-            window.removeEventListener('mousemove', updateMouseCords)
-        }
-    }, [])
-    return mouseCords
-  }
-
-  const [isHovered, setIsHovered] = React.useState(false)
-
-  const {x, y} = useMousePostion()
-
   const content = {
     title: "Fathers and Figures",
     description: {
@@ -92,71 +68,27 @@ export default function Home() {
         ))}
         <Seperator />
       </div>
-      <div className="relative min-h-screen flex flex-col items-center justify-center px-4">
 
-          <div 
-            className='reel-container absolute z-[-10] aspect-[9/16] rounded-lg overflow-clip pointer-events-none'
+      <div className="relative isolate min-h-screen text-container flex md:flex-row flex-col items-center justify-center gap-5 p-5">
+        <div className="flex-1 h-[80vh] w-full">
+          <iframe
+            className='rounded-sm inline h-full overflow-hidden'
+            src='https://www.youtube.com/embed/4yjNqLRRPxE?&controls=0&loop=1&playlist=4yjNqLRRPxE&modestbranding=1&showinfo=0&hl=en'
+            title="Maraa Mirrors Reel"
+            allow="accelerometer; autoplay; loop; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
             style={{
-              top: `${y}px`,
-              left: `${x}px`,
-            }}
-          >
-              { isHovered &&
-                
-                <iframe
-                className='overflow-hidden pointer-events-none'
-                src='https://www.youtube.com/embed/4yjNqLRRPxE?autoplay=1&mute=1&controls=0&loop=1&playlist=4yjNqLRRPxE&modestbranding=1&showinfo=0&version=3&rel=0&cc_load_policy=3&hl=en'
-                title="Maraa Mirrors Reel"
-                allow="accelerometer; autoplay; loop; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  pointerEvents: 'none',
-                  border: 'none'
-                }}
-                ></iframe>
-
-              }
+              width: '100%',
+              height: '100%',
               
-          </div>
-
-          <div 
-            className="404-container flex flex-col items-center justify-center mx-2 p-10 rounded-lg font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <div className='loader mb-5'></div>
-            <div className="space-y-6">
-              <div className="text-container !text-center">
-                Arre! This page is under construction.
-              </div>
-              <div className="text-container !text-xs !text-center !leading-relaxed">
-                But worry not, sumit is rolling up his sleeves,
-                chasing down time and resources, and will bring this <span className='opacity-50'>Fathers and Figures</span> page to life soon.<br />Hang tight!
-              </div>
-            
-              <div className='text-container flex justify-center gap-2 font-title bg-blend-difference transition-colors duration-1000 ease-out'>
-                <Link
-                  href="https://youtu.be/llARFMPOTB0?t=1119"
-                  target="_blank"
-                  className="flex justify-center items-center flex-1 px-4 py-2 text-center rounded-sm border-[1px] border-[var(--primary-blue)] text-xs hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]"
-                >
-                  Watch the old walkthrough video here.
-                </Link>
-                <Link
-                  href="https://sumitupall.tumblr.com/"
-                  target="_blank"
-                  className="flex justify-center items-center flex-1 px-4 py-2 text-center rounded-sm border-[1px] border-[var(--primary-blue)] text-xs hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]"
-                >
-                  Check out the work on the old site.
-                </Link>
-              </div>
-            </div>
-
-          
-          </div>
-        
+            }}
+            >
+            </iframe>
+        </div>
+        <div className='flex-1 flex flex-col gap-2 h-[80vh] w-full'>
+          <textarea defaultValue={'Describe your story here!'} className='text-center text-sm flex-1 p-5 w-full bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] rounded-sm' readOnly></textarea>
+          <button onClick={()=> alert('This feature is still cooking—almost there!')} className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-all duration-300'>Send me your story!</button>  
+        </div>        
       </div>
     </>
   );
