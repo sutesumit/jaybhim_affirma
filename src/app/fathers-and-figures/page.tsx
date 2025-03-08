@@ -70,9 +70,9 @@ export default function Home() {
       </div>
 
       <div className="relative isolate min-h-screen text-container flex md:flex-row flex-col items-center justify-center gap-5 p-5">
-        <div className="flex-1 h-[80vh] w-full">
+        <div className="flex-1 h-[80vh] w-full checkbox">
           <iframe
-            className='w-full h-full rounded-sm overflow-hidden'
+            className='h-fit object-fill rounded-sm overflow-hidden'
             src='https://www.youtube.com/embed/4yjNqLRRPxE?&controls=0&loop=1&playlist=4yjNqLRRPxE&modestbranding=1&showinfo=0&hl=en'
             title="Maraa Mirrors Reel"
             allow="accelerometer; autoplay; loop; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -86,7 +86,7 @@ export default function Home() {
         </div>
         <div className='flex-1 flex flex-col gap-2 h-[80vh] w-full'>
           <textarea defaultValue={'Describe your story here!'} className='text-center text-sm flex-1 p-5 w-full bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] rounded-sm' readOnly></textarea>
-          <button className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-all duration-300'>Send me your story!</button>  
+          <button onClick={()=> alert('This feature is still cooking—almost there!')} className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-all duration-300'>Send me your story!</button>  
         </div>        
       </div>
     </>
