@@ -87,7 +87,7 @@ export default function Home() {
         </div>
         <div className='storyboard flex-1 flex flex-col gap-2 h-[80vh] w-full'>
           <textarea defaultValue={'Describe your story here!'} className='text-center text-sm flex-1 p-5 w-full bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] rounded-sm' readOnly></textarea>
-          <button onClick={()=> alert('This feature is still cooking—almost there!')} className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-all duration-300'>Send me your story!</button>  
+          <button onClick={()=> alert('This feature is still cooking—almost there!')} className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:scale-90 hover:shadow-[4px_4px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out'>Send me your story!</button>  
         </div>        
       </div>
     </>
