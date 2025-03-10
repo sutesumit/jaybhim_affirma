@@ -70,7 +70,7 @@ export default function Home() {
       </div>
 
       <div className="relative isolate min-h-screen text-container flex md:flex-row flex-col items-center justify-center gap-5 p-5">
-        <div className="flex-1 h-[80vh] w-full p-1 border-[1px] border-[var(--primary-blue)] rounded-sm overflow-hidden">
+        <div className="flex-1 h-[80vh] w-full p-2 border-[1px] border-[var(--primary-blue)] rounded-sm overflow-hidden">
           <iframe
             className='rounded-sm inline h-full overflow-hidden'
             src='https://www.youtube.com/embed/4yjNqLRRPxE?&controls=0&loop=1&playlist=4yjNqLRRPxE&modestbranding=1&showinfo=0&hl=en'
@@ -86,9 +86,34 @@ export default function Home() {
             </iframe>
         </div>
         <div className='storyboard flex-1 flex flex-col gap-2 h-[80vh] w-full'>
-          <textarea defaultValue={'Describe your story here!'} className='text-center text-sm flex-1 p-5 w-full bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] rounded-sm' readOnly></textarea>
+          <textarea defaultValue={'Describe your story here!'} className='text-center text-sm flex-1 p-5 w-full border-[1px] border-[var(--primary-blue)] rounded-sm' readOnly></textarea>
+          <textarea defaultValue={'Your name (Optional)'} className='text-center text-sm p-1 w-full border-[1px] border-[var(--primary-blue)] rounded-sm' readOnly></textarea>
           <button onClick={()=> alert('This feature is still cooking—almost there!')} className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:scale-90 hover:shadow-[4px_4px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out'>Send me your story!</button>  
-        </div>        
+        </div>      
+      </div>
+
+      <div className="relative">
+        <Seperator />
+      </div>
+
+      <div className='relative isolate p-5'>
+        <div className=" text-container p-1 bg-[var(--primary-blue)] !text-[var(--primary-white)] rounded-sm">
+            <div className='text-xs text-center'><span className='story-count '>0</span> Unpublished stories received!</div>
+        </div>
+        <div className='stories text-center flex text-container flex-col gap-2 p-4'>
+          <div className='story-container p-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm'>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, perspiciatis? Ea facere cum tenetur perferendis iure eos, maxime esse eaque error unde, fugiat debitis natus laborum sunt perspiciatis nulla iusto!</p>
+            <p className='opacity-65 italic'>- <span>Name</span></p>
+          </div>
+          <div className='story-container p-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm'>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, perspiciatis? Ea facere cum tenetur perferendis iure eos, maxime esse eaque error unde, fugiat debitis natus laborum sunt perspiciatis nulla iusto!</p>
+            <p className='opacity-65 italic'>- <span>Name</span></p>
+          </div>
+          <div className='story-container p-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm'>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, perspiciatis? Ea facere cum tenetur perferendis iure eos, maxime esse eaque error unde, fugiat debitis natus laborum sunt perspiciatis nulla iusto!</p>
+            <p className='opacity-65 italic'>- <span>Name</span></p>
+          </div>
+        </div>
       </div>
     </>
   );
