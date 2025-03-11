@@ -5,6 +5,7 @@ import Seperator from '../my_components/shared/Seperator'
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Background from './background';
+import Link from 'next/link';
 
 
 export default function Home() {
@@ -113,6 +114,47 @@ export default function Home() {
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, perspiciatis? Ea facere cum tenetur perferendis iure eos, maxime esse eaque error unde, fugiat debitis natus laborum sunt perspiciatis nulla iusto!</p>
             <p className='opacity-65 italic'>- <span>Name</span></p>
           </div>
+        </div>
+      </div>
+
+      <div className="relative">
+        <Seperator />
+      </div>
+
+      <div className='py-5'>
+        <div className='text-container !text-xs !text-center'>This project was nurtured with the support of <Link target='_blank' href="https://maraa.in/portfolio/mirrors-fellowship/" className="link-text">Maraa&apos;s Mirrors</Link> (2024) — A Creative Fellowship on Masculinity.</div>
+        <div className="relative isolate text-container flex md:flex-row flex-col items-center justify-center gap-4 p-4">
+          <Image
+            src='/fathersandfigures/maraa_exhibition/1.jpg'
+            alt='A visitor during the exhibition'
+            width={220}
+            height={200}
+            className="rounded-sm border-[1px] border-[var(--primary-blue)] p-1 overflow-hidden"
+          />
+          <Image
+            src='/fathersandfigures/maraa_exhibition/2.jpg'
+            alt='A visitor during the exhibition'
+            style={{ transform: 'scaleX(-1)' }}
+            width={220}
+            height={200}
+            className="rounded-sm border-[1px] border-[var(--primary-blue)] p-1 overflow-hidden"
+          />
+        </div>
+        <div className='text-container !text-xs !text-center'>Scenes from the <Link className='link-text' target='_blank' href="https://bangaloreinternationalcentre.org/event/mirrors/">Mirrors Group Show</Link> on Experiences & Expressions of Masculine & Feminine at Bangalore International Center, November 2024. <span className="opacity-50">Image courtesy of <span className="italic">Angarika</span> from the Maraa team.</span></div>
+        
+        <div className='py-7 flex flex-col items-center justify-center'>
+          <iframe
+            className='rounded-sm mx-auto'
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/Zfsro2hMTws?si=4Ux5lmDwZLW9z7Pf&amp;start=128&end=180&loop=1&modestbranding=1&rel=0&hl=en"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          >
+          </iframe>
+          <div className='text-container !text-xs !text-center p-1'>A glimpse into the making & unmaking of Mirrors 2024.</div>
         </div>
       </div>
     </>
