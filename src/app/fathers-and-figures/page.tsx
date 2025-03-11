@@ -97,10 +97,10 @@ export default function Home() {
       </div>
 
       <div className='relative isolate p-5'>
-        <div className=" text-container p-1 bg-[var(--primary-blue)] !text-[var(--primary-white)] rounded-sm">
-            <div className='text-xs text-center'><span className='story-count '>0</span> Unpublished stories received!</div>
+        <div className=" text-container p-1 border-[1px] border-[var(--primary-blue)] hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] rounded-sm transition-all duration-300 ease-in-out">
+            <div className='text-xs opacity-80 text-center'>In the quiet queue, <span className='story-count '>0</span> fresh stories wait their turn, joining those already shared below.</div>
         </div>
-        <div className='stories text-center flex text-container flex-col gap-2 p-4'>
+        <div className='stories text-center flex text-container flex-col gap-2 !px-0'>
           <div className='story-container p-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm'>
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, perspiciatis? Ea facere cum tenetur perferendis iure eos, maxime esse eaque error unde, fugiat debitis natus laborum sunt perspiciatis nulla iusto!</p>
             <p className='opacity-65 italic'>- <span>Name</span></p>
