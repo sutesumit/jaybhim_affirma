@@ -70,8 +70,8 @@ export default function Home() {
         <Seperator />
       </div>
 
-      <div className="relative isolate min-h-screen text-container flex md:flex-row flex-col items-center justify-center gap-5 p-5">
-        <div className="flex-1 h-[80vh] w-full p-2 border-[1px] border-[var(--primary-blue)] rounded-sm overflow-hidden">
+      <div className="relative isolate text-container grid md:grid-cols-2 my-2 md:flex-row flex-col items-center justify-center gap-5">
+        <div className="flex-1 w-full max-h-[75vh] aspect-[7/12] border-[1px] border-[var(--primary-blue)] rounded-sm overflow-hidden">
           <iframe
             className='rounded-sm inline h-full overflow-hidden'
             src='https://www.youtube.com/embed/4yjNqLRRPxE?&controls=0&loop=1&playlist=4yjNqLRRPxE&modestbranding=1&showinfo=0&hl=en'
@@ -86,7 +86,7 @@ export default function Home() {
             >
             </iframe>
         </div>
-        <div className='storyboard flex-1 flex flex-col gap-2 h-[80vh] w-full'>
+        <div className='storyboard flex-1 flex flex-col gap-2 h-[80vh] md:h-full w-full'>
           <textarea defaultValue={'Describe your story here!'} className='text-center text-sm flex-1 p-5 w-full border-[1px] border-[var(--primary-blue)] rounded-sm' readOnly></textarea>
           <textarea defaultValue={'Your name (Optional)'} className='text-center text-sm p-1 w-full border-[1px] border-[var(--primary-blue)] rounded-sm' readOnly></textarea>
           <button onClick={()=> alert('This feature is still cooking—almost there!')} className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:scale-90 hover:shadow-[4px_4px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out'>Send me your story!</button>  
@@ -98,7 +98,7 @@ export default function Home() {
       </div>
 
       <div className='relative isolate p-5'>
-        <div className=" text-container my-2 p-1 border-[1px] border-[var(--primary-blue)] hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] rounded-sm transition-all duration-300 ease-in-out">
+        <div className=" text-container my-1 p-1 border-[1px] border-[var(--primary-blue)] hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] rounded-sm transition-all duration-300 ease-in-out">
             <div className='text-xs opacity-80 text-center'>In the quiet queue, <span className='story-count '>0</span> fresh stories wait their turn, joining those already shared below.</div>
         </div>
         <div className='stories text-center flex text-container flex-col gap-2 !px-0'>
@@ -144,7 +144,7 @@ export default function Home() {
         </div>
         <div className='text-container !text-xs !text-center p-1'>Scenes from the <Link className='link-text' target='_blank' href="https://bangaloreinternationalcentre.org/event/mirrors/">Mirrors Group Show</Link> on Experiences & Expressions of Masculine & Feminine at Bangalore International Center, November 2024. <span className="opacity-50">Image courtesy of <span className="italic">Angarika</span> from the Maraa team.</span></div>
         
-        <div className="maraa-video border-[1px] border-dotted rounded-sm border-[var(--primary-blue)] mt-5 py-7 w-full h-[70vh] text-container flex flex-col items-center justify-center">
+        <div className="maraa-video border-[1px] border-dotted rounded-sm border-[var(--primary-blue)] mt-5 p-1 w-full aspect-[16/10] text-container flex flex-col items-center justify-center">
             <iframe
               className='rounded-sm w-full mx-auto object-cover'
               style={{ width: '100%',
