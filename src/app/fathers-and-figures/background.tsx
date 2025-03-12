@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Pointer from "../my_components/common/navbar/nav_pointer";
 
 interface Trail {
   id: number;
@@ -12,20 +13,23 @@ interface Trail {
 
 const Background = (): React.ReactElement => {
   const [trails, setTrails] = useState<Trail[]>([]);
+  const bgtrailsRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (event: MouseEvent) => {
-    const newTrail: Trail = {
-      id: Date.now() + Math.random(),
-      src: `/fathersandfigures/${Math.floor(Math.random() * 22 + 1)}.jpg`,
-      x: event.clientX,
-      y: event.clientY,
-    };
+    if (bgtrailsRef.current && bgtrailsRef.current.contains(event.target as Node)) { 
+      const newTrail: Trail = {
+        id: Date.now() + Math.random(),
+        src: `/fathersandfigures/${Math.floor(Math.random() * 22 + 1)}.jpg`,
+        x: event.clientX,
+        y: event.clientY,
+      };
 
-    setTrails((prevTrails) => [...prevTrails, newTrail]);
+      setTrails((prevTrails) => [...prevTrails, newTrail]);
 
-    setTimeout(() => {
-      setTrails((prevTrails) => prevTrails.filter((trail) => trail.id !== newTrail.id));
-    }, 1000);
+      setTimeout(() => {
+        setTrails((prevTrails) => prevTrails.filter((trail) => trail.id !== newTrail.id));
+      }, 1000);
+    }
   };
 
   useEffect(() => {
@@ -34,7 +38,11 @@ const Background = (): React.ReactElement => {
   }, []);
 
   return (
-    <div className="relative h-full w-full">
+    <div 
+      className="relative h-full w-full overflow-hidden cursor-none"
+      ref={bgtrailsRef}
+    >
+      <Pointer />
       {trails.map((trail) => (
         <Image
           key={trail.id}
