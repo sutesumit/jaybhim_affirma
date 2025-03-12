@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Pointer from "../my_components/common/navbar/nav_pointer";
 
 interface Trail {
   id: number;
@@ -38,9 +39,10 @@ const Background = (): React.ReactElement => {
 
   return (
     <div 
-      className="relative h-full w-full overflow-hidden"
+      className="relative h-full w-full overflow-hidden cursor-none"
       ref={bgtrailsRef}
     >
+      <Pointer />
       {trails.map((trail) => (
         <Image
           key={trail.id}
