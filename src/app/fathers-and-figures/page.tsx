@@ -57,13 +57,14 @@ export default function Home() {
             dragConstraints={playgroundRef}
             style={{ ...imageStyle[i] }}
             dragElastic={0.1}
+            whileDrag={{ boxShadow: '0px 0px 10px 0px var(--primary-blue)', scale: 1.1 }}
           >
             <Image
               src={`/fathersandfigures/${i + 1}.jpg`}
               alt={`Image ${i + 1}`}
               width={200}
               height={200}
-              className="rounded-sm shadow-[1px_1px_5px_0px_var(--primary-blue)] pointer-events-none"
+              className="rounded-sm shadow-[1px_1px_2px_0px_var(--primary-blue)] pointer-events-none"
             />
           </motion.div>
         ))}
