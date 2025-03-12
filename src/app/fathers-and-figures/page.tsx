@@ -98,7 +98,7 @@ export default function Home() {
       </div>
 
       <div className='relative isolate p-5'>
-        <div className=" text-container p-1 border-[1px] border-[var(--primary-blue)] hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] rounded-sm transition-all duration-300 ease-in-out">
+        <div className=" text-container my-2 p-1 border-[1px] border-[var(--primary-blue)] hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] rounded-sm transition-all duration-300 ease-in-out">
             <div className='text-xs opacity-80 text-center'>In the quiet queue, <span className='story-count '>0</span> fresh stories wait their turn, joining those already shared below.</div>
         </div>
         <div className='stories text-center flex text-container flex-col gap-2 !px-0'>
@@ -121,15 +121,17 @@ export default function Home() {
         <Seperator />
       </div>
 
-      <div className='py-5'>
-        <div className='text-container !text-xs !text-center'>This project was nurtured with the support of <Link target='_blank' href="https://maraa.in/portfolio/mirrors-fellowship/" className="link-text">Maraa&apos;s Mirrors</Link> (2024) — A Creative Fellowship on Masculinity.</div>
-        <div className="relative isolate text-container flex md:flex-row flex-col items-center justify-center gap-4 p-4">
+      <div className='relative isolate p-5 flex flex-col items-center justify-center'>
+        <div className="text-container my-2 p-1 border-[1px] border-[var(--primary-blue)] hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] rounded-sm transition-all duration-300 ease-in-out">
+            <div className='text-xs opacity-80 text-center'>This project was nurtured with the support of <Link target='_blank' href="https://maraa.in/portfolio/mirrors-fellowship/" className="link-text">Maraa&apos;s Mirrors</Link> (2024) — A Creative Fellowship on Masculinity.</div>
+        </div>
+        <div className="relative isolate text-container flex flex-1 md:flex-row flex-col items-center justify-center gap-4">
           <Image
             src='/fathersandfigures/maraa_exhibition/1.jpg'
             alt='A visitor during the exhibition'
             width={220}
             height={200}
-            className="rounded-sm border-[1px] border-[var(--primary-blue)] p-1 overflow-hidden"
+            className="rounded-sm overflow-hidden"
           />
           <Image
             src='/fathersandfigures/maraa_exhibition/2.jpg'
@@ -137,24 +139,25 @@ export default function Home() {
             style={{ transform: 'scaleX(-1)' }}
             width={220}
             height={200}
-            className="rounded-sm border-[1px] border-[var(--primary-blue)] p-1 overflow-hidden"
+            className="rounded-sm overflow-hidden"
           />
         </div>
-        <div className='text-container !text-xs !text-center'>Scenes from the <Link className='link-text' target='_blank' href="https://bangaloreinternationalcentre.org/event/mirrors/">Mirrors Group Show</Link> on Experiences & Expressions of Masculine & Feminine at Bangalore International Center, November 2024. <span className="opacity-50">Image courtesy of <span className="italic">Angarika</span> from the Maraa team.</span></div>
+        <div className='text-container !text-xs !text-center p-1'>Scenes from the <Link className='link-text' target='_blank' href="https://bangaloreinternationalcentre.org/event/mirrors/">Mirrors Group Show</Link> on Experiences & Expressions of Masculine & Feminine at Bangalore International Center, November 2024. <span className="opacity-50">Image courtesy of <span className="italic">Angarika</span> from the Maraa team.</span></div>
         
-        <div className='py-7 flex flex-col items-center justify-center'>
-          <iframe
-            className='rounded-sm mx-auto'
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/Zfsro2hMTws?si=4Ux5lmDwZLW9z7Pf&amp;start=128&end=180&loop=1&modestbranding=1&rel=0&hl=en"
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          >
-          </iframe>
-          <div className='text-container !text-xs !text-center p-1'>A glimpse into the making & unmaking of Mirrors 2024.</div>
+        <div className="maraa-video mt-5 py-7 w-full h-[70vh] text-container flex flex-col items-center justify-center">
+            <iframe
+              className='rounded-sm w-full mx-auto object-cover'
+              style={{ width: '100%',
+                      height: '100%',
+                    }}
+              src="https://www.youtube.com/embed/Zfsro2hMTws?si=4Ux5lmDwZLW9z7Pf&amp;start=128&end=180&loop=1&modestbranding=1&rel=0&hl=en"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            >
+            </iframe>
+            <div className='text-container !text-xs !text-center p-1 italic'>A glimpse into the making & unmaking of Mirrors 2024.</div>
         </div>
       </div>
     </>
