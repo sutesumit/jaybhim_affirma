@@ -144,7 +144,7 @@ export default function Home() {
         </div>
         <div className='text-container !text-xs !text-center p-1'>Scenes from the <Link className='link-text' target='_blank' href="https://bangaloreinternationalcentre.org/event/mirrors/">Mirrors Group Show</Link> on Experiences & Expressions of Masculine & Feminine at Bangalore International Center, November 2024. <span className="opacity-50">Image courtesy of <span className="italic">Angarika</span> from the Maraa team.</span></div>
         
-        <div className="maraa-video mt-5 py-7 w-full h-[70vh] text-container flex flex-col items-center justify-center">
+        <div className="maraa-video border-[1px] border-dotted rounded-sm border-[var(--primary-blue)] mt-5 py-7 w-full h-[70vh] text-container flex flex-col items-center justify-center">
             <iframe
               className='rounded-sm w-full mx-auto object-cover'
               style={{ width: '100%',
