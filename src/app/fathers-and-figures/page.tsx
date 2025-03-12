@@ -46,7 +46,7 @@ export default function Home() {
 
       
       <div 
-        className='playground relative flex flex-wrap gap-5 items-center justify-center h-[250vh] w-screen overflow-hidden'
+        className='playground relative flex flex-wrap gap-5 items-center justify-center p-[5vh] min-h-screen w-screen overflow-hidden'
         ref={playgroundRef}
       >
         {Array.from({ length: 23 }, (_, i) => i).map((i) => (
