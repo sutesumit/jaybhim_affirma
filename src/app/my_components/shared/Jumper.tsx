@@ -8,17 +8,17 @@ const Jumper = () => {
     const seperatorRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className='m-auto h-[1.2rem] cursor-pointer'
+    <div className='flex flex-col items-center cursor-pointer relative'
 
                   onClick={() => {
 
                     if (seperatorRef.current) {
                         const target = seperatorRef.current
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'center' })
                     }
                   }}
             >
-              <RiScrollToBottomFill className='w-full h-full animate-bounce hover:text-slate-500'/>
+              <RiScrollToBottomFill className='text-xl inline animate-bounce my-2 hover:text-slate-500'/>
               <div className="w-full">
                   <Seperator ref={seperatorRef} />
               </div>
