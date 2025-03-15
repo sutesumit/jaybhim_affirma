@@ -49,7 +49,11 @@ export default function Home() {
         className='playground relative flex flex-wrap gap-5 items-center justify-center p-[5vh] min-h-screen w-screen bg-gradient-to-tl from-blue-300 to-blue-50 rounded-lg overflow-hidden'
         ref={playgroundRef}
       >
-        <div className="instruction absolute top-[40%] text-container m-2 !p-14 bg-[var(--primary-blue)] !text-[var(--primary-white)] !text-xl !text-center rounded-sm">Craft a story by reshuffling these frames and watch as your thoughts weave into a father-son tale!</div>
+        <div 
+          className="instruction absolute lowercase bg-blend-multiply top-[40%] -rotate-2 text-container m-2 !p-14 !text-xl !text-center border-dashed border-[1px] border-[var(--primary-blue)] rounded-sm"
+        >
+          📝🖼️ Craft a story by arranging these frames and watch as your thoughts weave into a father-son tale! 👨🏽‍👦🏽📑
+        </div>
         {Array.from({ length: 23 }, (_, i) => i).map((i) => (
           <motion.div
             key={i+200}
