@@ -50,7 +50,7 @@ export default function Home() {
         ref={playgroundRef}
       >
         <div 
-          className="instruction absolute lowercase bg-blend-multiply top-[40%] -rotate-2 text-container m-2 !p-14 !text-xl !text-center border-dashed border-[1px] border-[var(--primary-blue)] rounded-sm"
+          className="instruction absolute lowercase bg-blend-multiply top-[40%] -rotate-2 text-container m-2 !p-14 !text-xl !text-center border-dotted border-[1px] border-[var(--primary-blue)] rounded-sm"
         >
           📝🖼️ Craft a story by arranging these frames and watch as your thoughts weave into a father-son tale! 👨🏽‍👦🏽📑
         </div>
