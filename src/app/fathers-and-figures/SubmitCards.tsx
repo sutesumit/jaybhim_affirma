@@ -11,13 +11,13 @@ const SubmitCards = () => {
 
     useEffect(() => {   
         let controls
-        let finalX = - width
+        let finalX = - 3 * width
 
         controls = animate(xTransition, [0, finalX], {
             ease: 'linear',
-            duration: 5,
+            duration: 50,
             repeat: Infinity,
-            repeatType: 'loop',
+            repeatType: 'reverse',
             repeatDelay: 0,
         })
         return controls.stop;
@@ -31,7 +31,7 @@ const SubmitCards = () => {
         <div className=" text-container my-1 p-1 border-[1px] border-[var(--primary-blue)] hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] rounded-sm transition-all duration-300 ease-in-out">
             <div className='text-xs opacity-80 text-center'>In the quiet queue, <span className='story-count '>0</span> fresh stories wait their turn, joining those already shared below.</div>
         </div>
-        <div  className='stories flex flex-row text-center text-container gap-2 !px-0 !py-4 !overflow-x-auto'>
+        <div  className='stories flex flex-row text-center text-container overflow-hidden'>
             <m.div
                 className='flex flex-row gap-2'
                 ref={carouselRef}
