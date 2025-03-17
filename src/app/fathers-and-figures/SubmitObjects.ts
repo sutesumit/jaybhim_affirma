@@ -6,7 +6,7 @@ type StoryObject = {
   
   const submitStories: StoryObject[] = [
     {
-      story: "As I near the age my father was when he had me, I feel the same silence forming in our bond. I see how generations of caste-patriarchal trauma have numbed us, making vulnerability a distant memory. In his absence, I found father figures in books, movements, and idols, but I wonder—can I unlearn this inherited distance?",
+      story: "As I near the age my father was when he had me, I feel the same silence forming in our bond. I see how generations of caste-patriarchal trauma have numbed us, making vulnerability a distant memory. In his absence, I found father figures in books, movements, and idols, but I wonder—can I unlearn this inherited distance? As I near the age my father was when he had me, I feel the same silence forming in our bond. I see how generations of caste-patriarchal trauma have numbed us, making vulnerability a distant memory. In his absence, I found father figures in books, movements, and idols, but I wonder—can I unlearn this inherited distance?",
       name: "Rahul",
       screenshop: "001.png"
     },
