@@ -1,6 +1,7 @@
 import { motion as m, animate, useMotionValue } from 'framer-motion'
 import React, { useEffect } from 'react'
 import useMeasure from 'react-use-measure'
+import submitStories from './SubmitObjects'
 
 
 const SubmitCards = () => {
@@ -17,7 +18,7 @@ const SubmitCards = () => {
             ease: 'linear',
             duration: 50,
             repeat: Infinity,
-            repeatType: 'reverse',
+            repeatType: 'loop',
             repeatDelay: 0,
         })
         return controls.stop;
@@ -37,18 +38,14 @@ const SubmitCards = () => {
                 ref={carouselRef}
                 style={{ x: xTransition }}
             >
-              <div className='story-container snap-center w-full flex-shrink-0 p-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm'>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, perspiciatis? Ea facere cum tenetur perferendis iure eos, maxime esse eaque error unde, fugiat debitis natus laborum sunt perspiciatis nulla iusto!</p>
-                <p className='opacity-65 italic'>- <span>Name</span></p>
-              </div>
-              <div className='story-container snap-center w-full flex-shrink-0 p-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm'>
-                <p className=''>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, perspiciatis? Ea facere cum tenetur perferendis iure eos, maxime esse eaque error unde, fugiat debitis natus laborum sunt perspiciatis nulla iusto!</p>
-                <p className='opacity-65 italic'>- <span>Name</span></p>
-              </div>
-              <div className='story-container snap-center w-full flex-shrink-0 p-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm'>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, perspiciatis? Ea facere cum tenetur perferendis iure eos, maxime esse eaque error unde, fugiat debitis natus laborum sunt perspiciatis nulla iusto!</p>
-                <p className='opacity-65 italic'>- <span>Name</span></p>
-              </div>
+                {[...submitStories, ...submitStories].map((story, index) => (
+                    
+                        <div key={index} className='story-container snap-center w-full flex-shrink-0 p-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm'>
+                            <p>{story.story}</p>
+                            <p className='opacity-65 italic'>- <span>{story.name}</span></p>
+                        </div>
+                    )   
+                )}
             </m.div>
         </div>
       </div>
