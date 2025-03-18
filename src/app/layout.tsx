@@ -1,4 +1,4 @@
-import { Lora, Merriweather, Vesper_Libre, Rajdhani } from 'next/font/google';
+import { Lora, Merriweather, Vesper_Libre, Rajdhani, Reenie_Beanie } from 'next/font/google';
 import type { Metadata } from 'next';
 import React from 'react';
 import Footer from './my_components/common/Footer';
@@ -37,6 +37,13 @@ const rajdhani = Rajdhani({
   weight: ['400', '500', '600', '700'],
 });
 
+const reenieBeanie = Reenie_Beanie({
+  subsets: ["latin"],
+  weight: "400",
+  variable: '--font-reenie-beanie',
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: 'art.sumitsute',
   description: 'Art and Web Portfolio of Sumit Sute',
@@ -44,7 +51,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${lora.variable} ${merriweather.variable} ${vesper_libre.variable} ${rajdhani.variable}`}>
+    <html lang="en" className={`${lora.variable} ${merriweather.variable} ${vesper_libre.variable} ${rajdhani.variable} ${reenieBeanie.variable}`}>
       <body className="min-h-screen">
         <Navbar /> 
         {children}
