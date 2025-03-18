@@ -1,5 +1,4 @@
-import { motion as m, animate, useMotionValue, AnimatePresence } from 'framer-motion'
-import React, { useEffect } from 'react'
+import React from 'react'
 import submitStories from './SubmitObjects'
 
 
