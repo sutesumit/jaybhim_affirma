@@ -15,15 +15,15 @@ const SubmitCards = () => {
             <div className='text-xs opacity-80 text-center'>In the quiet queue, <span className='story-count '>0</span> fresh stories wait their turn, joining those already shared below.</div>
         </div>
         <div
-            className='all-stories text-container h-[70vh] overflow-x-auto snap snap-x snap-mandatory'
+            className='all-stories h-[25rem] text-container overflow-x-auto snap snap-y snap-mandatory'
         >
             {[...submitStories, ...submitStories, ...submitStories, ...submitStories].map((story, index) => (
                     <div 
                         key={index} 
-                        className={`story-container card-shadow sticky my-4 card-bg flex flex-col snap-center px-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm`}
+                        className={`story-container card-shadow sticky my-4 card-bg flex flex-col snap-center px-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm transition-all duration-300`}
                         onMouseEnter={() => setHoveredCard(index)}
                         onMouseLeave={() => setHoveredCard(null)}
-                        style={{ top: `${index}rem`, rotate: `${Math.random()*3}deg` }}
+                        style={{ top: `${index}rem`, rotate: `${Math.random()*3 - 1.5}deg` }}
                     >
                         <div className='card flex flex-col items-end h-auto overflow-y-auto'>
                             
