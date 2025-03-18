@@ -20,19 +20,21 @@ const SubmitCards = () => {
             {[...submitStories, ...submitStories, ...submitStories, ...submitStories].map((story, index) => (
                     <div 
                         key={index} 
-                        className={`story-container sticky top-2 flex flex-col snap-center p-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm`}
+                        className={`story-container card-shadow sticky my-4 card-bg flex flex-col snap-center px-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm`}
                         onMouseEnter={() => setHoveredCard(index)}
                         onMouseLeave={() => setHoveredCard(null)}
+                        style={{ top: `${index}rem`, rotate: `${Math.random()*3}deg` }}
                     >
-                        <div 
-                            className='m-auto h-10 w-10 flex flex-shrink-0 items-center justify-center bg-[var(--primary-blue)] text-[var(--primary-white)] rounded-full'
-                        >
-                            {index+1}
+                        <div className='card flex flex-col items-end h-auto overflow-y-auto'>
+                            
+                            <p className='m-auto max-w-[50ch] p-4'>
+                                {story.story}
+                                <span  
+                                    className='mx-2 opacity-50 italic before:content-["-"]'>
+                                        {story.name}
+                                </span>
+                            </p>
                         </div>
-                            <div className='hovered-state h-full overflow-y-auto'>
-                                <p className='opacity-65 text-center'><span  className='before:content-["-"] after:content-["-"]'>{story.name}</span></p>
-                                <p>{story.story}</p>
-                            </div>
                     </div>
                 )   
             )}
