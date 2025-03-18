@@ -17,11 +17,10 @@ const SubmitCards = () => {
             {[...submitStories, ...submitStories, ...submitStories, ...submitStories].map((story, index) => (
                     <div 
                         key={index} 
-                        className={`story-container card-shadow sticky my-4 card-bg flex flex-col snap-center px-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm transition-all duration-300`}
-                        style={{ top: `${index}rem`, rotate: `${Math.random()*3 - 1.5}deg` }}
+                        className={`story-container h-full sticky my-4 p-4 card-bg flex flex-col snap-center px-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm transition-all duration-300`}
+                        style={{ top: 0, rotate: `${Math.random()*5 - 2.5}deg` }}
                     >
-                        <div className='card flex flex-col items-end h-auto overflow-y-auto'>
-                            
+                        <div className='card flex flex-col items-center justify-center overflow-y-auto'>
                             <p className='m-auto text-lg font-semibold p-4 font-handwriting'>
                                 {story.story}
                                 <span  
