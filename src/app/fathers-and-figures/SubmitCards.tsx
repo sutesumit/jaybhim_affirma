@@ -15,12 +15,12 @@ const SubmitCards = () => {
             <div className='text-xs opacity-80 text-center'>In the quiet queue, <span className='story-count '>0</span> fresh stories wait their turn, joining those already shared below.</div>
         </div>
         <div
-            className='flex md:flex-row flex-col all-stories text-container gap-2 h-[70vh] overflow-x-auto snap snap-x snap-mandatory'
+            className='all-stories text-container h-[70vh] overflow-x-auto snap snap-x snap-mandatory'
         >
             {[...submitStories, ...submitStories, ...submitStories, ...submitStories].map((story, index) => (
                     <div 
                         key={index} 
-                        className={`story-container flex flex-col snap-center p-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm`}
+                        className={`story-container sticky top-2 flex flex-col snap-center p-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm`}
                         onMouseEnter={() => setHoveredCard(index)}
                         onMouseLeave={() => setHoveredCard(null)}
                     >
@@ -29,14 +29,10 @@ const SubmitCards = () => {
                         >
                             {index+1}
                         </div>
-                        {
-                        hoveredCard == index &&
                             <div className='hovered-state h-full overflow-y-auto'>
                                 <p className='opacity-65 text-center'><span  className='before:content-["-"] after:content-["-"]'>{story.name}</span></p>
                                 <p>{story.story}</p>
                             </div>
-                        
-                        }
                     </div>
                 )   
             )}
