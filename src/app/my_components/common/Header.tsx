@@ -8,7 +8,7 @@ import Link from 'next/link';
 const Navbar = () => {
 
     const pathName = usePathname()
-    var tabName = pathName ? pathName.split('/').pop() : "Home"
+    var tabName = pathName ? pathName.split('/').pop()?.split('-').join(' ') : "Home"
 
     const [isMenuOpen, setMenuOpen] = React.useState(false);
 
@@ -43,10 +43,16 @@ const Navbar = () => {
                         </span>
                     </span>
                     <span className='col-span-3 md:col-span-1 text-center'>
-                        <Link href='/' className='router-tab'>{'works + projects'}</Link>
+                        <Link 
+                            href='/' 
+                            className='router-tab'
+                        >
+                            <span>{'works + projects'}</span>
+
+                        </Link>
                     </span>
                     <span className='col-span-1 text-right hidden md:inline-block'>
-                        { <Link href={pathName} className='router-tab'>{pathName !=='/' ? tabName : "Home"}</Link> }
+                        { <a href={pathName} className='router-tab capitalize'>{pathName !=='/' ? tabName : "Home"}</a> }
                     </span>
                     {/* <Pointer /> */}
                 </div>
