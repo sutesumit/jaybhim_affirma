@@ -8,7 +8,7 @@ import Link from 'next/link';
 const Navbar = () => {
 
     const pathName = usePathname()
-    var tabName = pathName ? pathName.split('/').pop() : ""
+    var tabName = pathName ? pathName.split('/').pop() : "Home"
 
     const [isMenuOpen, setMenuOpen] = React.useState(false);
 
@@ -25,12 +25,16 @@ const Navbar = () => {
                 onMouseEnter={toggleMenu}
             >
                 <div className='nav-content cursor-pointer flex justify-between px-4 py-2 rounded-sm border-[1px] border-[var(--primary-blue)] text-xs font-title bg-white/50 backdrop-blur-sm hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-colors duration-1000 ease-out'>
-                    <span>sumitsute</span>
+                    <span>
+                    <Link href='/' className='router-tab !pr-0 !mr-0'>{'art.'}</Link><Link target='_blank' href='https://www.sumitsute.com/' className='router-tab !pl-0 !ml-0'>{'sumitsute.com'}</Link>
+                    </span>
                     <span>
                         <Link href='/' className='router-tab'>{'works + projects'}</Link>
-                        {   pathName !=='/' &&  <><span>{':'}</span><Link href={pathName} className='router-tab'>{tabName}</Link></>  }
+                        
                     </span>
-                    <span>bengaluru, in</span>
+                    <span>
+                        { <Link href={pathName} className='router-tab'>{pathName !=='/' ? tabName : "Home"}</Link> }
+                    </span>
                     {/* <Pointer /> */}
                 </div>
                 {/* <div className="separator-wrapper">
