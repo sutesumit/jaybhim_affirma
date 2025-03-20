@@ -37,39 +37,39 @@ const MenuLinks: React.FC<MenuLinkProps> = ({ toggleMenu, setMenuOpen, isMenuOpe
             onMouseEnter={() => setMenuOpen(true)}
             onMouseLeave={() => setMenuOpen(false)}
         >
-            <AnimatePresence>
-                <motion.div
-                    key="menu-content relative"
-                    className={`menu-content relative max-h-screen w-full z-20 p-2 grid md:grid-cols-3 sm:grid-cols-2 gap-4 rounded-lg overflow-y-scroll ${!isMenuOpen ? 'pointer-events-none' : ''}`}
-                    initial={{ y: "-100%" }}
-                    animate={{ y: isMenuOpen ? 0 : "-100%" }}
-                    transition={{ 
-                        duration: 0.3,
-                        ease: [0.4, 0, 0.2, 1]
-                    }}
-                >
-                        {
-                            linkObject.map((object, index) => {
-                                return (
-                    
-                                    <Link   href={object.href}
-                                            key={object.id}
-                                            onMouseEnter={()=>setHoveredCard(object.id)}
-                                            onMouseLeave={()=>setHoveredCard(null)}
-                                            onClick={() => setMenuOpen(false)}
-                                            className="link-card relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
-                                    >
-                                        <span className={hoveredCard === object.id ? 'text-[var(--primary-white)] bg-[var(--primary-blue)] px-2 py-1 rounded-sm' : ''}>{object.title}</span>
-                                        {hoveredCard === object.id && <span className='text-[var(--primary-blue)] text-sm p-2'>{object.description}</span>}
-                                    </Link>
-                    
-                                )
-                            }
+            <motion.div
+                key="menu-content relative"
+                className={`menu-content relative max-h-screen w-full z-20 p-2 grid md:grid-cols-3 sm:grid-cols-2 gap-4 rounded-lg overflow-y-scroll ${!isMenuOpen ? 'pointer-events-none' : ''}`}
+                initial={{ y: "-100%" }}
+                animate={{ y: isMenuOpen ? 0 : "-100%" }}
+                exit={{ y: "-100%" }}
+                transition={{ 
+                    duration: 0.3,
+                    ease: [0.4, 0, 0.2, 1]
+                }}
+            >
+                    {
+                        linkObject.map((object, index) => {
+                            return (
+                
+                                <Link   href={object.href}
+                                        key={object.id}
+                                        onMouseEnter={()=>setHoveredCard(object.id)}
+                                        onMouseLeave={()=>setHoveredCard(null)}
+                                        onClick={() => setMenuOpen(false)}
+                                        className="link-card relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
+                                >
+                                    <span className={hoveredCard === object.id ? 'text-[var(--primary-white)] bg-[var(--primary-blue)] px-2 py-1 rounded-sm' : ''}>{object.title}</span>
+                                    {hoveredCard === object.id && <span className='text-[var(--primary-blue)] text-sm p-2'>{object.description}</span>}
+                                </Link>
+                
                             )
                         }
-                        <Seperator />
-                </motion.div>
-            </AnimatePresence>
+                        )
+                    }
+                    <Seperator />
+            </motion.div>
+
 
             {
                 linkObject.map((object) => {

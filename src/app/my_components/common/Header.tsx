@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import MenuLinks from './navbar/menu';
 import Link from 'next/link';
 import { BsViewList } from "react-icons/bs";
+import { AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
 
@@ -68,14 +69,15 @@ const Navbar = () => {
                 </div>
             </div>
         </>
-        {isMenuOpen &&
-            <MenuLinks 
-                toggleMenu={toggleMenu} 
-                setMenuOpen={setMenuOpen} 
-                isMenuOpen={isMenuOpen}
-            />
-        }
-        
+        <AnimatePresence>
+            {isMenuOpen &&
+                <MenuLinks
+                    toggleMenu={toggleMenu}
+                    setMenuOpen={setMenuOpen}
+                    isMenuOpen={isMenuOpen}
+                />
+            }
+        </AnimatePresence>
     </nav>
   )
 }
