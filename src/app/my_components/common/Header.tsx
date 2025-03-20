@@ -24,7 +24,7 @@ const Navbar = () => {
                 onClick={() => window.location.href = '/'}
                 onMouseEnter={toggleMenu}
             >
-                <div className='nav-content cursor-pointer grid grid-cols-3 items-center px-4 py-2 rounded-sm border-[1px] border-[var(--primary-blue)] font-title bg-white/50 backdrop-blur-sm hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-colors duration-1000 ease-out'>
+                <div className='nav-content cursor-pointer grid grid-cols-3 align-middle px-4 py-2 rounded-sm border-[1px] border-[var(--primary-blue)] text-xs font-title bg-white/50 backdrop-blur-sm hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-colors duration-1000 ease-out'>
                     <span className='col-span-1 text-left hidden md:inline-block'>
                         <span className='site-tab px-5'>
                             <Link 
@@ -49,7 +49,7 @@ const Navbar = () => {
                             href='/' 
                             className='router-tab'
                         >
-                                <span className='inline-block scale-125'>
+                                <span className='inline-block align-middle text-sm'>
                                     <BsViewList />
                                 </span>
                         </Link>
