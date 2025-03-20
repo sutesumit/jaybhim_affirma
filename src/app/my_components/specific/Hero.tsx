@@ -30,7 +30,7 @@ const Hero = () => {
 
         <EvervaultCard className='font-jaibhim w-[70vw]' text='जय भीम'/>
 
-        <div className='absolute bottom-[6vh] m-auto h-[1.5rem] cursor-pointer'
+        <div className='absolute bottom-[6vh] m-auto h-[1.3rem] cursor-pointer'
               onClick={() => {
                 window.scrollTo({
                   top: window.innerHeight - 30,

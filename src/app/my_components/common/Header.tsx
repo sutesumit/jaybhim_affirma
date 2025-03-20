@@ -60,7 +60,7 @@ const Navbar = () => {
                     >
                         <Link 
                             href={pathName} 
-                            className='router-tab'
+                            className='router-tab capitalize'
                         >
                             {pathName !=='/' ? tabName : "Home"}
                         </Link>
