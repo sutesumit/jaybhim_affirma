@@ -3,7 +3,7 @@ import React from 'react'
 import { usePathname } from 'next/navigation';
 import MenuLinks from './navbar/menu';
 import Link from 'next/link';
-
+import { BsViewList } from "react-icons/bs";
 
 const Navbar = () => {
 
@@ -42,17 +42,19 @@ const Navbar = () => {
                             </Link>
                         </span>
                     </span>
-                    <span className='col-span-3 md:col-span-1 text-center'>
-                        <Link href='/' className='router-tab'>{'works + projects'}</Link>
+                    <span 
+                        className='col-span-3 md:col-span-1 text-center inline-block'
+                    >
+                        <Link 
+                            href='/' className='router-tab inline-block'
+                        >
+                                {"<BsViewList />"}
+                        </Link>
                     </span>
                     <span className='col-span-1 text-right hidden md:inline-block'>
                         { <Link href={pathName} className='router-tab'>{pathName !=='/' ? tabName : "Home"}</Link> }
                     </span>
-                    {/* <Pointer /> */}
                 </div>
-                {/* <div className="separator-wrapper">
-                    <Seperator />
-                </div> */}
             </div>
         </>
         {isMenuOpen &&
