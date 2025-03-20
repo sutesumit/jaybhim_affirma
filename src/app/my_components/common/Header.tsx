@@ -3,7 +3,7 @@ import React from 'react'
 import { usePathname } from 'next/navigation';
 import MenuLinks from './navbar/menu';
 import Link from 'next/link';
-
+import { BsViewList } from "react-icons/bs";
 
 const Navbar = () => {
 
@@ -24,9 +24,9 @@ const Navbar = () => {
                 onClick={() => window.location.href = '/'}
                 onMouseEnter={toggleMenu}
             >
-                <div className='nav-content cursor-pointer grid grid-cols-3 px-4 py-2 rounded-sm border-[1px] border-[var(--primary-blue)] text-xs font-title bg-white/50 backdrop-blur-sm hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-colors duration-1000 ease-out'>
+                <div className='nav-content cursor-pointer grid grid-cols-3 items-center px-4 py-2 rounded-sm border-[1px] border-[var(--primary-blue)] text-xs font-title bg-white/50 backdrop-blur-sm hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-colors duration-1000 ease-out'>
                     <span className='col-span-1 text-left hidden md:inline-block'>
-                        <span className='site-tab py-2 px-5'>
+                        <span className='site-tab px-5'>
                             <Link 
                                 href='/' 
                                 className='rootsite-tab'
@@ -42,23 +42,29 @@ const Navbar = () => {
                             </Link>
                         </span>
                     </span>
-                    <span className='col-span-3 md:col-span-1 text-center'>
+                    <span 
+                        className='col-span-3 md:col-span-1 text-center md:inline-block'
+                    >
                         <Link 
                             href='/' 
                             className='router-tab'
                         >
-                            <span>{'works + projects'}</span>
-
+                                <span className='inline-block align-middle text-sm'>
+                                    <BsViewList />
+                                </span>
                         </Link>
                     </span>
-                    <span className='col-span-1 text-right hidden md:inline-block'>
-                        { <a href={pathName} className='router-tab capitalize'>{pathName !=='/' ? tabName : "Home"}</a> }
+                    <span 
+                        className='col-span-1 text-right hidden md:inline-block'
+                    >
+                        <Link 
+                            href={pathName} 
+                            className='router-tab'
+                        >
+                            {pathName !=='/' ? tabName : "Home"}
+                        </Link>
                     </span>
-                    {/* <Pointer /> */}
                 </div>
-                {/* <div className="separator-wrapper">
-                    <Seperator />
-                </div> */}
             </div>
         </>
         {isMenuOpen &&
