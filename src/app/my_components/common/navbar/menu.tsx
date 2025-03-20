@@ -77,28 +77,36 @@ const MenuLinks: React.FC<MenuLinkProps> = ({ toggleMenu, setMenuOpen, isMenuOpe
                     <div 
                         key={object.id}
                         className="image-container"
-                        >
-                        {hoveredCard === object.id && (
-                        <Image
-                            className='menu-image'
-                            src={object.image}
-                            alt={object.title}
-                            width={100}
-                            height={100}
-                            style={{
-                            borderRadius: '10px',
-                            position: 'absolute',
-                            objectFit: 'contain',
-                            visibility: 'visible',
-                            width: '20vw',
-                            opacity: '10',
-                            zIndex: 10,
-                            pointerEvents: 'none',
-                            left: x,
-                            top: y,
-                            }}
-                        />
-                        )}
+                    >
+                        <AnimatePresence>
+                            {hoveredCard === object.id && (
+                            <motion.img
+                                initial={{ opacity: 0, scale: 0, rotate: 180 }}
+                                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                                exit={{ opacity: 0, scale: 0, rotate: -180 }}
+                                transition={{ 
+                                    duration: 0.1,
+                                    ease: [0.4, 0, 0.2, 1]
+                                }}
+                                className='menu-image'
+                                src={object.image}
+                                alt={object.title}
+                                width={100}
+                                height={100}
+                                style={{
+                                borderRadius: '10px',
+                                position: 'absolute',
+                                objectFit: 'contain',
+                                visibility: 'visible',
+                                width: '20vw',
+                                zIndex: 10,
+                                pointerEvents: 'none',
+                                left: `calc(${x}px - 10vw)`,
+                                top: `calc(${y}px - 10vw)`,
+                                }}
+                            />
+                            )}
+                        </AnimatePresence>
                     </div>
                     )
                 })
