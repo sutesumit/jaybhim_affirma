@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Seperator from '../shared/Seperator';
-import Pointer from './navbar/nav_pointer';
 
 interface FooterProps {}
 
