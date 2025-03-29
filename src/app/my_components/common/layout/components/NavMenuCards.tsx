@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import linkObject from './linkObject'
-import Image from 'next/image';
+import linkObject from '@/app/my_components/common/layout/data/linkObject'
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import Seperator from '../../shared/Seperator';
+import Seperator from '@/app/my_components/shared/Seperator';
 
 interface NavMenuCardProps {
     isMenuOpen: boolean,
