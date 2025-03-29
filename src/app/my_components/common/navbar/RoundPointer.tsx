@@ -1,22 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import useMousePosition from '@/_hooks/useMousePosition'
 
 const Pointer = () => {
 
-  const useMousePostion = () => {
-    const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
-    useEffect(()=>{
-        const updateMouseCords = (event: MouseEvent) => {
-            setMouseCords({x: event.clientX, y: event.clientY})
-        }
-        window.addEventListener('mousemove', updateMouseCords)
-        return () => {
-            window.removeEventListener('mousemove', updateMouseCords)
-        }
-    }, [])
-    return mouseCords
-}
-
-const {x, y} = useMousePostion()
+const {x, y} = useMousePosition()
   return (
       <div    
           className='nav-pointer absolute z-50 pointer-events-none' 
