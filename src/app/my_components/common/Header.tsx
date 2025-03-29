@@ -5,6 +5,7 @@ import NavMenuCards from './navbar/NavMenuCards';
 import Link from 'next/link';
 import { BsViewList } from "react-icons/bs";
 import { AnimatePresence } from 'framer-motion';
+import NavMenuIcon from './navbar/NavMenuIcon';
 
 const Navbar = () => {
 
@@ -52,7 +53,7 @@ const Navbar = () => {
                             onClick={() => toggleMenu()}
                         >
                                 <span className='inline-block align-middle text-sm'>
-                                    <BsViewList />
+                                    <NavMenuIcon />
                                 </span>
                         </Link>
                     </span>

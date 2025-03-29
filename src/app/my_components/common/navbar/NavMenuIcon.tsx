@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const MenuIcon = () => {
+const NavMenuIcon = () => {
   return (
         <svg 
           stroke="currentColor" 
@@ -20,4 +20,4 @@ const MenuIcon = () => {
   )
 }
 
-export default MenuIcon
+export default NavMenuIcon
