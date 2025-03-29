@@ -1,6 +1,6 @@
 import React from 'react'
-import TitleDiscription from '../my_components/shared/TitleDiscription'
-import PageFlip from '../my_components/shared/flipbook/PageFlip'
+import TitleDiscription from '@/app/my_components/shared/TitleDiscription'
+import PageFlip from '@/app/my_components/shared/flipbook/PageFlip'
 
 const content = {
   title: "Lunchboxes in the age of mechanical reproduction",
