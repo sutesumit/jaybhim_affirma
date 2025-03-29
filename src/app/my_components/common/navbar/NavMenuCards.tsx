@@ -5,13 +5,13 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import Seperator from '../../shared/Seperator';
 
-interface MenuLinkProps {
+interface NavMenuCardProps {
     isMenuOpen: boolean,
     setMenuOpen: (isMenuOpen: boolean) => void,
     toggleMenu: () => void;
 }
 
-const MenuLinks: React.FC<MenuLinkProps> = ({ toggleMenu, setMenuOpen, isMenuOpen }) => {
+const NavMenuCards: React.FC<NavMenuCardProps> = ({ toggleMenu, setMenuOpen, isMenuOpen }) => {
 
     const useMousePostion = (imageRef: React.RefObject<HTMLImageElement | null>) => {
         const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})  
@@ -114,4 +114,4 @@ const MenuLinks: React.FC<MenuLinkProps> = ({ toggleMenu, setMenuOpen, isMenuOpe
         </div>
     )
 }
-export default MenuLinks
+export default NavMenuCards

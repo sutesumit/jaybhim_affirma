@@ -1,7 +1,7 @@
 'use client';
 import React from 'react'
 import { usePathname } from 'next/navigation';
-import MenuLinks from './navbar/menu';
+import NavMenuCards from './navbar/NavMenuCards';
 import Link from 'next/link';
 import { BsViewList } from "react-icons/bs";
 import { AnimatePresence } from 'framer-motion';
@@ -71,7 +71,7 @@ const Navbar = () => {
         </>
         <AnimatePresence>
             {isMenuOpen &&
-                <MenuLinks
+                <NavMenuCards
                     toggleMenu={toggleMenu}
                     setMenuOpen={setMenuOpen}
                     isMenuOpen={isMenuOpen}
