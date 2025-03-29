@@ -1,7 +1,7 @@
 import React from 'react'
 import useMousePosition from '@/_hooks/useMousePosition'
 
-const Pointer = () => {
+const RoundPointer = () => {
 
 const {x, y} = useMousePosition()
   return (
@@ -15,4 +15,4 @@ const {x, y} = useMousePosition()
   )
 }
 
-export default Pointer
+export default RoundPointer
