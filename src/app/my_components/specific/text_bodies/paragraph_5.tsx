@@ -1,4 +1,4 @@
-import { LinkPreview } from '@/components/ui/link-preview'
+import { LinkPreview } from '@/_components/ui/link-preview'
 import React from 'react'
 
 const Paragraph_5 = () => {
