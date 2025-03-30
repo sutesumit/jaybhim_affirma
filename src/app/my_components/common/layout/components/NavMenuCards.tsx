@@ -3,6 +3,7 @@ import linkObject from '@/app/my_components/common/layout/data/linkObject'
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import Seperator from '@/app/my_components/shared/Seperator';
+import useMousePosition from '@/_hooks/useMousePosition'
 
 interface NavMenuCardProps {
     isMenuOpen: boolean,
@@ -12,23 +13,9 @@ interface NavMenuCardProps {
 
 const NavMenuCards: React.FC<NavMenuCardProps> = ({ toggleMenu, setMenuOpen, isMenuOpen }) => {
 
-    const useMousePostion = (imageRef: React.RefObject<HTMLImageElement | null>) => {
-        const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})  
-        useEffect(()=> {
-            const updateMouseCords = (event: MouseEvent) => {
-                setMouseCords({ x: (event.clientX), y: (event.clientY) })
-            }
-            window.addEventListener('mousemove', updateMouseCords)
-            return () => {
-                window.removeEventListener('mousemove', updateMouseCords)
-            }
-        }, [imageRef])
-        return mouseCords
-    }
-
     const [ hoveredCard, setHoveredCard] = useState<number | null>(null) 
     const imageRef = useRef<HTMLImageElement>(null);
-    const { x, y } = useMousePostion(imageRef);
+    const { x, y } = useMousePosition(imageRef);
 
     return ( 
         <div 

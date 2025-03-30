@@ -6,7 +6,7 @@ const RoundPointer = () => {
 const {x, y} = useMousePosition()
   return (
       <div    
-          className='nav-pointer absolute z-50 pointer-events-none' 
+          className='nav-pointer isolate absolute z-50 pointer-events-none' 
           style={{
               top: y,
               left: x

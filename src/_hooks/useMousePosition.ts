@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-const useMousePostion = () => {
+const useMousePosition = (imageRef: React.RefObject<HTMLImageElement | null> = {current: null}) => {
     const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
     useEffect(()=>{
         const updateMouseCords = (event: MouseEvent) => {
@@ -10,8 +10,8 @@ const useMousePostion = () => {
         return () => {
             window.removeEventListener('mousemove', updateMouseCords)
         }
-    }, [])
+    }, [imageRef])
     return mouseCords
 }
 
-export default useMousePostion
+export default useMousePosition
