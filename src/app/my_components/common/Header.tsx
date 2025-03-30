@@ -20,6 +20,7 @@ const Navbar = () => {
     
   return (
     <nav className="navbar fixed isolate top-0 z-20 w-full">
+        
         <>
             <div 
                 className='w-full relative text-[var(--primary-blue)] z-30 p-2 pb-1 cursor-pointer'
