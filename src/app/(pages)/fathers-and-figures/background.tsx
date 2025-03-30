@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import Pointer from "../my_components/common/navbar/nav_pointer";
+import Pointer from "@/app/my_components/common/layout/components/RoundPointer";
 
 interface Trail {
   id: number;

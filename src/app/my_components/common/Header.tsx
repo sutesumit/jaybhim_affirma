@@ -1,10 +1,11 @@
 'use client';
 import React from 'react'
 import { usePathname } from 'next/navigation';
-import MenuLinks from './navbar/menu';
+import NavMenuCards from '@/app/my_components/common/layout/components/NavMenuCards';
 import Link from 'next/link';
 import { BsViewList } from "react-icons/bs";
 import { AnimatePresence } from 'framer-motion';
+import NavMenuIcon from '@/app/my_components/common/layout/components/NavMenuIcon';
 
 const Navbar = () => {
 
@@ -52,7 +53,7 @@ const Navbar = () => {
                             onClick={() => toggleMenu()}
                         >
                                 <span className='inline-block align-middle text-sm'>
-                                    <BsViewList />
+                                    <NavMenuIcon />
                                 </span>
                         </Link>
                     </span>
@@ -71,7 +72,7 @@ const Navbar = () => {
         </>
         <AnimatePresence>
             {isMenuOpen &&
-                <MenuLinks
+                <NavMenuCards
                     toggleMenu={toggleMenu}
                     setMenuOpen={setMenuOpen}
                     isMenuOpen={isMenuOpen}

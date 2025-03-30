@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from "react"
 
-const Pointer = () => {
-
-  const useMousePostion = () => {
+const useMousePosition = (imageRef: React.RefObject<HTMLImageElement | null> = {current: null}) => {
     const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})
     useEffect(()=>{
         const updateMouseCords = (event: MouseEvent) => {
@@ -12,20 +10,8 @@ const Pointer = () => {
         return () => {
             window.removeEventListener('mousemove', updateMouseCords)
         }
-    }, [])
+    }, [imageRef])
     return mouseCords
 }
 
-const {x, y} = useMousePostion()
-  return (
-      <div    
-          className='nav-pointer absolute z-50 pointer-events-none' 
-          style={{
-              top: y,
-              left: x
-          }}
-      ></div>
-  )
-}
-
-export default Pointer
+export default useMousePosition

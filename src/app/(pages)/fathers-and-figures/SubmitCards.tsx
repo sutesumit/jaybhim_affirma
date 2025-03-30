@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import submitStories from './SubmitObjects'
 
 
+const SubmitCards = () => {  
 
-const SubmitCards = () => {
+    const [rotations, setRotations] = useState<number[]>([])
+
+    useEffect(() => {
+        const rotations: number[] = []
+        for (let i = 0; i < 4*submitStories.length; i++) {
+            rotations.push(Math.random() * 5 - 2.5)
+        }
+        setRotations(rotations)
+    }, [])
 
   return (
     <div className='relative isolate p-5'>
@@ -17,7 +26,7 @@ const SubmitCards = () => {
                     <div 
                         key={index} 
                         className={`story-container h-full sticky card-bg flex flex-col snap-center px-3 text-xs border-[1px] border-[var(--primary-blue)] rounded-sm transition-all duration-300`}
-                        style={{ top: 0, rotate: `${Math.random()*5 - 2.5}deg` }}
+                        style={{ top: 0, rotate: `${rotations[index]}deg` }}
                     >
                         <div className='card flex flex-col h-full items-center justify-center overflow-y-auto'>
                             <p className='m-auto text-lg font-semibold p-4 font-handwriting'>

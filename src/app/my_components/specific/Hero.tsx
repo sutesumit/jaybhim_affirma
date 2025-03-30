@@ -1,6 +1,6 @@
 'use client'
-import { EvervaultCard } from '@/components/ui/evervault-card'
-import { MaskContainer } from '@/components/ui/svg-mask-effect'
+import { EvervaultCard } from '@/_components/aceternity_ui/evervault-card'
+import { MaskContainer } from '@/_components/aceternity_ui/svg-mask-effect'
 import { RiScrollToBottomFill } from "react-icons/ri"
 import Image from 'next/image';
 import React from 'react'
