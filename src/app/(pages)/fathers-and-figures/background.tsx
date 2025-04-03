@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import Pointer from "@/app/my_components/common/layout/NavMenu/RoundPointer";
+import RoundPointer from "@/app/my_components/common/layout/NavMenu/RoundPointer";
 
 interface Trail {
   id: number;
@@ -42,7 +42,7 @@ const Background = (): React.ReactElement => {
       className="relative h-full w-full overflow-hidden cursor-none"
       ref={bgtrailsRef}
     >
-      <Pointer />
+      <RoundPointer />
       {trails.map((trail) => (
         <Image
           key={trail.id}
