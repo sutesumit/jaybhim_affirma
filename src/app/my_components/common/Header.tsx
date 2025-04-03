@@ -1,11 +1,11 @@
 'use client';
 import React from 'react'
 import { usePathname } from 'next/navigation';
-import NavMenuCards from '@/app/my_components/common/layout/components/NavMenuCards';
+import NavMenuCards from '@/app/my_components/common/layout/NavMenu/NavMenuCards';
 import Link from 'next/link';
 import { BsViewList } from "react-icons/bs";
 import { AnimatePresence } from 'framer-motion';
-import NavMenuIcon from '@/app/my_components/common/layout/components/NavMenuIcon';
+import NavMenuIcon from '@/app/my_components/common/layout/NavMenu/NavMenuIcon';
 
 const Navbar = () => {
 
