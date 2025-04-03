@@ -42,7 +42,7 @@ const Background = (): React.ReactElement => {
       className="relative h-full w-full overflow-hidden cursor-none"
       ref={bgtrailsRef}
     >
-      <RoundPointer />
+      <RoundPointer current={null} />
       {trails.map((trail) => (
         <Image
           key={trail.id}
