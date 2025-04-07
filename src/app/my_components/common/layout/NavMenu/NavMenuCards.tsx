@@ -3,33 +3,21 @@ import linkObject from '@/app/my_components/common/layout/data/linkObject'
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import Seperator from '@/app/my_components/shared/Seperator';
-import useMousePosition from '@/_hooks/useMousePosition'
-import { NavMenuProvider } from '../context/NavMenuContext';
+import { useNavMenu } from '../context/NavMenu/useNavMenu';
 
-interface NavMenuCardProps {
-    isMenuOpen: boolean,
-    setMenuOpen: (isMenuOpen: boolean) => void,
-    toggleMenu: () => void;
-}
+const NavMenuCards: React.FC = () => {
 
-const NavMenuCards: React.FC<NavMenuCardProps> = ({ toggleMenu, setMenuOpen, isMenuOpen }) => {
-
-    const [ hoveredCard, setHoveredCard] = useState<number | null>(null) 
-    const imageRef = useRef<HTMLImageElement>(null);
-    const { x, y } = useMousePosition(imageRef);
-
+    const { setMenuOpen, toggleMenu, hoveredCard, setHoveredCard, x, y } = useNavMenu();
+    
     return ( 
-        <NavMenuProvider>
             <div
                 className="menu-container overflow-visible"
-                onMouseEnter={() => setMenuOpen(true)}
-                onMouseLeave={() => setMenuOpen(false)}
             >
                 <motion.div
                     key="menu-content relative"
-                    className={`menu-content relative max-h-screen w-full z-20 p-2 grid md:grid-cols-3 sm:grid-cols-2 gap-4 rounded-lg overflow-y-scroll ${!isMenuOpen ? 'pointer-events-none' : ''}`}
+                    className={`menu-content relative max-h-screen w-full z-20 p-2 grid md:grid-cols-3 sm:grid-cols-2 gap-4 rounded-lg overflow-y-scroll`}
                     initial={{ y: "-100%" }}
-                    animate={{ y: isMenuOpen ? 0 : "-100%" }}
+                    animate={{ y: 0 }}
                     exit={{ y: "-100%" }}
                     transition={{
                         duration: 0.3,
@@ -44,7 +32,9 @@ const NavMenuCards: React.FC<NavMenuCardProps> = ({ toggleMenu, setMenuOpen, isM
                                             key={object.id}
                                             onMouseEnter={()=>setHoveredCard(object.id)}
                                             onMouseLeave={()=>setHoveredCard(null)}
-                                            onClick={() => setMenuOpen(false)}
+                                            onClick={() => {
+                                                setMenuOpen(false);
+                                            }}
                                             className="link-card relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
                                     >
                                         <span className={hoveredCard === object.id ? 'text-[var(--primary-white)] bg-[var(--primary-blue)] px-2 py-1 rounded-sm' : ''}>{object.title}</span>
@@ -98,9 +88,9 @@ const NavMenuCards: React.FC<NavMenuCardProps> = ({ toggleMenu, setMenuOpen, isM
                     })
                 }
             </div>
-        </NavMenuProvider>
     )
 }
-export default NavMenuCards
+
+export default NavMenuCards;
 
   
