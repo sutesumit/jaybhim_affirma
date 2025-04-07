@@ -1,4 +1,4 @@
-import React, {createContext, useState } from 'react'
+import React, {createContext, useCallback, useState } from 'react'
 import useMousePosition from '@/_hooks/useMousePosition';
 import { NavMenuContextProps } from './types';
 
@@ -8,9 +8,9 @@ export const NavMenuProvider = ({ children }: { children: React.ReactNode }) => 
     const [isMenuOpen, setMenuOpen ] = useState(false);
     const [hoveredCard, setHoveredCard ] = useState<number | null>(null);
     const { x, y } = useMousePosition();
-    const toggleMenu = () => {
+    const toggleMenu = useCallback(() => {
         setMenuOpen(prev => !prev)
-    }
+    }, [])
 
     return (
         <NavMenuContext.Provider value={{
@@ -29,4 +29,4 @@ export const NavMenuProvider = ({ children }: { children: React.ReactNode }) => 
 }   
 
 
-export default NavMenuContext;
+export { NavMenuContext };

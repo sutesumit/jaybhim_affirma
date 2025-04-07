@@ -1,6 +1,6 @@
 
 import { useContext } from 'react'
-import NavMenuContext from './NavMenuContext'
+import { NavMenuContext } from './NavMenuContext';
 
 export const useNavMenu = () => {
     const context = useContext(NavMenuContext);
