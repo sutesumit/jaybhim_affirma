@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import Seperator from '@/app/my_components/shared/Seperator';
 import { useNavMenu } from '../context/NavMenu/useNavMenu';
+import LinkCard from './LinkCard';
 
 const NavMenuCards: React.FC = () => {
 
@@ -25,22 +26,16 @@ const NavMenuCards: React.FC = () => {
                     }}
                 >
                         {
-                            linkObject.map((object, index) => {
+                            linkObject.map((object) => {
                                 return (
             
-                                    <Link   href={object.href}
-                                            key={object.id}
-                                            onMouseEnter={()=>setHoveredCard(object.id)}
-                                            onMouseLeave={()=>setHoveredCard(null)}
-                                            onClick={() => {
-                                                setMenuOpen(false);
-                                            }}
-                                            className="link-card relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
-                                    >
-                                        <span className={hoveredCard === object.id ? 'text-[var(--primary-white)] bg-[var(--primary-blue)] px-2 py-1 rounded-sm' : ''}>{object.title}</span>
-                                        {hoveredCard === object.id && <span className='text-[var(--primary-blue)] text-sm p-2'>{object.description}</span>}
-                                    </Link>
-            
+                                    <LinkCard  
+                                        object={object}
+                                        key={object.id}
+                                        setHoveredCard={setHoveredCard}
+                                        hoveredCard={hoveredCard}
+                                        setMenuOpen={setMenuOpen}
+                                    />
                                 )
                             }
                             )
