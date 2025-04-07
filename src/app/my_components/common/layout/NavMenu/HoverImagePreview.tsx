@@ -15,7 +15,6 @@ interface HoverImagePreviewProps {
 const HoverImagePreview: React.FC<HoverImagePreviewProps> = ({ object, hoveredCard, x, y}) => {
   return (
     <div
-        key={object.id}
         className="image-container"
     >
         <AnimatePresence>

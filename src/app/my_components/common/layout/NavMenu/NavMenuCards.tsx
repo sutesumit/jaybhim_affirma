@@ -7,7 +7,7 @@ import HoverImagePreview from './HoverImagePreview';
 import LinkCard from './LinkCard';
 
 const NavMenuCards: React.FC = () => {
-    const { setMenuOpen, toggleMenu, hoveredCard, setHoveredCard, x, y } = useNavMenu();
+    const { setMenuOpen, hoveredCard, setHoveredCard, x, y } = useNavMenu();
     
     return ( 
             <div

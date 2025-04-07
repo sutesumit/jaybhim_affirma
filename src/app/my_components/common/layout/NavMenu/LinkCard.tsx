@@ -23,7 +23,6 @@ const LinkCard: React.FC<LinkCardProps> = ({
   return (
     <Link   
         href={object.href}
-        key={object.id}
         onMouseEnter={()=>setHoveredCard(object.id)}
         onMouseLeave={()=>setHoveredCard(null)}
         onClick={() => {
