@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 
 const useMousePosition = (imageRef: React.RefObject<HTMLImageElement | null> = {current: null}) => {
     const [mouseCords, setMouseCords] = React.useState({x: 0, y: 0})

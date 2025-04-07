@@ -1,30 +1,29 @@
 'use client';
 import React from 'react'
 import { usePathname } from 'next/navigation';
-import NavMenuCards from '@/app/my_components/common/layout/components/NavMenuCards';
+import NavMenuCardsWrapper from '@/app/my_components/common/layout/NavMenu/NavMenuCards';
 import Link from 'next/link';
-import { BsViewList } from "react-icons/bs";
 import { AnimatePresence } from 'framer-motion';
-import NavMenuIcon from '@/app/my_components/common/layout/components/NavMenuIcon';
+import NavMenuIcon from '@/app/my_components/common/layout/NavMenu/NavMenuIcon';
+import { useNavMenu } from '@/app/my_components/common/layout/context/NavMenu/useNavMenu';
+import { NavMenuProvider } from '@/app/my_components/common/layout/context/NavMenu/NavMenuContext';
 
-const Navbar = () => {
-
+const Navbar: React.FC = () => {
     const pathName = usePathname()
     var tabName = pathName ? pathName.split('/').pop()?.split('-').join(' ') : "Home"
 
-    const [isMenuOpen, setMenuOpen] = React.useState(false);
-
-    const toggleMenu = () => {
-        setMenuOpen(!isMenuOpen);
-    }
+    const { toggleMenu, isMenuOpen, setMenuOpen } = useNavMenu();
     
   return (
-    <nav className="navbar fixed isolate top-0 z-20 w-full">
+    <nav 
+        className="navbar fixed isolate top-0 z-20 w-full"
+        onMouseEnter={() => setMenuOpen(true)}
+        onMouseLeave={() => setMenuOpen(false)}
+    >
+        
         <>
             <div 
                 className='w-full relative text-[var(--primary-blue)] z-30 p-2 pb-1 cursor-pointer'
-                // onClick={() => window.location.href = '/'}
-                onMouseEnter={toggleMenu}
             >
                 <div className='nav-content cursor-pointer grid grid-cols-3 items-center px-4 py-2 rounded-sm border-[1px] border-[var(--primary-blue)] text-xs font-title bg-white/50 backdrop-blur-sm hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition-colors duration-1000 ease-out'>
                     <span className='col-span-1 text-left hidden md:inline-block'>
@@ -50,7 +49,10 @@ const Navbar = () => {
                         <Link 
                             href='/' 
                             className='router-tab'
-                            onClick={() => toggleMenu()}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                toggleMenu();
+                            }}
                         >
                                 <span className='inline-block align-middle text-sm'>
                                     <NavMenuIcon />
@@ -72,15 +74,19 @@ const Navbar = () => {
         </>
         <AnimatePresence>
             {isMenuOpen &&
-                <NavMenuCards
-                    toggleMenu={toggleMenu}
-                    setMenuOpen={setMenuOpen}
-                    isMenuOpen={isMenuOpen}
-                />
+                <NavMenuCardsWrapper />
             }
         </AnimatePresence>
     </nav>
   )
 }
 
-export default Navbar
+const NavbarWrapper: React.FC = () => {
+    return (
+        <NavMenuProvider>
+            <Navbar />
+        </NavMenuProvider>
+    )
+}
+
+export default NavbarWrapper
