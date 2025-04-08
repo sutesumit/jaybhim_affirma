@@ -5,7 +5,7 @@ import NavMenuIcon from '@/app/my_components/common/layout/NavMenu/NavMenuIcon';
 
 interface NavLinksProps {
     pathName: string | null,
-    tabName: string | null
+    tabName: string | undefined
 }
 
 const NavLinks: React.FC<NavLinksProps> = ({pathName, tabName}) => {
@@ -50,10 +50,10 @@ const NavLinks: React.FC<NavLinksProps> = ({pathName, tabName}) => {
                 className='col-span-1 text-right hidden md:inline-block'
             >
                 <Link 
-                    href={pathName} 
+                    href={pathName ?? '/'} 
                     className='router-tab capitalize'
                 >
-                    {pathName !=='/' ? tabName : "Home"}
+                    {tabName || 'Home'}
                 </Link>
             </span>
       
