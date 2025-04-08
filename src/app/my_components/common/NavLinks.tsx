@@ -1,13 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 import { useNavMenu } from '@/app/my_components/common/layout/context/NavMenu/useNavMenu';
-import { usePathname } from 'next/navigation';
 import NavMenuIcon from '@/app/my_components/common/layout/NavMenu/NavMenuIcon';
 
-const NavLinks = () => {
+interface NavLinksProps {
+    pathName: string | null,
+    tabName: string | null
+}
+
+const NavLinks: React.FC<NavLinksProps> = ({pathName, tabName}) => {
     const { toggleMenu } = useNavMenu();
-    const pathName = usePathname()
-    var tabName = pathName ? pathName.split('/').pop()?.split('-').join(' ') : "Home"
 
   return (
     <>
