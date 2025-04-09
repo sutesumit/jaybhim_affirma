@@ -3,12 +3,12 @@ import Link from 'next/link'
 import { useNavMenu } from '@/app/my_components/common/layout/context/NavMenu/useNavMenu';
 import NavMenuIcon from '@/app/my_components/common/layout/NavMenu/NavMenuIcon';
 
-interface NavLinksProps {
+interface NavigationLinksProps {
     pathName: string | null,
     tabName: string | undefined
 }
 
-const NavLinks: React.FC<NavLinksProps> = ({pathName, tabName}) => {
+const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) => {
     const { toggleMenu } = useNavMenu();
 
   return (
@@ -61,4 +61,4 @@ const NavLinks: React.FC<NavLinksProps> = ({pathName, tabName}) => {
   )
 }
 
-export default NavLinks
+export default NavigationLinks
