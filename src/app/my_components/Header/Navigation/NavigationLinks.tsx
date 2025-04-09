@@ -1,7 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import { useNavMenu } from '@/app/my_components/common/layout/context/NavMenu/useNavMenu';
-import NavMenuIcon from '@/app/my_components/common/layout/NavMenu/NavMenuIcon';
+import MenuToggleIcon from '@/app/my_components/Header/Navigation/MenuToggleIcon';
+
 
 interface NavigationLinksProps {
     pathName: string | null,
@@ -42,7 +43,7 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) =>
                     }}
                 >
                         <span className='inline-block align-middle text-sm'>
-                            <NavMenuIcon />
+                            <MenuToggleIcon />
                         </span>
                 </Link>
             </span>
