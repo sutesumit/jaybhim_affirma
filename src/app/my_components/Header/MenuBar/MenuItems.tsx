@@ -1,9 +1,9 @@
 import React from 'react'
-import NavLinks from './NavLinks'
+import NavLinks from '../../common/NavLinks';
 import { usePathname } from 'next/navigation';
 
 
-const NavBarContent = () => {
+const MenuItems = () => {
 
     const pathName = usePathname()
     var tabName = pathName ? pathName.split('/').pop()?.split('-').join(' ') : "Home"
@@ -20,4 +20,4 @@ const NavBarContent = () => {
   )
 }
 
-export default NavBarContent
+export default MenuItems

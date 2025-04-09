@@ -1,7 +1,7 @@
 import { useNavMenu } from '@/app/my_components/common/layout/context/NavMenu/useNavMenu';
 import { AnimatePresence } from 'framer-motion';
 import NavMenuCardsWrapper from '@/app/my_components/common/layout/NavMenu/NavMenuCards';
-import NavBarContent from '../../common/NavBarContent';
+import MenuItems from './MenuItems';
 
 const MenuBarWrapper: React.FC = () => {
     const { isMenuOpen, setMenuOpen } = useNavMenu();    
@@ -13,7 +13,7 @@ const MenuBarWrapper: React.FC = () => {
         onMouseLeave={() => setMenuOpen(false)}
     >
         
-        <NavBarContent  />
+        <MenuItems  />
         <AnimatePresence>
             {isMenuOpen &&
                 <NavMenuCardsWrapper />
