@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Seperator from '@/app/my_components/shared/Seperator';
 import { useNavMenu } from '../../common/layout/context/NavMenu/useNavMenu';
 import CardImagePreview from './CardImagePreview';
-import LinkCard from '../../common/layout/NavMenu/LinkCard';
+import MenuLinkCard from './MenuLinkCard';
 
 const MenuCardsGrid: React.FC = () => {
     const { setMenuOpen, hoveredCard, setHoveredCard, x, y } = useNavMenu();
@@ -27,7 +27,7 @@ const MenuCardsGrid: React.FC = () => {
                         {
                             linkObject.map((object) => {
                                 return (
-                                    <LinkCard  
+                                    <MenuLinkCard  
                                         object={object}
                                         key={object.id}
                                         setHoveredCard={setHoveredCard}
