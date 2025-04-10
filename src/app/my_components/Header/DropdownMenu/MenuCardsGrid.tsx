@@ -3,7 +3,7 @@ import linkObject from '@/app/my_components/common/layout/data/linkObject'
 import { motion } from 'framer-motion';
 import Seperator from '@/app/my_components/shared/Seperator';
 import { useNavMenu } from '../../common/layout/context/NavMenu/useNavMenu';
-import HoverImagePreview from '../../common/layout/NavMenu/HoverImagePreview';
+import CardImagePreview from './CardImagePreview';
 import LinkCard from '../../common/layout/NavMenu/LinkCard';
 
 const MenuCardsGrid: React.FC = () => {
@@ -43,7 +43,7 @@ const MenuCardsGrid: React.FC = () => {
                 {
                     linkObject.map((object) => {
                         return (
-                        <HoverImagePreview
+                        <CardImagePreview
                             key={object.id}
                             object={object}
                             hoveredCard={hoveredCard}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-interface HoverImagePreviewProps {
+interface CardImagePreviewProps {
     object: {
         id: number,
         image: string,
@@ -12,7 +12,7 @@ interface HoverImagePreviewProps {
     y: number
 }
 
-const HoverImagePreview: React.FC<HoverImagePreviewProps> = ({ object, hoveredCard, x, y}) => {
+const CardImagePreview: React.FC<CardImagePreviewProps> = ({ object, hoveredCard, x, y}) => {
   return (
     <div
         className="image-container"
@@ -50,4 +50,4 @@ const HoverImagePreview: React.FC<HoverImagePreviewProps> = ({ object, hoveredCa
   )
 }
 
-export default HoverImagePreview
+export default CardImagePreview
