@@ -2,11 +2,11 @@ import React from 'react'
 import linkObject from '@/app/my_components/common/layout/data/linkObject'
 import { motion } from 'framer-motion';
 import Seperator from '@/app/my_components/shared/Seperator';
-import { useNavMenu } from '../context/NavMenu/useNavMenu';
-import HoverImagePreview from './HoverImagePreview';
-import LinkCard from './LinkCard';
+import { useNavMenu } from '../../common/layout/context/NavMenu/useNavMenu';
+import HoverImagePreview from '../../common/layout/NavMenu/HoverImagePreview';
+import LinkCard from '../../common/layout/NavMenu/LinkCard';
 
-const NavMenuCards: React.FC = () => {
+const MenuCardsGrid: React.FC = () => {
     const { setMenuOpen, hoveredCard, setHoveredCard, x, y } = useNavMenu();
     
     return ( 
@@ -57,6 +57,6 @@ const NavMenuCards: React.FC = () => {
     )
 }
 
-export default NavMenuCards;
+export default MenuCardsGrid;
 
   

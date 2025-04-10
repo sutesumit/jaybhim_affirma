@@ -1,6 +1,6 @@
 import { useNavMenu } from '@/app/my_components/common/layout/context/NavMenu/useNavMenu';
 import { AnimatePresence } from 'framer-motion';
-import NavMenuCardsWrapper from '@/app/my_components/common/layout/NavMenu/NavMenuCards';
+import MenuCardsGrid from '../DropdownMenu/MenuCardsGrid';
 import MenuItems from './MenuItems';
 
 const MenuBarWrapper: React.FC = () => {
@@ -16,7 +16,7 @@ const MenuBarWrapper: React.FC = () => {
         <MenuItems  />
         <AnimatePresence>
             {isMenuOpen &&
-                <NavMenuCardsWrapper />
+                <MenuCardsGrid />
             }
         </AnimatePresence>
     </nav>
