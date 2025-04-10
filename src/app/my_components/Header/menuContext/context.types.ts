@@ -1,4 +1,4 @@
-export interface NavMenuContextProps {
+export interface MenuContextProps {
     isMenuOpen: boolean;
     setMenuOpen: (isMenuOpen: boolean) => void;
     toggleMenu: () => void;

@@ -1,8 +1,8 @@
 import React, {createContext, useCallback, useState } from 'react'
 import useMousePosition from '@/_hooks/useMousePosition';
-import { NavMenuContextProps } from '../../common/layout/context/NavMenu/types';
+import { MenuContextProps } from './context.types';
 
-const MenuContextProvider = createContext<NavMenuContextProps | undefined>(undefined);
+const MenuContextProvider = createContext<MenuContextProps | undefined>(undefined);
 
 export const NavMenuProvider = ({ children }: { children: React.ReactNode }) => {
     const [isMenuOpen, setMenuOpen ] = useState(false);
