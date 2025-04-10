@@ -1,6 +1,6 @@
 import React, {createContext, useCallback, useState } from 'react'
 import useMousePosition from '@/_hooks/useMousePosition';
-import { NavMenuContextProps } from './types';
+import { NavMenuContextProps } from '../../common/layout/context/NavMenu/types';
 
 const NavMenuContext = createContext<NavMenuContextProps | undefined>(undefined);
 
