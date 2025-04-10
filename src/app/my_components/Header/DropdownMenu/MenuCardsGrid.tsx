@@ -1,13 +1,13 @@
 import React from 'react'
-import linkObject from '@/app/my_components/common/layout/data/linkObject'
 import { motion } from 'framer-motion';
 import Seperator from '@/app/my_components/shared/Seperator';
-import { useNavMenu } from '../context/NavMenu/useNavMenu';
-import HoverImagePreview from './HoverImagePreview';
-import LinkCard from './LinkCard';
+import CardImagePreview from './CardImagePreview';
+import MenuLinkCard from './MenuLinkCard';
+import menuConfig from './menuConfig';
+import { useMenuContext } from '@/app/my_components/Header/menuContext/useMenuContext';
 
-const NavMenuCards: React.FC = () => {
-    const { setMenuOpen, hoveredCard, setHoveredCard, x, y } = useNavMenu();
+const MenuCardsGrid: React.FC = () => {
+    const { setMenuOpen, hoveredCard, setHoveredCard, x, y } = useMenuContext();
     
     return ( 
             <div
@@ -25,9 +25,9 @@ const NavMenuCards: React.FC = () => {
                     }}
                 >
                         {
-                            linkObject.map((object) => {
+                            menuConfig.map((object) => {
                                 return (
-                                    <LinkCard  
+                                    <MenuLinkCard  
                                         object={object}
                                         key={object.id}
                                         setHoveredCard={setHoveredCard}
@@ -41,9 +41,9 @@ const NavMenuCards: React.FC = () => {
                         <Seperator />
                 </motion.div>
                 {
-                    linkObject.map((object) => {
+                    menuConfig.map((object) => {
                         return (
-                        <HoverImagePreview
+                        <CardImagePreview
                             key={object.id}
                             object={object}
                             hoveredCard={hoveredCard}
@@ -57,6 +57,6 @@ const NavMenuCards: React.FC = () => {
     )
 }
 
-export default NavMenuCards;
+export default MenuCardsGrid;
 
   

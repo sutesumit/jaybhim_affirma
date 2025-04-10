@@ -1,7 +1,7 @@
 import React from 'react'
 import useMousePosition from '@/_hooks/useMousePosition'
 
-const RoundPointer = (imageRef: React.RefObject<HTMLImageElement | null> = {current: null}) => {
+const CursorDot = (imageRef: React.RefObject<HTMLImageElement | null> = {current: null}) => {
 
 const {x, y} = useMousePosition(imageRef)
   return (
@@ -15,4 +15,4 @@ const {x, y} = useMousePosition(imageRef)
   )
 }
 
-export default RoundPointer
+export default CursorDot

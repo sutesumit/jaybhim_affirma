@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NavMenuIcon = () => {
+const MenuToggleIcon = () => {
   return (
         <svg 
           stroke="currentColor" 
@@ -19,4 +19,4 @@ const NavMenuIcon = () => {
   )
 }
 
-export default NavMenuIcon
+export default MenuToggleIcon

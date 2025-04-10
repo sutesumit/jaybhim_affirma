@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
 
-interface LinkCardProps {
+interface MenuLinkCardProps {
     object : {
         href: string,
         id: number,
@@ -14,7 +14,7 @@ interface LinkCardProps {
     setMenuOpen: (open: boolean) => void,
 }
 
-const LinkCard: React.FC<LinkCardProps> = ({ 
+const MenuLinkCard: React.FC<MenuLinkCardProps> = ({ 
     object, 
     setHoveredCard, 
     hoveredCard, 
@@ -50,4 +50,4 @@ const LinkCard: React.FC<LinkCardProps> = ({
 }
 
 
-export default LinkCard
+export default MenuLinkCard
