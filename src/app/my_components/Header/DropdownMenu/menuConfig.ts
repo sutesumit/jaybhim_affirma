@@ -1,6 +1,6 @@
 
 
-const linkObject = [
+const menuConfig = [
     {   
         id: 1,
         title: 'Fathers and Figures',
@@ -45,4 +45,4 @@ const linkObject = [
     },
 ]
 
-export default linkObject;
+export default menuConfig;

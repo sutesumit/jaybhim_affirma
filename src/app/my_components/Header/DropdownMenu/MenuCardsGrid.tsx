@@ -1,10 +1,10 @@
 import React from 'react'
-import linkObject from '@/app/my_components/common/layout/data/linkObject'
 import { motion } from 'framer-motion';
 import Seperator from '@/app/my_components/shared/Seperator';
 import { useNavMenu } from '../../common/layout/context/NavMenu/useNavMenu';
 import CardImagePreview from './CardImagePreview';
 import MenuLinkCard from './MenuLinkCard';
+import menuConfig from './menuConfig';
 
 const MenuCardsGrid: React.FC = () => {
     const { setMenuOpen, hoveredCard, setHoveredCard, x, y } = useNavMenu();
@@ -25,7 +25,7 @@ const MenuCardsGrid: React.FC = () => {
                     }}
                 >
                         {
-                            linkObject.map((object) => {
+                            menuConfig.map((object) => {
                                 return (
                                     <MenuLinkCard  
                                         object={object}
@@ -41,7 +41,7 @@ const MenuCardsGrid: React.FC = () => {
                         <Seperator />
                 </motion.div>
                 {
-                    linkObject.map((object) => {
+                    menuConfig.map((object) => {
                         return (
                         <CardImagePreview
                             key={object.id}
