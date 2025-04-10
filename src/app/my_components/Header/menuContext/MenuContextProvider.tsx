@@ -2,7 +2,7 @@ import React, {createContext, useCallback, useState } from 'react'
 import useMousePosition from '@/_hooks/useMousePosition';
 import { NavMenuContextProps } from '../../common/layout/context/NavMenu/types';
 
-const NavMenuContext = createContext<NavMenuContextProps | undefined>(undefined);
+const MenuContextProvider = createContext<NavMenuContextProps | undefined>(undefined);
 
 export const NavMenuProvider = ({ children }: { children: React.ReactNode }) => {
     const [isMenuOpen, setMenuOpen ] = useState(false);
@@ -13,7 +13,7 @@ export const NavMenuProvider = ({ children }: { children: React.ReactNode }) => 
     }, [])
 
     return (
-        <NavMenuContext.Provider value={{
+        <MenuContextProvider.Provider value={{
             isMenuOpen,
             setMenuOpen,
             toggleMenu,
@@ -24,9 +24,8 @@ export const NavMenuProvider = ({ children }: { children: React.ReactNode }) => 
         }}
         >
             {children}
-        </NavMenuContext.Provider>
+        </MenuContextProvider.Provider>
     );  
 }   
 
-
-export { NavMenuContext };
+export { MenuContextProvider };

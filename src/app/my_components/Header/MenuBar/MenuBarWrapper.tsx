@@ -1,10 +1,10 @@
-import { useNavMenu } from '@/app/my_components/common/layout/context/NavMenu/useNavMenu';
 import { AnimatePresence } from 'framer-motion';
 import MenuCardsGrid from '../DropdownMenu/MenuCardsGrid';
 import MenuItems from './MenuItems';
+import { useMenuContext } from '../menuContext/useMenuContext';
 
 const MenuBarWrapper: React.FC = () => {
-    const { isMenuOpen, setMenuOpen } = useNavMenu();    
+    const { isMenuOpen, setMenuOpen } = useMenuContext();    
     
   return (
     <nav

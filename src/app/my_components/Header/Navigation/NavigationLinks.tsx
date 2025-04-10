@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { useNavMenu } from '@/app/my_components/common/layout/context/NavMenu/useNavMenu';
+import { useMenuContext } from '@/app/my_components/Header/menuContext/useMenuContext';
 import MenuToggleIcon from '@/app/my_components/Header/Navigation/MenuToggleIcon';
 
 
@@ -10,7 +10,7 @@ interface NavigationLinksProps {
 }
 
 const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) => {
-    const { toggleMenu } = useNavMenu();
+    const { toggleMenu } = useMenuContext();
 
   return (
     <>

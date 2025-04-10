@@ -1,13 +1,13 @@
 import React from 'react'
 import { motion } from 'framer-motion';
 import Seperator from '@/app/my_components/shared/Seperator';
-import { useNavMenu } from '../../common/layout/context/NavMenu/useNavMenu';
 import CardImagePreview from './CardImagePreview';
 import MenuLinkCard from './MenuLinkCard';
 import menuConfig from './menuConfig';
+import { useMenuContext } from '@/app/my_components/Header/menuContext/useMenuContext';
 
 const MenuCardsGrid: React.FC = () => {
-    const { setMenuOpen, hoveredCard, setHoveredCard, x, y } = useNavMenu();
+    const { setMenuOpen, hoveredCard, setHoveredCard, x, y } = useMenuContext();
     
     return ( 
             <div
