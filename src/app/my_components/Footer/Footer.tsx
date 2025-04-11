@@ -1,6 +1,6 @@
 'use client'
 import Seperator from '../shared/Seperator';
-import useDalitHistoryMonthCounter from './useDalitHistoryMonthCounter';
+import getHistoryMonthCount from './getHistoryMonthCount';
 import useSessionTime from './useSessionTimer';
 
 interface FooterProps {}
@@ -8,7 +8,7 @@ interface FooterProps {}
 const Footer: React.FC<FooterProps> = () => {
 
     const sessionClock = useSessionTime();
-    const dalitHistoryStr = useDalitHistoryMonthCounter()
+    const dalitHistoryStr = getHistoryMonthCount()
 
     const getDalitHistoryMonthDay = (): number => {
         const currentMonth: number = new Date().getMonth() + 1;
