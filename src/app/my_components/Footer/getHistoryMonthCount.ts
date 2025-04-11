@@ -1,16 +1,16 @@
+'use client'
+const dalitHistoryStr: string = `April is Dalit History Month!`
+const today: Date = new Date()
+const currentDate: number = today.getDate()
+const currentMonth: number = today.getMonth()
+const currentYear: number = today.getFullYear()
+const bhimJayanti: Date = new Date(`${currentYear}, 04, 14`)
+
+const daysBetween = (d1: Date, d2: Date) => {
+    return Math.floor((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24))
+}
+
 const getHistoryMonthCount = () => {
-    const dalitHistoryStr: string = `April is Dalit History Month!`
-
-    const today: Date = new Date()
-    const currentDate: number = today.getDate()
-    const currentMonth: number = today.getMonth()
-    const currentYear: number = today.getFullYear()
-    const bhimJayanti: Date = new Date(`${currentYear}, 04, 14`)
-
-    const daysBetween = (d1: Date, d2: Date) => {
-        return Math.floor((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24))
-    }
-
     // On Bhim Jayanti Every Year
     if (today.getTime() == bhimJayanti.getTime()){
         return `Happy ${currentYear-1891}th Bhim Jayanti, Everyone!`
@@ -36,9 +36,7 @@ const getHistoryMonthCount = () => {
         const nextAprilFirst = new Date(`${currentYear+1}, 04, 01`)
         return `${daysBetween(today, nextAprilFirst)} days till Dalit History Month!`
     }
-
     return dalitHistoryStr
-
 }
 
-export default getHistoryMonthCount
+export { getHistoryMonthCount, currentYear }
