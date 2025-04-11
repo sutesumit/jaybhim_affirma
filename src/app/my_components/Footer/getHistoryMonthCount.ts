@@ -1,5 +1,5 @@
 const getHistoryMonthCount = () => {
-    var DalitHistoryStr: string = `April is Dalit History Month!`
+    const dalitHistoryStr: string = `April is Dalit History Month!`
 
     const today: Date = new Date()
     const currentDate: number = today.getDate()
@@ -37,7 +37,7 @@ const getHistoryMonthCount = () => {
         return `${daysBetween(today, nextAprilFirst)} days till Dalit History Month!`
     }
 
-    return DalitHistoryStr
+    return dalitHistoryStr
 
 }
 
