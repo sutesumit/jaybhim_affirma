@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import React from 'react';
 import Footer from './my_components/Footer/Footer';
 import './globals.css';
-import Navbar from './my_components/Header';
+import Header from './my_components/Header';
 
 
 interface RootLayoutProps {
@@ -53,10 +53,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${lora.variable} ${merriweather.variable} ${vesper_libre.variable} ${rajdhani.variable} ${reenieBeanie.variable}`}>
       <body className="min-h-screen">
-        <Navbar /> 
+        <Header /> 
         {children}
         <Footer />
       </body>
     </html>
   );
+
 }
