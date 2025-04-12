@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect } from "react"
 
 const useMousePosition = (imageRef: React.RefObject<HTMLImageElement | null> = {current: null}) => {

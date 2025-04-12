@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import NavigationLinks from '../Navigation/NavigationLinks';
 import { usePathname } from 'next/navigation';

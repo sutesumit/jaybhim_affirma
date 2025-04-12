@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import React from 'react';
 import Footer from './my_components/Footer/Footer';
 import './globals.css';
-import Header from './my_components/Header';
+import { Header } from './my_components/Header/';
 
 
 interface RootLayoutProps {
