@@ -1,9 +1,8 @@
 'use client'
-
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import CursorDot from "@/app/my_components/shared/cursorPointers/CursorDot";
 import TrailingImage from "./Background/TrailingImage";
-import { generateTrail } from "./Background/generateTrail";
+import { useMouseTrail } from "./Background/useMouseTrail";
 
 interface Trail {
   id: number;
@@ -16,22 +15,14 @@ const Background = (): React.ReactElement => {
   const [trails, setTrails] = useState<Trail[]>([]);
   const bgtrailsRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseMove = (event: MouseEvent) => {
-    if (bgtrailsRef.current && bgtrailsRef.current.contains(event.target as Node)) { 
-      const newTrail = generateTrail(event.clientX, event.clientY);
-
-      setTrails((prevTrails) => [...prevTrails, newTrail]);
-
-      setTimeout(() => {
-        setTrails((prevTrails) => prevTrails.filter((trail) => trail.id !== newTrail.id));
-      }, 1000);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+  const addToTrail = useCallback((trail: Trail) => {
+    setTrails((prevTrails) => [...prevTrails, trail])
   }, []);
+  const removeFromTrail = useCallback((id: number) => {
+      setTrails((prevTrails) => prevTrails.filter((trail) => trail.id !== id));
+  }, []);
+
+  useMouseTrail(bgtrailsRef, addToTrail, removeFromTrail);
 
   return (
     <div 
