@@ -4,7 +4,7 @@ import TitleDiscription from '@/app/my_components/shared/TitleDiscription';
 import Seperator from '@/app/my_components/shared/Seperator'
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import Background from './background';
+import Background from './Background/Background';
 import Link from 'next/link';
 import SubmitCards from './SubmitCards';
 

@@ -1,8 +1,8 @@
 'use client'
 import React, { useState, useCallback, useRef } from "react";
 import CursorDot from "@/app/my_components/shared/cursorPointers/CursorDot";
-import TrailingImage from "./Background/TrailingImage";
-import { useMouseTrail } from "./Background/useMouseTrail";
+import TrailingImage from "./TrailingImage";
+import { useMouseTrail } from "./useMouseTrail";
 
 interface Trail {
   id: number;
