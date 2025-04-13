@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import CursorDot from "@/app/my_components/shared/cursorPointers/CursorDot";
+import TrailingImage from "./Background/TrailingImage";
 
 interface Trail {
   id: number;
@@ -44,28 +44,7 @@ const Background = (): React.ReactElement => {
     >
       <CursorDot current={null} />
       {trails.map((trail) => (
-        <Image
-          key={trail.id}
-          src={trail.src}
-          alt="Trail Image"
-          width={300}
-          height={300}
-          className="rounded-sm object-cover shadow-[1px_1px_5px_0px_var(--primary-blue)]"
-          style={{
-            position: "absolute",
-            left: trail.x,
-            top: trail.y,
-            pointerEvents: "none",
-            opacity: 1,
-            transform: "translate(-50%, -50%)",
-            transition: "opacity 0.1s ease-out, transform 0.1s ease-out",
-          }}
-          onLoad={(e) => {
-            setTimeout(() => {
-              (e.target as HTMLImageElement).style.opacity = "0";
-            }, 2000);
-          }}
-        />
+        <TrailingImage key={trail.id} trail={trail}/>
       ))}
     </div>
   );
