@@ -41,11 +41,6 @@ const TrailingImage: React.FC<TrailingImageProps> = ({ trail }) => {
             transform: "translate(-50%, -50%)",
             transition: "opacity 0.1s ease-out, transform 0.1s ease-out",
         }}
-        onLoad={(e) => {
-        setTimeout(() => {
-            (e.target as HTMLImageElement).style.opacity = "0";
-        }, 2000);
-        }}
     />
   )
 }
