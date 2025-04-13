@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import CursorDot from "@/app/my_components/shared/cursorPointers/CursorDot";
 import TrailingImage from "./Background/TrailingImage";
+import { generateTrail } from "./Background/generateTrail";
 
 interface Trail {
   id: number;
@@ -17,12 +18,7 @@ const Background = (): React.ReactElement => {
 
   const handleMouseMove = (event: MouseEvent) => {
     if (bgtrailsRef.current && bgtrailsRef.current.contains(event.target as Node)) { 
-      const newTrail: Trail = {
-        id: Date.now() + Math.random(),
-        src: `/fathersandfigures/${Math.floor(Math.random() * 22 + 1)}.jpg`,
-        x: event.clientX,
-        y: event.clientY,
-      };
+      const newTrail = generateTrail(event.clientX, event.clientY);
 
       setTrails((prevTrails) => [...prevTrails, newTrail]);
 
