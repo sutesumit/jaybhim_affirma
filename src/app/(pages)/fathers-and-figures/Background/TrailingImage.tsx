@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react'
+import React from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 interface TrailingImageProps {
     trail: {
@@ -12,37 +13,29 @@ interface TrailingImageProps {
 
 const TrailingImage: React.FC<TrailingImageProps> = ({ trail }) => {
 
-    const imgRef = useRef<HTMLImageElement>(null);
-
-    useEffect(() => {
-        const timeOut = setTimeout(() => {
-            if (imgRef.current) {
-                imgRef.current.style.opacity = "0";
-            }
-        }, 2000);
-        return () => clearTimeout(timeOut);
-    }, []);
-
-
-
   return (
-    <Image
-        ref={imgRef}
-        src={trail.src}
-        alt="Trail Image"
-        width={300}
-        height={300}
-        className="absolute rounded-sm object-cover shadow-[1px_1px_5px_0px_var(--primary-blue)]"
+    <motion.div
+        initial={{ scale: 0.8, rotate: 3 }}
+        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        exit={{ opacity: 0, scale: 0, rotate: -30 }}
+        transition={{ duration: 0.3 }}
         style={{
-            left: trail.x,
-            top: trail.y,
+            position: 'absolute',
+            left: trail.x - 150,
+            top: trail.y - 150,
             pointerEvents: "none",
             opacity: 1,
-            transform: "translate(-50%, -50%)",
-            transition: "opacity 0.1s ease-out, transform 0.1s ease-out",
         }}
-    />
-  )
+    >
+        <Image
+            src={trail.src}
+            alt="Trail Image"
+            width={300}
+            height={300}
+            className="rounded-sm object-cover shadow-[1px_1px_5px_0px_var(--primary-blue)]"
+        />
+    </motion.div>
+  );
 }
 
 export default TrailingImage

@@ -3,6 +3,7 @@ import React, { useState, useCallback, useRef } from "react";
 import CursorDot from "@/app/my_components/shared/cursorPointers/CursorDot";
 import TrailingImage from "./TrailingImage";
 import { useMouseTrail } from "./useMouseTrail";
+import { AnimatePresence } from 'framer-motion'
 
 interface Trail {
   id: number;
@@ -30,9 +31,11 @@ const Background = (): React.ReactElement => {
       ref={bgtrailsRef}
     >
       <CursorDot current={null} />
-      {trails.map((trail) => (
-        <TrailingImage key={trail.id} trail={trail}/>
-      ))}
+      <AnimatePresence>
+        {trails.map((trail) => (
+          <TrailingImage key={trail.id} trail={trail}/>
+        ))}
+      </AnimatePresence>
     </div>
   );
 };
