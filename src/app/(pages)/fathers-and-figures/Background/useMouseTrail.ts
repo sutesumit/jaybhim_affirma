@@ -1,6 +1,6 @@
 'use client'
-import { useEffect } from 'react'
-import { generateTrail } from './generateTrail';
+import { useEffect, useRef } from 'react'
+import { generateTrailImage } from './generateTrailImage';
 
 interface Trail {
     id: number;
@@ -11,16 +11,20 @@ interface Trail {
 
 
 export const useMouseTrail = (bgtrailsRef: React.RefObject<HTMLDivElement | null>, addToTrail: (trail: Trail) => void, removeFromTrail: (id: number) => void) => {
-    useEffect(() => {
+  const mouseMoveCounter = useRef(0)
+  useEffect(() => {
         const handleMouseMove = (event: MouseEvent) => {
           if (bgtrailsRef.current?.contains(event.target as Node)) { 
-            const newTrail: Trail = generateTrail(event.clientX, event.clientY);
-      
-            addToTrail(newTrail);
-      
-            setTimeout(() => {
-                removeFromTrail(newTrail.id);
-            }, 1000);
+            mouseMoveCounter.current++
+              if (mouseMoveCounter.current % 15 === 0){
+              const newTrail: Trail = generateTrailImage(event.clientX, event.clientY);
+        
+              addToTrail(newTrail);
+        
+              setTimeout(() => {
+                  removeFromTrail(newTrail.id);
+              }, 1600);
+            }
           }
         };
         window.addEventListener("mousemove", handleMouseMove);
