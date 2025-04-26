@@ -16,7 +16,8 @@ const ArtCanvas = () => {
     useEffect(() => {
         setPhotoStyle(Array.from({ length: 23}, (_, i)=>{
             return {
-                transform: `scale(${Math.random() * .6 + .8}) rotate(${Math.random() * 60 - 30}deg)`,
+                rotate: Math.random() * 60 - 30,
+                scale: Math.random() * .6 + .8
             }
         }))
     }, [])
@@ -33,7 +34,7 @@ const ArtCanvas = () => {
                     key={i+200}
                     src={`/fathersandfigures/${i + 1}.jpg`}
                     alt={`Image ${i + 1}`}
-                    style={photoStyle[i]}
+                    animate={photoStyle[i]}
                     dragConstraints={artCanvasRef}
                 />
             )
