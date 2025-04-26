@@ -18,4 +18,4 @@
         return photoStyle
     }
 
-    export default usePhotoStyle
+    export { usePhotoStyle }

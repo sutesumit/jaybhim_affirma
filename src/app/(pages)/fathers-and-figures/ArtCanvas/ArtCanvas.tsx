@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import Seperator from '@/app/my_components/shared/Seperator'
 import Instruction from './Instruction'
 import DraggablePhoto from './DraggablePhoto'
-import usePhotoStyle from './usePhotoStyleHook'
+import { usePhotoStyle } from './usePhotoStyleHook'
 
 // ArtCanvas component for the Fathers and Figures page
 const ArtCanvas = () => {

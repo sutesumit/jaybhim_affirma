@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import SubmitCards from './SubmitCards';
 import HeroSection from './HeroSection';
-import ArtCanvas from './ArtCanvas/ArtCanvas';
+import { ArtCanvas } from './ArtCanvas';
 
 
 // Main landing page component for the "Fathers and Figures" page.
