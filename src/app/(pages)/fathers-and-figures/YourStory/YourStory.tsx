@@ -2,6 +2,7 @@ import Seperator from '@/app/my_components/shared/Seperator'
 import React from 'react'
 import InstructionReel from './InstructionReel'
 import YourStoryForm from './YourStoryForm'
+import StoryCard from './StoryCard';
 
 interface YourStoryProps {
   artCanvasRef: React.RefObject<HTMLDivElement | null>;
@@ -13,7 +14,8 @@ interface YourStoryProps {
 
 const YourStory: React.FC<YourStoryProps> = ({ artCanvasRef }) => {
   return (
-    <>
+    <>  
+        
         <div className="relative isolate text-container grid md:grid-cols-2 my-2 md:flex-row flex-col items-center justify-center gap-5">
             <InstructionReel />
             <YourStoryForm artCanvasRef={artCanvasRef} />
@@ -22,7 +24,7 @@ const YourStory: React.FC<YourStoryProps> = ({ artCanvasRef }) => {
         <div className="relative">
             <Seperator />
         </div>
-
+        <StoryCard />
         
     </>
   )
