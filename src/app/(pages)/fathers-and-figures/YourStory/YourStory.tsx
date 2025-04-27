@@ -2,7 +2,10 @@ import Seperator from '@/app/my_components/shared/Seperator'
 import React from 'react'
 import InstructionReel from './InstructionReel'
 import YourStoryForm from './YourStoryForm'
-import StoryCard from './StoryCard';
+import { StoryCardSet } from '../StoryCards'
+import { getLocalStories } from './localStories'
+import { StoryObjectType } from '../types' // Importing the StoryObjectType type for type checking
+
 
 interface YourStoryProps {
   artCanvasRef: React.RefObject<HTMLDivElement | null>;
@@ -13,6 +16,16 @@ interface YourStoryProps {
 // The artCanvasRef prop is passed down to the YourStoryForm component, allowing it to access the ArtCanvas element directly
 
 const YourStory: React.FC<YourStoryProps> = ({ artCanvasRef }) => {
+
+  // State to hold the local stories after the component mounts
+  const [localStories, setLocalStories] = React.useState<StoryObjectType[]>([])
+
+  // Effect to retrieve local stories when the component mounts
+  React.useEffect(() => {
+    const pastStories = getLocalStories();
+    setLocalStories(pastStories); // Update the localStories state with the retrieved stories
+  }, []);
+
   return (
     <>  
         
@@ -24,7 +37,7 @@ const YourStory: React.FC<YourStoryProps> = ({ artCanvasRef }) => {
         <div className="relative">
             <Seperator />
         </div>
-        <StoryCard />
+        { localStories.length > 0 && <StoryCardSet storyObject={localStories}  />}
         
     </>
   )
