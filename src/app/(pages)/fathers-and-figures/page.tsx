@@ -1,11 +1,12 @@
 'use client'
 import React from 'react';
-import Seperator from '@/app/my_components/shared/Seperator'
 import Image from 'next/image';
 import Link from 'next/link';
-import SubmitCards from './SubmitCards';
 import HeroSection from './HeroSection';
 import { ArtCanvas } from './ArtCanvas';
+import { YourStory } from './YourStory';
+import SubmitCards from './SubmitCards';
+import Seperator from '@/app/my_components/shared/Seperator';
 
 
 // Main landing page component for the "Fathers and Figures" page.
@@ -16,41 +17,13 @@ export default function Home() {
     <>
       <HeroSection />
       <ArtCanvas />
-      {/* Section 3: Submit your own story here: */}
-      
-      <div className="relative isolate text-container grid md:grid-cols-2 my-2 md:flex-row flex-col items-center justify-center gap-5">
-        <div className="flex-1 w-full max-h-[75vh] aspect-[7/12] border-[1px] border-[var(--primary-blue)] rounded-sm overflow-hidden">
-          <iframe
-            className='rounded-sm inline h-full overflow-hidden'
-            src='https://www.youtube.com/embed/4yjNqLRRPxE?&controls=0&loop=1&playlist=4yjNqLRRPxE&modestbranding=1&showinfo=0&hl=en'
-            title="Maraa Mirrors Reel"
-            allow="accelerometer; autoplay; loop; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            style={{
-              width: '100%',
-              height: '100%',
-              
-            }}
-            >
-            </iframe>
-        </div>
-        <div className='storyboard flex-1 flex flex-col gap-2 h-[80vh] md:h-full w-full'>
-        <button onClick={()=> alert('sumit is still cooking this feature—almost there!')} className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:scale-90 hover:shadow-[4px_4px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out'>Screeshot the story!</button>  
-          <textarea defaultValue={'Describe your story here!'} className='text-center text-sm flex-1 p-5 w-full border-[1px] border-[var(--primary-blue)] rounded-sm' readOnly></textarea>
-          <textarea defaultValue={'Your name (Optional)'} className='text-center text-sm p-1 w-full border-[1px] border-[var(--primary-blue)] rounded-sm' readOnly></textarea>
-          <button onClick={()=> alert('sumit is still cooking this feature—almost there!')} className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:scale-90 hover:shadow-[4px_4px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out'>Send me your story!</button>  
-        </div>      
-      </div>
-
-      <div className="relative">
-        <Seperator />
-      </div>
+      <YourStory />
 
       <SubmitCards />
 
-      <div className="relative">
-        <Seperator />
-      </div>
+        <div className="relative">
+            <Seperator />
+        </div>
 
       {/* Section 4: Maraa BIC Exhibition Photos */}
       <div className='relative isolate p-5 flex flex-col items-center justify-center'>
