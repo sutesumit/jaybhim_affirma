@@ -1,4 +1,5 @@
 import React from 'react'
+import html2canvas from 'html2canvas'
 
 interface YourStoryFormProps {
   artCanvasRef: React.RefObject<HTMLDivElement | null>;
@@ -10,7 +11,6 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
 
   // Reference tag to the .art-canvas div container where dragable photo elements live
   // This ref is used to access the DOM element directly, allowing for manipulation or measurement of the element
-
 
   const submissions: Object[] = []
 
@@ -26,10 +26,40 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
     console.log(submissions)
   }
 
+  // Function to handle the screenshot functionality
+  // This function uses the html2canvas library to take a screenshot of the artCanvasRef element
+  const handleScreenshot = async () => {
+    // Check if the artCanvasRef is not null before proceeding to take a screenshot
+    if (!artCanvasRef.current){
+      console.error('Artwork is not loaded yet!')
+      return
+    }
 
-  const handleScreenshot = () => {
-    console.log('Screenshot taken!')
-    console.log(artCanvasRef.current)
+    try{
+      // Use html2canvas to take a screenshot of the artCanvasRef element
+      // The screenshot will be saved as a canvas element
+      const canvas = await html2canvas(artCanvasRef.current)
+
+      // Convert the canvas to a data URL in PNG format
+      // This data URL can be used to display the screenshot or save it as an image
+      const dataURL = canvas.toDataURL('image/png')
+      
+      // Create a link element to download the screenshot
+      const link = document.createElement('a')
+
+      // Set the href attribute of the link to the data URL
+      link.href = dataURL
+
+      // Set the download attribute of the link to specify the filename for the downloaded image
+      link.download = 'fathers-and-figures-by-sumitsute-your-screenshot.png'
+
+      // Programmatically click the link to trigger the download
+      // This simulates a click event on the link, causing the browser to download the image
+      link.click()
+
+    } catch (error) {
+      console.error('Screenshot failed:', error)
+    }
   }
 
   
