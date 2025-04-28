@@ -1,8 +1,7 @@
 import React from 'react'
 import html2canvas from 'html2canvas'
 import { StoryObjectType } from '../types' // Importing the StoryObjectType type for type checking
-import { addLocalStory } from './localStories' // Importing the addLocalStory function for adding stories to local storage
-import dynamic from 'next/dynamic'
+import { addLocalStory, getLocalStories } from './localStories' // Importing the addLocalStory function for adding stories to local storage
 
 interface YourStoryFormProps {
   artCanvasRef: React.RefObject<HTMLDivElement | null>;
@@ -19,6 +18,13 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
 
+    // Check if the story is empty and log an error if it is
+    if(!formData.get('story')){
+      alert('Your story is waiting to be told!')
+      return
+    }
+    
+
     // Convert the FormData into a StoryObjectType
     const data: StoryObjectType = {
       id: `${Date.now() + Math.random()}`, // Generate a unique ID based on the current timestamp on the client side
@@ -32,6 +38,7 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
 
     // Clear the form after submission
     // This is done by resetting the form element, which clears all input fields and textarea
+    
     e.currentTarget.reset()
   }
 
@@ -81,18 +88,18 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
           onClick={() => handleScreenshot()} 
           className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:scale-90 hover:shadow-[4px_4px_0px_0px_var(--primary-blue)] transition duration-300 ease-in-out'
         >
-          Screenshot the story!
+          Save your story snapshot!
         </button>  
         
         <textarea 
-          placeholder={'Describe your story here!'} 
+          placeholder={'Tell the tale you created!'} 
           name='story' 
           className='text-justify placeholder:justify-center text-xs flex-1 p-5 w-full border-[1px] border-[var(--primary-blue)] rounded-sm'
         ></textarea>
         
         <input 
           type='text' 
-          placeholder={'Your name (Optional)'} 
+          placeholder={'Sign your name! (optional)'} 
           name='name' 
           className='text-center text-xs p-2 border-[1px] border-[var(--primary-blue)] rounded-sm'
         ></input>
@@ -101,7 +108,7 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
           type='submit' 
           className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:scale-90 hover:shadow-[4px_4px_0px_0px_var(--primary-blue)] transition duration-300 ease-in-out'
         >
-          Save your story!
+          Craft your draft below!
         </button>
     </form>
     </>
