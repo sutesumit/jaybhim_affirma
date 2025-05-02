@@ -1,27 +1,41 @@
-import React, { useEffect } from 'react'
+'use client'
+import React, { useEffect, useContext } from 'react'
 import StoryCard from './StoryCard'
-import { StoryObjectType } from '../types'
+import { MyStoriesContext } from '../YourStory/MyStoriesProvider'
 
 
-const StoryCardSet = ({ storyObject }: { storyObject: StoryObjectType[] }) => {
+const StoryCardSet = () => {
 
-  const [rotations, setRotations] = React.useState<number[]>([])
+  const context = useContext(MyStoriesContext)
+
+  if (!context) {
+    // throw new Error('StoryCardSet must be used within a MyStoriesProvider')
+    return null
+  }
+
+  const { myStories = [] } = context
+
+  const [ rotations, setRotations ] = React.useState<number[]>([])
 
   useEffect(() => {
-    const newRotations = storyObject.map(() => Math.floor(Math.random() * 5 - 2.5)) // Generate a random rotation between -2.5 and 2.5 degrees
-    setRotations(newRotations) 
-  }, [storyObject])
+    const randomRotations = Array.from({ length: myStories.length }, () => Math.floor(Math.random() * 5) - 2.5) 
+    setRotations(randomRotations)
+  }, [myStories])
+
+  
+
 
   return (
     <div
-        className='all-stories h-[25rem] text-container overflow-x-auto scroll-smooth'
+        className='all-stories h-[25rem] z-10 text-container overflow-x-auto scroll-smooth'
+        
     >
-        {storyObject.map((story, index) => {
+        {myStories.map((story, index) => {
             return (
             <StoryCard 
                 key={index} 
-                story={story} 
-                rotation={rotations[index]}
+                story={story}
+                rotation={rotations[index]} // Pass the random rotation value to each StoryCard 
             />
             )
         })}        

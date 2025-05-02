@@ -1,17 +1,23 @@
-import React from 'react'
+
+import React, { useContext } from 'react'
 import html2canvas from 'html2canvas'
 import { StoryObjectType } from '../types' // Importing the StoryObjectType type for type checking
-import { addLocalStory, getLocalStories } from './localStories' // Importing the addLocalStory function for adding stories to local storage
+import { MyStoriesContext } from './MyStoriesProvider'
 
 interface YourStoryFormProps {
   artCanvasRef: React.RefObject<HTMLDivElement | null>;
-}
+  }
+
 
 // This component is responsible for rendering the form where users can submit their stories and names
-// It includes a textarea for the story, an optional name field, and a submit button
 const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
 
-  // State to keep track of hydration of the component
+  const context = useContext(MyStoriesContext)
+  if (!context) {
+    throw new Error('YourStoryForm must be used within a MyStoriesProvider')
+  }
+
+  const setMyStories = context.setMyStories
 
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,7 +26,7 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
 
     // Check if the story is empty and log an error if it is
     if(!formData.get('story')){
-      alert('Your story is waiting to be told!')
+      alert('Your tale is waiting to be told! Fill the story field!')
       return
     }
     
@@ -32,9 +38,13 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
       name: formData.get('name') as string || 'Anonymous',
       createdAt: new Date().toISOString()
     } 
-    
+
     // Add the new story to local storage using the addLocalStory function
-    addLocalStory(data as StoryObjectType)
+    setMyStories((prevStories) => {
+      console.log('Previous stories:', prevStories)
+      return [data, ...prevStories]
+    })
+
 
     // Clear the form after submission
     // This is done by resetting the form element, which clears all input fields and textarea
@@ -88,7 +98,7 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
           onClick={() => handleScreenshot()} 
           className='border-[1px] text-xs rounded-sm border-[var(--primary-blue)] p-1 hover:scale-90 hover:shadow-[4px_4px_0px_0px_var(--primary-blue)] transition duration-300 ease-in-out'
         >
-          Save your story snapshot!
+          Save your collage snapshot!
         </button>  
         
         <textarea 
