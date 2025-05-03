@@ -41,7 +41,6 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
 
     // Add the new story to local storage using the addLocalStory function
     setMyStories((prevStories) => {
-      console.log('Previous stories:', prevStories)
       return [data, ...prevStories]
     })
 

@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { StoryObjectType } from '../types'
-import { getLocalStories } from './handleMyStories'
 
 interface MyStoriesContextType {
   myStories: StoryObjectType[];
@@ -12,8 +11,14 @@ export const MyStoriesContext = createContext< MyStoriesContextType | undefined 
 
 export const MyStoriesProvider = ({ children }: { children: React.ReactNode }) => {
 
-  const [myStories, setMyStories] = useState<StoryObjectType[]>([])
+  const [myStories, setMyStories] = useState<StoryObjectType[]>(() => {
+    const localStories = localStorage.getItem('localStories')
+    return localStories ? JSON.parse(localStories) : []
+  })
   // Initialize the state with stories from local storage when the component mounts
+  useEffect(() => {
+    localStorage.setItem('localStories', JSON.stringify(myStories))
+  }, [myStories])
 
   return (
     <MyStoriesContext.Provider value= {{ myStories, setMyStories}}>
