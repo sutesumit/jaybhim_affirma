@@ -1,12 +1,9 @@
-import React, { useContext } from 'react'
-import { MyStoriesContext } from '../YourStory/MyStoriesProvider'
+import React from 'react'
+import { useMyStories } from '../YourStory/MyStoriesProvider'
 
 const ButtonClearDraft = () => {
-    const context = useContext(MyStoriesContext)
-
-    if (!context) return null
-
-    const { setMyStories } = context
+    
+    const { setMyStories } = useMyStories()
 
     const handleClearDrafts = () => {
         setMyStories([])

@@ -1,18 +1,13 @@
 'use client'
-import React, { useContext } from 'react'
+import React from 'react'
 import { StoryCardSet } from '../StoryCards'
-import { MyStoriesContext } from '../YourStory/MyStoriesProvider'
 import ButtonClearDraft from './ButtonClearDraft'
 import ButtonQueueDraft from './ButtonQueueDraft'
+import { useMyStories } from '../YourStory/MyStoriesProvider'
 
 const StoryCardSetWrapper= () => {
 
-    const context = useContext(MyStoriesContext)
-
-    if (!context) return null
-
-    const { myStories } = context
-
+    const { myStories } = useMyStories()
 
     if (myStories.length === 0) {
         return (

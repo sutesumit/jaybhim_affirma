@@ -1,13 +1,9 @@
-import React, { useContext } from 'react'
-import { MyStoriesContext } from '../YourStory/MyStoriesProvider'
+import React from 'react'
+import { useMyStories } from '../YourStory/MyStoriesProvider'
 
 const ButtonQueueDraft = () => {
 
-    const context = useContext(MyStoriesContext)
-
-    if (!context) return null
-
-    const { myStories } = context
+    const { myStories } = useMyStories()
 
     if (myStories.length === 0) {
         return null
