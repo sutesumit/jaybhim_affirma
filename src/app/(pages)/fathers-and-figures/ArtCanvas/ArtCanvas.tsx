@@ -1,16 +1,21 @@
-import React, { useRef } from 'react'
+import React, { forwardRef, useRef, useImperativeHandle } from 'react'
 import Seperator from '@/app/my_components/shared/Seperator'
 import Instruction from './Instruction'
 import DraggablePhoto from './DraggablePhoto'
 import { usePhotoStyle } from './usePhotoStyleHook'
 
-// ArtCanvas component for the Fathers and Figures page
-const ArtCanvas = () => {
+// ArtCanvas component for the Fathers and Figures page, using forwardRef to allow `YourStoryForm` component to pass a ref to the canvas element
+// This component is responsible for rendering the canvas where the draggable photo elements are displayed
+const ArtCanvas = forwardRef((props, ref) => {
     // Reference tag to the .art-canvas div container where dragable photo elements live
     const artCanvasRef = useRef<HTMLDivElement | null>(null)
 
     // Custom hook to return state to store the style properties for the dragable photo elements
     const photoStyle = usePhotoStyle()
+
+    // useImperativeHandle is used to expose the artCanvasRef to the parent component (page)
+    // This allows the parent component to access the DOM element directly, allowing for manipulation or measurement of the element
+    useImperativeHandle(ref, () => artCanvasRef.current);
 
     return (
         <div 
@@ -36,6 +41,7 @@ const ArtCanvas = () => {
         <Seperator />
       </div>
   )
-}
+})
 
+// This is a default export of the ArtCanvas component, which can be imported and used in other parts of the application
 export default ArtCanvas

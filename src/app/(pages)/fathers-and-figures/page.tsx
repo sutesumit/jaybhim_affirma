@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import HeroSection from './HeroSection';
@@ -12,12 +12,13 @@ import Seperator from '@/app/my_components/shared/Seperator';
 // Main landing page component for the "Fathers and Figures" page.
 
 export default function Home() {
+  const artCanvasRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <>
       <HeroSection />
-      <ArtCanvas />
-      <YourStory />
+      <ArtCanvas ref={artCanvasRef} />
+      <YourStory artCanvasRef={artCanvasRef} />
 
       <SubmitCards />
 
