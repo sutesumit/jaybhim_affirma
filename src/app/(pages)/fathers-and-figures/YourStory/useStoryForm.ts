@@ -1,16 +1,10 @@
 
-import { useContext } from "react"
-import { MyStoriesContext } from "./MyStoriesProvider"
+import { useMyStories } from "./MyStoriesProvider"
 import { StoryObjectType } from "../types"
 
 const useStoryForm = () => {
 
-    const context = useContext(MyStoriesContext)
-    if (!context) {
-        throw new Error('useStoryForm must be used within a MyStoriesProvider')
-    }
-
-    const { setMyStories } = context
+    const { setMyStories } = useMyStories()
 
     const submitStory = (formData: FormData): boolean => {
         if(!formData.get('story')){

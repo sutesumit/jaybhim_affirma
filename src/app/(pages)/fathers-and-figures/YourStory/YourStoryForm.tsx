@@ -1,6 +1,5 @@
 
-import React, { useContext } from 'react'
-import { MyStoriesContext } from './MyStoriesProvider'
+import React from 'react'
 import captureScreenshot from './captureScreenshot'
 import useStoryForm from './useStoryForm'
 
@@ -12,11 +11,6 @@ interface YourStoryFormProps {
 // This component is responsible for rendering the form where users can submit their stories and names
 const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
 
-  const context = useContext(MyStoriesContext)
-  if (!context) {
-    throw new Error('YourStoryForm must be used within a MyStoriesProvider')
-  }
-
   const { submitStory } = useStoryForm()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,8 +20,6 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
     if (success) e.currentTarget.reset()
   }
 
-  // Function to handle the screenshot functionality
-  // This function uses the html2canvas library to take a screenshot of the artCanvasRef element
   const handleScreenshot = async () => {
     // Check if the artCanvasRef is not null before proceeding to take a screenshot
     if (!artCanvasRef.current){

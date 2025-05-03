@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useContext, useState } from 'react'
 import { StoryObjectType } from '../types'
 
 interface MyStoriesContextType {
@@ -16,12 +16,24 @@ export const MyStoriesProvider = ({ children }: { children: React.ReactNode }) =
   useEffect(() => {
     const localStories = localStorage.getItem('localStories')
     if (localStories) {
-      setMyStories(JSON.parse(localStories))
+      try {
+        const parsedStories = JSON.parse(localStories)
+        if (!Array.isArray(parsedStories)) {
+          throw new Error('Invalid local stories format')
+        }
+        setMyStories(parsedStories)
+      } catch (error){
+        console.error('Failed to parse local stories:', error)
+      }
     }
   }, [])
   
   useEffect(() => {
-    localStorage.setItem('localStories', JSON.stringify(myStories))
+    try {
+      localStorage.setItem('localStories', JSON.stringify(myStories))
+    } catch (error){
+      console.error('Failed to save local stories:', error)
+    }
   }, [myStories])
 
   return (
@@ -29,4 +41,12 @@ export const MyStoriesProvider = ({ children }: { children: React.ReactNode }) =
       { children }
     </MyStoriesContext.Provider>
   )
+}
+
+export const useMyStories = () => {
+  const context = useContext(MyStoriesContext)
+  if (!context) {
+    throw new Error('useMyStories must be used within a MyStoriesProvider')
+  }
+  return context
 }
