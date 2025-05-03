@@ -1,8 +1,8 @@
 
 import React, { useContext } from 'react'
-import html2canvas from 'html2canvas'
-import { StoryObjectType } from '../types' // Importing the StoryObjectType type for type checking
 import { MyStoriesContext } from './MyStoriesProvider'
+import captureScreenshot from './captureScreenshot'
+import useStoryForm from './useStoryForm'
 
 interface YourStoryFormProps {
   artCanvasRef: React.RefObject<HTMLDivElement | null>;
@@ -17,38 +17,13 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
     throw new Error('YourStoryForm must be used within a MyStoriesProvider')
   }
 
-  const setMyStories = context.setMyStories
-
+  const { submitStory } = useStoryForm()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-
-    // Check if the story is empty and log an error if it is
-    if(!formData.get('story')){
-      alert('Your tale is waiting to be told! Fill the story field!')
-      return
-    }
-    
-
-    // Convert the FormData into a StoryObjectType
-    const data: StoryObjectType = {
-      id: `${Date.now() + Math.random()}`, // Generate a unique ID based on the current timestamp on the client side
-      story: formData.get('story') as string,
-      name: formData.get('name') as string || 'Anonymous',
-      createdAt: new Date().toISOString()
-    } 
-
-    // Add the new story to local storage using the addLocalStory function
-    setMyStories((prevStories) => {
-      return [data, ...prevStories]
-    })
-
-
-    // Clear the form after submission
-    // This is done by resetting the form element, which clears all input fields and textarea
-    
-    e.currentTarget.reset()
+    const success = submitStory(formData)
+    if (success) e.currentTarget.reset()
   }
 
   // Function to handle the screenshot functionality
@@ -60,31 +35,7 @@ const YourStoryForm: React.FC<YourStoryFormProps> = ({ artCanvasRef }) => {
       return
     }
 
-    try{
-      // Use html2canvas to take a screenshot of the artCanvasRef element
-      // The screenshot will be saved as a canvas element
-      const canvas = await html2canvas(artCanvasRef.current)
-
-      // Convert the canvas to a data URL in PNG format
-      // This data URL can be used to display the screenshot or save it as an image
-      const dataURL = canvas.toDataURL('image/png')
-      
-      // Create a link element to download the screenshot
-      const link = document.createElement('a')
-
-      // Set the href attribute of the link to the data URL
-      link.href = dataURL
-
-      // Set the download attribute of the link to specify the filename for the downloaded image
-      link.download = 'fathers-and-figures-by-sumitsute-your-screenshot.png'
-
-      // Programmatically click the link to trigger the download
-      // This simulates a click event on the link, causing the browser to download the image
-      link.click()
-
-    } catch (error) {
-      console.error('Screenshot failed:', error)
-    }
+    captureScreenshot(artCanvasRef.current, 'fathers-and-figures-screenshot.png')
   }
 
   

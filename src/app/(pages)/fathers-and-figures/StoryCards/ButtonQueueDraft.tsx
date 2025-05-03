@@ -14,6 +14,7 @@ const ButtonQueueDraft = () => {
     }
 
     const handleQueueDraft = () => {
+        console.log(myStories)
         alert('Hang on, Sumit is still cooking this feature!')
     }
 
