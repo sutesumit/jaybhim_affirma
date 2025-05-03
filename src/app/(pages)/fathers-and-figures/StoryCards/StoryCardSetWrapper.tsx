@@ -1,8 +1,6 @@
 'use client'
 import React, { useContext } from 'react'
 import { StoryCardSet } from '../StoryCards'
-import { StoryObjectType } from '../types' // Importing the StoryObjectType type for type checking
-import { getLocalStories, clearLocalStories } from '../YourStory/' // Importing the getLocalStories and clearLocalStories functions for managing local storage 
 import { MyStoriesContext } from '../YourStory/MyStoriesProvider'
 
 const StoryCardSetWrapper= () => {
