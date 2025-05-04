@@ -1,11 +1,12 @@
 import React from 'react'
 import { useMyStories } from '../YourStory/MyStoriesProvider'
+import { clearLocalStories } from '../YourStory/handleLocalStories'
 
 const ButtonClearDraft = () => {
-    
     const { setMyStories } = useMyStories()
 
     const handleClearDrafts = () => {
+        clearLocalStories()
         setMyStories([])
     }
 

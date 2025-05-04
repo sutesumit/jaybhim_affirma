@@ -7,7 +7,7 @@ import { ArtCanvas } from './ArtCanvas';
 import { YourStory } from './YourStory';
 import SubmitCards from './SubmitCards';
 import Seperator from '@/app/my_components/shared/Seperator';
-
+import { Submissions } from './Submissions';
 
 // Main landing page component for the "Fathers and Figures" page.
 
@@ -19,8 +19,9 @@ export default function Home() {
       <HeroSection />
       <ArtCanvas ref={artCanvasRef} />
       <YourStory artCanvasRef={artCanvasRef} />
+      <Submissions />
 
-      <SubmitCards />
+      {/* <SubmitCards /> */}
 
         <div className="relative">
             <Seperator />

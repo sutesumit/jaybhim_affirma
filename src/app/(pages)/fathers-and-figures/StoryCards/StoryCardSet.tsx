@@ -7,7 +7,7 @@ const StoryCardSet = ({ myStories = [] }: { myStories?: StoryObjectType[] }) => 
 
   return (
     <div
-        className='all-stories h-[25rem] z-10 text-container overflow-x-auto scroll-smooth'
+        className='all-stories p-5 h-[25rem] z-10 overflow-x-auto scroll-smooth'
         
     >
         {myStories.map((story, index) => {
