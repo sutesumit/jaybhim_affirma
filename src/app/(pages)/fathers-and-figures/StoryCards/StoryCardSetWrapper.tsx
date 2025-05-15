@@ -20,7 +20,7 @@ const StoryCardSetWrapper= () => {
     return (
     <>
         <div className='text-container p-5 shadow-[inset_0px_0px_6px_var(--primary-blue)] rounded-sm overflow-hidden'>
-        <StoryCardSet myStories={myStories} />
+            <StoryCardSet myStories={myStories} />
         </div>
         <div className='text-container justify-between flex gap-2 mx-0 my-2'>
             <ButtonClearDraft />

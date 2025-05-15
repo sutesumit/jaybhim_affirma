@@ -1,6 +1,6 @@
 import html2canvas from 'html2canvas'
 
-const captureScreenshot = async (
+export const captureScreenshot = async (
     element: HTMLElement,
     filename: string = 'art.sumitsute.com-screenshot.png'
 ) => {
@@ -30,4 +30,13 @@ const captureScreenshot = async (
       }
 }
 
-export default captureScreenshot
+export const getCanvasUrl = async (element: HTMLElement) => {
+    try{
+        const canvas = await html2canvas(element)
+        const dataURL = canvas.toDataURL('image/png')
+        return dataURL
+    } catch (error) {
+        console.error('Failed to get canvas URL:', error)
+        return null
+    }
+}

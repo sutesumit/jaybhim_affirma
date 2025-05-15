@@ -1,6 +1,6 @@
 
 import React from 'react'
-import captureScreenshot from './captureScreenshot'
+import { captureScreenshot } from './captureScreenshot'
 import useStoryForm from './useStoryForm'
 
 interface YourStoryFormProps {
