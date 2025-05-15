@@ -40,12 +40,12 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
             }
             
             if (!artCanvasRef.current){
-                setRotation(Math.random() * 5 - 2.5)
                 return nextVal
             }
             (async () => {
                 setPendingUrl(true)
                 const url = await getCanvasUrl(artCanvasRef.current!)
+                setRotation(Math.random() * 5 - 2.5)
                 setUrl(nextVal ? url : null)
                 setPendingUrl(false)
             })()
@@ -68,11 +68,11 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
     }
 
     return (
-    <div className='relative flex flex-col justify-center'>  
+    <div className='relative flex flex-col justify-center my-5 p-2 overflow-visible'>  
         <InstructionReel />
         <div className='relative w-full text-container overflow-hidden h-[25rem] flex flex-col items-center justify-center '>
             <div 
-                className='relative p-3 w-full h-full rounded-sm border-[1px] border-[--primary-blue] hover:shadow-xl transition-all duration-300'
+                className='relative hover:p-3 w-full h-full rounded-sm border-[1px] border-[--primary-blue] hover:shadow-xl transition-all duration-300'
                 style={{ transform: `rotate(${rotation}deg)` }}
             >
                 <div
@@ -84,17 +84,21 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
                         <m.div
                         className="absolute z-[-1] isolate w-full h-full overflow-hidden pointer-events-none"
                         initial={{
-                          y: -200,
-                          opacity: 0,
+                          rotate: 15,
+                          scale: 1.8,
+                          y: -500,
                         }}
                         animate={{
+                          rotate: 0,
+                          scale: 1,
                           y: 0,
                           opacity: 1,
                         }}
                         exit={{
-                          y: 100,
-                          scale: .8,
-                          opacity: 0,
+                          y: 400,
+                          rotate: -45,
+                          scale: .5,
+                          opacity: 0.1,
                         }}
                         transition={{
                           type: 'spring',
