@@ -18,7 +18,7 @@ export default function Home() {
     <>
       <HeroSection />
       <ArtCanvas ref={artCanvasRef} />
-      <YourStory artCanvasRef={artCanvasRef} />
+      {/* <YourStory artCanvasRef={artCanvasRef} /> */}
       <MakeMyCard artCanvasRef={artCanvasRef} />
       <Submissions />
 
