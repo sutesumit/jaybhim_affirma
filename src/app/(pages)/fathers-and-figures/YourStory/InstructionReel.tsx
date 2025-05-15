@@ -24,7 +24,7 @@ const phoneCaseStyle = {
 
   return (
     <m.div 
-      className='phone-wrapper z-50 relative lg:absolute md:left-2 left-0 md:-rotate-2' 
+      className='phone-wrapper z-10 relative lg:absolute md:left-2 left-0 md:-rotate-2' 
       ref={phoneCaseRef}
       style={phoneCaseStyle}
     >
