@@ -19,9 +19,9 @@ const YourStory: React.FC<YourStoryProps> = ({ artCanvasRef }) => {
       <> 
         <div className="relative isolate text-container grid md:grid-cols-2 my-2 md:flex-row flex-col items-center justify-center gap-5">
             <InstructionReel />
-            <YourStoryForm artCanvasRef={artCanvasRef} />
+            {/* <YourStoryForm artCanvasRef={artCanvasRef} /> */}
         </div>
-        <StoryCardSetWrapper />
+        {/* <StoryCardSetWrapper /> */}
         <div className="relative">
             <Seperator />
         </div>
