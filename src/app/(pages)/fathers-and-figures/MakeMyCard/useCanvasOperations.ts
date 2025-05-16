@@ -1,34 +1,28 @@
 import { getCanvasUrl } from "@/_utils/html2CanvasUtils"
 import { useState, useCallback } from "react"
+import { useMyCardContext } from "./MyCardContext"
 
 interface UseCanvasOperationsProps {
     artCanvasRef: React.RefObject<HTMLDivElement | null>
-    setUrl: (url: string | null) => void
-    setCanvasOn: (canvasOn: boolean | ((prev: boolean) => boolean)) => void
 }
 
-export const useCanvasOperations = ({artCanvasRef, setUrl, setCanvasOn}: UseCanvasOperationsProps) => {
+export const useCanvasOperations = ({artCanvasRef}: UseCanvasOperationsProps) => {
+    const { url, setUrl } = useMyCardContext()
     const [pendingUrl, setPendingUrl] = useState(false)
 
     const handleCanvasUrl = useCallback(() => {
-        setCanvasOn((prev: boolean) => {
-            const nextVal = !prev
-            if(!nextVal){
-                setUrl(null)
-            }
-            
-            if (!artCanvasRef.current){
-                return nextVal
-            }
-            (async () => {
-                setPendingUrl(true)
-                const canvasUrl = await getCanvasUrl(artCanvasRef.current!)
-                setUrl(nextVal ? canvasUrl : null)
-                setPendingUrl(false)
-            })()
-            return nextVal
-        })
-    }, [artCanvasRef, setUrl, setCanvasOn])
+        if (!artCanvasRef.current) return
+        if (url) {
+            setUrl(null)
+            return
+        }
+        (async () => {
+            setPendingUrl(true)
+            const canvasUrl = await getCanvasUrl(artCanvasRef.current!)
+            setUrl(canvasUrl)
+            setPendingUrl(false)
+        })()
+    }, [artCanvasRef, url, setUrl])
     
-    return {pendingUrl, setPendingUrl, handleCanvasUrl}
+    return {pendingUrl, handleCanvasUrl}
 }

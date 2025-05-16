@@ -1,18 +1,26 @@
 import React from 'react'
+import { useCanvasOperations } from './useCanvasOperations'
+import { useMyCardContext } from './MyCardContext'
 import { Loader } from 'lucide-react'
 
-
-const ToggleCanvasButton = ({ handleCanvasUrl, pendingUrl, canvasOn }: { handleCanvasUrl: () => void, pendingUrl: boolean, canvasOn: boolean }) => {
-  
+const ToggleCanvasButton = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElement | null>}) => {
+    const {url} = useMyCardContext()
+    const {handleCanvasUrl, pendingUrl} = useCanvasOperations({artCanvasRef})
   
   return (
     <>
-        <button className='button-style !border-r-0' onClick={handleCanvasUrl} disabled={pendingUrl}>
-            {pendingUrl ? 
-                <span className='grayscale'><Loader className='text-xs inline h-3 animate-spin' />Painting Canvas!</span> 
-            : 
-                <span>{canvasOn ? 'Remove' : 'Add'} canvas background</span>
-            }
+        <button className={`button-style ${pendingUrl ? 'cursor-wait' : ''}`} onClick={handleCanvasUrl} disabled={pendingUrl}>
+            <span>
+                {
+                pendingUrl ? 
+                <span className='flex w-full justify-center items-center'>
+                    <Loader className="mr-2 h-4 w-4 animate-spin" />
+                </span> : 
+                url ? 
+                <span className='flex w-full justify-center items-center'>Clear My Backdrop</span> : 
+                <span className='flex w-full justify-center items-center'>Pull My Collage</span> 
+                }
+            </span>
         </button>
     </>
   )

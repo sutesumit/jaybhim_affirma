@@ -268,3 +268,12 @@
   0%,55%,100%  {border-bottom-left-radius:0;  border-top-right-radius:0}
   20%,30%      {border-bottom-left-radius:50%;border-top-right-radius:50%}
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

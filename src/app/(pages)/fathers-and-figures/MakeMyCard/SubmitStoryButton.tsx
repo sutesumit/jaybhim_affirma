@@ -1,39 +1,14 @@
-import React, { useCallback } from 'react'
+import React from 'react'
+import SubmitDrawer from './SubmitDrawer'
 
 
-interface SubmitStoryButtonProps {
-    url: string | null
-    myStory: string
-    myName: string
-    setUrl: (url: string | null) => void
-    setMyStory: (story: string) => void
-    setMyName: (name: string) => void
-    setCanvasOn: (canvasOn: boolean | ((prev: boolean) => boolean)) => void
-}
 
-
-const SubmitStoryButton = ( {url, myStory, myName, setUrl, setMyStory, setMyName, setCanvasOn}: SubmitStoryButtonProps) => {
+const SubmitStoryButton = () => {
     
-    const clearAllFields = useCallback(() => {
-            setUrl(null)
-            setMyStory('')
-            setMyName('')
-            setCanvasOn(false)
-            localStorage.clear()
-        }, [])
-    
-    const handleSubmitStory = () => {
-        if (!myStory){
-            alert(`Your tale is waiting to be told!`)
-            return
-        }
-        clearAllFields()
-        alert(`sumit is cooking this feature`)
-    }
   return (
-    <button className='button-style !border-l-0' onClick={() => {handleSubmitStory()}}>
-        Submit my card
-    </button>
+    <div className='button-style p-0'>
+        <SubmitDrawer/>
+    </div>
   )
 }
 
