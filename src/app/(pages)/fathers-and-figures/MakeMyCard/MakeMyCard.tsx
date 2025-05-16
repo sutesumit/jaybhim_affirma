@@ -22,6 +22,8 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
     React.useEffect(() => {
         setMyStory(localStorage.getItem('myStory') || '')
         setName(localStorage.getItem('name') || '')
+        setUrl(localStorage.getItem('url') || null)
+        setCanvasOn(localStorage.getItem('canvasOn') === 'true')
     }, [])
 
     const [rotation, setRotation] = React.useState(0)
@@ -45,11 +47,10 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
             (async () => {
                 setPendingUrl(true)
                 const url = await getCanvasUrl(artCanvasRef.current!)
-                setRotation(Math.random() * 5 - 2.5)
                 setUrl(nextVal ? url : null)
                 setPendingUrl(false)
             })()
-
+            setRotation(Math.random() * 5 - 2.5)
             return nextVal
         })
     }
@@ -60,20 +61,24 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
         saveMyStory()
       }, 1000)
       return () => clearInterval(timer)
-    }, [myStory, name])
+    }, [myStory, name, url, canvasOn])
 
     const saveMyStory = () => {
       localStorage.setItem('myStory', myStory)
       localStorage.setItem('name', name)
+      localStorage.setItem('url', url || '')
+      localStorage.setItem('canvasOn', canvasOn.toString())
     }
 
     return (
-    <div className='relative flex flex-col justify-center my-5 p-2 overflow-visible'>  
+    <div className='relative flex flex-col justify-center overflow-visible'>  
         <InstructionReel />
-        <div className='relative w-full text-container overflow-hidden h-[25rem] flex flex-col items-center justify-center '>
+        <div className='relative w-full text-container h-[25rem] flex flex-col items-center justify-center overflow-visible'>
             <div 
-                className='relative hover:p-3 w-full h-full rounded-sm border-[1px] border-[--primary-blue] hover:shadow-xl transition-all duration-300'
-                style={{ transform: `rotate(${rotation}deg)` }}
+                className={`relative flex-1 w-full rounded-sm card-bg card-border card-hover m-3`}
+                style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 2s ease-in-out' }}
+                onMouseEnter={() => setRotation(0)}
+                onMouseLeave={() => setRotation(rotation)}
             >
                 <div
                     className='relative flex flex-col font-handwriting text-xl w-full h-full overflow-hidden submission-card rounded-sm overflow-y-auto scrollbar-thin transition-all duration-300'
@@ -95,7 +100,7 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
                           opacity: 1,
                         }}
                         exit={{
-                          y: 400,
+                          y: -400,
                           rotate: -45,
                           scale: .5,
                           opacity: 0.1,
@@ -137,15 +142,15 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
                     />
                 </div>
             </div>
-            <div className='flex mt-4 bottom-0 w-full text-xs bg-white'>
-                <button className='button-style !rounded-r-none' onClick={handleCanvasUrl} disabled={pendingUrl}>
+            <div className='flex bottom-0 w-full text-xs bg-white'>
+                <button className='button-style !border-r-0' onClick={handleCanvasUrl} disabled={pendingUrl}>
                     {pendingUrl ? 
                         <><Loader className='text-xs inline h-3 animate-spin' /><span className=''>Painting Canvas!</span></> 
                     : 
                         <span>{canvasOn ? 'Remove' : 'Add'} canvas background</span>
                     }
                 </button>
-                <button className='button-style !rounded-l-none' onClick={() => {alert('Sumit is still cooking this feature!')}}>
+                <button className='button-style !border-l-0' onClick={() => {alert('Sumit is still cooking this feature!')}}>
                     Submit my card
                 </button>
             </div>
