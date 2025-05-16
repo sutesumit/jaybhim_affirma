@@ -10,7 +10,7 @@ const StoryCanvasCard = () => {
     
     return (
     <div 
-        className="relative flex-1 w-full rounded-sm card-bg card-border card-hover m-4"
+        className="relative flex-1 w-full rounded-sm card-bg card-border card-shadow"
         style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 1s ease-in-out' }}
         onMouseEnter={() => setRotation(0)}
         onMouseLeave={() => randomRotation()}

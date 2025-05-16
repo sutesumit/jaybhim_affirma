@@ -12,7 +12,7 @@ import {
   } from "@/components/ui/drawer"
 import { Button } from "@/components/ui/button"
 import StoryCanvasCard from './StoryCanvasCard'
-
+import { DownloadIcon, SendIcon, ArrowLeftIcon } from "lucide-react"
 
 
 const SubmitDrawer = () => {
@@ -27,20 +27,24 @@ const SubmitDrawer = () => {
         <DrawerContent className=''>
                 <DrawerHeader className=''>
                     <div 
-                        className='text-container w-full h-full'
+                        className='text-container w-full h-full items-center justify-center'
                     >
                         <StoryCanvasCard/>
                     </div>
                     <DrawerTitle></DrawerTitle>
                     <DrawerDescription></DrawerDescription>
                 </DrawerHeader>
-                <DrawerFooter className='flex gap-2 justify-center items-center'>
-                    <div className='flex gap-2 items-center'>
-                        <Button variant="default">Submit Not Working</Button>
-                        <Button variant="default">Download My Card</Button>
-                    </div>
+                <div className='flex justify-center items-center w-full text-container '>
+                    <input className='w-full text-xs p-1 border border-[var(--primary-blue)] rounded-sm' type="email" placeholder='Verify your email' disabled />
+                </div>
+                <DrawerFooter className='flex flex-col gap-2 justify-center items-center w-full text-container'>
+                        <div className='flex flex-row gap-2 justify-between w-full'>
+                            <Button className='flex-1' variant="myStyle" disabled><ArrowLeftIcon/>Backdrop</Button>
+                            <Button className='flex-1' variant="myStyle" disabled><DownloadIcon/>Download</Button>
+                            <Button className='flex-1' variant="myStyle" disabled><SendIcon/>Submit</Button>
+                        </div>
                     <DrawerClose asChild>
-                        <Button variant="outline">Close</Button>
+                        <Button className='' variant="destructive">Close</Button>
                     </DrawerClose>
                 </DrawerFooter>
             </DrawerContent>
