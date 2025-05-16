@@ -93,7 +93,7 @@
   }
 
   .card-hover {
-    @apply hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-all duration-300 ease-in-out
+    @apply hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transform transition-all duration-300 ease-in-out
   }
 
   .card-shadow {

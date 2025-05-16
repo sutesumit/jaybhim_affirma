@@ -4,11 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import HeroSection from './HeroSection';
 import { ArtCanvas } from './ArtCanvas';
-import { YourStory } from './YourStory';
 import { MakeMyCard } from './MakeMyCard';
 import Seperator from '@/app/my_components/shared/Seperator';
 import { Submissions } from './Submissions';
-import InstructionReel from './YourStory/InstructionReel';
+// import InstructionReel from './YourStory/InstructionReel';
 // Main landing page component for the "Fathers and Figures" page.
 
 export default function Home() {
@@ -18,11 +17,8 @@ export default function Home() {
     <>
       <HeroSection />
       <ArtCanvas ref={artCanvasRef} />
-      {/* <YourStory artCanvasRef={artCanvasRef} /> */}
       <MakeMyCard artCanvasRef={artCanvasRef} />
       <Submissions />
-
-      {/* <SubmitCards /> */}
 
         <div className="relative">
             <Seperator />
