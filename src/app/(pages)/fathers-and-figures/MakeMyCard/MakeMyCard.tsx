@@ -40,7 +40,7 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
             </div>
             <div className='flex bottom-0 w-full text-xs bg-white'>
                 <ToggleCanvasButton handleCanvasUrl={handleCanvasUrl} pendingUrl={pendingUrl} canvasOn={canvasOn}/>
-                <SubmitStoryButton url={url} myStory={myStory} myName={myName}/>
+                <SubmitStoryButton url={url} myStory={myStory} myName={myName} setUrl={setUrl} setMyStory={setMyStory} setMyName={setMyName} setCanvasOn={setCanvasOn}/>
             </div>
         </div>
         <div className='relative'>
