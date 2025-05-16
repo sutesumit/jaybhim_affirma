@@ -11,15 +11,17 @@ const CardCanvas = ({url, rotation}: {url: string | null, rotation: number}) => 
         initial={{
             rotate: 15,
             scale: 1.8,
-            y: -500,
+            y: -400,
         }}
         animate={{
+            borderRadius: '0%',
             rotate: 0,
             scale: 1,
             y: 0,
             opacity: 1,
         }}
         exit={{
+            borderRadius: '100%',
             y: -400,
             rotate: -45,
             scale: .5,
@@ -42,7 +44,6 @@ const CardCanvas = ({url, rotation}: {url: string | null, rotation: number}) => 
             fill
         />
         </m.div>
-        
         }
     </AnimatePresence>  
   )

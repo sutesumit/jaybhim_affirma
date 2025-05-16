@@ -17,15 +17,15 @@ const config: Config = {
   			body: [
   				'var(--font-merriweather)'
   			],
-			jaibhim: [
-			'var(--font-vesper_libre)'
-			],
-			rajdhani: [
-			'var(--font-rajdhani)'
-			],
-			handwriting: [
-				'var(--font-reenie-beanie)'
-			]	
+  			jaibhim: [
+  				'var(--font-vesper_libre)'
+  			],
+  			rajdhani: [
+  				'var(--font-rajdhani)'
+  			],
+  			handwriting: [
+  				'var(--font-reenie-beanie)'
+  			]
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
