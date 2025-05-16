@@ -1,19 +1,15 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react'
+import React from 'react'
 import { useMyCardContext } from './MyCardContext'
 import { useRandomRotation } from '@/_hooks/useRandomRotation'
 import CardCanvas from './CardCanvas'
 import WriteMyCard from './WriteMyCard'
 
-const StoryCanvasCard = forwardRef((_, ref) => {
+const StoryCanvasCard = () => {
     const {url, myStory, myName, setUrl, setMyStory, setMyName} = useMyCardContext()
     const { rotation, setRotation, randomRotation } = useRandomRotation()
-    const storyCanvasRef = useRef<HTMLDivElement>(null)
-
-    useImperativeHandle(ref, () => storyCanvasRef.current)
     
     return (
     <div 
-        ref={storyCanvasRef}
         className="relative flex-1 w-full rounded-sm card-bg card-border card-hover m-4"
         style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 1s ease-in-out' }}
         onMouseEnter={() => setRotation(0)}
@@ -27,5 +23,5 @@ const StoryCanvasCard = forwardRef((_, ref) => {
         </div>
     </div>
     )   
-})
+}
 export default StoryCanvasCard

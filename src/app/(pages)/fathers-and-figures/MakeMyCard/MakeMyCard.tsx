@@ -9,17 +9,16 @@ import ToggleCanvasButton from './ToggleCanvasButton'
 
 interface MakeMyCardProps {
     artCanvasRef: React.RefObject<HTMLDivElement | null>
-    storyCanvasRef: React.RefObject<HTMLDivElement | null>
 }
 
-const MakeMyCard = ({ artCanvasRef, storyCanvasRef }: MakeMyCardProps) => {
+const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
 
     return (
     <div className='relative flex flex-col justify-center overflow-visible'>  
         <InstructionReel />
         <MyCardProvider>
             <div className='relative w-full text-container flex flex-col items-center justify-center overflow-visible'>
-                <StoryCanvasCard ref={storyCanvasRef} />
+                <StoryCanvasCard />
                 <div className='sm:flex bottom-0 w-full text-xs bg-white'>
                     <ToggleCanvasButton artCanvasRef={artCanvasRef}/>
                     <SubmitStoryButton/>
