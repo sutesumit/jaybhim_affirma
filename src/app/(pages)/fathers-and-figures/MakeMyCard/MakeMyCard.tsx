@@ -1,13 +1,14 @@
 'use client'
 import React from 'react'
-import { getCanvasUrl } from '@/_utils/html2CanvasUtils'
 import Seperator from '@/app/my_components/shared/Seperator'
 import InstructionReel from './InstructionReel'
 import { useMyCardLocalStorage } from './useMyCardLocalStorage'
 import { useRandomRotation } from '@/_hooks/useRandomRotation'
 import WriteMyCard from './WriteMyCard'
 import CardCanvas from './CardCanvas'
-import Buttons from './Buttons'
+import ToggleCanvasButton from './ToggleCanvasButton'
+import { useCanvasOperations } from './useCanvasOperations'
+import SubmitStoryButton from './SubmitStoryButton'
 
 interface MakeMyCardProps {
     artCanvasRef: React.RefObject<HTMLDivElement | null>
@@ -17,31 +18,8 @@ interface MakeMyCardProps {
 const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
 
     const {url, myStory, myName, canvasOn, setUrl, setMyStory, setMyName, setCanvasOn} = useMyCardLocalStorage()
-    const [pendingUrl, setPendingUrl] = React.useState(false)
-
+    const {pendingUrl, setPendingUrl, handleCanvasUrl} = useCanvasOperations({artCanvasRef, setUrl, setCanvasOn})
     const { rotation, setRotation, randomRotation } = useRandomRotation()
-
-    const handleCanvasUrl = async () => {
-        setCanvasOn((prev) => {
-            const nextVal = !prev
-            if(!nextVal){
-                setUrl(null)
-            }
-            
-            if (!artCanvasRef.current){
-                return nextVal
-            }
-            (async () => {
-                setPendingUrl(true)
-                const canvasUrl = await getCanvasUrl(artCanvasRef.current!)
-                setUrl(nextVal ? canvasUrl : null)
-                setPendingUrl(false)
-            })()
-            return nextVal
-        })
-    }
-
-    
 
     return (
     <div className='relative flex flex-col justify-center overflow-visible'>  
@@ -55,13 +33,15 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
             >
                 <div
                     className='relative flex flex-col font-handwriting text-xl w-full h-full overflow-hidden submission-card rounded-sm overflow-y-auto scrollbar-thin transition-all duration-300'
-                    
                 >
                     <CardCanvas url={url} rotation={rotation}/>
                     <WriteMyCard myStory={myStory} myName={myName} setMyStory={setMyStory} setMyName={setMyName}/>
                 </div>
             </div>
-            <Buttons handleCanvasUrl={handleCanvasUrl} pendingUrl={pendingUrl} canvasOn={canvasOn}/>
+            <div className='flex bottom-0 w-full text-xs bg-white'>
+                <ToggleCanvasButton handleCanvasUrl={handleCanvasUrl} pendingUrl={pendingUrl} canvasOn={canvasOn}/>
+                <SubmitStoryButton url={url} myStory={myStory} myName={myName}/>
+            </div>
         </div>
         <div className='relative'>
             <Seperator />
