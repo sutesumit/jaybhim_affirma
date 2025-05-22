@@ -14,11 +14,13 @@ import { Button } from "@/components/ui/button"
 import StoryCanvasCard from '../cardBackground/StoryCanvasCard'
 import { DownloadIcon, SendIcon, ArrowLeftIcon } from "lucide-react"
 import { useAuthContext } from '@/auth/useAuthContext'
+import AuthDialog from '@/auth/AuthDialog'
+
 
 
 const SubmitDrawer = () => {
 
-    const { isAuthenticated, userName} = useAuthContext();
+    const { isAuthenticated, setIsAuthenticated } = useAuthContext();
     
   return (
     <Drawer>
@@ -37,7 +39,7 @@ const SubmitDrawer = () => {
                     <DrawerTitle></DrawerTitle>
                     <DrawerDescription></DrawerDescription>
                 </DrawerHeader>
-                <p className='text-center !p-0 !text-xs'>Hello {userName}, you're {isAuthenticated ? 'verified.' : 'not verified.'}</p>
+                <p className='text-center text-gray-500 !p-0 !text-xs italic'>Hello, you're {isAuthenticated ? '' : 'not'} verified.</p>
                 <div className='flex justify-center items-center w-full text-container '>
                     <input className='w-full text-xs p-1 border border-[var(--primary-blue)] rounded-sm' type="email" placeholder='Verify your email' disabled />
                 </div>
@@ -45,7 +47,22 @@ const SubmitDrawer = () => {
                         <div className='flex flex-row gap-2 justify-between w-full'>
                             <Button className='flex-1' variant="myStyle" disabled><ArrowLeftIcon/>Backdrop</Button>
                             <Button className='flex-1' variant="myStyle" disabled><DownloadIcon/>Download</Button>
-                            <Button className='flex-1' variant="myStyle" disabled><SendIcon/>Submit</Button>
+                            { isAuthenticated ?
+                                <Button 
+                                    className='flex-1' 
+                                    variant="myStyle"
+                                    onClick={() => {
+                                        setIsAuthenticated?.(false)
+                                    }}
+                                >
+                                    <SendIcon/>Undo Auth/<span className='line-through'>Submit</span>
+                                </Button>
+                                :
+                                <Button className='flex-1' variant="myStyle">
+                                    <AuthDialog />
+                                </Button>
+                            }
+                            
                         </div>
                     <DrawerClose asChild>
                         <Button className='' variant="destructive">Close</Button>

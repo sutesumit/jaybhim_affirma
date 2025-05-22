@@ -6,8 +6,8 @@ import SubmitDrawer from '../submitDrawer/SubmitDrawer'
 const SubmitStoryButton = () => {
     
   return (
-    <div className='button-style p-0'>
-        <SubmitDrawer/>
+    <div className='button-style p-0 flex justify-between'>
+       <SubmitDrawer/>
     </div>
   )
 }
