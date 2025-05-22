@@ -1,6 +1,6 @@
 import { getCanvasUrl } from "@/_utils/html2CanvasUtils"
 import { useState, useCallback } from "react"
-import { useMyCardContext } from "./MyCardContext"
+import { useMyCardContext } from "../context/MyCardContext"
 
 interface UseCanvasOperationsProps {
     artCanvasRef: React.RefObject<HTMLDivElement | null>

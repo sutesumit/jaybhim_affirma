@@ -1,8 +1,8 @@
 import React from 'react'
-import { useMyCardContext } from './MyCardContext'
+import { useMyCardContext } from '../../context/MyCardContext'
 import { useRandomRotation } from '@/_hooks/useRandomRotation'
 import CardCanvas from './CardCanvas'
-import WriteMyCard from './WriteMyCard'
+import WriteMyCard from '../inputStory/WriteMyCard'
 
 const StoryCanvasCard = () => {
     const {url, myStory, myName, setUrl, setMyStory, setMyName} = useMyCardContext()

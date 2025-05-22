@@ -4,6 +4,7 @@ import React from 'react';
 import { Footer } from './my_components/Footer/';
 import './globals.css';
 import { Header } from './my_components/Header/';
+import { AuthProvider } from '@/auth/AuthContext';
 
 
 interface RootLayoutProps {
@@ -52,11 +53,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${lora.variable} ${merriweather.variable} ${vesper_libre.variable} ${rajdhani.variable} ${reenieBeanie.variable}`}>
-      <body className="min-h-screen">
-        <Header /> 
-        {children}
-        <Footer />
-      </body>
+      <AuthProvider>
+        <body className="min-h-screen">
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </AuthProvider>
     </html>
   );
 
