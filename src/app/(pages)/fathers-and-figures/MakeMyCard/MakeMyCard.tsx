@@ -1,11 +1,11 @@
 'use client'
-import React, { useRef } from 'react'
+import React from 'react'
 import Seperator from '@/app/my_components/shared/Seperator'
-import InstructionReel from './InstructionReel'
-import SubmitStoryButton from './SubmitStoryButton'
-import { MyCardProvider } from './MyCardContext'
-import StoryCanvasCard from './StoryCanvasCard'
-import ToggleCanvasButton from './ToggleCanvasButton'
+import InstructionReel from './components/InstructionReel'
+import SubmitStoryButton from './components/inputStory/SubmitStoryButton'
+import { MyCardProvider } from './context/MyCardContext'
+import StoryCanvasCard from './components/cardBackground/StoryCanvasCard'
+import ToggleCanvasButton from './components/cardBackground/ToggleCanvasButton'
 
 interface MakeMyCardProps {
     artCanvasRef: React.RefObject<HTMLDivElement | null>

@@ -1,6 +1,6 @@
 import React from 'react'
-import { useCanvasOperations } from './useCanvasOperations'
-import { useMyCardContext } from './MyCardContext'
+import { useCanvasOperations } from '../../hooks/useCanvasOperations'
+import { useMyCardContext } from '../../context/MyCardContext'
 import { Loader } from 'lucide-react'
 
 const ToggleCanvasButton = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElement | null>}) => {
