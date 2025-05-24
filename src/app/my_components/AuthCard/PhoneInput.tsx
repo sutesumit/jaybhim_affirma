@@ -2,26 +2,23 @@ import React from 'react'
 import { Label } from '@radix-ui/react-label'
 import { Input } from '@/components/ui/input'
 import { ForwardIcon, Loader } from 'lucide-react';
+import { PhoneInputProps } from '@/lib/auth/auth-types';
 
-interface PhoneInputProps {
-    phone: string,
-    loading: boolean;
-    onChange: (value: string) => void;
-    onSubmit: (phone: string) => void;
-}
 
 const PhoneInput: React.FC<PhoneInputProps> = ({ 
     phone, 
-    loading, 
+    loading,
+    error,
     onChange,
     onSubmit
 }) => {
     
-    const handlePhoneSubmit = (e: React.FormEvent) => {
+    const handlePhoneSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        onSubmit(phone)
+        await onSubmit(phone)
     }
   return (
+    <>
     <form 
         className="flex font-mono justify-center items-center space-y-1.5 relative"
         onSubmit={handlePhoneSubmit}
@@ -32,8 +29,9 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
             value={phone}
             onChange={(e)=>onChange(e.target.value) }
             id="name" 
-            placeholder="+919034567890" 
+            placeholder="+919876543210" 
             disabled={loading}
+            className= {error ? `border-red-400 focus:border-red-400` : ``}
         />
         <button 
             type='submit' 
@@ -43,6 +41,11 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
             {loading ? <Loader className='p-1 animate-spin'/> : <ForwardIcon/>}
         </button>
     </form>
+    {error &&
+        <div className="text-xs font-mono p-1 text-red-400">{error}</div>
+    }
+    </>
+
   )
 }
 

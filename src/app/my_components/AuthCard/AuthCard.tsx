@@ -1,4 +1,4 @@
-import React, { useState} from "react"
+import React, { useCallback, useState} from "react"
 
 import {
   Card,
@@ -6,60 +6,162 @@ import {
   CardDescription,
   CardHeader,
 } from "@/components/ui/card"
-import OTPInput from "./OTPInput"
 import PhoneInput from "./PhoneInput"
+import OtpInput from "./OtpInput"
+import { AuthCardProps, AuthStep, User } from "@/lib/auth/auth-types"
+import { AuthValidator } from "@/lib/auth/auth-validator"
 
 
-const AuthCard: React.FC = () => {
-    const [phone, setPhone] = React.useState('')
-    const [otp, setOtp] = React.useState('')
+const AuthCard: React.FC<AuthCardProps> = ({
+  onAuthError,
+  onAuthSuccess,
+  title = "Keep the trolls at bay — verify to stay:",
+  className = "w-[350px]"
+}) => {
+    const [phone, setPhone] = useState('')
+    const [otp, setOtp] = useState('')
+    const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const [step, setStep] = useState<'phone' | 'otp' >('phone')
+    const [step, setStep] = useState<AuthStep>('phone')
 
-    const handlePhoneSubmit = (submittedPhone: string) => {
+    const handleSendOtp = useCallback(async (submittedPhone: string) => {
       setLoading(true)
-      console.log(`Phone submitted: ${submittedPhone}`)
-      setTimeout(()=> {
+      setError('')
+
+      const validation = AuthValidator.validatePhone(submittedPhone)
+      if(!validation.isValid){
+        setError(validation.error || 'Those digits didn’t dial right. Fix them please.')
+        onAuthError?.(validation.error || 'Those digits didn’t dial right. Fix them please.' )
         setLoading(false)
+        return
+      }
+
+      try {
+        console.log(`Simulating sending OTP to: ${AuthValidator.sanitizePhone(submittedPhone)}`)
+        await new Promise(resolve => setTimeout(resolve, 1500))
         setStep('otp')
-      }, 1000)
-    }
-
-    const handleOtpSubmit = (submittedOtp: string) => {
-      setLoading(true)
-      console.log(`OTP Submitted: ${submittedOtp}`)
-      setTimeout(()=> {
+        setPhone(submittedPhone)
+        console.log('Simulated OTP sent successfully')
+      } catch (error){
+        const errorMessage = '(Simulated Step): OTP is playing hard to get. Try again!'
+        setError(errorMessage)
+        onAuthError?.(errorMessage)
+        console.error(`(Simulated: Error in sending the OTP`, error)
+      } finally {
         setLoading(false)
-        console.log(`OTP Verification simulated. No actual verification yet!`)
-      }, 1000)
+      }
+
+    }, [onAuthError])
+
+    const handleVerifyOtp = useCallback(async (submittedOtp: string) => {
+      setLoading(true)
+      setError('')
+
+      const phoneValidation = AuthValidator.validatePhone(phone)
+      if (!phoneValidation.isValid){
+        setError(phoneValidation.error || 'That doesn’t look like a valid number.')
+        onAuthError?.(phoneValidation.error || 'That doesn’t look like a valid number.')
+        setLoading(false)
+        return
+      }
+
+      const otpValidation = AuthValidator.validateOtp(submittedOtp)
+      if (!otpValidation.isValid){
+        setError(otpValidation.error || 'OTP’s wobbly, balance it with 6 digits.')
+        onAuthError?.(otpValidation.error || 'OTP’s wobbly, balance it with 6 digits.')
+        setLoading(false)
+        return
+      }
+
+      try {
+        console.log(`Simulatting the verification of otp: ${AuthValidator.sanitizeOpt(submittedOtp)} sent to ${AuthValidator.sanitizePhone(phone)}!`)
+        await new Promise(resolve => (setTimeout(resolve, 1500)))
+
+        const simulatedUser: User = {
+          id: 'user-id',
+          phone: AuthValidator.sanitizePhone(phone),
+          created_at: new Date().toISOString()
+        }
+        setStep('verified')
+        onAuthSuccess?.(simulatedUser)
+        console.log(`Successful simulation of OTP Authentication of user ${simulatedUser}`)
+
+
+      } catch (error) {
+        const errorMessage='Simulated: OTP got distracted midway. Send it again!'
+        setError(errorMessage)
+        onAuthError?.(errorMessage)
+        console.error('Simulated: Error in OTP Validation', error)        
+      } finally {
+        setLoading(false)
+      }
+
+      // console.log(`OTP Submitted: ${submittedOtp}`)
+      // setTimeout(()=> {
+      //   setLoading(false)
+      //   console.log(`OTP Verification simulated. No actual verification yet!`)
+      // }, 1000)
+    }, [phone, onAuthSuccess, onAuthError])
+
+    const handleResendOtp = useCallback(async()=>{
+      setOtp('')
+      setError('')
+      await handleSendOtp(phone)
+    },[phone, handleSendOtp])
+
+    const handleChangePhone = useCallback(async()=>{
+      setStep('phone')
+      setOtp('')
+      setError('')
+    },[])
+
+    const stepContent = () => {
+      switch(step){
+        case "phone":
+          return (
+            <PhoneInput 
+              phone={phone} 
+              error={error}
+              loading={loading}
+              onChange={setPhone}
+              onSubmit={handleSendOtp}
+            />
+          )
+        case "otp":
+          return (
+            <OtpInput
+              otp={otp} 
+              error={error}
+              onChange={setOtp}
+              loading={loading}
+              onSubmit={handleVerifyOtp}
+              onResend={handleResendOtp}
+            />
+          )
+        case "verified":
+          return (
+            <div className="text-center text-xs p-1 card-border">Verified Now 🎉</div>
+          )
+        default:
+          return null;
+      }
+      
     }
 
 
   return (
-    <Card className="w-[350px]">
+    <Card className={`${className}`}>
       <CardHeader>
         {/* <CardTitle>Create project</CardTitle> */}
         <CardDescription 
             className="text-xs text-center"
         >
-            Keep the trolls at bay — verify to stay:
+            {title}
         </CardDescription>
       </CardHeader>
       <CardContent>
-          <div className="grid w-full items-center gap-4">
-            <PhoneInput 
-                phone={phone} 
-                loading={loading}
-                onChange={setPhone}
-                onSubmit={handlePhoneSubmit}
-            />
-            <OTPInput 
-                otp={otp} 
-                onChange={setOtp}
-                loading={loading}
-                maxLength={6}
-                onSubmit={handleOtpSubmit}
-            />
+          <div className="grid w-full items-center">
+            {stepContent()}
           </div>
       </CardContent>
     </Card>

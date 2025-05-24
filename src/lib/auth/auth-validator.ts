@@ -6,7 +6,7 @@ export class AuthValidator {
         if (!phone.trim()){
             return {
                 isValid: false, 
-                error: 'Drop your phone digits!'
+                error: 'Mate, drop your phone digits first!'
             }
         }
         if (!this.PHONE_REGEX.test(phone)){
@@ -28,7 +28,7 @@ export class AuthValidator {
         if (!this.OTP_REGEX.test(submittedOtp)){
             return {
                 isValid: false,
-                error: '6 digits, please. No more, no less!'
+                error: 'OTP’s wobbly, balance it with 6 digits.'
             }
         }
         return { isValid: true }
@@ -41,7 +41,4 @@ export class AuthValidator {
     static sanitizeOpt (submittedOtp: string): string {
         return submittedOtp.trim().replace(/\D/g, '')
     }
-    // Define static otpSanitizer
-        //  This funciton takes the otp stirng as input and string as output.
-        //  it similarly directly returns a trimmed version further replaced regex operation with removing any thing non-digt
 }

@@ -19,7 +19,7 @@ export interface AuthResult {
     user?: User
 }
 
-export interface OTPResult {
+export interface OtpResult {
     success: boolean;
     error?: string;
     message?: string;
@@ -42,11 +42,10 @@ export interface PhoneInputProps {
 }
 
 export interface OtpInputProps {
-    phone: string,
     otp: string,
     loading: boolean;
     error?: string;
     onChange: (value: string) => void;
     onSubmit: (otp: string) => Promise<void>;
-    onResend: () => Promise<void>
+    onResend?: () => Promise<void>
 }

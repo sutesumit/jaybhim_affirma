@@ -1,6 +1,6 @@
 import React from 'react'
 import EmailInput from './EmailInput'
-import OTPInput from '@/app/my_components/AuthCard/OTPInput'
+import OtpInput from '@/app/my_components/AuthCard/OtpInput'
 import GetOTP from './GetOTP'
 import VerifyButton from './VerifyButton'
 import { useAuthContext } from '../useAuthContext'
@@ -16,7 +16,7 @@ const AuthInputs = () => {
           <GetOTP />
       </div>
       <div className='otp-input w-full flex flex-col items-center justify-center gap-4'>
-          <OTPInput />
+          {/* <OtpInput /> */}
           <VerifyButton />
       </div>   
     </div>
