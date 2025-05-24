@@ -79,7 +79,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
         {error &&
           <div className="text-xs font-mono p-1 text-red-400">{error}</div>
         }
-        <div className='flex font-mono justify-between mt-4'>
+        <div className='flex font-mono text-primary justify-between mt-4'>
           <button 
             className='p-1 text-xs rounded-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-30 hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]'
             id='resend-otp'
