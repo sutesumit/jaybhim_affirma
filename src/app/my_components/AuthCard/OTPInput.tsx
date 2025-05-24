@@ -14,7 +14,8 @@ const OtpInput: React.FC<OtpInputProps> = ({
     loading,
     onSubmit,
     error,
-    onResend
+    onResend,
+    onBack
 }) => {
 
     const handleOtpSubmit = async (e: React.FormEvent) => {
@@ -36,7 +37,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
     return (
       <>
         <form 
-            className="flex relative items-center space-y-1.5"
+            className="flex justify-evenly items-center space-y-1.5 font-mono"
             onSubmit={handleOtpSubmit}
         >
             
@@ -59,7 +60,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
                     <InputOTPSlot className={error ? 'border-red-400 border-[1px]' : ''} index={5} />
                 </InputOTPGroup>
             </InputOTP>
-            <div className='absolute flex right-0 gap-1'>
+            <>
               <Label className="sr-only" htmlFor="submit-otp">Submit OTP</Label>
               <button
                   id='submit-otp'
@@ -73,28 +74,29 @@ const OtpInput: React.FC<OtpInputProps> = ({
                 <Check/>
                 }
               </button>
-              { onResend &&
-              <>
-              <Label className="sr-only" htmlFor="resend-otp">Resend OTP</Label>
-              <button
-                id='resend-otp'
-                onClick={handleResend}
-                className='disabled:cursor-not-allowed disabled:opacity-30 right-1 p-1 rounded-sm border-[1px] border-[var(--primary-blue)] hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]'
-                disabled={loading}
-              >
-                {loading ?
-                <Loader className='p-1 animate-spin'/> 
-                :
-                <ReplyAll className='-scale-x-100' />
-                }
-              </button>
-              </>
-              }
-            </div>            
+            </>            
         </form>
         {error &&
           <div className="text-xs font-mono p-1 text-red-400">{error}</div>
         }
+        <div className='flex font-mono justify-between mt-4'>
+          <button 
+            className='p-1 text-xs rounded-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-30 hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]'
+            id='resend-otp'
+            onClick={onBack}
+            disabled={loading}
+          >
+            Edit Phone
+          </button>
+          <button 
+            className='p-1 text-xs rounded-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-30 hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]'
+            id='resend-otp'
+            onClick={handleResend}
+            disabled={loading}
+          >
+            Resend OTP
+          </button>
+        </div>
     </>
     )
 }

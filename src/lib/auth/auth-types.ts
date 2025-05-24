@@ -48,4 +48,5 @@ export interface OtpInputProps {
     onChange: (value: string) => void;
     onSubmit: (otp: string) => Promise<void>;
     onResend?: () => Promise<void>
+    onBack?: () => Promise<void>
 }

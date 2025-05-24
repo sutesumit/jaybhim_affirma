@@ -136,11 +136,14 @@ const AuthCard: React.FC<AuthCardProps> = ({
               loading={loading}
               onSubmit={handleVerifyOtp}
               onResend={handleResendOtp}
+              onBack={handleChangePhone}
             />
           )
         case "verified":
           return (
-            <div className="text-center text-xs p-1 card-border">Verified Now 🎉</div>
+            <div className="text-center text-xs p-1 card-border">
+              Verified Now 🎉
+            </div>
           )
         default:
           return null;
