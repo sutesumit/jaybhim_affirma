@@ -1,6 +1,6 @@
-import React, { use } from 'react'
+import React from 'react'
 import EmailInput from './EmailInput'
-import OTPInput from './OTPInput'
+import OTPInput from '@/app/my_components/AuthCard/OTPInput'
 import GetOTP from './GetOTP'
 import VerifyButton from './VerifyButton'
 import { useAuthContext } from '../useAuthContext'
