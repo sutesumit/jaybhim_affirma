@@ -24,7 +24,7 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
                     <ToggleCanvasButton artCanvasRef={artCanvasRef}/>
                     <SubmitStoryButton/>
                 </div>
-                <AuthCard />
+                {/* <AuthCard /> */}
             </div>
         </MyCardProvider>
         <div className='relative'>

@@ -1,12 +1,10 @@
+import { AuthResult, AuthState, User } from "@/lib/auth/auth-types";
 
-export interface AuthContextType {
-    isAuthenticated: boolean;
-    userName?: string;
-    email?: string;
-    OTP?: string;
-    setIsAuthenticated?: (isAuthenticated: boolean) => void;
-    setEmail?: (email: string) => void;
-    setOTP?: (OTP: string) => void;
+
+export interface AuthContextType extends AuthState {
+    setUser: (user: User | null) => (void)
+    revalidate: ()=> Promise<void>
+    logout: ()=>Promise<void>
 }
 
 

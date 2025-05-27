@@ -1,5 +1,5 @@
 export class AuthValidator {
-    private static readonly PHONE_REGEX = /^\+?[1-9]\d{1,14}$/
+    private static readonly PHONE_REGEX = /^\+[1-9]\d{1,14}$/
     private static readonly OTP_REGEX = /^\d{6}$/
 
     static validatePhone (phone: string): {isValid: boolean, error?: string}{
@@ -12,7 +12,7 @@ export class AuthValidator {
         if (!this.PHONE_REGEX.test(phone)){
             return {
                 isValid: false, 
-                error: 'Give those digits a quick fix!'
+                error: 'Give those digits a quick fix and have a country code!'
             }
         }      
         return { isValid: true}

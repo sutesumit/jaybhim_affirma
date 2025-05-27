@@ -10,6 +10,7 @@ import PhoneInput from "./PhoneInput"
 import OtpInput from "./OtpInput"
 import { AuthCardProps, AuthStep, User } from "@/lib/auth/auth-types"
 import { AuthValidator } from "@/lib/auth/auth-validator"
+import { AuthService } from "@/lib/auth/auth-service"
 
 
 const AuthCard: React.FC<AuthCardProps> = ({
@@ -37,11 +38,17 @@ const AuthCard: React.FC<AuthCardProps> = ({
       }
 
       try {
-        console.log(`Simulating sending OTP to: ${AuthValidator.sanitizePhone(submittedPhone)}`)
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        setStep('otp')
-        setPhone(submittedPhone)
-        console.log('Simulated OTP sent successfully')
+        const result = await AuthService.sendOtp(submittedPhone)
+
+        if (result.success){
+          setStep('otp')
+          setPhone(submittedPhone)
+          console.log('Simulated OTP sent successfully')
+        } else {
+          setError(result.error || 'Failed to send otp.')
+          onAuthError?.(result.error || 'Failed to send otp.')
+        }
+
       } catch (error){
         const errorMessage = '(Simulated Step): OTP is playing hard to get. Try again!'
         setError(errorMessage)
@@ -74,19 +81,16 @@ const AuthCard: React.FC<AuthCardProps> = ({
       }
 
       try {
-        console.log(`Simulatting the verification of otp: ${AuthValidator.sanitizeOpt(submittedOtp)} sent to ${AuthValidator.sanitizePhone(phone)}!`)
-        await new Promise(resolve => (setTimeout(resolve, 1500)))
+        const result = await AuthService.verifyOtp(phone, submittedOtp)
 
-        const simulatedUser: User = {
-          id: 'user-id',
-          phone: AuthValidator.sanitizePhone(phone),
-          created_at: new Date().toISOString()
+        if(result.success && result.user){
+          setStep('verified')
+          onAuthSuccess?.(result.user)
+          console.log(`Successful simulation of OTP Authentication of user ${result.user}`)
+        } else {
+          setError(result.error || 'Invalid OTP')
+          onAuthError?.(result.error || 'Invalid OTP')
         }
-        setStep('verified')
-        onAuthSuccess?.(simulatedUser)
-        console.log(`Successful simulation of OTP Authentication of user ${simulatedUser}`)
-
-
       } catch (error) {
         const errorMessage='Simulated: OTP got distracted midway. Send it again!'
         setError(errorMessage)
@@ -95,12 +99,6 @@ const AuthCard: React.FC<AuthCardProps> = ({
       } finally {
         setLoading(false)
       }
-
-      // console.log(`OTP Submitted: ${submittedOtp}`)
-      // setTimeout(()=> {
-      //   setLoading(false)
-      //   console.log(`OTP Verification simulated. No actual verification yet!`)
-      // }, 1000)
     }, [phone, onAuthSuccess, onAuthError])
 
     const handleResendOtp = useCallback(async()=>{
