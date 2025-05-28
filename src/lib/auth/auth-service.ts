@@ -114,7 +114,7 @@ export class AuthService {
                 return { success: false, error: data.error || 'Not Authenticated' }
             }
             
-            return { success: true, user: data.user}
+            return { success: true, user: data as User}
 
         } catch (error) {
             console.log('AuthService: Error in getting current user.', error)

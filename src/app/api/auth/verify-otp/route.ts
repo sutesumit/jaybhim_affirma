@@ -1,7 +1,6 @@
+import { AuthManager } from "@/lib/auth/auth-manager"
 import { AuthValidator } from "@/lib/auth/auth-validator"
 import { supabase } from "@/lib/supabase"
-import { error } from "console"
-import { data } from "jquery"
 import { NextResponse } from "next/server"
 
 
@@ -44,13 +43,29 @@ export async function POST(request: Request){
             )
         }
 
+        
+        if (!data.user.id || !data.user.phone) {
+        console.error('[Auth Error] User object is incomplete:', data.user)
+
+        return NextResponse.json(
+            {
+            error: 'Incomplete user data received from Supabase.',
+            requiredFields: ['id', 'phone'],
+            received: data.user,
+            },
+            { status: 400 }
+        )
+        }
+
         const userData = {
             id: data.user.id,
             phone: data.user.phone,
             created_at: data.user.created_at
         }
 
-        return NextResponse.json({ success: true, user: userData})
+        const response = NextResponse.json({ success: true, user: userData})
+        AuthManager.setAuthCookie(response, userData)
+        return response
 
     } catch (error: any){
         console.error('[verify-otp]', error)

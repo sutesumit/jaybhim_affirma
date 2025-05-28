@@ -1,4 +1,4 @@
-import React, { use, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import AuthCard from './AuthCard'
 import { User } from '@/lib/auth/auth-types'
 import { useAuthContext } from '@/auth/useAuthContext'
@@ -21,7 +21,14 @@ const ProtectedAuthWrapper = ({children, onAuthError, onAuthSuccess}: ProtectedA
         }
 
     }, [error, onAuthError, user, onAuthSuccess])
-    
+
+    if (loading) {
+    return (
+      <div className={`flex justify-center items-center`}>
+        <p>Loading authentication status...</p> {/* Or a spinner */}
+      </div>
+    );
+    }
     
     if(!user || !isAuthenticated){
         return (

@@ -11,6 +11,9 @@ import OtpInput from "./OtpInput"
 import { AuthCardProps, AuthStep, User } from "@/lib/auth/auth-types"
 import { AuthValidator } from "@/lib/auth/auth-validator"
 import { AuthService } from "@/lib/auth/auth-service"
+import { useAuthContext } from "@/auth/useAuthContext"
+import { useRouter } from "next/navigation"
+
 
 
 const AuthCard: React.FC<AuthCardProps> = ({
@@ -24,6 +27,8 @@ const AuthCard: React.FC<AuthCardProps> = ({
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [step, setStep] = useState<AuthStep>('phone')
+    const { setUser } =  useAuthContext()
+    const router = useRouter()
 
     const handleSendOtp = useCallback(async (submittedPhone: string) => {
       setLoading(true)
@@ -84,9 +89,11 @@ const AuthCard: React.FC<AuthCardProps> = ({
         const result = await AuthService.verifyOtp(phone, submittedOtp)
 
         if(result.success && result.user){
+          setUser( result.user )
           setStep('verified')
           onAuthSuccess?.(result.user)
           console.log(`Successful simulation of OTP Authentication of user ${result.user}`)
+          router.refresh()
         } else {
           setError(result.error || 'Invalid OTP')
           onAuthError?.(result.error || 'Invalid OTP')
