@@ -8,11 +8,13 @@ import {
 } from "@/components/ui/card"
 import PhoneInput from "./PhoneInput"
 import OtpInput from "./OtpInput"
-import { AuthCardProps, AuthStep, User } from "@/lib/auth/auth-types"
+import { AuthCardProps, AuthStep, AuthMethod } from "@/lib/auth/auth-types"
 import { AuthValidator } from "@/lib/auth/auth-validator"
 import { AuthService } from "@/lib/auth/auth-service"
 import { useAuthContext } from "@/auth/useAuthContext"
 import { useRouter } from "next/navigation"
+import AuthMethodInput from "./AuthMethodInput"
+import EmailInput from "./EmailInput"
 
 
 
@@ -23,10 +25,12 @@ const AuthCard: React.FC<AuthCardProps> = ({
   className = "w-[350px]"
 }) => {
     const [phone, setPhone] = useState('')
+    const [email, setEmail] = useState('')
+    const [authMethod, setAuthMethod] = useState<AuthMethod>('email')
     const [otp, setOtp] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const [step, setStep] = useState<AuthStep>('phone')
+    const [step, setStep] = useState<AuthStep>('input')
     const { setUser } =  useAuthContext()
     const router = useRouter()
 
@@ -115,23 +119,37 @@ const AuthCard: React.FC<AuthCardProps> = ({
     },[phone, handleSendOtp])
 
     const handleChangePhone = useCallback(async()=>{
-      setStep('phone')
+      setStep('input')
+      setAuthMethod('phone')
       setOtp('')
       setError('')
     },[])
 
     const stepContent = () => {
       switch(step){
-        case "phone":
-          return (
-            <PhoneInput 
-              phone={phone} 
-              error={error}
-              loading={loading}
-              onChange={setPhone}
-              onSubmit={handleSendOtp}
-            />
-          )
+        case "input":
+            switch(authMethod){
+              case 'phone':
+                return(
+                  <PhoneInput 
+                    phone={phone} 
+                    error={error}
+                    loading={loading}
+                    onChange={setPhone}
+                    onSubmit={handleSendOtp}
+                  />
+                )
+              case 'email':
+                return(
+                  <EmailInput 
+                    email={email} 
+                    error={error}
+                    loading={loading}
+                    onChange={setEmail}
+                    onSubmit={handleSendOtp}
+                  />
+                )
+            }
         case "otp":
           return (
             <OtpInput
@@ -169,6 +187,7 @@ const AuthCard: React.FC<AuthCardProps> = ({
       </CardHeader>
       <CardContent>
           <div className="grid w-full items-center">
+            <AuthMethodInput onChange={setAuthMethod}/>
             {stepContent()}
           </div>
       </CardContent>

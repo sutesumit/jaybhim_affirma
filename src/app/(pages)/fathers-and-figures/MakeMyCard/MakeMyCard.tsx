@@ -20,7 +20,7 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
         <MyCardProvider>
             <div className='relative h-full my-10 w-full text-container flex gap-5 flex-col items-center justify-center overflow-visible'>
                 <StoryCanvasCard />
-                <div className='sm:flex bottom-0 w-full text-xs bg-white'>
+                <div className='sm:flex bottom-0 w-full text-xs gap-2 bg-white'>
                     <ToggleCanvasButton artCanvasRef={artCanvasRef}/>
                     <SubmitStoryButton/>
                 </div>

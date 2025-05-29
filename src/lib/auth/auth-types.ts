@@ -11,7 +11,9 @@ export interface AuthState {
     error: string | null
 }
 
-export type AuthStep = 'phone' | 'otp' | 'verified'
+export type AuthStep = 'input' | 'otp' | 'verified'
+
+export type AuthMethod = 'email' | 'phone'
 
 export interface AuthResult {
     success: boolean;
@@ -40,6 +42,15 @@ export interface PhoneInputProps {
     onChange: (value: string) => void;
     onSubmit: (phone: string) => Promise<void>;
 }
+
+export interface EmailInputProps {
+    email: string;
+    loading: boolean;
+    error?: string;
+    onChange: (value: string) => void;
+    onSubmit: (phone: string) => Promise<void>;
+}
+
 
 export interface OtpInputProps {
     otp: string,
