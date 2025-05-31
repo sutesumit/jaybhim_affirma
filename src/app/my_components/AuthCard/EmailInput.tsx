@@ -36,7 +36,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
         <button 
             type='submit' 
             className='absolute disabled:cursor-not-allowed disabled:opacity-30 right-1 p-1 rounded-sm hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]'
-            disabled={loading || "!email.trim()"}
+            disabled={loading || !email.trim()}
         >
             {loading ? <Loader className='p-1 animate-spin'/> : <ForwardIcon/>}
         </button>

@@ -1,6 +1,8 @@
 export class AuthValidator {
     private static readonly PHONE_REGEX = /^\+[1-9]\d{1,14}$/
     private static readonly OTP_REGEX = /^\d{6}$/
+    private static readonly EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 
     static validatePhone (phone: string): {isValid: boolean, error?: string}{
         if (!phone.trim()){
@@ -34,11 +36,31 @@ export class AuthValidator {
         return { isValid: true }
     }
 
+    static validateEmail = (email: string): {isValid: boolean, error?: string } => {
+        if(!email.trim()){
+            return {
+                isValid: false,
+                error: 'Mate, drop your email first!'
+            }
+        }
+        if(!this.EMAIL_REGEX.test(email)){
+            return {
+                isValid: false,
+                error: 'Give that email address a quick fix!'
+            }
+        }
+        return({isValid: true})
+    }
+
     static sanitizePhone (phone: string): string {
         return phone.trim().replace(/\s+/g,'')
     }
 
-    static sanitizeOpt (submittedOtp: string): string {
+    static sanitizeOtp (submittedOtp: string): string {
         return submittedOtp.trim().replace(/\D/g, '')
+    }
+
+    static sanitizeEmail (email: string): string {
+        return email.trim().toLowerCase().replace(/[^\x20-\x7E]/g, '')
     }
 }

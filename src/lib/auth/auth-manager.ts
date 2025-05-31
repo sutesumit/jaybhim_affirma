@@ -10,7 +10,8 @@ export class AuthManager {
     static setAuthCookie(response: NextResponse, user: User): void{
         const userData = JSON.stringify({
             id: user.id,
-            phone: user.phone,
+            phone: user.phone ?? null,
+            email: user.email ?? null,
             created_at: user.created_at
         })
 
@@ -32,7 +33,7 @@ export class AuthManager {
                 return null
             }
             const userData = JSON.parse(authCookie.value)
-            if (!userData.id || !userData.phone){
+            if (!userData.id || (!userData.phone && !userData.email) ){
                 console.warn('AuthManager: Invalid user data in auth cookie')
                 return null
             }

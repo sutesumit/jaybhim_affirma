@@ -86,7 +86,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
             onClick={onBack}
             disabled={loading}
           >
-            Edit Phone
+            Edit Contact
           </button>
           <button 
             className='p-1 text-xs rounded-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-30 hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]'

@@ -1,5 +1,4 @@
-
-import { AuthResult, OtpResult, User } from "./auth-types"
+import { AuthMethod, AuthResult, OtpResult, User } from "./auth-types"
 import { AuthValidator } from "./auth-validator"
 
 
@@ -7,19 +6,32 @@ import { AuthValidator } from "./auth-validator"
 export class AuthService {
     private static readonly API_BASE = '/api/auth'
 
-    static async sendOtp(phone: string): Promise<OtpResult>{
+
+    static async sendOtp(contact: string, method: AuthMethod): Promise<OtpResult>{
         try {
-            const phoneValidation = AuthValidator.validatePhone(phone)
-            if(!phoneValidation.isValid){
-                return { success: false, error: phoneValidation.error}
+            let payLoad
+            if (method === 'phone'){
+                const phoneValidation = AuthValidator.validatePhone(contact)
+                if(!phoneValidation.isValid){
+                    return { success: false, error: phoneValidation.error}
+                }
+                const sanitizedPhone = AuthValidator.sanitizePhone(contact)
+                console.log(`AuthService: Sending the otp to ${sanitizedPhone}`)
+                payLoad = { 'phone' : sanitizedPhone}
+            } else {
+                const emailValidation = AuthValidator.validateEmail(contact)
+                if(!emailValidation.isValid){
+                    return { success: false, error: emailValidation.error}
+                }
+                const sanitizedEmail = AuthValidator.sanitizeEmail(contact)
+                console.log(`AuthService: Sending the otp to ${sanitizedEmail}`)
+                payLoad = { 'email' : sanitizedEmail}
             }
-            const sanitizedPhone = AuthValidator.sanitizePhone(phone)
-            console.log(`AuthService: Sending the otp to ${sanitizedPhone}`)
 
             const response = await fetch(`${this.API_BASE}/send-otp`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ phone: sanitizedPhone })
+                body: JSON.stringify({ ...payLoad })
             })
 
             const data = await response.json()
@@ -37,30 +49,42 @@ export class AuthService {
         }
     }
 
-    static async verifyOtp(phone: string, otp: string): Promise<AuthResult>{
+    static async verifyOtp(authMethod: AuthMethod, otp: string, phone: string, email: string): Promise<AuthResult>{
         try {
-            const phoneValidation = AuthValidator.validatePhone(phone)
-            if (!phoneValidation.isValid){
-                return ({success: false, error: 'Invalid Phone format'})
+
+
+
+            let payLoad
+            const contact = authMethod === 'phone' ? phone : email
+            if (!contact) {
+                return ({ success: false, error: `Missing ${authMethod}` });
+            }
+            const contactValidator = authMethod === 'phone'  ? AuthValidator.validatePhone : AuthValidator.validateEmail
+            const contactSanitizer = authMethod === 'phone' ? AuthValidator.sanitizePhone : AuthValidator.sanitizeEmail
+
+            const validation = contactValidator(contact)
+            const sanitizedContact = contactSanitizer(contact)
+
+            if (!validation.isValid){
+                return ({success: false, error: `Invalid ${authMethod} format`})
             }
             const otpValidation = AuthValidator.validateOtp(otp)
             if(!otpValidation.isValid){
                 return ({success: false, error: 'Invalid OTP Format'})
             }
 
-            const sanitizedPhone = AuthValidator.sanitizePhone(phone)
-            const sanitizedOtp = AuthValidator.sanitizeOpt(otp)
+            const sanitizedOtp = AuthValidator.sanitizeOtp(otp)
+            console.log(`AuthService: Initiate OTP verification of OTP: ${sanitizedOtp} for ${authMethod}: ${sanitizedContact}`)
 
-            console.log(`AuthService: Initiate OTP verification of OTP: ${sanitizedOtp} for phone: ${sanitizedPhone}`)
-
+            payLoad = {
+                [authMethod]:  sanitizedContact,
+                token: sanitizedOtp
+            }
 
             const response = await fetch(`${this.API_BASE}/verify-otp`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    phone: sanitizedPhone,
-                    token: sanitizedOtp
-                })
+                body: JSON.stringify(payLoad)
             })
 
             const data = await response.json()
@@ -75,7 +99,7 @@ export class AuthService {
             })
 
         } catch (error) {
-            console.error('AuthSerive: VerifyOtp Error', error)
+            console.error('AuthService: VerifyOtp Error', error)
             return { success: false, error: 'Network Error, failed to verify OTP' }
         }
     }

@@ -6,13 +6,18 @@ import { NextResponse } from "next/server"
 
 export async function POST(request: Request){
     try {
-        const { phone, token } = await request.json()
+        const { phone, email, token } = await request.json()
 
-        const phoneValidation = AuthValidator.validatePhone(phone)
-        if(!phoneValidation.isValid){
+        if (!phone && !email){
             return NextResponse.json(
-                { error: phoneValidation.error || 'Invalid Phone.'},
-                { status: 422 }
+                { error: '[verify-otp route] Need either phone or email'},
+                { status: 400}
+            )
+        }
+        if (phone && email) {
+            return NextResponse.json(
+                { error: '[verify-otp route] Provide either phone or email '},
+                { status: 400}
             )
         }
 
@@ -23,15 +28,44 @@ export async function POST(request: Request){
                 { status: 422 }
             )
         }
+        const sanitizeOpt = AuthValidator.sanitizeOtp(token)
 
-        const sanitizedPhone = AuthValidator.sanitizePhone(phone)
-        const sanitizeOpt = AuthValidator.sanitizeOpt(token)
+        let payLoad :
+        | { phone: string, token: string, type: 'sms'}
+        | { email: string, token: string, type: 'email' };
+        
+        if(phone){
+            const phoneValidation = AuthValidator.validatePhone(phone)
+            if(!phoneValidation.isValid){
+                return NextResponse.json(
+                    { error: phoneValidation.error || 'Invalid Phone.'},
+                    { status: 422 }
+                )
+            }
+            const sanitizedPhone = AuthValidator.sanitizePhone(phone)
 
-        const { data, error } = await supabase.auth.verifyOtp({
-            phone: sanitizedPhone,
-            token: sanitizeOpt,
-            type: 'sms'
-        })
+            payLoad = {
+                phone: sanitizedPhone,
+                token: sanitizeOpt,
+                type: 'sms'
+            }
+        } else {
+            const emailValidation = AuthValidator.validateEmail(email)
+            if(!emailValidation.isValid){
+                return NextResponse.json(
+                    { error: emailValidation.error || 'Invalid Email'},
+                    { status: 422 } 
+                )
+            }
+            const sanitizedEmail = AuthValidator.sanitizeEmail(email)
+            payLoad = {
+                email: sanitizedEmail,
+                token: sanitizeOpt,
+                type: 'email'
+            }
+        }
+
+        const { data, error } = await supabase.auth.verifyOtp(payLoad)
 
         if(error){
             throw error
@@ -44,13 +78,13 @@ export async function POST(request: Request){
         }
 
         
-        if (!data.user.id || !data.user.phone) {
+        if (!data.user.id || (!data.user.phone && !data.user.email)) {
         console.error('[Auth Error] User object is incomplete:', data.user)
 
         return NextResponse.json(
             {
             error: 'Incomplete user data received from Supabase.',
-            requiredFields: ['id', 'phone'],
+            requiredFields: ['id', 'phone or email'],
             received: data.user,
             },
             { status: 400 }
@@ -59,7 +93,8 @@ export async function POST(request: Request){
 
         const userData = {
             id: data.user.id,
-            phone: data.user.phone,
+            phone: data.user.phone ?? null,
+            email: data.user.email ?? null,
             created_at: data.user.created_at
         }
 

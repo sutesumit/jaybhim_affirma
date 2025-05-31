@@ -17,7 +17,6 @@ import AuthMethodInput from "./AuthMethodInput"
 import EmailInput from "./EmailInput"
 
 
-
 const AuthCard: React.FC<AuthCardProps> = ({
   onAuthError,
   onAuthSuccess,
@@ -34,24 +33,31 @@ const AuthCard: React.FC<AuthCardProps> = ({
     const { setUser } =  useAuthContext()
     const router = useRouter()
 
-    const handleSendOtp = useCallback(async (submittedPhone: string) => {
+    const handleSendOtp = useCallback(async (contact: string) => {
       setLoading(true)
       setError('')
+      
+      let validation
+      let setInput = authMethod === 'phone' ? setPhone : setEmail
+      if (authMethod === 'phone'){
+        validation = AuthValidator.validatePhone(contact)
+      } else {
+        validation = AuthValidator.validateEmail(contact)
+      }
 
-      const validation = AuthValidator.validatePhone(submittedPhone)
       if(!validation.isValid){
-        setError(validation.error || 'Those digits didn’t dial right. Fix them please.')
-        onAuthError?.(validation.error || 'Those digits didn’t dial right. Fix them please.' )
+        setError(validation.error || 'Those inputs didn’t dial right. Fix them please.')
+        onAuthError?.(validation.error || 'Wrong email or phone. Fix them please.' )
         setLoading(false)
         return
       }
 
       try {
-        const result = await AuthService.sendOtp(submittedPhone)
+        const result = await AuthService.sendOtp(contact, authMethod)
 
         if (result.success){
           setStep('otp')
-          setPhone(submittedPhone)
+          setInput(contact)
           console.log('Simulated OTP sent successfully')
         } else {
           setError(result.error || 'Failed to send otp.')
@@ -67,19 +73,25 @@ const AuthCard: React.FC<AuthCardProps> = ({
         setLoading(false)
       }
 
-    }, [onAuthError])
+    }, [authMethod, onAuthError])
 
     const handleVerifyOtp = useCallback(async (submittedOtp: string) => {
       setLoading(true)
       setError('')
 
-      const phoneValidation = AuthValidator.validatePhone(phone)
-      if (!phoneValidation.isValid){
-        setError(phoneValidation.error || 'That doesn’t look like a valid number.')
-        onAuthError?.(phoneValidation.error || 'That doesn’t look like a valid number.')
-        setLoading(false)
-        return
+      let validation
+      if (authMethod === 'phone'){
+        validation = AuthValidator.validatePhone(phone)
+      } else {
+        validation = AuthValidator.validateEmail(email)
       }
+
+      if (!validation.isValid){
+          setError(validation.error || 'That doesn’t look like a valid number.')
+          onAuthError?.(validation.error || 'That doesn’t look like a valid number.')
+          setLoading(false)
+          return
+        }
 
       const otpValidation = AuthValidator.validateOtp(submittedOtp)
       if (!otpValidation.isValid){
@@ -90,7 +102,7 @@ const AuthCard: React.FC<AuthCardProps> = ({
       }
 
       try {
-        const result = await AuthService.verifyOtp(phone, submittedOtp)
+        const result = await AuthService.verifyOtp(authMethod, submittedOtp, phone, email)
 
         if(result.success && result.user){
           setUser( result.user )
@@ -110,7 +122,7 @@ const AuthCard: React.FC<AuthCardProps> = ({
       } finally {
         setLoading(false)
       }
-    }, [phone, onAuthSuccess, onAuthError])
+    }, [authMethod, phone, email, onAuthSuccess, onAuthError])
 
     const handleResendOtp = useCallback(async()=>{
       setOtp('')
@@ -118,9 +130,8 @@ const AuthCard: React.FC<AuthCardProps> = ({
       await handleSendOtp(phone)
     },[phone, handleSendOtp])
 
-    const handleChangePhone = useCallback(async()=>{
+    const handleChangeContact = useCallback(async()=>{
       setStep('input')
-      setAuthMethod('phone')
       setOtp('')
       setError('')
     },[])
@@ -159,7 +170,7 @@ const AuthCard: React.FC<AuthCardProps> = ({
               loading={loading}
               onSubmit={handleVerifyOtp}
               onResend={handleResendOtp}
-              onBack={handleChangePhone}
+              onBack={handleChangeContact}
             />
           )
         case "verified":
