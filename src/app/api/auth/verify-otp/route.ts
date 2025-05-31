@@ -2,6 +2,7 @@ import { AuthManager } from "@/lib/auth/auth-manager"
 import { AuthValidator } from "@/lib/auth/auth-validator"
 import { supabase } from "@/lib/supabase"
 import { NextResponse } from "next/server"
+import { stringify } from "querystring"
 
 
 export async function POST(request: Request){
@@ -28,7 +29,7 @@ export async function POST(request: Request){
                 { status: 422 }
             )
         }
-        const sanitizeOpt = AuthValidator.sanitizeOtp(token)
+        const sanitizedOpt = AuthValidator.sanitizeOtp(token)
 
         let payLoad :
         | { phone: string, token: string, type: 'sms'}
@@ -46,7 +47,7 @@ export async function POST(request: Request){
 
             payLoad = {
                 phone: sanitizedPhone,
-                token: sanitizeOpt,
+                token: sanitizedOpt,
                 type: 'sms'
             }
         } else {
@@ -60,11 +61,11 @@ export async function POST(request: Request){
             const sanitizedEmail = AuthValidator.sanitizeEmail(email)
             payLoad = {
                 email: sanitizedEmail,
-                token: sanitizeOpt,
+                token: sanitizedOpt,
                 type: 'email'
             }
         }
-
+        console.log(`Payload: ${stringify(payLoad)}`)
         const { data, error } = await supabase.auth.verifyOtp(payLoad)
 
         if(error){

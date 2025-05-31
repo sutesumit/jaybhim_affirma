@@ -5,7 +5,7 @@ export class AuthValidator {
 
 
     static validatePhone (phone: string): {isValid: boolean, error?: string}{
-        if (!phone.trim()){
+        if (!phone?.trim()){
             return {
                 isValid: false, 
                 error: 'Mate, drop your phone digits first!'
@@ -53,14 +53,14 @@ export class AuthValidator {
     }
 
     static sanitizePhone (phone: string): string {
-        return phone.trim().replace(/\s+/g,'')
+        return phone.trim().replace(/\s+/g,'') || ''
     }
 
     static sanitizeOtp (submittedOtp: string): string {
-        return submittedOtp.trim().replace(/\D/g, '')
+        return submittedOtp.trim().replace(/\D/g, '') || ''
     }
 
     static sanitizeEmail (email: string): string {
-        return email.trim().toLowerCase().replace(/[^\x20-\x7E]/g, '')
+        return email.trim().toLowerCase().replace(/[^\x20-\x7E]/g, '') || ''
     }
 }

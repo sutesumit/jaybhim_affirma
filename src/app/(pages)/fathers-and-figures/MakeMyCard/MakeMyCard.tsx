@@ -6,7 +6,6 @@ import SubmitStoryButton from './components/inputStory/SubmitStoryButton'
 import { MyCardProvider } from './context/MyCardContext'
 import StoryCanvasCard from './components/cardBackground/StoryCanvasCard'
 import ToggleCanvasButton from './components/cardBackground/ToggleCanvasButton'
-import { AuthCard } from '@/app/my_components/AuthCard'
 
 interface MakeMyCardProps {
     artCanvasRef: React.RefObject<HTMLDivElement | null>
@@ -20,9 +19,9 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
         <MyCardProvider>
             <div className='relative h-full my-10 w-full text-container flex gap-5 flex-col items-center justify-center overflow-visible'>
                 <StoryCanvasCard />
-                <div className='sm:flex bottom-0 w-full text-xs gap-2 bg-white'>
+                <div className='flex sm:flex-row flex-col w-full text-xs gap-2'>
                     <ToggleCanvasButton artCanvasRef={artCanvasRef}/>
-                    <SubmitStoryButton/>
+                    <SubmitStoryButton artCanvasRef={artCanvasRef} />
                 </div>
                 {/* <AuthCard /> */}
             </div>
