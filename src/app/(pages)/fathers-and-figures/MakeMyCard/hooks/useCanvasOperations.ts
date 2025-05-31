@@ -18,9 +18,14 @@ export const useCanvasOperations = ({artCanvasRef}: UseCanvasOperationsProps) =>
         }
         (async () => {
             setPendingUrl(true)
-            const canvasUrl = await getCanvasUrl(artCanvasRef.current!)
-            setUrl(canvasUrl)
-            setPendingUrl(false)
+            try {
+                const canvasUrl = await getCanvasUrl(artCanvasRef.current!)
+                setUrl(canvasUrl)
+            } catch (error) {
+                console.error(`Failed to pull your backdrop`, error)
+            } finally {
+                setPendingUrl(false)
+            }
         })()
     }, [artCanvasRef, url, setUrl])
     

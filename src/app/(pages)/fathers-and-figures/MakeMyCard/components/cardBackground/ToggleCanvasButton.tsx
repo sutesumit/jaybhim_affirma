@@ -9,7 +9,7 @@ const ToggleCanvasButton = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLD
   
   return (
     <>
-        <button className={`button-style ${pendingUrl ? 'cursor-wait' : ''}`} onClick={handleCanvasUrl} disabled={pendingUrl}>
+        <button className={`button-style flex-1 ${pendingUrl ? 'cursor-wait' : ''}`} onClick={handleCanvasUrl} disabled={pendingUrl}>
             <span>
                 {
                 pendingUrl ? 
