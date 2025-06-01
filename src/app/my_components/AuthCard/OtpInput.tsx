@@ -5,7 +5,7 @@ import {
     InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { Label } from '@radix-ui/react-label'
-import { Check, Loader, ReplyAll } from 'lucide-react'
+import { Check, Loader } from 'lucide-react'
 import { OtpInputProps } from '@/lib/auth/auth-types'
 
 const OtpInput: React.FC<OtpInputProps> = ({
@@ -27,7 +27,6 @@ const OtpInput: React.FC<OtpInputProps> = ({
     }
 
     const handleResend = async (e: React.MouseEvent) => {
-      // alert('clicked')
       e.preventDefault()
       if (!loading && onResend){
         await onResend()
