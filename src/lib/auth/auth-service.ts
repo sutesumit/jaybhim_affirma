@@ -52,8 +52,6 @@ export class AuthService {
     static async verifyOtp(authMethod: AuthMethod, otp: string, phone: string, email: string): Promise<AuthResult>{
         try {
 
-
-
             let payLoad
             const contact = authMethod === 'phone' ? phone : email
             if (!contact) {
