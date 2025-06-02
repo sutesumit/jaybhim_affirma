@@ -31,7 +31,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
             id="name" 
             placeholder="jaibhim@sumitsute.com" 
             disabled={loading}
-            className= {error ? `border-red-400 focus:border-red-400` : ``}
+            className= {error ? `border-red-400 focus:border-red-400 pr-9` : `pr-9`}
         />
         <button 
             type='submit' 
