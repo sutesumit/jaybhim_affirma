@@ -4,16 +4,18 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { AuthMethod } from '@/lib/auth/auth-types'
 
 type AuthMethodInputProps = {
-    onChange: (method: AuthMethod) => void
+    value: AuthMethod
+    onAuthMethodChange: (value: AuthMethod) => void
 }
 
 
-const AuthMethodInput: React.FC<AuthMethodInputProps> = ({ onChange }) => {
+const AuthMethodInput: React.FC<AuthMethodInputProps> = ({ value, onAuthMethodChange }) => {
   return (
     <RadioGroup 
-        defaultValue="email" 
+        defaultValue="email"
+        value={value}
         className='m-auto flex mb-2 font-mono'
-        onValueChange={onChange}
+        onValueChange={onAuthMethodChange}
     >
         <div className="flex items-center space-x-2">
             <RadioGroupItem value="email" id="email" />

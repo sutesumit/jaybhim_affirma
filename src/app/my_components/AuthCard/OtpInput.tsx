@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     InputOTP,
     InputOTPGroup,
@@ -14,9 +14,21 @@ const OtpInput: React.FC<OtpInputProps> = ({
     loading,
     onSubmit,
     error,
-    onResend,
-    onBack
+    onResendOtp,
+    onEditContact,
 }) => {
+
+    const [countdown, setCountdown] = useState(30)
+
+    useEffect(()=>{
+      let timer: NodeJS.Timeout
+      if(countdown > 0 ){
+        timer = setTimeout(()=>{
+          setCountdown((prev)=> (prev-1))
+        }, 1000)
+      }
+      return () => clearTimeout(timer)
+    }, [countdown])
 
     const handleOtpSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -28,8 +40,8 @@ const OtpInput: React.FC<OtpInputProps> = ({
 
     const handleResend = async (e: React.MouseEvent) => {
       e.preventDefault()
-      if (!loading && onResend){
-        await onResend()
+      if (!loading && onResendOtp && countdown === 0){
+        await onResendOtp()
       }
     }
 
@@ -82,7 +94,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
           <button 
             className='p-1 text-xs rounded-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-30 hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]'
             id='resend-otp'
-            onClick={onBack}
+            onClick={onEditContact}
             disabled={loading}
           >
             Edit Contact
@@ -91,9 +103,9 @@ const OtpInput: React.FC<OtpInputProps> = ({
             className='p-1 text-xs rounded-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-30 hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]'
             id='resend-otp'
             onClick={handleResend}
-            disabled={loading}
+            disabled={loading || countdown > 0 }
           >
-            Resend OTP
+            {countdown > 0 ? `Resend in ${countdown}` :"Resend OTP"}
           </button>
         </div>
     </>
