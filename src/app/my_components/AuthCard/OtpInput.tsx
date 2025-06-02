@@ -42,6 +42,7 @@ const OtpInput: React.FC<OtpInputProps> = ({
       e.preventDefault()
       if (!loading && onResendOtp && countdown === 0){
         await onResendOtp()
+        setCountdown(30)
       }
     }
 

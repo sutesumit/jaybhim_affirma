@@ -50,18 +50,23 @@ export class AuthService {
     }
 
     static async verifyOtp(authMethod: AuthMethod, otp: string, phone: string, email: string): Promise<AuthResult>{
+        
         try {
-
             let payLoad
             const contact = authMethod === 'phone' ? phone : email
+            
             if (!contact) {
                 return ({ success: false, error: `Missing ${authMethod}` });
             }
-            const contactValidator = authMethod === 'phone'  ? AuthValidator.validatePhone : AuthValidator.validateEmail
-            const contactSanitizer = authMethod === 'phone' ? AuthValidator.sanitizePhone : AuthValidator.sanitizeEmail
+            
+            const validation = authMethod === 'phone'
+            ? AuthValidator.validatePhone(contact)
+            : AuthValidator.validateEmail(contact)
 
-            const validation = contactValidator(contact)
-            const sanitizedContact = contactSanitizer(contact)
+            const sanitizedContact = authMethod === 'phone'
+            ? AuthValidator.sanitizePhone(contact)
+            : AuthValidator.sanitizeEmail(contact)
+
 
             if (!validation.isValid){
                 return ({success: false, error: `Invalid ${authMethod} format`})
@@ -78,6 +83,8 @@ export class AuthService {
                 [authMethod]:  sanitizedContact,
                 token: sanitizedOtp
             }
+
+            console.log(`My Playload: ${payLoad}`)
 
             const response = await fetch(`${this.API_BASE}/verify-otp`, {
                 method: 'POST',

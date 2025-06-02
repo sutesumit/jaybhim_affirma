@@ -86,45 +86,54 @@ const useAuthFlow = (
 
     const handleVerifyOtp = useCallback(async(submittedOtp: string)=>{
         updateState({loading: true, error: ''})
-
         const contactValidation = state.authMethod === 'phone'
         ? AuthValidator.validatePhone(state.phone)
         : AuthValidator.validateEmail(state.email)
-        const otpValidation = AuthValidator.validateOtp(state.otp)
+        const otpValidation = AuthValidator.validateOtp(submittedOtp)
 
         if(!contactValidation.isValid || !otpValidation.isValid){
-        const error = contactValidation.error || otpValidation.error || 'Invalid Credentials'
-        updateState({ error, loading: false })
-        onAuthError?.(error)
-        return
+            const error = contactValidation.error || otpValidation.error || 'Invalid Credentials'
+            updateState({ error, loading: false })
+            onAuthError?.(error)
+            return
         }
 
         try {
-        const result = await AuthService.verifyOtp(
-            state.authMethod,
-            state.otp,
-            state.phone,
-            state.email
-        )
+            const phone = AuthValidator.sanitizePhone(state.phone)
+            const email = AuthValidator.sanitizeEmail(state.email)
 
-        if(result.success && result.user){
-            setUser(result.user)
-            updateState({loading: false, authStep: 'verified'})
-            onAuthSuccess?.(result.user)
-            router.refresh()
-        }
+            // This part is not working for phones
+            const result = await AuthService.verifyOtp(
+                state.authMethod,
+                submittedOtp,
+                phone,
+                email
+            )
+            console.log(`My results: ${result.success} for ${submittedOtp} and ${phone}`)
+
+            if(result.success && result.user){
+                setUser(result.user)
+                updateState({loading: false, authStep: 'verified'})
+                onAuthSuccess?.(result.user)
+                router.refresh()
+            } else {
+                const errorMessage = result.error || 'OTP Verification failed!'
+                updateState({error: errorMessage, loading: false})
+                onAuthError?.(errorMessage)
+            }
         
         } catch (error) {
-        const errorMessage = 'Error in verifying OTP, try again!'
-        updateState({ error: errorMessage, loading: false })
-        onAuthError?.(errorMessage)
+            const errorMessage = 'Error in verifying OTP, try again!'
+            updateState({ error: errorMessage, loading: false })
+            onAuthError?.(errorMessage)
         }
 
     }, [state.authMethod, state.otp, state.phone, state.email, onAuthError])
 
     const handleResendOtp = useCallback(async()=>{
         updateState({ loading: true, error:'', otp: '', authStep: 'otp' })
-        await handleSendOtp(state.authMethod === 'phone' ? state.phone : state.email)
+        const contact = state.authMethod === 'phone' ? state.phone : state.email
+        await handleSendOtp(contact)
     },[handleSendOtp, state.authMethod, state.phone, state.email])
 
     const handleChangeContact = useCallback(()=> {
