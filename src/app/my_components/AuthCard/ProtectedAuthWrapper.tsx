@@ -33,6 +33,7 @@ const ProtectedAuthWrapper = ({children, onAuthError, onAuthSuccess}: ProtectedA
     if(!user || !isAuthenticated){
         return (
         <AuthCard 
+            className='w-full max-w-[22rem] shrink'
             onAuthError={onAuthError}
             onAuthSuccess={onAuthSuccess}
         />

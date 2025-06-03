@@ -31,7 +31,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
             id="name" 
             placeholder="+919876543210" 
             disabled={loading}
-            className= {error ? `border-red-400 focus:border-red-400` : ``}
+            className= {error ? `border-red-400 focus:border-red-400 pr-9` : `pr-9`}
         />
         <button 
             type='submit' 
