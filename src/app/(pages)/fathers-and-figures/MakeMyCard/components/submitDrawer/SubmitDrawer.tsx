@@ -39,10 +39,10 @@ const SubmitDrawer = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElem
     
   return (
         <Drawer>
-                <DrawerTrigger className='w-full h-full m-auto'>
-                    <>
+                <DrawerTrigger className='w-full button-style h-full m-auto'>
+                    
                         Submit my card
-                    </>
+                    
                 </DrawerTrigger>
                 <DrawerContent className='backdrop-blur-sm min-h-[70vh] w-full p-2 items-center justify-center'>
                     <DrawerTitle></DrawerTitle>
