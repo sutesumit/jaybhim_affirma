@@ -1,5 +1,5 @@
 import React from 'react'
-import TitleDiscription from '@/app/my_components/shared/TitleDiscription'
+import { TitleDiscription } from '@/app/my_components/PageTitleSection'
 import PageFlip from '@/app/my_components/shared/flipbook/PageFlip'
 
 const content = {

@@ -7,8 +7,6 @@ import { ArtCanvas } from './ArtCanvas';
 import { MakeMyCard } from './MakeMyCard';
 import Seperator from '@/app/my_components/shared/Seperator';
 import { Submissions } from './Submissions';
-// import InstructionReel from './YourStory/InstructionReel';
-// Main landing page component for the "Fathers and Figures" page.
 
 export default function Home() {
   const artCanvasRef = useRef<HTMLDivElement | null>(null);

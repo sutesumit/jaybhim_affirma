@@ -1,8 +1,8 @@
 'use client' 
 import React, { useEffect, useRef, useState } from 'react'
 import { RiScrollToBottomFill } from 'react-icons/ri'
-import Seperator from './Seperator'
-import { Ghost, Milestone } from 'lucide-react'
+import Seperator from '../shared/Seperator'
+import { Milestone } from 'lucide-react'
 import { motion as m, AnimatePresence } from 'framer-motion'
 
 const jumperTexts = [
@@ -46,7 +46,7 @@ const Jumper = () => {
       onClick={handleScroll}
     >
         <div
-          className='flex relative gap-2 font-rajdhani items-center justify-center m-auto h-8 p-4 checkbox w-fit overflow-clip button-style'
+          className='flex relative gap-2 font-rajdhani items-center justify-center m-auto h-8 p-4 w-fit overflow-clip card-bg button-style'
         >
           <RiScrollToBottomFill className='text-xl'/>
           <AnimatePresence mode='wait'>

@@ -1,4 +1,3 @@
-import { opacity } from 'html2canvas/dist/types/css/property-descriptors/opacity'
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
@@ -25,7 +24,7 @@ const config: Config = {
 			"pierce": {
 				'0%': { transform: 'translateX(20px) translateY(-50%) scaleY(0.5) rotate(-20deg)', opacity: '0.2' },
 				'15%': { transform: 'translateX(-2px) translateY(10%) scaleY(1.0) rotate(5deg)', opacity: '1' },
-				'70%': { transform: 'translateX(2px) translateY(-1%) scaleY(0.98) rotate(-5deg)'},
+				'70%': { transform: 'translateX(2px) translateY(-1%) scaleY(1.0) rotate(-5deg)'},
 				'100%': { transform: 'translateY(0) scaleY(1) rotate(8deg)'},
 			}
 		},
