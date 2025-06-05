@@ -114,6 +114,53 @@
     @apply hover:text-blue-200
   }
 
+  .description-notch {
+    --notch-width: 90px;
+    --notch-depth: 20px;
+    --notch-radius: 3px; /* New variable for corner radius */
+    
+    clip-path: polygon(
+        0 0,
+        /* Start of left curve - smooth bezier-like transition */
+        calc(50% - var(--notch-width) / 2) 0,
+        calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.1) calc(var(--notch-depth) * 0.02),
+        calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.2) calc(var(--notch-depth) * 0.08),
+        calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.3) calc(var(--notch-depth) * 0.18),
+        calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.4) calc(var(--notch-depth) * 0.32),
+        calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.5) calc(var(--notch-depth) * 0.48),
+        calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.6) calc(var(--notch-depth) * 0.65),
+        calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.7) calc(var(--notch-depth) * 0.78),
+        calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.8) calc(var(--notch-depth) * 0.88),
+        calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.9) calc(var(--notch-depth) * 0.95),
+        calc(50% - var(--notch-width) / 2 + var(--notch-radius)) var(--notch-depth),
+        
+        /* Bottom of notch - smooth transition */
+        calc(50% - var(--notch-radius) * 0.3) var(--notch-depth),
+        calc(50% - var(--notch-radius) * 0.1) calc(var(--notch-depth) * 0.98),
+        50% calc(var(--notch-depth) * 0.96),
+        calc(50% + var(--notch-radius) * 0.1) calc(var(--notch-depth) * 0.98),
+        calc(50% + var(--notch-radius) * 0.3) var(--notch-depth),
+        
+        /* Right curve - mirror of left */
+        calc(50% + var(--notch-width) / 2 - var(--notch-radius)) var(--notch-depth),
+        calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.9) calc(var(--notch-depth) * 0.95),
+        calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.8) calc(var(--notch-depth) * 0.88),
+        calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.7) calc(var(--notch-depth) * 0.78),
+        calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.6) calc(var(--notch-depth) * 0.65),
+        calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.5) calc(var(--notch-depth) * 0.48),
+        calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.4) calc(var(--notch-depth) * 0.32),
+        calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.3) calc(var(--notch-depth) * 0.18),
+        calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.2) calc(var(--notch-depth) * 0.08),
+        calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.1) calc(var(--notch-depth) * 0.02),
+        calc(50% + var(--notch-width) / 2) 0,
+        
+        /* Complete the shape */
+        100% 0,
+        100% 100%,
+        0 100%
+    );
+}
+
 }
 
 @keyframes typing {
