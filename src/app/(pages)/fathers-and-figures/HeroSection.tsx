@@ -1,5 +1,5 @@
 import React from 'react'
-import TitleDiscription from '@/app/my_components/shared/TitleDiscription'
+import { TitleDiscription } from '@/app/my_components/PageTitleSection/'
 import { Background } from './Background'
 
 // Static Content: Data for rendering the page title and page description in English and Marathi for Fathers and Figures page.

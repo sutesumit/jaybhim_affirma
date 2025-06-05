@@ -1,6 +1,6 @@
 'use client';
 import WritingsSnapscroll from "@/app/my_components/specific/image_bodies/writings_snapscroll";
-import TitleDiscription from "@/app/my_components/shared/TitleDiscription";
+import { TitleDiscription } from "@/app/my_components/PageTitleSection";
 import { flashFictions } from "@/app/my_components/specific/image_bodies/flash_fiction_object";
 import Image from "next/image";
 import { motion } from "framer-motion";
