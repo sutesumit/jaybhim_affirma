@@ -1,3 +1,4 @@
+import { opacity } from 'html2canvas/dist/types/css/property-descriptors/opacity'
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
@@ -15,9 +16,23 @@ const config: Config = {
 				"0%,70%,100%": { opacity: "1" },
 				"20%,50%": { opacity: "0" },
 			},
+			"wiggle": {
+				"0%, 100%": { transform: "rotate(0deg) translateY(0) scale(1)", opacity: '0'},
+				"20%": { transform: "rotate(5deg) translateY(-4px) scale(1.05)", opacity: '1'},
+				"50%": { transform: "rotate(-8deg) translateY(2px) scale(0.95)", opacity: '1'},
+				"80%": { transform: "rotate(4deg) translateY(-1px) scale(1.02)", opacity: '0.80'},
+			},
+			"pierce": {
+				'0%': { transform: 'translateX(20px) translateY(-50%) scaleY(0.5) rotate(-20deg)', opacity: '0.2' },
+				'15%': { transform: 'translateX(-2px) translateY(10%) scaleY(1.0) rotate(5deg)', opacity: '1' },
+				'70%': { transform: 'translateX(2px) translateY(-1%) scaleY(0.98) rotate(-5deg)'},
+				'100%': { transform: 'translateY(0) scaleY(1) rotate(8deg)'},
+			}
 		},
 		animation: {
 			 "caret-blink": "caret-blink 1.25s ease-out infinite",
+			 "wiggle": "wiggle 5s ease-in-out infinite",
+			 "pierce": "pierce 5s ease-in-out"
 		},
   		fontFamily: {
   			title: [
