@@ -12,7 +12,7 @@ const TitleDiscription = ({ title, description, background }: { title: string, d
         <div className='title-container relative pt-14 z-0 w-full m-auto'>
             {background && <div className='absolute inset-0 z-[-10]'>{background}</div>}
             <div className='max-w-[90ch] mx-2 md:mx-auto text-[--primary-blue] bg-white/50 transition-[background] duration-300 hover:bg-gradient-to-bl hover:from-blue-300 hover:via-blue-50 hover:to-blue-50 backdrop-blur-sm border-[1px] border-[--primary-blue] rounded-sm'>
-            <div className='text-centr flex justify-center items-center relative pt-6 text-2xl font-rajdhani'>
+            <div className='text-centr flex flex-col justify-center items-center relative pt-6 text-2xl font-rajdhani'>
               {title}
               <LanguageSwitch 
                 isMarathi={isMarathi} 
