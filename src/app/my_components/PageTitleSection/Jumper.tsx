@@ -42,7 +42,7 @@ const Jumper = () => {
     const currentJumperText = jumperTexts[index]
 
   return (
-    <div className='m-auto pb-5 items-center cursor-pointer relative'
+    <div className='m-auto pb-4 items-center cursor-pointer relative'
       onClick={handleScroll}
     >
         <div

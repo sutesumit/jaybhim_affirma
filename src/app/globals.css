@@ -198,12 +198,12 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--primary-white)/50;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--primary-blue)/50;
-  border-radius: 3px;
+  border-radius: 3spx;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -213,7 +213,7 @@
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--primary-blue) var(--primary-white);
+  scrollbar-color: var(--primary-blue) transparent;
 }
 
 .card-content, .all-cards {

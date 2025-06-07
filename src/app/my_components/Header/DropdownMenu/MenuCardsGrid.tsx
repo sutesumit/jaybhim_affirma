@@ -17,12 +17,8 @@ const MenuCardsGrid: React.FC = () => {
                     key="menu-content relative"
                     className={`menu-content relative max-h-screen w-full z-20 p-2 grid md:grid-cols-3 sm:grid-cols-2 gap-4 rounded-lg overflow-y-scroll`}
                     initial={{ y: "-100%" }}
-                    animate={{ y: 0 }}
-                    exit={{ y: "-100%" }}
-                    transition={{
-                        duration: 0.3,
-                        ease: [0.4, 0, 0.2, 1]
-                    }}
+                    animate={{ y: 0, transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1]} }}
+                    exit={{ y: "-100%", transition: { duration: 0.1, ease: [0.4, 0, 0.1, 1]} }}
                 >
                         {
                             menuConfig.map((object) => {
