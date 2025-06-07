@@ -17,7 +17,7 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = ({ isMarathi, setIsMarathi
   const language = !isMarathi ? 'मराठी' : 'English'
 
   return (
-    <div className='flex absolute bottom-0 translate-y-[50%] z-50 w-fit justify-center font-rajdhani text-sm m-auto'>
+    <div className='flex absolute bottom-0 translate-y-[50%] z-50 w-fit justify-center font-rajdhani text-sm'>
       <label className='relative inline-flex items-center justify-center gap-0 cursor-pointer button-style !border-dotted p-0 pl-2 font-semibold'>
         <input
           type='checkbox'
@@ -25,7 +25,6 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = ({ isMarathi, setIsMarathi
           checked={isMarathi}
           onChange={toggleLangauage}
         />
-        {/* <Languages className='h-4 w-4'/> */}
         <AnimatePresence mode='wait' initial={false}>
             <m.div
                 key={isMarathi ? 'marathi' : 'english'}
