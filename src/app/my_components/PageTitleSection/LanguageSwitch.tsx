@@ -18,7 +18,7 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = ({ isMarathi, setIsMarathi
 
   return (
     <div className='flex absolute bottom-0 translate-y-[50%] z-50 w-fit justify-center font-rajdhani text-sm'>
-      <label className='relative inline-flex items-center justify-center gap-0 cursor-pointer button-style !border-dotted p-0 pl-2 font-semibold'>
+      <label className='relative inline-flex items-center justify-center gap-0 cursor-pointer button-style !border-dotted p-0 pl-2 font-semibold transition-all duration-300'>
         <input
           type='checkbox'
           className='sr-only'
