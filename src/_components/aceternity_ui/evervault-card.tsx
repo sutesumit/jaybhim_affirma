@@ -5,10 +5,10 @@ import { useMotionTemplate, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const EvervaultCard = ({
-  text,
+  children,
   className,
 }: {
-  text?: string;
+  children?: React.ReactNode;
   className?: string;
 }) => {
   let mouseX = useMotionValue(0);
@@ -49,7 +49,9 @@ export const EvervaultCard = ({
         <div className="relative z-10 flex items-center justify-center">
           <div className="relative h-44 w-44  rounded-full flex items-center justify-center text-white font-bold text-4xl">
             <div className="absolute w-full h-full bg-white/[0.8] dark:bg-black/[0.8] blur-sm rounded-full" />
-            <span className="dark:text-white text-[--primary-blue] z-20">{text}</span>
+            <div className="dark:text-white text-[--primary-blue] z-20">
+              {children}
+            </div>
           </div>
         </div>
       </div>
@@ -81,7 +83,7 @@ export function CardPattern({ mouseX, mouseY, randomString }: any) {
 }
 
 const characters =
-  ["Annihilate", "Caste"];
+  ["Annihilate.", "Caste."];
 export const generateRandomString = (length: number) => {
   let result = "";
   for (let i = 0; i < length; i++) {

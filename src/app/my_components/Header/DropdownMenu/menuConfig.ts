@@ -43,6 +43,13 @@ const menuConfig = [
         image: '/thumbnails/12.jpg',
         description: 'Few convoluted flash-fictions titled by abstract visuals, in a secret pursuit of articulating & visualizing disturbed relationships with the self and others.'
     },
+    {
+        id: 7,
+        title: 'कलाकाराचे निवेदन // Artist’s Statement',
+        href: '/artist-statement',
+        image: '/thumbnails/12.jpg',
+        description: 'A collection of Artists Statements'
+    }
 ]
 
 export default menuConfig;

@@ -54,9 +54,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${lora.variable} ${merriweather.variable} ${vesper_libre.variable} ${rajdhani.variable} ${reenieBeanie.variable}`}>
       <AuthProvider>
-        <body className="min-h-screen">
+        <body className="min-h-screen flex flex-col justify-between">
           <Header />
-          {children}
+          <div className="flex-1 flex flex-col items-center">
+            {children}
+          </div>
           <Footer />
         </body>
       </AuthProvider>
