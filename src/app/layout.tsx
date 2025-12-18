@@ -5,6 +5,7 @@ import { Footer } from './my_components/Footer/';
 import './globals.css';
 import { Header } from './my_components/Header/';
 import { AuthProvider } from '@/auth/AuthContext';
+import { NavMenuProvider } from './my_components/Header/menuContext/MenuContextProvider';
 
 
 interface RootLayoutProps {
@@ -54,13 +55,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${lora.variable} ${merriweather.variable} ${vesper_libre.variable} ${rajdhani.variable} ${reenieBeanie.variable}`}>
       <AuthProvider>
-        <body className="min-h-screen flex flex-col justify-between">
-          <Header />
-          <div className="flex-1 flex flex-col items-center">
-            {children}
-          </div>
-          <Footer />
-        </body>
+        <NavMenuProvider>
+          <body className="min-h-screen flex flex-col justify-between">
+            <Header />
+            <div className="flex-1 flex flex-col items-center">
+              {children}
+            </div>
+            <Footer />
+          </body>
+        </NavMenuProvider>
       </AuthProvider>
     </html>
   );

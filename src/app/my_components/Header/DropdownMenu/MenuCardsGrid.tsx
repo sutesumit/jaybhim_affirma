@@ -11,7 +11,7 @@ const MenuCardsGrid: React.FC = () => {
     
     return ( 
             <div
-                className="menu-container overflow-visible"
+                className="menu-container card-border rounded-sm mx-2 overflow-y-scroll max-h-[calc(100vh-56px)]"
             >
                 <motion.div
                     key="menu-content relative"
@@ -34,7 +34,6 @@ const MenuCardsGrid: React.FC = () => {
                             }
                             )
                         }
-                        <Seperator />
                 </motion.div>
                 {
                     menuConfig.map((object) => {

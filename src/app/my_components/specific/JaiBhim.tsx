@@ -2,23 +2,24 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useMenuContext } from "../Header/menuContext/useMenuContext";
 
 const DURATION = 0.2;
 const STAGGER = 0.05;
 
 export default function JaiBhim() {
+    const { isMenuOpen, setMenuOpen } = useMenuContext();
     return (
         <div className="relative">
-            <motion.a
-                //   href="#"
+            <motion.div
                 className="relative flex items-center justify-center "
                 initial="initial"
                 whileHover="hovered"
-                
+                onClick={() =>setMenuOpen(!isMenuOpen)}
             >
                 {/* Bottom Ashok Chakra - slides in */}
                 <motion.div
-                    className="absolute m-auto inset-0 flex items-center justify-center -z-10"
+                    className="absolute m-auto inset-0 flex items-center justify-center -z-10 pointer-events-none"
                     variants={{
                         initial: { opacity: 0, scale: 0.5 },
                         hovered: { opacity: 1, scale: 1 }
@@ -48,7 +49,7 @@ export default function JaiBhim() {
                             hovered: { y: "-100%" },
                         }}
                     >
-                        {"Enter".split("").map((letter, index) => (
+                        {"Begin".split("").map((letter, index) => (
                             <motion.span
                                 key={index}
                                 className="inline-block"
@@ -94,7 +95,7 @@ export default function JaiBhim() {
                         ))}
                     </motion.div>
                 </div>
-            </motion.a>
+            </motion.div>
         </div>
     );
 }

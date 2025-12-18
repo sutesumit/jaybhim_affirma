@@ -1,6 +1,11 @@
 import React from 'react'
+import {cn} from '@/lib/utils'
 
-const Seperator = React.forwardRef<HTMLDivElement>((_,ref) => {
+interface SeperatorProps {
+  className?: string;
+}
+
+const Seperator = React.forwardRef<HTMLDivElement, SeperatorProps>((_, ref) => {
   return (
     
       <div ref={ref} className='separator absolute bottom-0 hero-border-container h-[1px] w-full'>

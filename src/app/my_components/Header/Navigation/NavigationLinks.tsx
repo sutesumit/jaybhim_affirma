@@ -10,7 +10,7 @@ interface NavigationLinksProps {
 }
 
 const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) => {
-    const { toggleMenu } = useMenuContext();
+    const { isMenuOpen, toggleMenu } = useMenuContext();
 
   return (
     <>
@@ -43,7 +43,7 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) =>
                     }}
                 >
                         <span className='inline-block align-middle text-sm'>
-                            <MenuToggleIcon />
+                            <MenuToggleIcon isMenuOpen={isMenuOpen} />
                         </span>
                 </Link>
             </span>

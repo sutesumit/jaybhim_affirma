@@ -1,22 +1,37 @@
-import React from 'react'
+"use client";
 
-const MenuToggleIcon = () => {
+import React from "react";
+import { LogOut, GalleryVertical } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const iconProps = "w-4 h-4";
+
+const MenuToggleIcon = ({ isMenuOpen }: { isMenuOpen: boolean }) => {
   return (
-        <svg 
-          stroke="currentColor" 
-          fill="currentColor" 
-          strokeWidth="0" 
-          viewBox="0 0 16 16" 
-          height="1em" 
-          width="1em" 
-          xmlns="http://www.w3.org/2000/svg"
+    <AnimatePresence mode="wait">
+      {!isMenuOpen ? (
+        <motion.div
+          key="menu"
+          initial={{ opacity: 0, scale: 0.5, y: -20}}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.5, y: 20 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
         >
-          <path 
-            d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2m0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2m0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14"
-          >
-          </path>
-        </svg>
-  )
-}
+          <GalleryVertical className={iconProps} />
+        </motion.div>
+      ) : (
+        <motion.div
+          key="close"
+          initial={{ opacity: 0, scale: 0.5, y: -20 }}
+          animate={{ opacity: 1, scale: 1, y: 0, rotate: -90 }}
+          exit={{ opacity: 0, scale: 0.5, y: 20 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+        >
+          <LogOut className={iconProps} />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
 
-export default MenuToggleIcon
+export default MenuToggleIcon;

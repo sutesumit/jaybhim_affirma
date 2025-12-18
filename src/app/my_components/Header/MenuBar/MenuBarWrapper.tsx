@@ -9,14 +9,13 @@ const MenuBarWrapper: React.FC = () => {
   return (
     <nav
         className="navbar fixed isolate top-0 z-20 w-full"
-        onMouseEnter={() => setMenuOpen(true)}
-        onMouseLeave={() => setMenuOpen(false)}
+        onClick={() => setMenuOpen(!isMenuOpen)}
     >
         
         <MenuItems  />
         <AnimatePresence>
             {isMenuOpen &&
-                <MenuCardsGrid />
+                <MenuCardsGrid key="menu-cards-grid" />
             }
         </AnimatePresence>
     </nav>
