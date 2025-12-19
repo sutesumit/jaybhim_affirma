@@ -23,7 +23,7 @@
     "jquery": "^3.7.1",
     "lucide-react": "^0.471.2",
     "motion": "^12.1.0",
-    "next": "latest",
+    "next": "15.5.8",
     "node": "^23.7.0",
     "qss": "^3.0.0",
     "react": "latest",
