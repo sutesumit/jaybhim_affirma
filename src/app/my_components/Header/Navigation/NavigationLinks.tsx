@@ -56,6 +56,7 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) =>
                 <Link 
                     href={pathName ?? '/'} 
                     className='router-tab capitalize'
+                    onClick={(e) => e.stopPropagation()}
                 >
                     {tabName || 'Home'}
                 </Link>

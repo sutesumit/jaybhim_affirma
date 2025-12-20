@@ -19,6 +19,7 @@ const HoverLink: React.FC<HoverLinkProps> = ({ href, target, className, children
             href={href} 
             target={target}
             className={className}
+            onClick={(e) => e.stopPropagation()}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
