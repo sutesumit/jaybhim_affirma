@@ -2,7 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import { useMenuContext } from '@/app/my_components/Header/menuContext/useMenuContext';
 import MenuToggleIcon from '@/app/my_components/Header/Navigation/MenuToggleIcon';
-
+import HoverLink from './HoverLink';
+import { ExternalLink, House } from 'lucide-react';
 
 interface NavigationLinksProps {
     pathName: string | null,
@@ -16,19 +17,21 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) =>
     <>
         <span className='col-span-1 text-left hidden md:inline-block'>
                 <span className='site-tab px-5'>
-                    <Link 
+                    <HoverLink 
                         href='/' 
                         className='rootsite-tab'
+                        hoverContent={<House className='w-4 h-4' />}
                     >
                         {'art.'}
-                    </Link>
-                    <Link 
+                    </HoverLink>
+                    <HoverLink 
                         target='_blank' 
                         href='https://www.sumitsute.com/' 
                         className='rootsite-tab'
+                        hoverContent={<><ExternalLink className='w-4 h-4' /><span className='ml-2'>sumitsute.com</span></>}
                     >
                         {'sumitsute.com'}
-                    </Link>
+                    </HoverLink>
                 </span>
             </span>
             <span 
@@ -53,6 +56,7 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) =>
                 <Link 
                     href={pathName ?? '/'} 
                     className='router-tab capitalize'
+                    onClick={(e) => e.stopPropagation()}
                 >
                     {tabName || 'Home'}
                 </Link>

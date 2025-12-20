@@ -12,7 +12,7 @@ const MenuToggleIcon = ({ isMenuOpen }: { isMenuOpen: boolean }) => {
       {!isMenuOpen ? (
         <motion.div
           key="menu"
-          initial={{ opacity: 0, scale: 0.5, y: -20}}
+          initial={{ opacity: 0, scale: 0.5, y: 20}}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
@@ -22,9 +22,9 @@ const MenuToggleIcon = ({ isMenuOpen }: { isMenuOpen: boolean }) => {
       ) : (
         <motion.div
           key="close"
-          initial={{ opacity: 0, scale: 0.5, y: -20 }}
+          initial={{ opacity: 0, scale: 0.5, y: -20, rotate: -90 }}
           animate={{ opacity: 1, scale: 1, y: 0, rotate: -90 }}
-          exit={{ opacity: 0, scale: 0.5, y: 20 }}
+          exit={{ opacity: 0, scale: 0.5, y: -20, rotate: -90 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
         >
           <LogOut className={iconProps} />
