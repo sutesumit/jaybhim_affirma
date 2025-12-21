@@ -1,6 +1,13 @@
 
 
 const menuConfig = [
+    {
+        id: 0,
+        title: 'Documentary Portfolio',
+        href: '/documentary-portfolio',
+        image: '/thumbnails/27.jpg',
+        description: 'A documentary portfolio developed in collaboration with institutions, movements, and publications, examining lived realities in rural and urban India.'
+    },
     {   
         id: 1,
         title: 'Fathers and Figures',
@@ -57,13 +64,6 @@ const menuConfig = [
         image: '/thumbnails/4.jpg',
         description: ' As I imagine a visual presence of my friends on the walls of my parental house, the digital phoniness of my attempts fail to antidote my loneliness during Covid-19.'
     },
-    // {
-    //     id: 9,
-    //     title: 'A Day in the Life of Ramesh Mawaskar',
-    //     href: '/a-day-in-the-life-of-ramesh-mawaskar',
-    //     image: '/thumbnails/6.jpg',
-    //     description: 'A Day in the Life of Ramesh Mawaskar: How, my long-time friend from Melghat, spent his first day as a cold-drink merchant in a weekly market.'
-    // },
     {
         id: 10,
         title: 'Notes on Atrocity Cases',
