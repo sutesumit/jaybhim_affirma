@@ -6,6 +6,7 @@ import './globals.css';
 import { Header } from './my_components/Header/';
 import { AuthProvider } from '@/auth/AuthContext';
 import { NavMenuProvider } from './my_components/Header/menuContext/MenuContextProvider';
+import NavigationProgressBar from './my_components/NavigationProgressBar';
 
 
 interface RootLayoutProps {
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <AuthProvider>
         <NavMenuProvider>
           <body className="min-h-screen flex flex-col justify-between">
+            <NavigationProgressBar />
             <Header />
             <div className="flex-1 flex flex-col items-center">
               {children}

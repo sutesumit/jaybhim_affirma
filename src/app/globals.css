@@ -298,3 +298,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Creative Navigation Loading Bar Styling */
+#nprogress .bar {
+  background: linear-gradient(to right, var(--primary-blue), var(--primary-blue)) !important;
+  /* box-shadow: 0 0 10px var(--primary-blue), 0 0 5px var(--primary-blue) !important; */
+  height: 4px !important;
+  z-index: 99999 !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--primary-blue), 0 0 5px var(--primary-blue) !important;
+}
+
+#nprogress .spinner {
+  display: none !important;
+}

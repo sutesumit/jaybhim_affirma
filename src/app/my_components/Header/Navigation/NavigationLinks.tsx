@@ -42,7 +42,6 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) =>
                     className='router-tab'
                     onClick={(e) => {
                         e.preventDefault();
-                        toggleMenu();
                     }}
                 >
                         <span className='inline-block align-middle text-sm'>
