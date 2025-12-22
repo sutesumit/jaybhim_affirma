@@ -1,10 +1,10 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
-import GalleryImage from "./GalleryImage";
+import PreviewImage from "./PreviewImage";
 import ThumbnailStrip from "./ThumbnailStrip";
 import imageList from "./imageList";
 
-export default function ImageGallery() {
+export default function DocumentaryGallery() {
   const [current, setCurrent] = useState(0);
 
   const goPrev = useCallback(() => setCurrent(i => (i === 0 ? imageList.length - 1 : i - 1)), []);
@@ -22,7 +22,7 @@ export default function ImageGallery() {
 
   return (
     <section className="relative flex flex-col items-center justify-center w-full h-full">
-      <GalleryImage src={imageList[current]} alt={`Documentary ${current + 1}`} />
+      <PreviewImage src={`/documentary_portfolio/${imageList[current]}`} alt={`Documentary ${current + 1}`} />
       <ThumbnailStrip images={imageList} currentIndex={current} onSelect={setCurrent} />
     </section>
   );
