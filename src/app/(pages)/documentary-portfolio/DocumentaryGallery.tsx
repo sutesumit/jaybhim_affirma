@@ -4,11 +4,20 @@ import PreviewImage from "./PreviewImage";
 import ThumbnailStrip from "./ThumbnailStrip";
 import imageList from "./imageList";
 
+const SLIDE_SHOW_INTERVAL = 5000;
+
 export default function DocumentaryGallery() {
+  const  [isSlideShowPlaying, setIsSlideShowPlaying] = useState(true);
   const [current, setCurrent] = useState(0);
 
   const goPrev = useCallback(() => setCurrent(i => (i === 0 ? imageList.length - 1 : i - 1)), []);
   const goNext = useCallback(() => setCurrent(i => (i === imageList.length - 1 ? 0 : i + 1)), []);
+
+  useEffect(() => {
+    if (!isSlideShowPlaying) return;
+    const interval = setInterval(() => goNext(), SLIDE_SHOW_INTERVAL);
+    return () => clearInterval(interval);
+  }, [isSlideShowPlaying, goNext, current]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -21,7 +30,7 @@ export default function DocumentaryGallery() {
   }, [goPrev, goNext]);
 
   return (
-    <section className="relative flex flex-col items-center justify-center w-full h-full">
+    <section className="relative flex flex-col items-center justify-center w-full h-full overflow-hidden">
       <PreviewImage src={`/documentary_portfolio/${imageList[current]}`} alt={`Documentary ${current + 1}`} />
       <ThumbnailStrip images={imageList} currentIndex={current} onSelect={setCurrent} />
     </section>
