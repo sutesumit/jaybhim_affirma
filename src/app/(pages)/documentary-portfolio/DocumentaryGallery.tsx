@@ -1,5 +1,6 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import PreviewImage from "./PreviewImage";
 import ThumbnailStrip from "./ThumbnailStrip";
 import imageList from "./imageList";
@@ -8,10 +9,17 @@ const SLIDE_SHOW_INTERVAL = 5000;
 
 export default function DocumentaryGallery() {
   const  [isSlideShowPlaying, setIsSlideShowPlaying] = useState(true);
+  const [direction, setDirection] = useState(0);
   const [current, setCurrent] = useState(0);
 
-  const goPrev = useCallback(() => setCurrent(i => (i === 0 ? imageList.length - 1 : i - 1)), []);
-  const goNext = useCallback(() => setCurrent(i => (i === imageList.length - 1 ? 0 : i + 1)), []);
+  const goPrev = useCallback(() =>{ 
+    setDirection(-1);
+    setCurrent(i => (i === 0 ? imageList.length - 1 : i - 1));
+  }, []);
+  const goNext = useCallback(() =>{ 
+    setDirection(1);
+    setCurrent(i => (i === imageList.length - 1 ? 0 : i + 1));
+  }, []);
 
   useEffect(() => {
     if (!isSlideShowPlaying) return;
@@ -31,7 +39,14 @@ export default function DocumentaryGallery() {
 
   return (
     <section className="relative flex flex-col items-center justify-center w-full h-full overflow-hidden">
-      <PreviewImage src={`/documentary_portfolio/${imageList[current]}`} alt={`Documentary ${current + 1}`} />
+      <AnimatePresence initial={false} mode="popLayout" custom={direction}>
+        <PreviewImage 
+          key={current}
+          src={`/documentary_portfolio/${imageList[current]}`} 
+          alt={`Documentary ${current + 1}`} 
+          custom={direction}
+        />
+      </AnimatePresence>
       <ThumbnailStrip images={imageList} currentIndex={current} onSelect={setCurrent} />
     </section>
   );
