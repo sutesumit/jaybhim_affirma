@@ -4,16 +4,18 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+import type { GalleryImage } from "./imageList";
+import { ChevronLast, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+
 interface Props {
-  images: string[];
+  images: GalleryImage[];
   currentIndex: number;
   onSelect: (index: number) => void;
 }
 
-const IDLE_TIMEOUT = 1000;
+const IDLE_TIMEOUT = 4000;
 
 export default function ThumbnailStrip({ images, currentIndex, onSelect }: Props) {
-  // const [isOpen, setIsOpen] = useState(true);
   const [isIdle, setIsIdle] = useState(false);
   const timeOutRef = useRef<NodeJS.Timeout | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -63,19 +65,18 @@ export default function ThumbnailStrip({ images, currentIndex, onSelect }: Props
 
   return (
     <motion.div 
-      className="absolute bottom-0 w-full z-10"
+      className="absolute bottom-0 w-full z-30"
       initial="visible"
       animate={isIdle ? "idle" : "visible"}
       variants={{
         visible: { y: 0, opacity: 1 },
-        // hidden: { y: "100%", opacity: 1 },
         idle: { y: 40, opacity: 0.05 }
       }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleMouseEnter}
-    >      
+    >
       <div 
         ref={scrollContainerRef}
         className="flex h-auto px-[50vw] py-4 w-full overflow-x-auto gap-2 hide-scrollbar bg-gradient-to-t from-black/80 to-transparent"
@@ -85,20 +86,27 @@ export default function ThumbnailStrip({ images, currentIndex, onSelect }: Props
           e.currentTarget.scrollLeft += e.deltaY;
         }}  
       >
-        {images.map((filename, idx) => (
+        {images.map((image, idx) => (
           <motion.button
-            key={filename}
+            key={image.filename}
             ref={(el) => { itemRef.current[idx] = el }}
             className={`relative flex-shrink-0 w-24 h-24 rounded transition-all duration-300 ${
               idx === currentIndex 
-                ? "ring-4 ring-white scale-110 z-10 shadow-lg shadow-black/50" 
-                : "opacity-60 hover:opacity-100 hover:scale-105"
+                ? "ring-2 ring-[var(--primary-blue)] z-10 shadow-lg shadow-black/50" 
+                : ""
             }`}
             onClick={() => onSelect(idx)}
-            whileHover={{ scale: 1.1 }}
+            animate={{ 
+              scale: idx === currentIndex ? 1.2 : 1,
+              opacity: idx === currentIndex ? 1 : 0.6
+            }}
+            whileHover={{ 
+              scale: idx === currentIndex ? 1.2 : 1.1,
+              opacity: idx === currentIndex ? 1 : 0.6
+            }}
             whileTap={{ scale: 0.95 }}
           >
-            <Image src={`/documentary_portfolio/${filename}`} alt={`thumb ${idx + 1}`} fill className="object-cover rounded" />
+            <Image src={image.src} alt={image.alt} fill className="object-cover rounded" />
           </motion.button>
         ))}
       </div>

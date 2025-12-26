@@ -1,107 +1,44 @@
-const images = [
-  "AnandMelava_2018_Sumit-11.webp",
-  "AnandMelava_2018_Sumit-125.webp",
-  "AnandMelava_2018_Sumit-131.webp",
-  "AnandMelava_2018_Sumit-133.webp",
-  "AnandMelava_2018_Sumit-14.webp",
-  "AnandMelava_2018_Sumit-140.webp",
-  "AnandMelava_2018_Sumit-16.webp",
-  "AnandMelava_2018_Sumit-166.webp",
-  "AnandMelava_2018_Sumit-167.webp",
-  "AnandMelava_2018_Sumit-189.webp",
-  "AnandMelava_2018_Sumit-52.webp",
-  "AnandMelava_2018_Sumit-59.webp",
-  "AnandMelava_2018_Sumit-69.webp",
-  "AnandMelava_2018_Sumit-97.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020_All Selected_Double Logo_1500-1515.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020_All Selected_Double Logo_1500-159.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020_All_Plain_Low Size-269.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020_All_Plain_Low Size-89.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020_All_Plain_Low Size-95.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1004.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1165.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1253.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1258.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1263.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1353.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-137.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-141.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1410.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1419.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1560.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1573.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1665.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1792.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1881.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-1998.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-2100.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-2122.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-235.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-342.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-4.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-478.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-58.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-6.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-635-2.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-668.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-821.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-857.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-862.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-871.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-898.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-914.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-917.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-97.webp",
-  "Gadchiroli_VSTF_SumitSute_Feb2020-980.webp",
-  'HBNC and Dhundishivani-126.webp',
-  'HBNC and Dhundishivani-75.webp',
-  'Hyd_Lowestkey-67.webp',
-  'Hyd_Lowestkey-95.webp',
-  'Melghat_AnandMelava_Nov2018_Sumit_Second Folder-11.webp',
-  'Melghat_AnandMelava_Nov2018_Sumit_Second Folder-22.webp',
-  'Melghat_AnandMelava_Nov2018_Sumit_Second Folder-33.webp',
-  'MMU and Shramdan-16.webp',
-  'MMU and Shramdan-18.webp',
-  'MMU and Shramdan-36.webp',
-  'OPD-15.webp',
-  'OPD-83.webp',
-  'OT & Camp Day-19.webp',
-  'OT & Camp Day-56.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-125-7.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-128-8.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-174-20.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-19-25.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-21-31.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-235-42.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-259-60.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-265-64.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-287-70.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-289-71.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-313-80.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-320-85.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-356-103.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-368-106.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-400-117.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-443-144.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-518-184.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-614-212.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-66-231.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-67-235.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-7-241.webp',
-  'Paani Foundation_Training_Vharakatwadi_By Sumit Sute-75-249.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-137.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-146.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-197.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-214.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-278.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-311.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-332.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-34.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-342.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-343.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-357.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-373.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-395.webp',
-  'Sondara Gurukul_Final Selection_Lower Size-4.webp'
-];
-export default images;
+import fs from "fs";
+import path from "path";
+
+export interface GalleryImage {
+  filename: string;
+  src: string;
+  alt: string;
+  year: string;
+  caption?: string;
+  organization?: string;
+}
+
+const metadataMap: Record<string, Partial<GalleryImage>> = {
+
+}
+
+export function getImageList(): GalleryImage[] {
+  const directoryPath = path.join(process.cwd(), "public", "documentary_portfolio");
+  
+  if(!fs.existsSync(directoryPath)) {
+    return [];
+  }
+
+  const allFiles = fs.readdirSync(directoryPath)
+    .filter((filename) => /\.(jpg|jpeg|png|webp|avif)$/i.test(filename));
+
+  for (let i= allFiles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [allFiles[i], allFiles[j]] = [allFiles[j], allFiles[i]];
+  }
+
+  return allFiles.map((filename) => {
+    const metadata = metadataMap[filename] || {};
+    return {
+      filename,
+      src: `/documentary_portfolio/${filename}`,
+      alt: filename,
+      year: metadata.year || "",
+      caption: metadata.caption || "",
+      organization: metadata.organization || "",
+    };
+  });
+  
+}
