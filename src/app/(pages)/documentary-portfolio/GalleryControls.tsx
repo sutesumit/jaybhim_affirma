@@ -39,7 +39,7 @@ export default function GalleryControls({
   return (
     <div className="absolute inset-0 w-full h-full z-20 isolate pointer-events-none">
       {/* Top Bar: Navigation & Tools */}
-      <div className="pt-14 px-4 w-full flex flex-col md:flex-row justify-between items-start gap-2">
+      <div className="pt-14 px-4 w-full flex flex-col-reverse md:flex-row justify-center items-center md:justify-between md:items-start gap-2">
         
         {/* Left: Info Toggles */}
         <motion.div 
@@ -75,11 +75,10 @@ export default function GalleryControls({
         </motion.div>
       </div>
 
-      {/* Info Cards Overlay */}
-      <div className="relative top-2 left-4 w-full max-w-[400px]">
-        <AnimatePresence mode="popLayout">
+      <div className="relative top-2 md:left-4 w-full flex justify-center items-center md:justify-start">
+        <AnimatePresence>
           {activeTab && (
-            <InfoCard key={activeTab} id={activeTab} data={currentImage} />
+            <InfoCard id={activeTab} data={currentImage} />
           )}
         </AnimatePresence>
       </div>

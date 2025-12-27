@@ -1,6 +1,10 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import type { GalleryImage } from "../imageList";
+import { ExperienceSection } from "./sections/ExperienceSection";
+import { CommentsSection } from "./sections/CommentsSection";
+import { CaptionsSection } from "./sections/CaptionsSection";
+import Gradient1 from "@/app/my_components/gradients/Gradient1";
 
 export type SectionId = "experience" | "comments" | "captions";
 
@@ -13,20 +17,11 @@ export function InfoCard({ id, data }: InfoCardProps) {
   const renderContent = () => {
     switch (id) {
       case "experience":
-        return (
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="text-[var(--primary-blue)] font-bold">{data.year || "N/A"}</span>
-              <span className="text-white/40">|</span>
-              <span className="text-white font-medium">{data.organization || "Independent"}</span>
-            </div>
-            <p className="text-[10px] uppercase tracking-wider text-white/40">{data.filename}</p>
-          </div>
-        );
+        return <ExperienceSection data={data} />;
       case "comments":
-        return <p className="italic text-white/90">"{data.alt || "No description available."}"</p>;
+        return <CommentsSection data={data} />;
       case "captions":
-        return <p className="leading-relaxed text-white">{data.caption || "No caption provided."}</p>;
+        return <CaptionsSection data={data} />;
       default:
         return null;
     }
@@ -38,10 +33,28 @@ export function InfoCard({ id, data }: InfoCardProps) {
       initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)", y: 10 }}
       animate={{ opacity: 1, scale: 1, filter: "blur(0px)", y: 0 }}
       exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)", y: -10 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className="p-3 w-full bg-black/40 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl pointer-events-auto"
+      transition={{ 
+        duration: 0.3, 
+        ease: "easeOut",
+        layout: { duration: 0.3 }
+      }}
+      className="w-[80vw] max-w-[400px] card-bg backdrop-blur-sm border-[1px] border-[--primary-blue] rounded-sm font-rajdhani overflow-hidden pointer-events-auto"
     >
-      {renderContent()}
+      <Gradient1 hoverOn={true} className="p-0">
+        <div className="p-3 pr-1">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={id}
+              initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+              transition={{ duration: 0.2 }}
+            >
+              {renderContent()}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </Gradient1>
     </motion.div>
   );
 }

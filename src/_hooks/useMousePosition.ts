@@ -11,7 +11,7 @@ const useMousePosition = (imageRef: React.RefObject<HTMLImageElement | null> = {
         return () => {
             window.removeEventListener('mousemove', updateMouseCords)
         }
-    }, [imageRef])
+    }, [imageRef?.current]) // Stabilize dependency by tracking the ref value, not the ref object itself
     return mouseCords
 }
 

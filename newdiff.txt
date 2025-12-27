@@ -1,0 +1,113 @@
+diff --git a/src/_hooks/useMousePosition.ts b/src/_hooks/useMousePosition.ts
+index 4e78cb5..b81434d 100644
+--- a/src/_hooks/useMousePosition.ts
++++ b/src/_hooks/useMousePosition.ts
+@@ -11,7 +11,7 @@ const useMousePosition = (imageRef: React.RefObject<HTMLImageElement | null> = {
+         return () => {
+             window.removeEventListener('mousemove', updateMouseCords)
+         }
+-    }, [imageRef])
++    }, [imageRef?.current]) // Stabilize dependency by tracking the ref value, not the ref object itself
+     return mouseCords
+ }
+ 
+diff --git a/src/app/(pages)/documentary-portfolio/GalleryControls.tsx b/src/app/(pages)/documentary-portfolio/GalleryControls.tsx
+index 079e0f5..5cd9eb1 100644
+--- a/src/app/(pages)/documentary-portfolio/GalleryControls.tsx
++++ b/src/app/(pages)/documentary-portfolio/GalleryControls.tsx
+@@ -39,7 +39,7 @@ export default function GalleryControls({
+   return (
+     <div className="absolute inset-0 w-full h-full z-20 isolate pointer-events-none">
+       {/* Top Bar: Navigation & Tools */}
+-      <div className="pt-14 px-4 w-full flex flex-col md:flex-row justify-between items-start gap-2">
++      <div className="pt-14 px-4 w-full flex flex-col-reverse md:flex-row justify-center items-center md:justify-between md:items-start gap-2">
+         
+         {/* Left: Info Toggles */}
+         <motion.div 
+@@ -75,11 +75,10 @@ export default function GalleryControls({
+         </motion.div>
+       </div>
+ 
+-      {/* Info Cards Overlay */}
+-      <div className="relative top-2 left-4 w-full max-w-[400px]">
+-        <AnimatePresence mode="popLayout">
++      <div className="relative top-2 md:left-4 w-full flex justify-center items-center md:justify-start">
++        <AnimatePresence>
+           {activeTab && (
+-            <InfoCard key={activeTab} id={activeTab} data={currentImage} />
++            <InfoCard id={activeTab} data={currentImage} />
+           )}
+         </AnimatePresence>
+       </div>
+diff --git a/src/app/(pages)/documentary-portfolio/components/InfoCard.tsx b/src/app/(pages)/documentary-portfolio/components/InfoCard.tsx
+index d00cf6d..bb3932f 100644
+--- a/src/app/(pages)/documentary-portfolio/components/InfoCard.tsx
++++ b/src/app/(pages)/documentary-portfolio/components/InfoCard.tsx
+@@ -1,6 +1,10 @@
+ "use client";
+-import { motion } from "framer-motion";
++import { motion, AnimatePresence } from "framer-motion";
+ import type { GalleryImage } from "../imageList";
++import { ExperienceSection } from "./sections/ExperienceSection";
++import { CommentsSection } from "./sections/CommentsSection";
++import { CaptionsSection } from "./sections/CaptionsSection";
++import Gradient1 from "@/app/my_components/gradients/Gradient1";
+ 
+ export type SectionId = "experience" | "comments" | "captions";
+ 
+@@ -13,20 +17,11 @@ export function InfoCard({ id, data }: InfoCardProps) {
+   const renderContent = () => {
+     switch (id) {
+       case "experience":
+-        return (
+-          <div className="space-y-1">
+-            <div className="flex items-center gap-2">
+-              <span className="text-[var(--primary-blue)] font-bold">{data.year || "N/A"}</span>
+-              <span className="text-white/40">|</span>
+-              <span className="text-white font-medium">{data.organization || "Independent"}</span>
+-            </div>
+-            <p className="text-[10px] uppercase tracking-wider text-white/40">{data.filename}</p>
+-          </div>
+-        );
++        return <ExperienceSection data={data} />;
+       case "comments":
+-        return <p className="italic text-white/90">"{data.alt || "No description available."}"</p>;
++        return <CommentsSection data={data} />;
+       case "captions":
+-        return <p className="leading-relaxed text-white">{data.caption || "No caption provided."}</p>;
++        return <CaptionsSection data={data} />;
+       default:
+         return null;
+     }
+@@ -38,10 +33,28 @@ export function InfoCard({ id, data }: InfoCardProps) {
+       initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)", y: 10 }}
+       animate={{ opacity: 1, scale: 1, filter: "blur(0px)", y: 0 }}
+       exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)", y: -10 }}
+-      transition={{ duration: 0.3, ease: "easeOut" }}
+-      className="p-3 w-full bg-black/40 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl pointer-events-auto"
++      transition={{ 
++        duration: 0.3, 
++        ease: "easeOut",
++        layout: { duration: 0.3 }
++      }}
++      className="w-[80vw] max-w-[400px] card-bg backdrop-blur-sm border-[1px] border-[--primary-blue] rounded-sm font-rajdhani overflow-hidden pointer-events-auto"
+     >
+-      {renderContent()}
++      <Gradient1 hoverOn={true} className="p-0">
++        <div className="p-3 pr-1">
++          <AnimatePresence mode="wait" initial={false}>
++            <motion.div
++              key={id}
++              initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
++              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
++              exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
++              transition={{ duration: 0.2 }}
++            >
++              {renderContent()}
++            </motion.div>
++          </AnimatePresence>
++        </div>
++      </Gradient1>
+     </motion.div>
+   );
+ }
