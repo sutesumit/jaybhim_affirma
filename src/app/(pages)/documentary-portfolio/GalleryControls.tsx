@@ -1,114 +1,88 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import { Play, Pause, ChevronLast, ChevronFirst, Aperture, Captions, MessagesSquare } from "lucide-react";
+import { 
+  Play, Pause, ChevronLast, ChevronFirst, 
+  Aperture, Captions, MessagesSquare 
+} from "lucide-react";
 import { useState } from "react";
+import type { GalleryImage } from "./imageList";
+import { IconButton } from "./components/IconButton";
+import { InfoCard, type SectionId } from "./components/InfoCard";
 
 interface Props {
   isPlaying: boolean;
   onTogglePlay: () => void;
   goPrev: () => void;
   goNext: () => void;
+  currentImage: GalleryImage;
 }
 
-export default function GalleryControls({ isPlaying, onTogglePlay, goPrev, goNext }: Props) {
-  const [active, setActive] = useState({
-    experience: false,
-    comments: false,
-    captions: false,
-  })
+const SECTIONS = [
+  { id: "experience", Icon: Aperture, label: "Experience" },
+  { id: "comments", Icon: MessagesSquare, label: "Comments" },
+  { id: "captions", Icon: Captions, label: "Captions" },
+] as const;
+
+export default function GalleryControls({ 
+  isPlaying, 
+  onTogglePlay, 
+  goPrev, 
+  goNext, 
+  currentImage 
+}: Props) {
+  const [activeTab, setActiveTab] = useState<SectionId | null>(null);
+
+  const toggleSection = (id: SectionId) => {
+    setActiveTab(current => current === id ? null : id);
+  };
+
   return (
-    <div className="relative inset-0 w-full h-full z-20 isolate">
-    <div className="pt-14 px-3 w-full z-20 flex justify-between items-start pointer-events-none">
-      <div className="info-icons pointer-events-auto flex flex-1 gap-2">
-        <button 
-          onClick={() => { setActive((prev) => ({ ...prev, experience: !prev.experience })) }}
-          className={`p-2 rounded-full backdrop-blur-md hover:bg-white/20 transition-all border border-white/20 group ${active.experience ? "ring-2 ring-[var(--primary-blue)] bg-[var(--primary-blue)] text-white" : "bg-white/10"}`}
+    <div className="absolute inset-0 w-full h-full z-20 isolate pointer-events-none">
+      {/* Top Bar: Navigation & Tools */}
+      <div className="pt-14 px-4 w-full flex flex-col md:flex-row justify-between items-start gap-2">
+        
+        {/* Left: Info Toggles */}
+        <motion.div 
+          className="flex gap-2"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
         >
-          <Aperture 
-            className={`w-4 h-4 text-white/80 group-hover:text-white`} 
-          />
-        </button>
-        <button 
-          onClick={() => { setActive((prev) => ({ ...prev, comments: !prev.comments })) }}
-          className={`p-2 rounded-full backdrop-blur-md hover:bg-white/20 transition-all border border-white/20 group ${active.comments ? "ring-2 ring-[var(--primary-blue)] bg-[var(--primary-blue)] text-white" : "bg-white/10"}`}
+          {SECTIONS.map(({ id, Icon, label }) => (
+            <IconButton
+              key={id}
+              Icon={Icon}
+              onClick={() => toggleSection(id as SectionId)}
+              isActive={activeTab === id}
+              aria-label={`Toggle ${label}`}
+            />
+          ))}
+        </motion.div>
+
+        {/* Right: Playback Controls */}
+        <motion.div 
+          className="flex gap-2"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
         >
-          <MessagesSquare
-            className={`w-4 h-4 text-white/80 group-hover:text-white`} 
+          <IconButton Icon={ChevronFirst} onClick={goPrev} aria-label="Previous image" />
+          <IconButton 
+            Icon={isPlaying ? Pause : Play} 
+            onClick={onTogglePlay} 
+            fill={!isPlaying}
+            aria-label={isPlaying ? "Pause" : "Play"}
           />
-        </button>
-        <button 
-          onClick={() => { setActive((prev) => ({ ...prev, captions: !prev.captions })) }}
-          className={`p-2 rounded-full backdrop-blur-md hover:bg-white/20 transition-all border border-white/20 group ${active.captions ? "ring-2 ring-[var(--primary-blue)] bg-[var(--primary-blue)] text-white" : "bg-white/10"}`}
-        >
-          <Captions 
-            className={`w-4 h-4 text-white/80 group-hover:text-white`} 
-          />
-        </button>
+          <IconButton Icon={ChevronLast} onClick={goNext} aria-label="Next image" />
+        </motion.div>
       </div>
-      <div className="control-icons justify-end pointer-events-auto flex flex-1 gap-2">
-        <button 
-           onClick={goPrev}
-           className="p-2 rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all border border-white/20 group"
-        >
-          <ChevronFirst className="w-4 h-4 text-white/80 group-hover:text-white" />
-        </button>
-        <button 
-           onClick={onTogglePlay}
-           className="p-2 rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all border border-white/20 group"
-           aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
-        >
-           {isPlaying ? (
-             <Pause className="w-4 h-4 text-white/80 group-hover:text-white" /> 
-            ) : ( 
-             <Play className="w-4 h-4 text-white/80 group-hover:text-white fill-current" /> 
-            )}
-        </button>
-        <button 
-           onClick={goNext}
-           className="p-2 rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all border border-white/20 group"
-        >
-          <ChevronLast className="w-4 h-4 text-white/80 group-hover:text-white" />
-        </button>
+
+      {/* Info Cards Overlay */}
+      <div className="relative top-2 left-4 w-full max-w-[400px]">
+        <AnimatePresence mode="popLayout">
+          {activeTab && (
+            <InfoCard key={activeTab} id={activeTab} data={currentImage} />
+          )}
+        </AnimatePresence>
       </div>
-    
-    </div>
-    <div className="info-cards text-sm h-auto max-w-[400px] mx-3 my-1 p-1 justify-center flex flex-col items-center gap-1">
-      <AnimatePresence>
-      {active.experience && (
-        <motion.div 
-          key="experience"
-          className="p-2 w-full card-bg rounded card-border"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-        >
-          <p>Experience</p>
-        </motion.div>
-      )}
-      {active.comments && (
-        <motion.div 
-          key="comments"
-          className="p-2 w-full card-bg rounded card-border"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-        >
-          <p>Comments</p>
-        </motion.div>
-      )}
-      {active.captions && (
-        <motion.div 
-          key="captions"
-          className="p-2 w-full card-bg rounded card-border"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-        >
-          <p>Captions</p>
-        </motion.div>
-      )}
-    </AnimatePresence>
-    </div>
     </div>
   );
 }

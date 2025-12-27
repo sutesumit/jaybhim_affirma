@@ -57,7 +57,7 @@ export default function DocumentaryGallery({ images }: Props) {
       <GalleryControls 
         isPlaying={isSlideShowPlaying} 
         onTogglePlay={() => setIsSlideShowPlaying(prev => !prev)}
-        // currentImage={images[current]}
+        currentImage={images[current]}
         goPrev={goPrev}
         goNext={goNext}
       />
