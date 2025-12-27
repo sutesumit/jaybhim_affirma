@@ -22,9 +22,9 @@ export function CaptionsSection({ data }: Props) {
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className="relative border-[1px] border-dotted border-[--primary-blue] p-3 rounded-sm bg-white/15 hover:shadow-[inset_0px_0px_15px_-5px_rgba(59,_130,_246,_0.4)] transition-all duration-300 space-y-1"
         >
-          {data.alt && (
+          {data.caption && (
             <p className="text-[--primary-blue]/90 text-[14px] leading-relaxed font-light">
-              {data.alt}
+              {data.caption}
             </p>
           )}
 
