@@ -122,7 +122,7 @@ export default function JaiBhim() {
                             initial={{ scale: 0.9, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                            className="w-full max-w-[500px] relative pointer-events-auto font-light"
+                            className="w-full max-w-[500px] min-h-[60vh] relative pointer-events-auto font-light"
                         >
                             <TitleDiscription 
                                 variant="popup-bio" 

@@ -28,6 +28,7 @@ export function IconButton({
       aria-label={ariaLabel}
       className={cn(
         "p-2 rounded-full backdrop-blur-md transition-all border border-white/20 group pointer-events-auto",
+        !isActive && "mix-blend-difference",
         isActive 
           ? "ring-2 ring-[var(--primary-blue)] bg-[var(--primary-blue)] text-white shadow-lg shadow-[var(--primary-blue)]/20" 
           : "bg-white/10 hover:bg-white/20 text-white/80 hover:text-white",

@@ -30,14 +30,14 @@ export default function GalleryControls({
   goNext, 
   currentImage 
 }: Props) {
-  const [activeTab, setActiveTab] = useState<SectionId | null>(null);
+  const [activeTab, setActiveTab] = useState<SectionId | null>("captions");
 
   const toggleSection = (id: SectionId) => {
     setActiveTab(current => current === id ? null : id);
   };
 
   return (
-    <div className="absolute inset-0 w-full h-full z-20 isolate pointer-events-none">
+    <div className="absolute inset-0 w-full h-full z-20 pointer-events-none">
       {/* Top Bar: Navigation & Tools */}
       <div className="pt-14 px-4 w-full flex flex-col-reverse md:flex-row justify-center items-center md:justify-between md:items-start gap-2">
         
