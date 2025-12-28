@@ -5,7 +5,6 @@ import LanguageSwitch from './LanguageSwitch';
 import { motion as m, AnimatePresence } from 'framer-motion'
 import Gradient1 from '../gradients/Gradient1';
 import { ChevronDown } from 'lucide-react';
-import { useMenuContext } from '../Header';
 
 const TitleDiscription = ({ 
   variant,
@@ -22,7 +21,6 @@ const TitleDiscription = ({
 }) => {
 
   const [isMarathi, setIsMarathi] = useState(false)
-  const {isMenuOpen, setMenuOpen} = useMenuContext()
 
   return (
     <>
