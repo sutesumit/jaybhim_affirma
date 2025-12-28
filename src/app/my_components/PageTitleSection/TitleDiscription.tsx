@@ -5,7 +5,6 @@ import LanguageSwitch from './LanguageSwitch';
 import { motion as m, AnimatePresence } from 'framer-motion'
 import Gradient1 from '../gradients/Gradient1';
 import { ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { useMenuContext } from '../Header';
 
 const TitleDiscription = ({ 
