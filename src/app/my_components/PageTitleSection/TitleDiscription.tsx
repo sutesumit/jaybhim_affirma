@@ -4,19 +4,42 @@ import Jumper from './Jumper';
 import LanguageSwitch from './LanguageSwitch';
 import { motion as m, AnimatePresence } from 'framer-motion'
 import Gradient1 from '../gradients/Gradient1';
+import { ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useMenuContext } from '../Header';
 
-const TitleDiscription = ({ title, description, background }: { title: string, description: { eng?: string | undefined, mar?: string | undefined }, background?: React.ReactNode | React.ReactElement }) => {
-  
-  const [isMarathi, setIsMarathi] = useState(false) 
-  
+const TitleDiscription = ({ 
+  variant,
+  title,
+  description,
+  background,
+  onClose,
+}: { 
+  variant?: string, 
+  title: string, 
+  description: { eng?: string | undefined, mar?: string | undefined }, 
+  background?: React.ReactNode | React.ReactElement,
+  onClose?: () => void
+}) => {
+
+  const [isMarathi, setIsMarathi] = useState(false)
+  const {isMenuOpen, setMenuOpen} = useMenuContext()
+
   return (
     <>
-      <div className='title-container relative pt-16 z-0 w-full m-auto'>
+      <div className={`${variant !== 'popup-bio' ? 'pt-16' : ''} title-container relative z-0 w-full m-auto`}>
         {background && <div className='absolute inset-0 z-[-10]'>{background}</div>}
         <div className='max-w-[90ch] mx-2 md:mx-auto text-[--primary-blue] card-bg font-rajdhani transition-[background] duration-300 backdrop-blur-sm border-[1px] border-[--primary-blue] rounded-sm'>
           <Gradient1 hoverOn={true}>
-            <div className='text-center flex flex-col justify-center items-center relative'>
-              <div className='p-5 mb-4 text-2xl'>
+            {variant === 'popup-bio' && 
+            <div 
+              className='relative flex items-center justify-center cursor-pointer border-b border-[--primary-blue] hover:bg-[--primary-blue] hover:text-white'
+              onClick={onClose}
+            >
+              <ChevronDown className='w-3 h-3' />
+            </div>}
+            <div className={`text-center flex flex-col justify-center items-center relative`}>
+              <div className={`p-5 mb-2 text-${variant !== 'popup-bio' ? '2xl' : 'lg'}`}>
                 {title}
               </div>
               <LanguageSwitch
@@ -24,9 +47,9 @@ const TitleDiscription = ({ title, description, background }: { title: string, d
                 setIsMarathi={setIsMarathi}
               />
             </div>
-            
+
             <div
-              className='leading-relaxed m-5 mt-0 description-notch relative text-lg flex flex-col max-h-[50vh] items-center hover:shadow-[inset_0px_0px_15px_-5px_rgba(59,_130,_246,_0.5)] justify-between place-items-start border-[1px] border-dotted border-[--primary-blue] rounded-sm overflow-y-auto scrollbar-thin transition-all duration-300'
+              className='leading-relaxed m-5 mt-0 p-3 sm:p-0 description-notch relative text-lg flex flex-col max-h-[50vh] items-center hover:shadow-[inset_0px_0px_15px_-5px_rgba(59,_130,_246,_0.5)] justify-between place-items-start border-[1px] border-dotted border-[--primary-blue] rounded-sm overflow-y-auto scrollbar-thin transition-all duration-300'
             >
               <AnimatePresence mode='wait' initial={false}>
                 <m.p
@@ -38,17 +61,19 @@ const TitleDiscription = ({ title, description, background }: { title: string, d
                   transition={{ duration: 0.3 }}
                 >
                   {isMarathi && description.mar
-                  ? description.mar
-                  : description.eng
+                    ? description.mar
+                    : description.eng
                   }
                 </m.p>
               </AnimatePresence>
             </div>
           </Gradient1>
         </div>
-        <div className='mt-4'>
-          <Jumper />
-        </div>
+        {variant !== 'popup-bio'
+          && <div className='mt-4'>
+            <Jumper />
+          </div>
+        }
       </div>
     </>
   )
