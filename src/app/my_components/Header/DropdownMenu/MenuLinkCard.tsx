@@ -21,10 +21,13 @@ const MenuLinkCard: React.FC<MenuLinkCardProps> = ({
     setMenuOpen,  
 }) => {
   return (
-    <Link   
-        href={object.href}
+    <div 
+        className='relative flex-shrink-0'
         onMouseEnter={()=>setHoveredCard(object.id)}
         onMouseLeave={()=>setHoveredCard(null)}
+    >
+    <Link   
+        href={object.href}
         onClick={() => {
             setMenuOpen(false);
         }}
@@ -46,6 +49,7 @@ const MenuLinkCard: React.FC<MenuLinkCardProps> = ({
             </span>
         )}
     </Link>
+    </div>
   )
 }
 
