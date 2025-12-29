@@ -20,7 +20,7 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) =>
                     <HoverLink 
                         href='/' 
                         className='rootsite-tab'
-                        hoverContent={<House className='w-4 h-4' />}
+                        hoverContent={<House className='w-4 h-4 m-1' />}
                     >
                         {'art.'}
                     </HoverLink>
@@ -28,7 +28,7 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) =>
                         target='_blank' 
                         href='https://www.sumitsute.com/' 
                         className='rootsite-tab'
-                        hoverContent={<><ExternalLink className='w-4 h-4' /><span className='ml-2'>sumitsute.com</span></>}
+                        hoverContent={<><ExternalLink className='w-4 h-4 m-1' /><span className='ml-2'>sumitsute.com</span></>}
                     >
                         {'sumitsute.com'}
                     </HoverLink>

@@ -26,12 +26,12 @@ export function IconButton({
       whileTap={{ scale: 0.9 }}
       onClick={onClick}
       aria-label={ariaLabel}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
       className={cn(
-        "p-2 rounded-full backdrop-blur-md transition-all border border-white/20 group pointer-events-auto",
-        !isActive && "mix-blend-difference",
+        "p-2 rounded-sm transition-colors border card-bg card-border button-style group pointer-events-auto duration-300 ease-in-out",
         isActive 
-          ? "ring-2 ring-[var(--primary-blue)] bg-[var(--primary-blue)] text-white shadow-lg shadow-[var(--primary-blue)]/20" 
-          : "bg-white/10 hover:bg-white/20 text-white/80 hover:text-white",
+          ? "bg-[var(--primary-blue)] text-white shadow-lg shadow-[var(--primary-blue)]/20" 
+          : "",
         className
       )}
     >

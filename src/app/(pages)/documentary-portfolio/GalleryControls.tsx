@@ -2,7 +2,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { 
   Play, Pause, ChevronLast, ChevronFirst, 
-  Aperture, Captions, MessagesSquare 
+  Aperture, Captions, CaptionsOff, MessagesSquare,
 } from "lucide-react";
 import { useState } from "react";
 import type { GalleryImage } from "./imageList";
@@ -20,7 +20,7 @@ interface Props {
 const SECTIONS = [
   { id: "experience", Icon: Aperture, label: "Experience" },
   { id: "comments", Icon: MessagesSquare, label: "Comments" },
-  { id: "captions", Icon: Captions, label: "Captions" },
+  { id: "captions", Icon: Captions, label: "ClosedCaption" },
 ] as const;
 
 export default function GalleryControls({ 
@@ -39,7 +39,7 @@ export default function GalleryControls({
   return (
     <div className="absolute inset-0 w-full h-full z-20 pointer-events-none">
       {/* Top Bar: Navigation & Tools */}
-      <div className="pt-14 px-4 w-full flex flex-col-reverse md:flex-row justify-center items-center md:justify-between md:items-start gap-2">
+      <div className="pt-14 px-2 w-full flex flex-col-reverse md:flex-row justify-center items-center md:justify-between md:items-start gap-2">
         
         {/* Left: Info Toggles */}
         <motion.div 
@@ -50,7 +50,7 @@ export default function GalleryControls({
           {SECTIONS.map(({ id, Icon, label }) => (
             <IconButton
               key={id}
-              Icon={Icon}
+              Icon={id === "captions" ? (activeTab === id ? CaptionsOff : Captions) : Icon}
               onClick={() => toggleSection(id as SectionId)}
               isActive={activeTab === id}
               aria-label={`Toggle ${label}`}
@@ -75,7 +75,7 @@ export default function GalleryControls({
         </motion.div>
       </div>
 
-      <div className="relative top-2 md:left-4 w-full flex justify-center items-center md:justify-start">
+      <div className="relative top-2 md:left-2 w-full flex justify-center items-center md:justify-start">
         <AnimatePresence>
           {activeTab && (
             <InfoCard id={activeTab} data={currentImage} />
