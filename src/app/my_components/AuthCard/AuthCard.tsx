@@ -17,7 +17,7 @@ import useAuthFlow from "./useAuthFlow"
 const AuthCard: React.FC<AuthCardProps> = ({
   onAuthError,
   onAuthSuccess,
-  title = "Keep the trolls at bay — verify to stay:",
+  title = "Verify to share your thoughts or leave a mark:",
   className = "w-[350px]"
 }) => {
 

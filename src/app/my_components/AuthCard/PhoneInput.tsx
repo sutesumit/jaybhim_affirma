@@ -17,6 +17,10 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
         e.preventDefault()
         await onSubmit(phone)
     }
+
+    // TODO: remove this once the phone input auth flow is implemented
+    error = 'We can’t afford SMS yet. Email it is.'
+    
   return (
     <>
     <form 
@@ -30,13 +34,13 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
             onChange={(e)=>onChange(e.target.value) }
             id="name" 
             placeholder="+919876543210" 
-            disabled={loading}
+            disabled={true}
             className= {error ? `border-red-400 focus:border-red-400 pr-9` : `pr-9`}
         />
         <button 
             type='submit' 
             className='absolute disabled:cursor-not-allowed disabled:opacity-30 right-1 p-1 rounded-sm hover:opacity-100 hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]'
-            disabled={loading || !phone.trim()}
+            disabled={true}
         >
             {loading ? <Loader className='p-1 animate-spin'/> : <ForwardIcon/>}
         </button>

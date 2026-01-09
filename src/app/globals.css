@@ -75,7 +75,7 @@
   }
 
   .button-style {
-    @apply w-full border-[1px] border-[var(--primary-blue)] rounded-sm p-1 cursor-pointer hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition duration-300 ease-in-out
+    @apply w-full border-[1px] border-[var(--primary-blue)] rounded-sm p-1 font-rajdhani font-bold uppercase cursor-pointer hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition duration-300 ease-in-out
   }
 
   .router-tab {

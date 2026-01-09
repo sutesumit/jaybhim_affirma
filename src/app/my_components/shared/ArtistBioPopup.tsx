@@ -33,7 +33,7 @@ const ArtistBioPopup: React.FC<ArtistBioPopupProps> = ({ isOpen, onClose }) => {
                         initial={{ 
                             opacity: 0, 
                             y: -80, 
-                            scale: 0.95, 
+                            scale: 0.9, 
                             rotate: initialRotation 
                         }}
                         animate={{
