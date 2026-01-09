@@ -3,17 +3,16 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useMenuContext } from "../Header/menuContext/useMenuContext";
-import { AnimatePresence } from "framer-motion";
-import { TitleDiscription } from "../PageTitleSection";
+import ArtistBioPopup from "../shared/ArtistBioPopup";
 
 const DURATION = 0.2;
 const STAGGER = 0.05;
 
 export default function JaiBhim() {
-    const { isMenuOpen, setMenuOpen } = useMenuContext();
+    const { setMenuOpen } = useMenuContext();
     const [isDialogOpen, setIsDialogOpen] = React.useState(false);
 
-    const handleOpenMenu = () => {
+    const handleClosePopup = () => {
         setMenuOpen(true);
         setIsDialogOpen(false);
     };
@@ -107,36 +106,8 @@ export default function JaiBhim() {
                     </motion.div>
                 </div>
 
-            <AnimatePresence>
-                {isDialogOpen && (
-                    <motion.div 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[9999] flex items-center justify-center"
-                        onClick={(e) => {
-                            if (e.target === e.currentTarget) handleOpenMenu();
-                        }}
-                    >
-                        <motion.div 
-                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                            animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                            className="w-full max-w-[500px] min-h-[60vh] relative pointer-events-auto font-light"
-                        >
-                            <TitleDiscription 
-                                variant="popup-bio" 
-                                title="Artist's Bio" 
-                                onClose={() => handleOpenMenu()}
-                                description={{
-                                    eng: "Sumit Sute is a visual artist who grew up in Aurangabad, Maharashtra. Through his works, he curiously attempts to converge the personal and the political to make sense of the influences of casteist-patriarchal traumas on emotional inheritance and familial bondings. While he continues to grapple to locate himself as a neo-middleclass urban dalit with survior's guilt; the artistic, economic and communal isolations have often informed his anxieties resulting into his lower artistic endurance. Through his artistic practice, he intends to develop a visual vocabulary to acknowledge, struggle and heal through the shame, anger and anxieties of his emotional responses around caste-patriarchy-class influenced intergenerational traumas. ",
-                                    mar: "मूळचा औरंगाबादचा सुमित सुटे हा एक छायाकलाकार आहे. समाजातल्या जातीय आणि पुरुषकेंद्री व्यवस्थांची कौटुंबिक नात्यांवर होणाऱ्या पिढीजात आणि खोलवर पडसादांचा कानोसा घेत तो त्याच्या छायाकृतींतून वैयक्तिक आणि राजकीय नीतींचा मेळ लावू पाहतो. स्वतःची नव-मध्यमवर्गीय शहरी दलित म्हणून ओळख स्विकारताना त्याबरोबर आपसूक येणाऱ्या चांगल्या नशिबाची अपराधी जाण ठेवत जेव्हा जेव्हा तो कलात्मक, आर्थिक आणि सामाजिक एकटेपणात स्वतःला सापडतो, तेव्हा तेव्हा त्याची कलात्मक चिकाटी फाटून असते. जातीय-पुरुषकेंद्री-वर्गीय व्यवस्थेतून घडलेल्या पिढीजात आघातांच्या भावनिक प्रतिसादाला, राग-लाज आणि अस्वस्थतेला ओळखायला, झगडायला आणि ऊभरून यायला तो स्वतःची दृकभाषा विकसित करू पाहतोय."
-                                }} 
-                            />
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            <ArtistBioPopup isOpen={isDialogOpen} onClose={handleClosePopup} />
         </div>
     );
 }
+
