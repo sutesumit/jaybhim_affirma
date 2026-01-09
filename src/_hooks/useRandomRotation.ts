@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+export const randomInRange = (min: number, max: number) => 
+    Math.random() * (max - min) + min;
+
+
 export const useRandomRotation = () => {
     const [rotation, setRotation] = useState(0)
     useEffect(() => {
