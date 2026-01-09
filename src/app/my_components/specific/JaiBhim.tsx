@@ -57,7 +57,7 @@ export default function JaiBhim() {
                                 hovered: { y: "-100%" },
                             }}
                         >
-                            {"Begin".split("").map((letter, index) => (
+                            {"Enter".split("").map((letter, index) => (
                                 <motion.span
                                     key={index}
                                     className="inline-block"

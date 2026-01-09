@@ -2,7 +2,7 @@ import Hero from "./my_components/specific/Hero";
 
 export default function Home() {
   return (
-      <div className="flex flex-1 h-full items-center justify-center">
+      <div className="flex flex-1 h-full items-center justify-center pt-14">
         <Hero />
       </div>
   )
