@@ -7,17 +7,17 @@ const MenuBarWrapper: React.FC = () => {
     const { isMenuOpen, setMenuOpen } = useMenuContext();    
     
   return (
-    <nav
+        <nav
         className="navbar fixed isolate top-0 z-20 w-full"
-        onClick={() => setMenuOpen(!isMenuOpen)}
-    >
-        
+            onClick={() => setMenuOpen(!isMenuOpen)}
+        >
+
         <MenuItems  />
-        <AnimatePresence>
-            {isMenuOpen &&
-                <MenuCardsGrid key="menu-cards-grid" />
-            }
-        </AnimatePresence>
+            <AnimatePresence>
+                {isMenuOpen &&
+                        <MenuCardsGrid key="menu-cards-grid" />
+                }
+            </AnimatePresence>
     </nav>
   )
 }

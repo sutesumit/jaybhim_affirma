@@ -31,7 +31,7 @@ const MenuLinkCard: React.FC<MenuLinkCardProps> = ({
         onClick={() => {
             setMenuOpen(false);
         }}
-        className="link-card relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
+        className="link-card"
     >
         <span 
             className={

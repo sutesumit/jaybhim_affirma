@@ -59,19 +59,23 @@
   }
 
   .card-bg {
-    @apply bg-white/50 backdrop-blur-sm
+    @apply bg-white/40 backdrop-blur-md
   }
 
   .card-border {
     @apply border-[1px] border-[var(--primary-blue)]
   }
 
+  .glass-hover {
+    @apply hover:backdrop-blur-lg hover:bg-[rgba(19,24,87,0.1)] transform transition-all duration-300 ease-in-out hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_inset_0_-1px_1px_rgba(19,24,87,0.5),_0_0_12px_rgba(19,24,87,0.2)]
+  }
+
   .card-hover {
-    @apply hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transform transition-all duration-300 ease-in-out
+    @apply glass-hover hover:scale-90
   }
 
   .card-shadow {
-    @apply shadow-[5px_5px_0px_0px_var(--primary-blue)]
+    @apply shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6),_inset_0_-1px_1px_rgba(19,24,87,0.4),_0_4px_16px_0_rgba(19,24,87,0.15)]
   }
 
   .button-style {
@@ -79,11 +83,11 @@
   }
 
   .router-tab {
-    @apply hover:bg-[var(--primary-white)] hover:text-[var(--primary-blue)] hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300
+    @apply border-[1px] border-transparent hover:bg-white/60 hover:backdrop-blur-md hover:shadow-md hover:border-white/50 hover:text-[var(--primary-blue)] hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300
   }
 
   .rootsite-tab {
-    @apply hover:text-[var(--primary-blue)] hover:bg-[var(--primary-white)] hover:py-2 hover:px-5 rounded-sm transition-all duration-300
+    @apply border-[1px] border-transparent hover:text-[var(--primary-blue)] hover:bg-white/60 hover:backdrop-blur-md hover:shadow-md hover:border-white/50 hover:py-2 hover:px-5 rounded-sm transition-all duration-300
   }
 
   .link-text {
@@ -100,6 +104,14 @@
 
   .round-pointer {
     @apply w-5 h-5 bg-[var(--primary-white)] translate-x-[-50%] translate-y-[-50%] bg-blend-difference rounded-full 
+  }
+
+  .link-card {
+    @apply card-bg card-shadow card-hover relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip
+  }
+
+  .blend-text {
+    @apply mix-blend-difference text-[var(--primary-white)]
   }
 
 }
