@@ -40,7 +40,7 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = ({ isMarathi, setIsMarathi
         <AnimatePresence mode="wait" initial={false}>
             <m.div
                 key={isMarathi ? 'marathi' : 'english'}
-                className='w-14 text-center px-2 py-1 pointer-events-none'
+                className='w-16 text-center px-2 py-1 pointer-events-none'
                 initial={{ y: -10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 10, opacity: 0 }}

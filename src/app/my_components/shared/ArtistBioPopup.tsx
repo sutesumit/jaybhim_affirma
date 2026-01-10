@@ -33,12 +33,14 @@ const ArtistBioPopup: React.FC<ArtistBioPopupProps> = ({ isOpen, onClose }) => {
                         initial={{ 
                             opacity: 0, 
                             y: -80, 
+                            z: -10,
                             scale: 0.9, 
                             rotate: initialRotation 
                         }}
                         animate={{
                             opacity: 1,
                             y: 0,
+                            z: 50,
                             scale: 1,
                             rotate: 0,
                             transition: { type: "spring", stiffness: 250, damping: 20 }
@@ -46,6 +48,7 @@ const ArtistBioPopup: React.FC<ArtistBioPopupProps> = ({ isOpen, onClose }) => {
                         exit={{
                             opacity: 0,
                             y: 550,
+                            z: -10,
                             scale: 0.5,
                             rotate: exitRotation,
                             transition: { duration: 0.4, ease: "easeIn" }
