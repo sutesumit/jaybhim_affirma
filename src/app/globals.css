@@ -146,11 +146,45 @@
   }
 
   .menu-card-description {
-    @apply mt-8 text-sm text-[var(--primary-blue)] leading-relaxed px-8 text-center max-w-[90%] mx-auto opacity-0 translate-y-2 transition-all duration-300 ease-in-out;
+    /* Base styles */
+    @apply text-sm text-[var(--primary-white)] leading-relaxed px-6 text-center mx-auto drop-shadow-[0_3px_1.5px_rgba(19,24,87,0.8)];
+    
+    /* Hidden state (default) */
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    
+    /* Overflow & Scrollbar */
+    overflow-y: auto; 
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-white) transparent;
+    
+    transform: translateY(10px); /* Slight movement for effect */
+    
+    /* Transition settings */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .menu-card-description-visible {
-    @apply opacity-100 translate-y-0;
+    /* Visible state */
+    max-height: 200px; /* Limits height, enables scrolling if content exceeds this */
+    opacity: 1;
+    margin-top: 0.2rem; /* Equivalent to mt-8 */
+    transform: translateY(0);
+  }
+
+  /* Webkit Scrollbar Styling for this element */
+  .menu-card-description::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .menu-card-description::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .menu-card-description::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
   }
 
 }
