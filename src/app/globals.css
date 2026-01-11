@@ -83,11 +83,11 @@
   }
 
   .router-tab {
-    @apply border-[1px] border-transparent hover:bg-white/60 hover:backdrop-blur-md hover:shadow-md hover:border-white/50 hover:text-[var(--primary-blue)] hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300
+    @apply border-[1px] border-transparent hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] hover:backdrop-blur-md hover:shadow-md hover:border-white/50 hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300
   }
 
   .rootsite-tab {
-    @apply border-[1px] border-transparent hover:text-[var(--primary-blue)] hover:bg-white/60 hover:backdrop-blur-md hover:shadow-md hover:border-white/50 hover:py-2 hover:px-5 rounded-sm transition-all duration-300
+    @apply border-[1px] border-transparent hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] hover:backdrop-blur-md hover:shadow-md hover:border-white/50 hover:py-2 hover:px-5 rounded-sm transition-all duration-300
   }
 
   .link-text {
