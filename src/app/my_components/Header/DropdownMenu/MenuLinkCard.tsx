@@ -20,6 +20,7 @@ const MenuLinkCard: React.FC<MenuLinkCardProps> = ({
     hoveredCard, 
     setMenuOpen,  
 }) => {
+    const isActive = hoveredCard === object.id;
   return (
     <div 
         className='relative flex-shrink-0'
@@ -32,22 +33,17 @@ const MenuLinkCard: React.FC<MenuLinkCardProps> = ({
             setMenuOpen(false);
         }}
         className="link-card"
-    >
-        <span 
-            className={
-                hoveredCard === object.id 
-                ? 'text-[var(--primary-white)] bg-[var(--primary-blue)] px-2 py-1 rounded-sm' 
-                : ''
-            }
-        >
-            {object.title}
-        </span>
-
-        {hoveredCard === object.id && (
-            <span className='text-[var(--primary-blue)] text-sm p-2'>
-                {object.description}
+    >  
+        <div className={`menu-title-wrapper ${isActive ? 'menu-title-active' : ''}`}>
+            <div className='menu-title-bg'/>
+            <span className='menu-title-text'>
+                {object.title}
             </span>
-        )}
+        </div>
+
+        <div className={`menu-card-description ${isActive ? 'menu-card-description-visible' : ''}`}>
+            {object.description}
+        </div>
     </Link>
     </div>
   )

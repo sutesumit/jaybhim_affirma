@@ -78,16 +78,24 @@
     @apply shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6),_inset_0_-1px_1px_rgba(19,24,87,0.4),_0_4px_16px_0_rgba(19,24,87,0.15)]
   }
 
+  .blue-on-glass {
+    @apply bg-[var(--primary-blue)] backdrop-blur-md shadow-md border-white/50 border-[1px] rounded-sm text-[var(--primary-white)]
+  }
+
   .button-style {
     @apply w-full border-[1px] border-[var(--primary-blue)] rounded-sm p-1 font-rajdhani uppercase cursor-pointer hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition duration-300 ease-in-out
   }
 
   .router-tab {
-    @apply border-[1px] border-transparent hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] hover:backdrop-blur-md hover:shadow-md hover:border-white/50 hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300
+    @apply border-[1px] border-transparent hover:blue-on-glass hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300
   }
 
   .rootsite-tab {
     @apply border-[1px] border-transparent hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] hover:backdrop-blur-md hover:shadow-md hover:border-white/50 hover:py-2 hover:px-5 rounded-sm transition-all duration-300
+  }
+
+  .link-card {
+    @apply card-bg card-shadow card-hover relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip
   }
 
   .link-text {
@@ -106,12 +114,43 @@
     @apply w-5 h-5 bg-[var(--primary-white)] translate-x-[-50%] translate-y-[-50%] bg-blend-difference rounded-full 
   }
 
-  .link-card {
-    @apply card-bg card-shadow card-hover relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip
-  }
-
   .blend-text {
     @apply mix-blend-difference text-[var(--primary-white)]
+  }
+
+  .menu-title-wrapper {
+    @apply relative inline-block;
+  }
+
+  .menu-title-bg {
+    @apply absolute top-0 left-0 w-full h-full blue-on-glass;
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .menu-title-text {
+    @apply relative px-4 py-2 inline-block;
+    color: var(--primary-blue);
+    transition: color 0.3s ease 0.1s;
+    z-index: 2;
+  }
+
+  .menu-title-active .menu-title-bg {
+    transform: scaleY(1);
+  }
+
+  .menu-title-active .menu-title-text {
+    color: var(--primary-white);
+  }
+
+  .menu-card-description {
+    @apply mt-8 text-sm text-[var(--primary-blue)] leading-relaxed px-8 text-center max-w-[90%] mx-auto opacity-0 translate-y-2 transition-all duration-300 ease-in-out;
+  }
+
+  .menu-card-description-visible {
+    @apply opacity-100 translate-y-0;
   }
 
 }
