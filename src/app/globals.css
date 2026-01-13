@@ -3,41 +3,40 @@
 @tailwind utilities;
 
 :root {
+  /* Brand Colors */
   --primary-blue: #131857;
   --primary-white: #ffffff;
+  
+  /* Fonts */
   --title-font: var(--font-lora);
   --text-font: var(--font-merriweather);
-}
 
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;              /* white background */
-    --foreground: 233 65% 20%;            /* dark blue text */
-    --card: 0 0% 100%;                    /* white card */
-    --card-foreground: 233 65% 20%;       /* dark blue on card */
-    --popover: 0 0% 100%;
-    --popover-foreground: 233 65% 20%;
-    --primary: 233 65% 20%;               /* your primary blue */
-    --primary-foreground: 0 0% 100%;      /* white on blue */
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 233 65% 20%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 233 65% 40%;      /* lighter blue text on muted */
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 233 65% 20%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 233 65% 20%;
-    --chart-1: 233 65% 20%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-  }
+  /* Shadcn / Theme Variables */
+  --background: 0 0% 100%;              /* white background */
+  --foreground: 233 65% 20%;            /* dark blue text */
+  --card: 0 0% 100%;                    /* white card */
+  --card-foreground: 233 65% 20%;       /* dark blue on card */
+  --popover: 0 0% 100%;
+  --popover-foreground: 233 65% 20%;
+  --primary: 233 65% 20%;               /* your primary blue */
+  --primary-foreground: 0 0% 100%;      /* white on blue */
+  --secondary: 0 0% 96.1%;
+  --secondary-foreground: 233 65% 20%;
+  --muted: 0 0% 96.1%;
+  --muted-foreground: 233 65% 40%;      /* lighter blue text on muted */
+  --accent: 0 0% 96.1%;
+  --accent-foreground: 233 65% 20%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% 89.8%;
+  --input: 0 0% 89.8%;
+  --ring: 233 65% 20%;
+  --chart-1: 233 65% 20%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 27 87% 67%;
+  --radius: 0.5rem;
 }
 
 @layer base {
@@ -45,168 +44,110 @@
     @apply border-border scroll-smooth;
   }
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
+    @apply bg-background text-foreground overflow-x-hidden font-body;
   }
 }
 
-@layer components{
-  .text-container p {
-    @apply pt-4
-  }
+@layer components {
+  /* --- Layout & General --- */
+  .text-container p { @apply pt-4; }
+  .checkbox { @apply border-2 border-pink-400 z-50; }
 
-  .checkbox {
-    @apply border-2 border-pink-400 z-50
-  }
-
-  .card-bg {
-    @apply bg-white/40 backdrop-blur-md
-  }
-
-  .card-border {
-    @apply border-[1px] border-[var(--primary-blue)]
-  }
-
+  /* --- Glassmorphism & Cards --- */
+  .card-bg { @apply bg-white/40 backdrop-blur-md; }
+  .card-border { @apply border-[1px] border-[var(--primary-blue)]; }
+  .card-shadow { @apply shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6),_inset_0_-1px_1px_rgba(19,24,87,0.4),_0_4px_16px_0_rgba(19,24,87,0.15)]; }
+  
   .glass-hover {
-    @apply hover:backdrop-blur-lg hover:bg-[rgba(19,24,87,0.1)] transform transition-all duration-300 ease-in-out hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_inset_0_-1px_1px_rgba(19,24,87,0.5),_0_0_12px_rgba(19,24,87,0.2)]
+    @apply backdrop-blur-xl bg-primary/10 hover:backdrop-blur-sm hover:bg-white/50 transform transition-all duration-300 ease-in-out;
+    @apply hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_inset_0_-1px_1px_rgba(19,24,87,0.5),_0_0_12px_rgba(19,24,87,0.2)];
   }
 
-  .card-hover {
-    @apply glass-hover hover:scale-90
-  }
+  .card-hover { @apply glass-hover hover:scale-95; }
 
-  .card-shadow {
-    @apply shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6),_inset_0_-1px_1px_rgba(19,24,87,0.4),_0_4px_16px_0_rgba(19,24,87,0.15)]
+  .link-card {
+    @apply card-bg card-shadow card-hover relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip;
   }
 
   .blue-on-glass {
-    @apply bg-[var(--primary-blue)] backdrop-blur-md shadow-md border-white/50 border-[1px] rounded-sm text-[var(--primary-white)]
+    @apply bg-[var(--primary-blue)] shadow-md border-white/50 border-[1px] rounded-sm text-[var(--primary-white)];
   }
 
+  /* --- Navigation & Tabs --- */
   .button-style {
-    @apply w-full border-[1px] border-[var(--primary-blue)] rounded-sm p-1 font-rajdhani uppercase cursor-pointer hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition duration-300 ease-in-out
+    @apply w-full border-[1px] border-[var(--primary-blue)] rounded-sm p-1 font-rajdhani uppercase cursor-pointer hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition duration-300 ease-in-out;
   }
 
   .router-tab {
-    @apply border-[1px] border-transparent hover:blue-on-glass hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300
+    @apply border-[1px] border-transparent hover:blue-on-glass hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300;
   }
 
   .rootsite-tab {
-    @apply border-[1px] border-transparent hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] hover:backdrop-blur-md hover:shadow-md hover:border-white/50 hover:py-2 hover:px-5 rounded-sm transition-all duration-300
+    @apply border-[1px] border-transparent hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] hover:backdrop-blur-md hover:shadow-md hover:border-white/50 hover:py-2 hover:px-5 rounded-sm transition-all duration-300;
   }
 
-  .link-card {
-    @apply card-bg card-shadow card-hover relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip
-  }
-
+  /* --- Interaction Elements --- */
   .link-text {
-    @apply transition-all duration-1000 ease-in-out bg-gradient-to-tr from-[var(--primary-blue)] to-[var(--primary-white)] bg-clip-text text-transparent
+    @apply transition-all duration-1000 ease-in-out bg-gradient-to-tr from-[var(--primary-blue)] to-[var(--primary-white)] bg-clip-text text-transparent;
   }
 
   .link-text:hover {
-    @apply bg-gradient-to-t hover:bg-gradient-to-bl from-[var(--primary-blue)] to-[var(--primary-white)] bg-clip-text text-transparent transition-all duration-1000 ease-in-out 
+    @apply bg-gradient-to-bl transition-all duration-1000 ease-in-out;
   }
 
-  .menu-image, .reel-container {
-    @apply translate-x-[-50%] translate-y-[-50%]
-  }
+  .menu-image, .reel-container { @apply translate-x-[-50%] translate-y-[-50%]; }
+  .round-pointer { @apply w-5 h-5 bg-[var(--primary-white)] translate-x-[-50%] translate-y-[-50%] bg-blend-difference rounded-full; }
+  .blend-text { @apply mix-blend-difference text-[var(--primary-white)]; }
 
-  .round-pointer {
-    @apply w-5 h-5 bg-[var(--primary-white)] translate-x-[-50%] translate-y-[-50%] bg-blend-difference rounded-full 
-  }
-
-  .blend-text {
-    @apply mix-blend-difference text-[var(--primary-white)]
-  }
-
-  .menu-title-wrapper {
-    @apply relative inline-block;
-  }
-
+  /* --- Specialized Components --- */
+  .menu-title-wrapper { @apply relative inline-block; }
   .menu-title-bg {
-    @apply absolute top-0 left-0 w-full h-full blue-on-glass;
-    transform: scaleY(0);
-    transform-origin: center;
-    transition: transform 0.3s ease;
-    z-index: 1;
+    @apply absolute top-0 left-0 w-full h-full blue-on-glass scale-y-0 origin-center transition-transform duration-300 z-[1];
   }
 
   .menu-title-text {
-    @apply relative px-4 py-2 inline-block;
-    color: var(--primary-blue);
-    transition: color 0.3s ease 0.1s;
-    z-index: 2;
+    @apply relative px-4 py-2 inline-block drop-shadow-[1px_1px_1px_var(--primary-white)] mix-blend-screen text-[var(--primary-blue)] transition-colors duration-300 delay-100 z-[2];
   }
 
-  .menu-title-active .menu-title-bg {
-    transform: scaleY(1);
-  }
-
-  .menu-title-active .menu-title-text {
-    color: var(--primary-white);
-  }
+  .menu-title-active .menu-title-bg { @apply scale-y-100; }
+  .menu-title-active .menu-title-text { @apply text-[var(--primary-white)]; }
 
   .menu-card-description {
-    /* Base styles */
-    @apply text-sm text-[var(--primary-white)] leading-relaxed px-6 text-center mx-auto drop-shadow-[0_3px_1.5px_rgba(19,24,87,0.8)];
-    
-    /* Hidden state (default) */
-    max-height: 0;
-    opacity: 0;
-    margin-top: 0;
-    
-    /* Overflow & Scrollbar */
-    overflow-y: auto; 
+    @apply text-sm text-[var(--primary-blue)] leading-relaxed px-6 text-center mx-auto drop-shadow-[0px_2px_3px_var(--primary-blue)];
+    @apply max-h-0 opacity-0 mt-0 translate-y-[10px] overflow-y-auto transition-all ease-in-out;
+    transition-duration: 400ms;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-white) transparent;
-    
-    transform: translateY(10px); /* Slight movement for effect */
-    
-    /* Transition settings */
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .menu-card-description-visible {
-    /* Visible state */
-    max-height: 200px; /* Limits height, enables scrolling if content exceeds this */
-    opacity: 1;
-    margin-top: 0.2rem; /* Equivalent to mt-8 */
-    transform: translateY(0);
+    @apply opacity-100 translate-y-0;
+    max-height: 200px;
+    margin-top: 0.2rem;
   }
 
-  /* Webkit Scrollbar Styling for this element */
-  .menu-card-description::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .menu-card-description::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
+  /* Webkit Scrollbar Styling for menu-card-description */
+  .menu-card-description::-webkit-scrollbar { width: 4px; }
+  .menu-card-description::-webkit-scrollbar-track { background: transparent; }
   .menu-card-description::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 4px;
+    @apply bg-white/50 rounded-full;
   }
-
 }
 
 @layer utilities {
-
   .text-container {
-    @apply max-w-[60ch] px-8 md:p-2 mx-auto text-left text-[--primary-blue] font-body text-base
+    @apply max-w-[60ch] px-8 md:p-2 mx-auto text-left text-[--primary-blue] font-body text-base;
   }
 
-  .accent-text {
-    @apply hover:text-blue-200
-  }
+  .accent-text { @apply hover:text-blue-200; }
 
+  /* --- Masking & Shapes --- */
   .description-notch {
     --notch-width: 90px;
     --notch-depth: 20px;
-    --notch-radius: 3px; /* New variable for corner radius */
-    
+    --notch-radius: 3px;
     clip-path: polygon(
         0 0,
-        /* Start of left curve - smooth bezier-like transition */
         calc(50% - var(--notch-width) / 2) 0,
         calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.1) calc(var(--notch-depth) * 0.02),
         calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.2) calc(var(--notch-depth) * 0.08),
@@ -218,15 +159,11 @@
         calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.8) calc(var(--notch-depth) * 0.88),
         calc(50% - var(--notch-width) / 2 + var(--notch-radius) * 0.9) calc(var(--notch-depth) * 0.95),
         calc(50% - var(--notch-width) / 2 + var(--notch-radius)) var(--notch-depth),
-        
-        /* Bottom of notch - smooth transition */
         calc(50% - var(--notch-radius) * 0.3) var(--notch-depth),
         calc(50% - var(--notch-radius) * 0.1) calc(var(--notch-depth) * 0.98),
         50% calc(var(--notch-depth) * 0.96),
         calc(50% + var(--notch-radius) * 0.1) calc(var(--notch-depth) * 0.98),
         calc(50% + var(--notch-radius) * 0.3) var(--notch-depth),
-        
-        /* Right curve - mirror of left */
         calc(50% + var(--notch-width) / 2 - var(--notch-radius)) var(--notch-depth),
         calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.9) calc(var(--notch-depth) * 0.95),
         calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.8) calc(var(--notch-depth) * 0.88),
@@ -238,45 +175,18 @@
         calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.2) calc(var(--notch-depth) * 0.08),
         calc(50% + var(--notch-width) / 2 - var(--notch-radius) * 0.1) calc(var(--notch-depth) * 0.02),
         calc(50% + var(--notch-width) / 2) 0,
-        
-        /* Complete the shape */
-        100% 0,
-        100% 100%,
-        0 100%
+        100% 0, 100% 100%, 0 100%
     );
+  }
+
+  .hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
 }
 
-}
-
-@keyframes typing {
-  0% { width: 0% }
-  90% {width: 100%}
-  100% {width: 0%}
-}
-
-@keyframes blink-cursor {
-  from, to { border-color: transparent}
-  50% { border-color: var(--primary-white)}
-}
-
-.typewriter {
-  width: fit-content;
-  overflow: hidden;
-  white-space: nowrap;
-  width: fit-content;
-  display: inline-block;
-  border-right: 1px solid var(--primary-blue);
-  animation: typing 8s steps(47, end) infinite, blink-cursor 0.75s step-end infinite;
-}
-
-
-.text-[--primary-white\/50] {
-  color: rgb(var(--primary-white) / 0.5);
-  /* OR */
-  color: rgba(var(--primary-white), 0.5);
-}
-
-/* WebKit Browsers */
+/* --- Global Scrollbars (WebKit) --- */
 ::-webkit-scrollbar {
   width: 1px;
   height: 1px;
@@ -288,14 +198,14 @@
 
 ::-webkit-scrollbar-thumb {
   background: var(--primary-blue)/50;
-  border-radius: 3spx;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-blue)/50;
 }
 
-/* Firefox */
+/* --- Global Scrollbars (Firefox) --- */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--primary-blue) transparent;
@@ -308,104 +218,91 @@
 
 .menu-content {
   scrollbar-width: none;
-  scrollbar: smooth;
+  scroll-behavior: smooth;
 }
 
+/* --- Keyframes --- */
+@keyframes typing {
+  0% { width: 0% }
+  90% { width: 100% }
+  100% { width: 0% }
+}
 
-/* HTML: <div class="loader"></div> */
+@keyframes blink-cursor {
+  from, to { border-color: transparent }
+  50% { border-color: var(--primary-white) }
+}
+
+@keyframes l8 {
+  0%,10%   { border-radius: 0 }
+  30%,40%  { border-radius: 50% 0 }
+  60%,70%  { border-radius: 50% }
+  90%,100% { border-radius: 0 50% }
+}
+
+@keyframes l7-1 {
+  0%,55%,100% { border-top-left-radius: 0; border-bottom-right-radius: 0 }
+  20%,30%     { border-top-left-radius: 50%; border-bottom-right-radius: 50% }
+}
+
+@keyframes l7-2 {
+  0%,55%,100% { border-bottom-left-radius: 0; border-top-right-radius: 0 }
+  20%,30%     { border-bottom-left-radius: 50%; border-top-right-radius: 50% }
+}
+
+/* --- Animation Classes --- */
+.typewriter {
+  @apply inline-block overflow-hidden whitespace-nowrap border-r-[1px] border-[var(--primary-blue)];
+  animation: typing 8s steps(47, end) infinite, blink-cursor 0.75s step-end infinite;
+}
+
+/* --- Loaders --- */
 .loader {
-  width: 75px;
-  aspect-ratio: 1; 
-  display: grid;
+  @apply w-[75px] aspect-square grid;
 }
-.loader:before,
-.loader:after {
+
+.loader:before, .loader:after {
   content: "";
+  @apply w-[35px] aspect-square;
   grid-area: 1/1;
-  width: 35px;
-  aspect-ratio: 1;
   box-shadow: 0 0 0 3px var(--primary-blue) inset;
   filter: drop-shadow(40px 40px 0 var(--primary-blue));
   animation: l8 2s infinite alternate;
 }
+
 .loader:after {
-  margin: 0 0 0 auto; 
+  @apply ml-auto;
   filter: drop-shadow(-40px 40px 0 var(--primary-blue));
   animation-delay: -1s;
 }
-@keyframes l8 {
-  0%,10%   {border-radius:0}
-  30%,40%  {border-radius:50% 0}
-  60%,70%  {border-radius:50%}
-  90%,100% {border-radius:0 50%}
-}
 
-/* 404 loader */
-
-.loader2,
-.loader2:before,
-.loader2:after{
-  width: 35px;
-  aspect-ratio: 1;
+.loader2, .loader2:before, .loader2:after {
+  @apply w-[35px] aspect-square relative;
   box-shadow: 0 0 0 3px inset var(--primary-blue);
-  position: relative;
-  /* animation: 1.5s infinite 0.5s; */
-  animation-name: l7-1,l7-2;
+  animation-name: l7-1, l7-2;
   animation-duration: 1.5s;
   animation-delay: 0.5s;
   animation-iteration-count: infinite;
 }
-.loader2:before,
-.loader2:after{
+
+.loader2:before, .loader2:after {
   content: "";
-  position: absolute;
-  left: calc(100% + 5px);
-  animation-delay: 1s,0s;
-}
-.loader2:after{
-  left: -40px;
-  animation-delay: 0s,1s;
-}
-@keyframes l7-1 {
-  0%,55%,100%  {border-top-left-radius:0;  border-bottom-right-radius:0}
-  20%,30%      {border-top-left-radius:50%;border-bottom-right-radius:50%}
-}
-@keyframes l7-2 {
-  0%,55%,100%  {border-bottom-left-radius:0;  border-top-right-radius:0}
-  20%,30%      {border-bottom-left-radius:50%;border-top-right-radius:50%}
+  @apply absolute left-[calc(100%+5px)];
+  animation-delay: 1s, 0s;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+.loader2:after {
+  @apply left-[-40px];
+  animation-delay: 0s, 1s;
 }
 
-/* Creative Navigation Loading Bar Styling */
+/* --- Third-Party / UI Overrides --- */
 #nprogress .bar {
-  background: linear-gradient(to right, var(--primary-blue), var(--primary-blue)) !important;
-  /* box-shadow: 0 0 10px var(--primary-blue), 0 0 5px var(--primary-blue) !important; */
-  height: 4px !important;
-  z-index: 99999 !important;
+  @apply bg-[var(--primary-blue)] h-[4px] z-[99999] !important;
 }
 
 #nprogress .peg {
-  box-shadow: 0 0 10px var(--primary-blue), 0 0 5px var(--primary-blue) !important;
+  @apply shadow-[0_0_10px_var(--primary-blue),0_0_5px_var(--primary-blue)] !important;
 }
 
-#nprogress .spinner {
-  display: none !important;
-}
-
-.hide-scrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  scrollbar: smooth;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
+#nprogress .spinner { @apply hidden !important; }
