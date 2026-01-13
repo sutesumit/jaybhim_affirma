@@ -27,11 +27,11 @@ const TitleDiscription = ({
         className={`${variant !== 'popup-bio' ? 'pt-16' : ''} title-container relative z-0 w-full m-auto`}
       >
         {background && <div className='absolute inset-0 z-[-10]'>{background}</div>}
-        <div className='max-w-[90ch] mx-2 md:mx-auto text-[--primary-blue] card-bg font-rajdhani transition-[background] duration-300 backdrop-blur-sm border-[1px] border-[--primary-blue] rounded-sm'>
+        <div className='max-w-[90ch] mx-2 md:mx-auto text-[--primary-blue] glass-hover card-shadow font-rajdhani transition-all duration-300 rounded-sm'>
           <Gradient1 hoverOn={true}>
             {variant === 'popup-bio' && 
             <div 
-              className='relative flex items-center justify-center cursor-pointer border-b border-[--primary-blue] hover:bg-[--primary-blue] hover:text-white'
+              className='relative flex items-center justify-center cursor-pointer border-b border-white/30 hover:border-[--primary-blue] hover:bg-[--primary-blue] hover:text-[var(--primary-white)] transition-colors duration-300'
               onClick={onClose}
             >
               <ChevronDown className='w-3 h-3' />
