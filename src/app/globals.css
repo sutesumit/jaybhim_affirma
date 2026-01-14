@@ -57,6 +57,7 @@
   .card-bg { @apply bg-white/40 backdrop-blur-md; }
   .card-border { @apply border-[1px] border-[var(--primary-blue)]; }
   .card-shadow { @apply shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6),_inset_0_-1px_1px_rgba(19,24,87,0.4),_0_4px_16px_0_rgba(19,24,87,0.15)]; }
+  .card-inner-shadow { @apply hover:shadow-[inset_0px_0px_10px_-1px_rgba(59,_130,_246,_0.5)] ; }
   
   .glass-hover {
     @apply backdrop-blur-lg bg-transparent hover:backdrop-blur-sm hover:bg-white/50 transform transition-all duration-300 ease-in-out;
