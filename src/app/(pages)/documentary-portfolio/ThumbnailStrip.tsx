@@ -92,7 +92,7 @@ export default function ThumbnailStrip({ images, currentIndex, onSelect }: Props
             ref={(el) => { itemRef.current[idx] = el }}
             className={`relative flex-shrink-0 w-24 h-24 rounded transition-all duration-300 ${
               idx === currentIndex 
-                ? "ring-2 ring-[var(--primary-blue)] z-10 shadow-lg shadow-black/50" 
+                ? "card-shadow glass-hover z-10" 
                 : ""
             }`}
             onClick={() => onSelect(idx)}

@@ -1,19 +1,21 @@
 import * as React from "react"
-
+import Gradient1 from "@/app/my_components/gradients/Gradient1"
 import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-lg card-border border bg-card text-card-foreground shadow",
-      className
-    )}
-    {...props}
-  />
+  <Gradient1 hoverOn={true}>
+    <div
+      ref={ref}
+      className={cn(
+        "rounded-lg z-10 font-rajdhani hover:card-shadow glass-hover transition-all duration-300 ease-in-out",
+        className
+      )}
+      {...props}
+    />
+  </Gradient1>
 ))
 Card.displayName = "Card"
 

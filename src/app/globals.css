@@ -103,7 +103,7 @@
   }
 
   .menu-title-text {
-    @apply relative px-4 py-2 inline-block text-[var(--primary-blue)] transition-colors duration-300 delay-100 z-[2];
+    @apply relative font-semibold px-4 py-2 inline-block text-[var(--primary-blue)] transition-colors duration-300 delay-100 z-[2];
   }
 
   .menu-title-active { @apply card-shadow glass-hover scale-y-100; }

@@ -60,7 +60,7 @@ export function ExperienceSection({ data }: Props) {
       <div className="space-y-1.5 pb-4">
         {EXPERIENCES.map((exp, index) => (
           <article key={index} className="space-y-4 group relative">
-            <div className="relative border-[1px] border-dotted border-[--primary-blue] p-3 rounded-sm bg-white/10 hover:shadow-[inset_0px_0px_15px_-5px_rgba(59,_130,_246,_0.3)] transition-all duration-300">
+            <div className="relative hover:card-shadow p-3 rounded-sm transition-all duration-300">
               <div className="space-y-1">
               <h4 className="text-[--primary-blue] font-bold text-md leading-tight transition-all duration-300">
                 {exp.organization}

@@ -41,7 +41,7 @@ export function InfoCard({ id, data }: InfoCardProps) {
       className="w-[80vw] max-w-[400px] card-shadow glass-hover rounded-sm font-rajdhani overflow-hidden pointer-events-auto"
     >
       <Gradient1 hoverOn={true} className="p-0">
-        <div className="p-3 pr-1">
+        <div className="p-3">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={id}

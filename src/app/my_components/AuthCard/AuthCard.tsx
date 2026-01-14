@@ -43,7 +43,7 @@ const AuthCard: React.FC<AuthCardProps> = ({
     <Card className={`${className}`}>
       <CardHeader>
         <CardDescription 
-            className="text-xs text-center"
+            className="text-center"
         >
             {title}
         </CardDescription>
