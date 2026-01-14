@@ -26,7 +26,7 @@ const Gradient1: React.FC<GradientProps> = ({ children, className, hoverOn = fal
     <div ref={containerRef} className={cn('layer-1 gradient-wrapper overflow-clip rounded-sm group flex flex-col relative group', className)}
     >
       <div 
-        className={cn(`layer-2 backdrop-blur-md absolute  inset-0`)}
+        className={cn(`layer-2 backdrop-blur-md absolute inset-0 pointer-events-none`)}
       >
         <div className='layer-3 absolute opacity-0 group-hover:opacity-100 group-hover:blur-3xl inset-0 bg-gradient-to-br hover:bg-gradient-to-tl from-blue-200 via-blue-100 to-blue-500 transition-all duration-1000'>
         </div>

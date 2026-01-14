@@ -69,21 +69,17 @@
     @apply card-bg card-shadow card-hover relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip;
   }
 
-  .blue-on-glass {
-    @apply bg-[var(--primary-blue)] shadow-md border-white/50 border-[1px] rounded-sm text-[var(--primary-white)];
-  }
-
   /* --- Navigation & Tabs --- */
   .button-style {
     @apply w-full border-[1px] border-[var(--primary-blue)] rounded-sm p-1 font-rajdhani uppercase cursor-pointer hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition duration-300 ease-in-out;
   }
 
   .router-tab {
-    @apply border-[1px] border-transparent hover:blue-on-glass hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300;
+    @apply glass-hover hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300;
   }
 
   .rootsite-tab {
-    @apply border-[1px] border-transparent hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] hover:backdrop-blur-md hover:shadow-md hover:border-white/50 hover:py-2 hover:px-5 rounded-sm transition-all duration-300;
+    @apply glass-hover hover:py-2 hover:px-5 rounded-sm transition-all duration-300;
   }
 
   /* --- Interaction Elements --- */
