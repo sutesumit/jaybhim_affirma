@@ -16,10 +16,10 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) =>
   return (
     <>
         <span className='col-span-1 text-left hidden md:inline-block'>
-                <span className='site-tab px-5'>
+                <span className='site-tab px-3'>
                     <HoverLink 
                         href='/' 
-                        className='rootsite-tab'
+                        className='rootsite-tab pl-3'
                         hoverContent={<House className='w-4 h-4 m-1' />}
                     >
                         {'art.'}
@@ -27,7 +27,7 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({pathName, tabName}) =>
                     <HoverLink 
                         target='_blank' 
                         href='https://www.sumitsute.com/' 
-                        className='rootsite-tab'
+                        className='rootsite-tab pr-3'
                         hoverContent={<><ExternalLink className='w-4 h-4 m-1' /><span className='ml-2'>sumitsute.com</span></>}
                     >
                         {'sumitsute.com'}

@@ -28,14 +28,20 @@ export function IconButton({
       aria-label={ariaLabel}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       className={cn(
-        "p-2 rounded-sm transition-colors border card-bg card-border button-style group pointer-events-auto duration-300 ease-in-out",
+        "p-2 rounded-sm transition-colors button-style group pointer-events-auto duration-300 ease-in-out",
         isActive 
-          ? "bg-[var(--primary-blue)] text-white shadow-lg shadow-[var(--primary-blue)]/20" 
+          ? "bg-[var(--primary-blue)] text-white" 
           : "",
         className
       )}
     >
-      <Icon className={cn("w-4 h-4 transition-transform group-hover:rotate-3", fill && "fill-current")} />
+      <Icon 
+        className={cn(
+          "w-4 h-4 transition-transform group-hover:rotate-3", 
+          fill && "fill-current",
+          isActive && "drop-shadow-[0_0_2px_rgba(255,191,0,0.9)]"
+        )} 
+      />
     </motion.button>
   );
 }

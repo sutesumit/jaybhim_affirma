@@ -38,7 +38,7 @@ export function InfoCard({ id, data }: InfoCardProps) {
         ease: "easeOut",
         layout: { duration: 0.3 }
       }}
-      className="w-[80vw] max-w-[400px] card-bg backdrop-blur-sm border-[1px] border-[--primary-blue] rounded-sm font-rajdhani overflow-hidden pointer-events-auto"
+      className="w-[80vw] max-w-[400px] card-shadow glass-hover rounded-sm font-rajdhani overflow-hidden pointer-events-auto"
     >
       <Gradient1 hoverOn={true} className="p-0">
         <div className="p-3 pr-1">

@@ -28,7 +28,7 @@ export function CaptionsSection({ data }: Props) {
             </p>
           )}
 
-          <div className="pt-2 border-t border-[--primary-blue]/20 space-y-1 mt-1">
+          <div className="pt-2 border-t border-white/40 space-y-1 mt-1">
             <div className="flex items-center gap-2 text-[11px]">
               <span className="text-[--primary-blue] font-bold">{data.year || "N/A"}</span>
               <span className="text-[--primary-blue]/30">|</span>
