@@ -19,7 +19,7 @@ export function InfoCard({ id, data }: InfoCardProps) {
       case "experience":
         return <ExperienceSection data={data} />;
       case "comments":
-        return <CommentsSection data={data} />;
+        return <CommentsSection pagePath="/documentary-portfolio" />;
       case "captions":
         return <CaptionsSection data={data} />;
       default:

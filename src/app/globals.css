@@ -70,6 +70,15 @@
     @apply card-bg card-shadow card-hover relative h-[30vh] flex-shrink-0 rounded-sm p-5 flex flex-col justify-center items-center font-rajdhani text-center overflow-clip;
   }
 
+  /* --- Comments --- */
+  .comment-author-tag {
+    @apply border border-white/5 backdrop-blur-md rounded-sm px-1 mr-1 transition-all duration-300 ease-in-out;
+  }
+
+  .comment-author-tag:hover {
+    @apply border-transparent card-inner-shadow;
+  }
+
   /* --- Navigation & Tabs --- */
   .button-shadow { @apply shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6),_inset_0_-1px_1px_rgba(19,24,87,0.4),_0_1px_2px_0_rgba(19,24,87,0.15)]; }
   .button-style {
