@@ -92,11 +92,14 @@ export function CommentsSection({ pagePath }: Props) {
         <button className="button-style text-xs font-medium tracking-[0.2em] uppercase px-2 py-1 pointer-events-auto">
           Community Interactions
         </button>
-        <button 
-            className="w-fit px-2 py-1.5 button-style text-xs font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-50 flex items-center gap-2"
-          >
-            <RotateCw className="w-3 h-3" />
-          </button>
+        <button
+          onClick={fetchComments}
+          disabled={isFetching}
+          title="Refresh Comments"
+          className="w-fit px-2 py-1.5 button-style text-xs font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-50 flex items-center gap-2"
+        >
+          <RotateCw className={`w-3 h-3 ${isFetching ? "animate-spin" : ""}`} />
+        </button>
       </div>
 
       {/* Input Area */}
@@ -134,12 +137,12 @@ export function CommentsSection({ pagePath }: Props) {
       <div className="space-y-1 text-[--primary-blue]">
         {isFetching ? (
           <div className="flex flex-col items-center justify-center p-8 text-white/40">
-            <Loader2 className="w-6 h-6 animate-spin mb-2" />
-            <span className="text-xs uppercase tracking-widest">Loading Conversation...</span>
+            <div className='loader2 mb-5 opacity-50'></div>
+            <span className="text-xs text-[--primary-blue] uppercase tracking-widest opacity-50">Loading Conversation...</span>
           </div>
         ) : comments.length === 0 ? (
           <div className="text-center p-8 bg-white/5 rounded-sm border border-dashed border-white/10">
-            <p className="text-sm text-white/40 italic">No comments yet. Be the first to share! ✦</p>
+            <p className="text-sm text-[--primary-blue] italic">No comments yet. Be the first to share! ✦</p>
           </div>
         ) : (
           comments.map((comment) => (
