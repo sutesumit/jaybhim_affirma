@@ -1,5 +1,5 @@
 import { AuthManager } from "@/lib/auth/auth-manager";
-import { supabase } from "@/lib/supabase";
+import { getServerSupabase } from "@/lib/supabase-server";
 import { NextResponse } from "next/server";
 import type { 
   PostCommentRequest, 
@@ -14,11 +14,23 @@ export async function POST(request: Request): Promise<NextResponse<PostCommentRe
   try {
     // Check authentication
     const user = await AuthManager.getAuthenticatedUser();
+    
     if (!user) {
       return NextResponse.json(
         { success: false, error: "Authentication required" },
         { status: 401 }
       );
+    }
+
+    if (!user.accessToken) {
+        console.warn("[POST /api/comments] Missing access token for user", user.id);
+        return NextResponse.json(
+            { 
+              success: false, 
+              error: "Your session is incomplete (missing JWT). Please log out and log in again." 
+            },
+            { status: 401 }
+        );
     }
 
     // Parse request body
@@ -55,7 +67,10 @@ export async function POST(request: Request): Promise<NextResponse<PostCommentRe
       );
     }
 
-    // Insert comment into database
+    // Get context-aware supabase client
+    const supabase = await getServerSupabase();
+
+    // Insertion with explicit user context
     const { data: comment, error: insertError } = await supabase
       .from("comments")
       .insert({
@@ -92,7 +107,11 @@ export async function POST(request: Request): Promise<NextResponse<PostCommentRe
       success: true,
       comment: {
         ...comment,
-        user: { phone: user.phone, email: user.email },
+        user: { 
+          phone: user.phone, 
+          email: user.email,
+          display_name: user.display_name 
+        },
       },
     });
   } catch (error: unknown) {
@@ -119,10 +138,12 @@ export async function GET(request: Request): Promise<NextResponse<GetCommentsRes
       );
     }
 
+    const supabase = await getServerSupabase();
+
     // Fetch comments (RLS automatically filters deleted_at IS NULL)
     const { data: comments, error } = await supabase
       .from("comments")
-      .select("*")
+      .select("*, user:profiles(display_name)")
       .eq("page_path", pagePath)
       .order("created_at", { ascending: false });
 

@@ -130,7 +130,29 @@ export class AuthService {
         }
     }
 
+
+    static async updateProfile(displayName: string): Promise<{success: boolean, user?: User, error?: string}> {
+        try {
+            const response = await fetch(`${this.API_BASE}/profile`, {
+                method: 'PATCH',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ displayName })
+            });
+            const data = await response.json();
+            
+            if (!response.ok) {
+                return { success: false, error: data.error || 'Failed to update profile' };
+            }
+            
+            return { success: true, user: data.user };
+        } catch (error) {
+            console.error('AuthService: updateProfile error', error);
+            return { success: false, error: "Network error, please try again" };
+        }
+    }
+
     static async getCurrentUser(): Promise<AuthResult>{
+
         try {
             console.log(`Getting the current user.`)
             // await new Promise (resolve=>setTimeout(resolve, 1500))

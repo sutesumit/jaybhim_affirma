@@ -7,12 +7,14 @@ export class AuthManager {
     private static readonly COOKIE_NAME = 'auth-token'
     private static readonly COOKIE_MAX_AGE = 60 * 60 * 24 * 10
 
-    static setAuthCookie(response: NextResponse, user: User): void{
+    static setAuthCookie(response: NextResponse, user: User, accessToken?: string): void{
         const userData = JSON.stringify({
             id: user.id,
             phone: user.phone ?? null,
             email: user.email ?? null,
-            created_at: user.created_at
+            display_name: user.display_name ?? null,
+            created_at: user.created_at,
+            accessToken: accessToken || user.accessToken
         })
 
         response.cookies.set(this.COOKIE_NAME, userData, {

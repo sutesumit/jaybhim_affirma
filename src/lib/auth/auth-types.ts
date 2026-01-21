@@ -2,7 +2,9 @@ export interface User {
     id: string;
     phone?: string | null;
     email?: string | null,
+    display_name?: string | null
     created_at: string;
+    accessToken?: string;
 }
 
 export interface AuthState {

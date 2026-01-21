@@ -14,6 +14,7 @@ export interface Comment {
   user?: {
     phone?: string | null;
     email?: string | null;
+    display_name?: string | null;
   };
 }
 

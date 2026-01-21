@@ -129,9 +129,13 @@ export class CommentService {
   /**
    * Extracts a display name from user auth data
    */
-  static formatAuthorName(user: { phone?: string | null; email?: string | null } | undefined): string {
+  static formatAuthorName(user: { phone?: string | null; email?: string | null; display_name?: string | null } | undefined): string {
     if (!user) return "Anonymous";
     
+    if (user.display_name) {
+      return user.display_name;
+    }
+
     if (user.phone) {
       // Mask phone number for privacy: +91******1234
       const p = user.phone;

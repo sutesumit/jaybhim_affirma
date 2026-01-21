@@ -1,4 +1,4 @@
-import { Drawer, DrawerContent, DrawerTrigger, DrawerTitle, DrawerClose } from "@/components/ui/drawer"
+import { Drawer, DrawerContent, DrawerTitle, DrawerClose } from "@/components/ui/drawer"
 import ProtectedAuthWrapper from "./ProtectedAuthWrapper"
 import { X } from 'lucide-react'
 import { useState } from "react";
@@ -10,26 +10,39 @@ interface ClickableChildProps {
 }
 
 interface ProtectedActionDrawerProps {
-  children: React.ReactElement<ClickableChildProps>; 
+  children: React.ReactNode; 
+  trigger?: React.ReactElement<ClickableChildProps>;
   title?: string;
   drawerClassName?: string;
+  mode?: 'action' | 'view';
+
+
 }
 
 export const ProtectedActionDrawer = ({ 
     children, 
+    trigger,
     title = "Authentication Required",
-    drawerClassName = "backdrop-blur-sm min-h-[50vh] w-full p-6 items-center justify-center"
+    drawerClassName = "backdrop-blur-sm min-h-[50vh] w-full p-6 items-center justify-center",
+    mode = 'action'
 }: ProtectedActionDrawerProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const { isAuthenticated } = useAuthContext();
 
     const handleInterceptClick = (e?: React.MouseEvent) => {
+        if (mode === 'view') {
+            setIsOpen(true);
+            return;
+        }
+
         if (isAuthenticated) {
+
+            const triggerEl = children as React.ReactElement<ClickableChildProps>;
             if (
-                React.isValidElement(children) &&
-                typeof children.props.onClick === 'function'
+                React.isValidElement(triggerEl)
+                && typeof triggerEl.props.onClick === 'function'
             ) {
-                children.props.onClick(e);
+                triggerEl.props.onClick(e);
             }
         } else {
             e?.preventDefault();
@@ -39,21 +52,27 @@ export const ProtectedActionDrawer = ({
     }
 
     const handleAuthSuccess = () => {
-        setIsOpen(false);
+        if (mode === 'action') {
+            setIsOpen(false);
 
-        setTimeout(() => {
-            if (
-                React.isValidElement(children) &&
-                typeof children.props.onClick === 'function'
-            ) {
-                children.props.onClick();
-            }
-        }, 2000);
+            setTimeout(() => {
+                const childEl = children as React.ReactElement<ClickableChildProps>;
+                if (
+                    React.isValidElement(childEl) &&
+                    typeof childEl.props.onClick === 'function'
+                ) {
+                    childEl.props.onClick();
+                }
+            }, 300);
+        }
     }
 
-    const TriggerElement = React.cloneElement(children, {
-        onClick: handleInterceptClick
-    });
+    const ResolvedTrigger = mode === 'action' ? children : trigger;
+    const TriggerElement = React.isValidElement(ResolvedTrigger)
+        ? React.cloneElement(ResolvedTrigger as React.ReactElement<ClickableChildProps>, {
+            onClick: handleInterceptClick
+        })
+        : null;
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
@@ -61,10 +80,12 @@ export const ProtectedActionDrawer = ({
       <DrawerContent className={drawerClassName}>
         <DrawerTitle className="hidden">{title}</DrawerTitle>
         <ProtectedAuthWrapper onAuthSuccess={handleAuthSuccess}>
-           <div className="flex flex-col items-center justify-center text-center space-y-4">
-              <h2 className="text-xl font-bold font-rajdhani uppercase tracking-widest">Authentication Success</h2>
-              <p className="text-sm text-white/60">Your action is being processed...</p>
-           </div>
+            {mode === 'view' ? children : (
+            <div className="flex flex-col items-center justify-center text-center space-y-4">
+                <h2 className="text-xl font-bold font-rajdhani uppercase tracking-widest">Authentication Success</h2>
+                <p className="text-sm text-white/60">Your action is being processed...</p>
+            </div>
+           )}
         </ProtectedAuthWrapper>
         <DrawerClose asChild>
             <X className='absolute top-4 right-4 cursor-pointer backdrop-blur-lg card-border hover:text-white hover:bg-primary rounded-full p-1 transition-colors duration-300' />
