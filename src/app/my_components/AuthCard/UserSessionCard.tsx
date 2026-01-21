@@ -65,46 +65,57 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                     {description ? description : (
                         <>
                             Jai Bhim, <br />
-                            {isEditing ? (
-                                <div className="flex items-center justify-center gap-2 mt-1">
+                            <div 
+                                className="relative inline-flex items-center justify-center group min-h-[30px] my-1"
+                                onClick={() => !isEditing && setIsEditing(true)}
+                            >
+                                {/* Ghost Span: Drives width, always rendered */}
+                                <span className={`px-2 py-1 text-sm text-center glass-hover rounded min-w-[3rem] whitespace-pre select-none ${isEditing ? 'opacity-0' : 'opacity-100'}`}>
+                                    {(isEditing ? newName : (user?.display_name || "Digital Bro")).replace(/ /g, "\u00a0") || "\u00a0"}
+                                </span>
+
+                                {/* Overlay Input: Matches span dimensions exactly */}
+                                {isEditing && (
                                     <input
                                         type="text"
                                         value={newName}
                                         onChange={(e) => setNewName(e.target.value)}
-                                        className="inline-flex checkbox w-30 items-baseline gap-2 glass-hover rounded px-2 py-1 my-1 text-sm text-center focus:outline-none focus:border-white/40"
+                                        className="absolute inset-0 w-full h-full bg-transparent border-none text-center text-sm px-2 py-1 focus:outline-none focus:ring-0"
                                         autoFocus
                                         onKeyDown={(e) => {
                                             if (e.key === 'Enter') handleUpdateName();
                                             if (e.key === 'Escape') handleCancel();
                                         }}
+                                        onClick={(e) => e.stopPropagation()} 
                                     />
-                                    <button 
-                                        onClick={handleUpdateName} 
-                                        disabled={isLoading}
-                                        className="h-7 w-7 glass-hover rounded-sm inline-flex items-center justify-center focus:outline-none focus:border-white transition-colors text-green-400"
-                                    >
-                                        {isLoading ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
-                                    </button>
-                                    <button 
-                                        onClick={handleCancel}
-                                        disabled={isLoading} 
-                                        className="h-7 w-7 glass-hover rounded-sm inline-flex items-center justify-center transition-colors text-red-400"
-                                    >
-                                        <X size={14} />
-                                    </button>
+                                )}
+
+                                {/* Controls: Absolutely positioned outside flow */}
+                                <div className="absolute left-full pl-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                                    {isEditing ? (
+                                        <>
+                                            <button 
+                                                onClick={(e) => { e.stopPropagation(); handleUpdateName(); }}
+                                                disabled={isLoading}
+                                                className="h-7 w-7 glass-hover rounded-sm inline-flex items-center justify-center focus:outline-none transition-colors text-green-400"
+                                            >
+                                                {isLoading ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
+                                            </button>
+                                            <button 
+                                                onClick={(e) => { e.stopPropagation(); handleCancel(); }}
+                                                disabled={isLoading} 
+                                                className="h-7 w-7 glass-hover rounded-sm inline-flex items-center justify-center transition-colors text-red-400"
+                                            >
+                                                <X size={14} />
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <span className="h-7 w-7 inline-flex items-center justify-center glass-hover rounded opacity-20 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                            <Pencil size={14} />
+                                        </span>
+                                    )}
                                 </div>
-                            ) : (
-                                <div className="flex w-30 checkbox items-center relative justify-center gap-2 group cursor-pointer" 
-                                    onClick={() => setIsEditing(true)}
-                                >
-                                    <span className="h-7 inline-flex items-center justify-center glass-hover rounded px-2 text-sm text-center">
-                                        {user?.display_name || "Digital Bro"}
-                                    </span>
-                                    <span className="h-7 w-7 absolute -right-8 top-1/2 -translate-y-1/2 inline-flex items-center justify-center glass-hover rounded opacity-20 group-hover:opacity-100 transition-opacity">
-                                        <Pencil size={14} />
-                                    </span>
-                                </div>
-                            )}
+                            </div>
                             <span className="mt-1 block">You are logged in.</span>
                         </>
                     )}

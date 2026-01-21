@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { Dot, Quote, Loader2, Trash2, AlertCircle, Pencil } from "lucide-react";
+import { Dot, Quote, Loader2, Trash2, AlertCircle, Pencil, RotateCw } from "lucide-react";
 import { useAuthContext } from "@/auth/useAuthContext";
 import { CommentService } from "@/lib/comments/comment-service";
 import type { Comment } from "@/types/comments";
@@ -88,10 +88,15 @@ export function CommentsSection({ pagePath }: Props) {
   return (
     <div className="space-y- max-h-[60vh] overflow-y-auto overflow-x-hidden scroll-smooth font-rajdhani pr-1 antialiased custom-scrollbar">
       {/* Interaction Header */}
-      <div className="flex items-center justify-between sticky top-0 bg-transparent z-10 py-1">
+      <div className="flex gap-1 items-center justify-between bg-transparent z-10 py-1">
         <button className="button-style text-xs font-medium tracking-[0.2em] uppercase px-2 py-1 pointer-events-auto">
           Community Interactions
         </button>
+        <button 
+            className="w-fit px-2 py-1.5 button-style text-xs font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-50 flex items-center gap-2"
+          >
+            <RotateCw className="w-3 h-3" />
+          </button>
       </div>
 
       {/* Input Area */}
@@ -151,19 +156,19 @@ export function CommentsSection({ pagePath }: Props) {
                       {comment.updated_at !== comment.created_at && (
                         <span className="text-sm italic">(edited)</span>
                       )}
-                    {/* </span> */}
-                    <span className="flex-1 font-light text-sm leading-relaxed whitespace-pre-wrap break-words">
-                      {comment.comment_text}
+                      {/* </span> */}
+                      <span className="flex-1 font-light text-sm leading-relaxed whitespace-pre-wrap break-words">
+                        {comment.comment_text}
+                      </span>
+                      <span className="inline-flex items-baseline text-xs font-light italic flex items-baseline">
+                        <Dot className="w-3 h-3 self-center" />
+                        {CommentService.formatTimestamp(comment.created_at)}
+                      </span>
                     </span>
-                    <span className="inline-flex items-baseline text-xs font-light italic flex items-baseline">
-                      <Dot className="w-3 h-3 self-center" />
-                      {CommentService.formatTimestamp(comment.created_at)}
-                    </span>
-                  </span>
                   </span>
 
                   {user?.id === comment.user_id && (
-                    <div className="flex gap-3 pt-1 pr-1">
+                    <div className="flex gap-3 p-2">
                         <button 
                             // onClick={() => handleEditComment(comment.id)}
                             className="opacity-0 group-hover:opacity-100 text-white/70 hover:text-blue-900 transition-all duration-300"
