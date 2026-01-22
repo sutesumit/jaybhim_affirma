@@ -6,11 +6,48 @@ import { CommentService } from "@/lib/comments/comment-service";
 import type { Comment } from "@/types/comments";
 import { ProtectedActionDrawer } from "@/app/my_components/AuthCard";
 
-interface Props {
+interface CommentsSectionProps {
   pagePath: string;
 }
 
-export function CommentsSection({ pagePath }: Props) {
+interface CommentContentProps {
+  text: string;
+}
+
+const CommentContent = ({ text }: CommentContentProps) => {
+  const MAX_LENGTH = 100;
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const isLongText = text.length > MAX_LENGTH;
+  if (!isLongText) return (
+    <span
+      className="flex-1 font-light text-sm leading-relaxed whitespace-pre-wrap break-words"
+    >
+      {text}
+    </span>
+  );
+
+  return (
+    <>
+    <span
+      className="flex-1 font-light text-sm leading-relaxed whitespace-pre-wrap break-words"
+    >
+      {isExpanded ? text : text.slice(0, MAX_LENGTH) + "..."}
+    </span>
+    <button
+      onClick={() => setIsExpanded(!isExpanded)}
+      className="text-xs text-[--primary-blue] opacity-50 px-2 rounded-sm ml-1 hover:bg-[--primary-blue] hover:text-[--primary-white] hover:opacity-100 transition-all duration-300"
+    >
+      {isExpanded ? "Show Less" : "Show More"}
+    </button>
+    </>
+  );
+};
+
+
+
+
+export function CommentsSection({ pagePath }: CommentsSectionProps) {
   const { user } = useAuthContext();
 
   const [comments, setComments] = useState<Comment[]>([]);
@@ -160,9 +197,7 @@ export function CommentsSection({ pagePath }: Props) {
                         <span className="text-sm italic">(edited)</span>
                       )}
                       {/* </span> */}
-                      <span className="flex-1 font-light text-sm leading-relaxed whitespace-pre-wrap break-words">
-                        {comment.comment_text}
-                      </span>
+                      <CommentContent text={comment.comment_text} />
                       <span className="inline-flex items-baseline text-xs font-light italic flex items-baseline">
                         <Dot className="w-3 h-3 self-center" />
                         {CommentService.formatTimestamp(comment.created_at)}
