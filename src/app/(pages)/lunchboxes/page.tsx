@@ -1,6 +1,9 @@
+'use client'
 import React from 'react'
 import { TitleDiscription } from '@/app/my_components/PageTitleSection'
 import PageFlip from '@/app/my_components/shared/flipbook/PageFlip'
+import { CommentsSection } from '@/app/my_components/CommentsSection/CommentsSection'
+import Gradient1 from '@/app/my_components/gradients/Gradient1'
 
 const content = {
   title: "Lunchboxes in the age of mechanical reproduction",
@@ -26,6 +29,9 @@ const Home = () => {
       <div className='flex h-screen w-screen justify-center bg-gradient-to-br from-blue-100 via-[--primary-white] to-blue-100'>
         <PageFlip />
       </div>
+      <Gradient1 hoverOn={true} className='w-full max-w-2xl my-4 p-4 glass-hover card-shadow card-bg rounded-sm'>
+        <CommentsSection pagePath="/lunchboxes" />
+      </Gradient1>
     </div>
   )
 }

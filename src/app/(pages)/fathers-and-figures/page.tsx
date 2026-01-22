@@ -7,6 +7,8 @@ import { ArtCanvas } from './ArtCanvas';
 import { MakeMyCard } from './MakeMyCard';
 import Seperator from '@/app/my_components/shared/Seperator';
 import { Submissions } from './Submissions';
+import Gradient1 from '@/app/my_components/gradients/Gradient1';
+import { CommentsSection } from '@/app/my_components/CommentsSection/CommentsSection';
 
 export default function Home() {
   const artCanvasRef = useRef<HTMLDivElement | null>(null);
@@ -61,6 +63,9 @@ export default function Home() {
             </iframe>
             <div className='text-container !text-xs !text-center p-1 italic'>A glimpse into the making & unmaking of Mirrors 2024.</div>
         </div>
+        <Gradient1 hoverOn={true} className='w-full max-w-2xl my-4 p-4 glass-hover card-shadow card-bg rounded-sm'>
+          <CommentsSection pagePath="/fathers-and-figures" />
+        </Gradient1>
       </div>
     </>
   );

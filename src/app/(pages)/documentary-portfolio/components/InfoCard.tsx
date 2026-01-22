@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import type { GalleryImage } from "../imageList";
 import { ExperienceSection } from "./sections/ExperienceSection";
-import { CommentsSection } from "./sections/CommentsSection";
+import { CommentsSectionWrapper as CommentsSection } from "./sections/CommentsSection";
 import { CaptionsSection } from "./sections/CaptionsSection";
 import Gradient1 from "@/app/my_components/gradients/Gradient1";
 
@@ -19,7 +19,7 @@ export function InfoCard({ id, data }: InfoCardProps) {
       case "experience":
         return <ExperienceSection data={data} />;
       case "comments":
-        return <CommentsSection pagePath="/documentary-portfolio" />;
+        return <CommentsSection />;
       case "captions":
         return <CaptionsSection data={data} />;
       default:
