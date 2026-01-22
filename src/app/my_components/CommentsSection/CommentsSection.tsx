@@ -5,13 +5,31 @@ import { useAuthContext } from "@/auth/useAuthContext";
 import { useComments } from "./hooks/useComments";
 import { CommentInput } from "./CommentInput";
 import { CommentsList } from "./CommentsList";
+import Gradient1 from "../gradients/Gradient1";
 
 interface CommentsSectionProps {
   pagePath: string;
+  mode?: "overlay" | "standalone";
 }
 
-export function CommentsSection({ pagePath }: CommentsSectionProps) {
+function ConditionalWrapper({
+  condition,
+  wrapper,
+  children,
+}: {
+  condition: boolean;
+  wrapper: (children: React.ReactNode) => React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return condition ? wrapper(children) : <>{children}</>;
+}
+
+export function CommentsSection({
+  pagePath,
+  mode,
+}: CommentsSectionProps) {
   const { user } = useAuthContext();
+
   const {
     comments,
     isFetching,
@@ -22,12 +40,12 @@ export function CommentsSection({ pagePath }: CommentsSectionProps) {
     handleDeleteComment,
   } = useComments(pagePath);
 
-  return (
-    <div className="space-y- max-h-[60vh] overflow-y-auto overflow-x-hidden scroll-smooth font-rajdhani pr-1 antialiased custom-scrollbar">
+  const content = (
+    <div className="z-10 max-h-[60vh] overflow-y-auto overflow-x-hidden scroll-smooth font-rajdhani pr-1 antialiased custom-scrollbar">
       {/* Interaction Header */}
       <div className="flex gap-1 items-center justify-between bg-transparent z-10 py-1">
         <button className="button-style text-xs font-medium tracking-[0.2em] uppercase px-2 py-1 pointer-events-auto">
-          Community Interactions
+          Common Ground
         </button>
         <button
           onClick={fetchComments}
@@ -38,9 +56,7 @@ export function CommentsSection({ pagePath }: CommentsSectionProps) {
           <RotateCw className={`w-3 h-3 ${isFetching ? "animate-spin" : ""}`} />
         </button>
       </div>
-
-      {/* Input Area */}
-      <CommentInput onPost={handlePostComment} isSubmitting={isSubmitting} />
+      <CommentInput mode={mode} onPost={handlePostComment} isSubmitting={isSubmitting} />
 
       {error && (
         <div className="flex items-center gap-2 text-red-400 text-[11px] bg-red-400/10 p-2 rounded-sm mb-2">
@@ -49,13 +65,29 @@ export function CommentsSection({ pagePath }: CommentsSectionProps) {
         </div>
       )}
 
-      {/* Comments List */}
-      <CommentsList 
-        comments={comments} 
-        isFetching={isFetching} 
-        currentUser={user} 
-        onDelete={handleDeleteComment} 
+      <CommentsList
+        comments={comments}
+        isFetching={isFetching}
+        currentUser={user}
+        onDelete={handleDeleteComment}
+        mode={mode}
       />
     </div>
+  );
+
+  return (
+    <ConditionalWrapper
+      condition={mode === "standalone"}
+      wrapper={(children) => (
+        <Gradient1
+          hoverOn
+          className="w-full max-w-2xl my-4 p-4 glass-hover card-shadow card-bg rounded-sm"
+        >
+          {children}
+        </Gradient1>
+      )}
+    >
+      {content}
+    </ConditionalWrapper>
   );
 }

@@ -7,6 +7,7 @@ export function CommentsSectionWrapper() {
     <>
         <CommentsSection
             pagePath="/documentary-portfolio"
+            mode="overlay"
         />
     </>
   );

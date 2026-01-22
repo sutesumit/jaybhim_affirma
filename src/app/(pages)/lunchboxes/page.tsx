@@ -29,9 +29,7 @@ const Home = () => {
       <div className='flex h-screen w-screen justify-center bg-gradient-to-br from-blue-100 via-[--primary-white] to-blue-100'>
         <PageFlip />
       </div>
-      <Gradient1 hoverOn={true} className='w-full max-w-2xl my-4 p-4 glass-hover card-shadow card-bg rounded-sm'>
-        <CommentsSection pagePath="/lunchboxes" />
-      </Gradient1>
+      <CommentsSection pagePath="/lunchboxes" mode="standalone" />
     </div>
   )
 }

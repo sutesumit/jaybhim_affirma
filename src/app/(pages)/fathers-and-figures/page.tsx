@@ -63,9 +63,7 @@ export default function Home() {
             </iframe>
             <div className='text-container !text-xs !text-center p-1 italic'>A glimpse into the making & unmaking of Mirrors 2024.</div>
         </div>
-        <Gradient1 hoverOn={true} className='w-full max-w-2xl my-4 p-4 glass-hover card-shadow card-bg rounded-sm'>
-          <CommentsSection pagePath="/fathers-and-figures" />
-        </Gradient1>
+        <CommentsSection pagePath="/fathers-and-figures" mode="standalone" />
       </div>
     </>
   );

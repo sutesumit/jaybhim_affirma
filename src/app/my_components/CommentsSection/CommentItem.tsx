@@ -10,17 +10,18 @@ interface CommentItemProps {
   comment: Comment;
   currentUser: { id: string } | null | undefined;
   onDelete: (id: string) => void;
+  mode?: "overlay" | "standalone";
 }
 
-export const CommentItem = ({ comment, currentUser, onDelete }: CommentItemProps) => {
+export const CommentItem = ({ comment, currentUser, onDelete, mode }: CommentItemProps) => {
   return (
     <div className="group relative">
       <div className="hover:card-shadow p-1 rounded-sm border border-white/5 hover:border-white/10 transition-all duration-300 relative bg-white/[0.02]">
         <Quote className="w-3 h-3 absolute top-1 left-1 rotate-180 text-[--primary-blue]/40" />
         
         <div className="flex justify-between items-start pl-4">
-          <span className="flex flex-wrap min-w-0">
-            <span className="flex-1 items-center gap-2 flex-wrap mb-1">
+          <span className="flex flex-wrap min-w-0 w-full">
+            <span className="flex-1 w-full items-center gap-2 flex-wrap mb-1">
               {currentUser?.id === comment.user_id ? (
                 <ProtectedActionDrawer 
                   mode="view"
@@ -49,7 +50,7 @@ export const CommentItem = ({ comment, currentUser, onDelete }: CommentItemProps
           </span>
 
           {currentUser?.id === comment.user_id && (
-            <div className="flex gap-3 p-2">
+            <div className={`flex gap-3 p-2 ${mode === "overlay" ? "flex-col" : "flex-row"}`}>
                 <button 
                     // onClick={() => handleEditComment(comment.id)}
                     className="opacity-0 group-hover:opacity-100 text-white/70 hover:text-blue-900 transition-all duration-300"

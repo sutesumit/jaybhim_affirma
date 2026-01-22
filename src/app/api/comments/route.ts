@@ -6,6 +6,8 @@ import type {
   PostCommentResponse, 
   GetCommentsResponse 
 } from "@/types/comments";
+import { MAX_COMMENT_LENGTH } from "@/lib/comments/constants";
+
 
 /**
  * POST /api/comments - Create a new comment
@@ -60,9 +62,9 @@ export async function POST(request: Request): Promise<NextResponse<PostCommentRe
       );
     }
 
-    if (trimmedText.length > 2000) {
+    if (trimmedText.length > MAX_COMMENT_LENGTH) {
       return NextResponse.json(
-        { success: false, error: "Comment exceeds maximum length of 2000 characters" },
+        { success: false, error: `Comment exceeds maximum length of ${MAX_COMMENT_LENGTH} characters` },
         { status: 400 }
       );
     }
