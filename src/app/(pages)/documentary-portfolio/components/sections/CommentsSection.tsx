@@ -142,7 +142,7 @@ export function CommentsSection({ pagePath }: Props) {
           </div>
         ) : comments.length === 0 ? (
           <div className="text-center p-8 bg-white/5 rounded-sm border border-dashed border-white/10">
-            <p className="text-sm text-[--primary-blue] italic">No comments yet. Be the first to share! ✦</p>
+            <p className="text-sm text-[--primary-blue] italic">No echoes yet. The room is open! ✦</p>
           </div>
         ) : (
           comments.map((comment) => (

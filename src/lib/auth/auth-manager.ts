@@ -26,6 +26,28 @@ export class AuthManager {
         })
     }
 
+    private static isTokenExpired(token: string): boolean {
+        try {
+            const parts = token.split('.');
+            if (parts.length !== 3) return true;
+            
+            const payloadBase64 = parts[1];
+            if (!payloadBase64) return true;
+            
+            const normalized = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+            const buffer = Buffer.from(normalized, 'base64');
+            const payloadJson = JSON.parse(buffer.toString());
+            
+            if (typeof payloadJson.exp === 'number') {
+                const now = Math.floor(Date.now() / 1000);
+                return payloadJson.exp < (now - 5); 
+            }
+            return false;
+        } catch (e) {
+            return true;
+        }
+    }
+
     static async getAuthenticatedUser(): Promise<User | null>{
         try {
             const cookieStore = cookies()
@@ -35,6 +57,12 @@ export class AuthManager {
                 return null
             }
             const userData = JSON.parse(authCookie.value)
+
+            if (userData.accessToken && this.isTokenExpired(userData.accessToken)) {
+                return null;
+            }
+
+
             if (!userData.id || (!userData.phone && !userData.email) ){
                 console.warn('AuthManager: Invalid user data in auth cookie')
                 return null
