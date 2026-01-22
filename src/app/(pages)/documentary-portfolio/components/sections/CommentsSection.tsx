@@ -55,6 +55,7 @@ export function CommentsSection({ pagePath }: CommentsSectionProps) {
   const [isFetching, setIsFetching] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [textareaRef, setTextareaRef] = useState<HTMLTextAreaElement | null>(null);
 
   // Fetch comments from the API
   const fetchComments = useCallback(async () => {
@@ -78,6 +79,13 @@ export function CommentsSection({ pagePath }: CommentsSectionProps) {
   useEffect(() => {
     fetchComments();
   }, [fetchComments]);
+
+  useEffect(() => {
+    if (textareaRef) {
+      textareaRef.style.height = "auto";
+      textareaRef.style.height = `${textareaRef.scrollHeight}px`;
+    }
+  }, [commentText, textareaRef]);
 
   // Handle posting a new comment
   const handlePostComment = async () => {
@@ -142,13 +150,13 @@ export function CommentsSection({ pagePath }: CommentsSectionProps) {
       {/* Input Area */}
       <div className="py-2">
         <div className="flex gap-2">
-          <input 
-            type="text" 
+          <textarea 
+            ref={setTextareaRef}
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handlePostComment()}
             placeholder="Feel like sharing a thought?" 
-            className="flex-1 bg-white/5 border border-white/10 rounded-sm px-1 py-1 text-sm text-[--primary-blue] placeholder:text-white/70 outline-none focus:border-[--primary-blue]/60 hover:border-white/20 transition-all duration-300"
+            className="flex-1 max-h-24 overflow-y-auto bg-white/5 border border-white/10 rounded-sm px-1 py-1 text-sm text-[--primary-blue] placeholder:text-white/70 outline-none focus:border-[--primary-blue]/60 hover:border-white/20 transition-all duration-300"
             disabled={isSubmitting}
           />
           <ProtectedActionDrawer title="Login to post a comment">

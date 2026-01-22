@@ -70,7 +70,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                                 onClick={() => !isEditing && setIsEditing(true)}
                             >
                                 {/* Ghost Span: Drives width, always rendered */}
-                                <span className={`px-2 py-1 text-sm text-center glass-hover rounded min-w-[3rem] whitespace-pre select-none ${isEditing ? 'opacity-0' : 'opacity-100'}`}>
+                                <span className={`px-2 py-1 text-sm font-semibold text-center glass-hover rounded min-w-[3rem] whitespace-pre select-none ${isEditing ? 'opacity-0' : 'opacity-100'}`}>
                                     {(isEditing ? newName : (user?.display_name || "Digital Bro")).replace(/ /g, "\u00a0") || "\u00a0"}
                                 </span>
 
@@ -80,7 +80,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                                         type="text"
                                         value={newName}
                                         onChange={(e) => setNewName(e.target.value)}
-                                        className="absolute inset-0 w-full h-full bg-transparent border-none text-center text-sm px-2 py-1 focus:outline-none focus:ring-0"
+                                        className="absolute inset-0 w-full h-full bg-transparent border-none font-semibold text-center text-sm px-2 py-1 focus:outline-none focus:ring-0"
                                         autoFocus
                                         onKeyDown={(e) => {
                                             if (e.key === 'Enter') handleUpdateName();
