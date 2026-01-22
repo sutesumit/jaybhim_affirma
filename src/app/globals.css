@@ -75,6 +75,10 @@
     @apply border border-white/5 backdrop-blur-md rounded-sm px-1 mr-1 transition-all duration-300 ease-in-out;
   }
 
+  .comment-author-self-tag {
+    @apply border glass-hover backdrop-blur-md rounded-sm px-1 mr-1 transition-all duration-300 ease-in-out;
+  }
+
   .comment-author-tag:hover {
     @apply border-transparent card-inner-shadow;
   }

@@ -4,7 +4,7 @@ import { Dot, Quote, Loader2, Trash2, AlertCircle, Pencil, RotateCw } from "luci
 import { useAuthContext } from "@/auth/useAuthContext";
 import { CommentService } from "@/lib/comments/comment-service";
 import type { Comment } from "@/types/comments";
-import { ProtectedActionDrawer } from "@/app/my_components/AuthCard";
+import { ProtectedActionDrawer, UserSessionCard } from "@/app/my_components/AuthCard";
 
 interface CommentsSectionProps {
   pagePath: string;
@@ -190,9 +190,22 @@ export function CommentsSection({ pagePath }: CommentsSectionProps) {
                 <div className="flex justify-between items-start pl-4">
                   <span className="flex flex-wrap min-w-0">
                     <span className="flex-1 items-center gap-2 flex-wrap mb-1">
-                      <span className="font-bold comment-author-tag text-xs tracking-wide pr-1">
-                        {CommentService.formatAuthorName(comment.user)}:
-                      </span>
+                      {user?.id === comment.user_id ? (
+                        <ProtectedActionDrawer 
+                          mode="view"
+                          trigger={
+                            <span className="font-bold comment-author-self-tag text-xs tracking-wide pr-1 cursor-pointer transition-colors">
+                              {CommentService.formatAuthorName(comment.user)}:
+                            </span>
+                          }
+                        >
+                          <UserSessionCard />
+                        </ProtectedActionDrawer>
+                      ) : (
+                        <span className="font-bold comment-author-tag text-xs tracking-wide pr-1">
+                          {CommentService.formatAuthorName(comment.user)}:
+                        </span>
+                      )}
                       {comment.updated_at !== comment.created_at && (
                         <span className="text-sm italic">(edited)</span>
                       )}
