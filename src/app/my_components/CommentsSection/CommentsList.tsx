@@ -25,8 +25,10 @@ export const CommentsList = ({ comments, isFetching, currentUser, onDelete, mode
 
   if (comments.length === 0) {
     return (
-      <div className="text-center p-8 bg-white/5 rounded-sm border border-dashed border-white/10">
-        <p className="text-sm text-[--primary-blue] italic">No echoes yet. The room is open! ✦</p>
+      <div className="text-center items-center p-12 justify-center bg-white/5 rounded-sm">
+        <p className="text-sm text-[--primary-blue] italic">
+          No echoes yet. The room is open! ✦
+        </p>
       </div>
     );
   }

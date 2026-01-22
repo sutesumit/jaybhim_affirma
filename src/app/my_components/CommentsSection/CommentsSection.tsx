@@ -41,7 +41,7 @@ export function CommentsSection({
   } = useComments(pagePath);
 
   const content = (
-    <div className="z-10 max-h-[60vh] overflow-y-auto overflow-x-hidden scroll-smooth font-rajdhani pr-1 antialiased custom-scrollbar">
+    <div className="z-10 max-h-[60vh] h-full flex flex-col overflow-y-auto overflow-x-hidden scroll-smooth font-rajdhani pr-1 antialiased custom-scrollbar">
       {/* Interaction Header */}
       <div className="flex gap-1 items-center justify-between bg-transparent z-10 py-1">
         <button className="button-style text-xs font-medium tracking-[0.2em] uppercase px-2 py-1 pointer-events-auto">
@@ -81,7 +81,7 @@ export function CommentsSection({
       wrapper={(children) => (
         <Gradient1
           hoverOn
-          className="w-full max-w-2xl my-4 p-4 glass-hover card-shadow card-bg rounded-sm"
+          className="w-full max-w-2xl min-h-64 my-4 p-4 glass-hover card-shadow card-bg rounded-sm"
         >
           {children}
         </Gradient1>
