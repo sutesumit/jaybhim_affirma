@@ -8,10 +8,11 @@ interface CommentsListProps {
   isFetching: boolean;
   currentUser: { id: string } | null | undefined;
   onDelete: (id: string) => void;
+  onEdit: (id: string, text: string) => Promise<{ success: boolean; error?: string }>;
   mode?: "overlay" | "standalone";
 }
 
-export const CommentsList = ({ comments, isFetching, currentUser, onDelete, mode }: CommentsListProps) => {
+export const CommentsList = ({ comments, isFetching, currentUser, onDelete, onEdit, mode }: CommentsListProps) => {
   if (isFetching) {
     return (
       <div className="flex flex-col items-center justify-center p-8 text-white/40">
@@ -41,6 +42,7 @@ export const CommentsList = ({ comments, isFetching, currentUser, onDelete, mode
           comment={comment} 
           currentUser={currentUser} 
           onDelete={onDelete} 
+          onEdit={onEdit}
           mode={mode}
         />
       ))}

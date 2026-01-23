@@ -1,7 +1,7 @@
 import { Drawer, DrawerContent, DrawerTitle, DrawerClose } from "@/components/ui/drawer"
 import ProtectedAuthWrapper from "./ProtectedAuthWrapper"
 import { X } from 'lucide-react'
-import { useState } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useAuthContext } from "@/auth/useAuthContext";
 import React from "react";
 
@@ -28,8 +28,10 @@ export const ProtectedActionDrawer = ({
 }: ProtectedActionDrawerProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const { isAuthenticated } = useAuthContext();
+    const hasExecutedRef = useRef(false);
 
     const handleInterceptClick = (e?: React.MouseEvent) => {
+        hasExecutedRef.current = false;
         if (mode === 'view') {
             setIsOpen(true);
             return;
@@ -51,8 +53,11 @@ export const ProtectedActionDrawer = ({
         }
     }
 
-    const handleAuthSuccess = () => {
+    const handleAuthSuccess = useCallback(() => {
+        if (hasExecutedRef.current) return;
+
         if (mode === 'action') {
+            hasExecutedRef.current = true;
             setIsOpen(false);
 
             setTimeout(() => {
@@ -65,7 +70,7 @@ export const ProtectedActionDrawer = ({
                 }
             }, 300);
         }
-    }
+    }, [mode, children]);
 
     const ResolvedTrigger = mode === 'action' ? children : trigger;
     const TriggerElement = React.isValidElement(ResolvedTrigger)

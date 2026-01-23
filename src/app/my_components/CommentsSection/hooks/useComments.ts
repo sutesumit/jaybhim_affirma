@@ -56,6 +56,32 @@ export function useComments(pagePath: string) {
     }
   };
 
+  const handleEditComment = async (commentId: string, commentText: string) => {
+    const trimmed = commentText.trim();
+    if (!trimmed || isSubmitting) return { success: false };
+
+    setIsSubmitting(true);
+    setError(null);
+    
+    try {
+      const result = await CommentService.updateComment(commentId, trimmed);
+      
+      if (result.success && result.comment) {
+        setComments((prev) => prev.map((c) => c.id === commentId ? result.comment! : c));
+        return { success: true };
+      } else {
+        setError(result.error || "Failed to edit comment");
+        return { success: false, error: result.error };
+      }
+    } catch (err) {
+      setError("An unexpected error occurred while editing.");
+      console.error(err);
+      return { success: false, error: "Unexpected error" };
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   const handleDeleteComment = async (commentId: string) => {
     if (!window.confirm("Are you sure you want to delete this comment?")) return;
 
@@ -79,6 +105,7 @@ export function useComments(pagePath: string) {
     error,
     fetchComments,
     handlePostComment,
+    handleEditComment,
     handleDeleteComment,
   };
 }

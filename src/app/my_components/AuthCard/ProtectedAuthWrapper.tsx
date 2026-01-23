@@ -12,15 +12,7 @@ interface ProtectedAuthWrapperProps {
 const ProtectedAuthWrapper = ({children, onAuthError, onAuthSuccess}: ProtectedAuthWrapperProps) => {
     const { isAuthenticated, user, loading, error } = useAuthContext()
 
-    useEffect(()=>{
-        if (error && onAuthError){
-            onAuthError(error)
-        }
-        if (user && onAuthSuccess){
-            onAuthSuccess(user)
-        }
-
-    }, [error, onAuthError, user, onAuthSuccess])
+    // Unified handling of AuthSuccess is now moved to ProtectedActionDrawer and AuthCard
 
     if (loading) {
     return (

@@ -37,6 +37,7 @@ export function CommentsSection({
     error,
     fetchComments,
     handlePostComment,
+    handleEditComment,
     handleDeleteComment,
   } = useComments(pagePath);
 
@@ -70,6 +71,7 @@ export function CommentsSection({
         isFetching={isFetching}
         currentUser={user}
         onDelete={handleDeleteComment}
+        onEdit={handleEditComment}
         mode={mode}
       />
     </div>

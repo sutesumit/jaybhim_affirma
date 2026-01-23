@@ -1,5 +1,5 @@
 import { AuthManager } from "@/lib/auth/auth-manager";
-import { supabase } from "@/lib/supabase";
+import { getServerSupabase } from "@/lib/supabase-server";
 import { NextResponse } from "next/server";
 import type { 
   UpdateCommentRequest, 
@@ -67,6 +67,7 @@ export async function PATCH(
     }
 
     // Fetch existing comment to verify ownership and get current text
+    const supabase = await getServerSupabase();
     const { data: existingComment, error: fetchError } = await supabase
       .from("comments")
       .select("*")
@@ -136,7 +137,7 @@ export async function PATCH(
       success: true,
       comment: {
         ...updatedComment,
-        user: { phone: user.phone, email: user.email },
+        user: { phone: user.phone, email: user.email, display_name: user.display_name },
       },
     });
   } catch (error: unknown) {
@@ -176,6 +177,7 @@ export async function DELETE(
     }
 
     // Fetch existing comment to verify ownership
+    const supabase = await getServerSupabase();
     const { data: existingComment, error: fetchError } = await supabase
       .from("comments")
       .select("user_id")
