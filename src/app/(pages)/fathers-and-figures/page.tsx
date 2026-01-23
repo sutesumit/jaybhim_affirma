@@ -63,8 +63,11 @@ export default function Home() {
             </iframe>
             <div className='text-container !text-xs !text-center p-1 italic'>A glimpse into the making & unmaking of Mirrors 2024.</div>
         </div>
-        <CommentsSection pagePath="/fathers-and-figures" mode="standalone" />
       </div>
+      <div className='relative w-full'>
+        <Seperator />
+      </div>
+      <CommentsSection pagePath="/fathers-and-figures" mode="standalone" />
     </>
   );
 }

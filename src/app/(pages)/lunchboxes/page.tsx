@@ -4,6 +4,7 @@ import { TitleDiscription } from '@/app/my_components/PageTitleSection'
 import PageFlip from '@/app/my_components/shared/flipbook/PageFlip'
 import { CommentsSection } from '@/app/my_components/CommentsSection/CommentsSection'
 import Gradient1 from '@/app/my_components/gradients/Gradient1'
+import Seperator from '@/app/my_components/shared/Seperator'
 
 const content = {
   title: "Lunchboxes in the age of mechanical reproduction",
@@ -28,6 +29,9 @@ const Home = () => {
       />
       <div className='flex h-screen w-screen justify-center bg-gradient-to-br from-blue-100 via-[--primary-white] to-blue-100'>
         <PageFlip />
+      </div>
+      <div className='relative w-full'>
+        <Seperator />
       </div>
       <CommentsSection pagePath="/lunchboxes" mode="standalone" />
     </div>
