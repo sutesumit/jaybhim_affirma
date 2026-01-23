@@ -5,6 +5,8 @@ import { flashFictions } from "@/app/my_components/specific/image_bodies/flash_f
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import Seperator from "@/app/my_components/shared/Seperator";
+import { CommentsSection } from "@/app/my_components/CommentsSection";
 
 const content = {
   title: "Imagining Images",
@@ -61,6 +63,10 @@ export default function Home() {
       <div className='flex h-screen w-screen items-center justify-center bg-gradient-to-br from-blue-100 via-[--primary-white] to-blue-100'>
         <WritingsSnapscroll />
       </div>
+      <div className='relative w-full'>
+        <Seperator />
+      </div>
+      <CommentsSection pagePath="/marathi-short-stories" mode="standalone" />
     </div>
   )
 }
