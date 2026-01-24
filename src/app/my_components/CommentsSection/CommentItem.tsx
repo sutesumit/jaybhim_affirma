@@ -46,12 +46,12 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
         
         <div className="flex justify-between items-start pl-4">
           <div className="flex flex-col min-w-0 w-full">
-            <div className="flex items-center gap-2 flex-wrap mb-1">
+            <div className="flex items-center flex-wrap">
               {currentUser?.id === comment.user_id ? (
                 <ProtectedActionDrawer 
                   mode="view"
                   trigger={
-                    <span className="font-bold comment-author-self-tag text-xs tracking-wide cursor-pointer transition-colors">
+                    <span className="font-bold comment-author-self-tag tracking-wide cursor-pointer transition-colors">
                       {CommentService.formatAuthorName(comment.user)}:
                     </span>
                   }
@@ -59,7 +59,7 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
                   <UserSessionCard />
                 </ProtectedActionDrawer>
               ) : (
-                <span className="font-bold comment-author-tag text-xs tracking-wide">
+                <span className="font-bold comment-author-tag tracking-wide">
                   {CommentService.formatAuthorName(comment.user)}:
                 </span>
               )}
@@ -67,25 +67,25 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
               {comment.updated_at !== comment.created_at && !isEditing ? (
                 <>
                   
-                  <span className="inline-flex items-center text-[10px] font-light text-[--primary-blue]/40">
+                  <span className="inline-flex text-sm items-center font-light text-[--primary-blue]/40">
                     <Dot className="w-3 h-3 self-center" />
-                    <span className="text-[10px] text-[--primary-blue]/40">[edited {CommentService.formatTimestamp(comment.updated_at)}]</span>
+                    <span className="text-[--primary-blue]/40">[edited {CommentService.formatTimestamp(comment.updated_at)}]</span>
                   </span>
                 </>
               ) : (
-                <span className="inline-flex items-center text-[10px] font-light text-[--primary-blue]/40">
+                <span className="inline-flex text-sm items-center font-light text-[--primary-blue]/40">
                   <Dot className="w-3 h-3 self-center" />
-                    <span className="text-[10px] text-[--primary-blue]/40">[created {CommentService.formatTimestamp(comment.updated_at)}]</span>
+                    <span className="text-[--primary-blue]/40">[created {CommentService.formatTimestamp(comment.updated_at)}]</span>
                 </span>
               )}
             </div>
 
-            <div className={`relative group/edit-container mt-1 ${isEditing ? 'w-full' : ''}`}>
+            <div className={`relative group/edit-container pl-1 ${isEditing ? 'w-full' : ''}`}>
               {isEditing ? (
                 <div className="relative w-full">
                   {/* Ghost Content: Always rendered with same typography to drive container height */}
                   <div 
-                    className="font-light text-sm leading-relaxed whitespace-pre-wrap break-words pb-2 pr-2 invisible pointer-events-none select-none"
+                    className="comment-body-text invisible pointer-events-none select-none"
                     aria-hidden="true"
                   >
                     {(editValue || "\u00a0").replace(/ /g, "\u00a0")}
@@ -94,7 +94,7 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
                   <textarea
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
-                    className="absolute inset-0 w-full h-full bg-transparent border-none font-light text-sm leading-relaxed p-0 focus:outline-none focus:ring-0 resize-none overflow-hidden"
+                    className="absolute card-inner-shadow inset-0 w-full h-full bg-transparent border-none rounded-sm comment-body-text focus:outline-none focus:ring-0 resize-none overflow-hidden"
                     autoFocus
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
@@ -112,7 +112,7 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
             </div>
           </div>
 
-          <div className={`flex gap-3 p-2 ${mode === "overlay" ? "flex-col" : "flex-row"} ${isEditing ? "opacity-100" : "opacity-0 group-hover:opacity-100"} transition-opacity duration-300`}>
+          <div className={`flex gap-1 p-2 ${mode === "overlay" ? "flex-col" : "flex-row"} ${isEditing ? "opacity-100" : "opacity-0 group-hover:opacity-100"} transition-opacity duration-300`}>
             {isEditing ? (
               <>
                 <button

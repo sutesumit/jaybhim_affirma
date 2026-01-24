@@ -39,16 +39,16 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                 setIsEditing(false);
                 toast({
                     variant: "success",
-                    title: "Profile Updated",
-                    description: "Your display name has been saved.",
+                    title: "Nice New Name",
+                    description: "Your badge just got a tiny upgrade.",
                 });
             }
         } catch (error) {
             console.error("Update profile error", error);
             toast({
                 variant: "destructive",
-                title: "Update Failed",
-                description: "Failed to update your profile.",
+                title: "Oops. Update Failed",
+                description: "That didn’t quite work. Mind trying again?",
             });
         } finally {
             setIsLoading(false);
@@ -65,8 +65,8 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
             await AuthService.logout();
             toast({
                 variant: "info",
-                title: "Logged Out",
-                description: "You have been successfully logged out.",
+                title: "Logged Out ✌️",
+                description: "You’ve escaped. For now.",
             });
             window.location.reload();
         } catch (error) {
@@ -74,7 +74,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
             toast({
                 variant: "destructive",
                 title: "Logout Failed",
-                description: "An error occurred while logging out.",
+                description: "The logout door was jammed. Retry?",
             });
         }
     }

@@ -11,16 +11,16 @@ export const CommentContent = ({ text }: CommentContentProps) => {
 
   const isLongText = text.length > COMMENT_TRUNCATION_THRESHOLD;
   if (!isLongText) return (
-    <span className="flex-1 font-light text-sm leading-relaxed whitespace-pre-wrap break-words">
+    <div className="flex-1 comment-body-text">
       {text}
-    </span>
+    </div>
   );
 
   return (
     <>
-      <span className="flex-1 font-light text-sm leading-relaxed whitespace-pre-wrap break-words">
+      <div className="flex-1 comment-body-text">
         {isExpanded ? text : text.slice(0, COMMENT_TRUNCATION_THRESHOLD) + "..."}
-      </span>
+      </div>
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="text-xs text-[--primary-blue] opacity-30 px-2 rounded-sm ml-1 border border-[var(--primary-blue)] hover:bg-[--primary-blue] hover:text-[--primary-white] hover:opacity-100 transition-all duration-300"
