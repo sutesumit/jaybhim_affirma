@@ -55,9 +55,9 @@ export class CommentService {
   /**
    * Updates an existing comment
    */
-  static async updateComment(commentId: string, commentText: string): Promise<PostCommentResponse> {
+  static async updateComment(commentId: string, commentText: string, isAnonymous: boolean = false): Promise<PostCommentResponse> {
     try {
-      const body: UpdateCommentRequest = { commentText };
+      const body: UpdateCommentRequest = { commentText, isAnonymous };
       const response = await fetch(`/api/comments/${commentId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },

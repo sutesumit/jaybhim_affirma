@@ -83,7 +83,7 @@ export function useComments(pagePath: string) {
     }
   };
 
-  const handleEditComment = async (commentId: string, commentText: string) => {
+  const handleEditComment = async (commentId: string, commentText: string, isAnonymous: boolean = false) => {
     const trimmed = commentText.trim();
     if (!trimmed || isSubmitting) return { success: false };
 
@@ -91,7 +91,7 @@ export function useComments(pagePath: string) {
     setError(null);
     
     try {
-      const result = await CommentService.updateComment(commentId, trimmed);
+      const result = await CommentService.updateComment(commentId, trimmed, isAnonymous);
       
       if (result.success && result.comment) {
         setComments((prev) => prev.map((c) => c.id === commentId ? result.comment! : c));

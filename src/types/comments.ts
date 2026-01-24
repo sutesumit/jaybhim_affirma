@@ -35,6 +35,7 @@ export interface PostCommentRequest {
 
 export interface UpdateCommentRequest {
   commentText: string;
+  isAnonymous?: boolean;
 }
 
 export interface PostCommentResponse {

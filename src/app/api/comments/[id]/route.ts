@@ -43,7 +43,7 @@ export async function PATCH(
 
     // Parse request body
     const body: UpdateCommentRequest = await request.json();
-    const { commentText } = body;
+    const { commentText, isAnonymous } = body;
 
     if (!commentText || typeof commentText !== "string") {
       return NextResponse.json(
@@ -116,12 +116,18 @@ export async function PATCH(
     }
 
     // Update the comment
+    const updatePayload: any = {
+      comment_text: trimmedText,
+      updated_at: new Date().toISOString(),
+    };
+
+    if (typeof isAnonymous === "boolean") {
+      updatePayload.is_anonymous = isAnonymous;
+    }
+
     const { data: updatedComment, error: updateError } = await supabase
       .from("comments")
-      .update({
-        comment_text: trimmedText,
-        updated_at: new Date().toISOString(),
-      })
+      .update(updatePayload)
       .eq("id", id)
       .select()
       .single();

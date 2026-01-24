@@ -6,28 +6,31 @@ import { CommentService } from "@/lib/comments/comment-service";
 import { MAX_COMMENT_LENGTH } from "@/lib/comments/constants";
 import type { Comment } from "@/types/comments";
 import { CommentContent } from "./CommentContent";
+import { Checkbox } from "@radix-ui/react-checkbox";
+import { Label } from "@radix-ui/react-label";
 
 interface CommentItemProps {
   comment: Comment;
   currentUser: { id: string } | null | undefined;
   onDelete: (id: string) => void;
-  onEdit: (id: string, text: string) => Promise<{ success: boolean; error?: string }>;
+  onEdit: (id: string, text: string, isAnonymous: boolean) => Promise<{ success: boolean; error?: string }>;
   mode?: "overlay" | "standalone";
 }
 
 export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: CommentItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isAnonymous, setIsAnonymous] = useState(comment.is_anonymous);
   const [editValue, setEditValue] = useState(comment.comment_text);
   const [isSaving, setIsSaving] = useState(false);
 
   const handleSave = async () => {
-    if (editValue.trim() === comment.comment_text) {
+    if (editValue.trim() === comment.comment_text && isAnonymous === comment.is_anonymous) {
       setIsEditing(false);
       return;
     }
     
     setIsSaving(true);
-    const result = await onEdit(comment.id, editValue);
+    const result = await onEdit(comment.id, editValue, isAnonymous);
     setIsSaving(false);
     
     if (result.success) {
@@ -37,6 +40,7 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
 
   const handleCancel = () => {
     setEditValue(comment.comment_text);
+    setIsAnonymous(comment.is_anonymous);
     setIsEditing(false);
   };
 
@@ -47,13 +51,13 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
         
         <div className="flex justify-between items-start pl-4">
           <div className="flex flex-col min-w-0 w-full">
-            <div className="flex items-center flex-wrap">
+            <div className="flex items-center gap-1 flex-wrap">
               {currentUser?.id === comment.user_id ? (
                 <ProtectedActionDrawer 
                   mode="view"
                   trigger={
                     <span className="font-bold comment-author-self-tag tracking-wide cursor-pointer transition-colors">
-                      {CommentService.formatAuthorName(comment.user, comment.is_anonymous)}:
+                      {CommentService.formatAuthorName(comment.user, isEditing ? isAnonymous : comment.is_anonymous)}:
                     </span>
                   }
                 >
@@ -65,9 +69,28 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
                 </span>
               )}
 
+              {isEditing && currentUser?.id === comment.user_id ? (
+                <div className="flex items-center space-x-[1px] group/anon opacity-70 hover:opacity-100 transition-opacity">
+                  <Checkbox
+                    id={`anonymous-${comment.id}`}
+                    checked={isAnonymous}
+                    onCheckedChange={(checked) => setIsAnonymous(!!checked)}
+                    className={`border-2 border-[--primary-blue] rounded-[2px] data-[state=checked]:shadow-[inset_0_0_0_2px_rgba(255,255,255,0.6)]
+ data-[state=checked]:bg-[--primary-blue] data-[state=checked]:border-[--primary-blue] h-3 w-3 transition-all duration-300`}
+                  />
+                  <Label
+                    htmlFor={`anonymous-${comment.id}`}
+                    className={`text-[9px] px-1 rounded-[2px] font-semibold tracking-wide uppercase text-[--primary-blue] cursor-pointer select-none ${isAnonymous ? "bg-[--primary-blue] text-[--primary-white]" : ""} transition-all duration-300`}
+                  >
+                    Anonymous
+                  </Label>
+                </div>
+              ) : (
+                <></>
+              )}
+
               {comment.updated_at !== comment.created_at ? (
                 <>
-                  
                   <span className="inline-flex text-sm items-center font-light text-[--primary-blue]/40">
                     <Dot className="w-3 h-3 self-center" />
                     <span className="text-[--primary-blue]/40">[edited {CommentService.formatTimestamp(comment.updated_at)}]</span>
@@ -142,7 +165,11 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
               currentUser?.id === comment.user_id && (
                 <>
                   <button 
-                    onClick={() => setIsEditing(true)}
+                    onClick={() => {
+                      setEditValue(comment.comment_text);
+                      setIsAnonymous(comment.is_anonymous);
+                      setIsEditing(true);
+                    }}
                     className="comment-tiny-button"
                     title="Edit Comment"
                   >

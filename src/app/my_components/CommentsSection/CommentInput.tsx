@@ -53,14 +53,14 @@ export const CommentInput = ({ onPost, isSubmitting, mode }: CommentInputProps) 
           </ProtectedActionDrawer>
           <div className="flex items-center space-x-[1px] group/anon opacity-70 hover:opacity-100 transition-opacity">
             <Checkbox
-              id="anonymous"
+              id="anonymous-new"
               checked={isAnonymous}
               onCheckedChange={(checked) => setIsAnonymous(!!checked)}
               className={`border-2 border-[--primary-blue] rounded-[2px] data-[state=checked]:shadow-[inset_0_0_0_2px_rgba(255,255,255,0.6)]
  data-[state=checked]:bg-[--primary-blue] data-[state=checked]:border-[--primary-blue] h-3 w-3 transition-all duration-300`}
             />
             <Label
-              htmlFor="anonymous"
+              htmlFor="anonymous-new"
               className={`text-[9px] px-1 rounded-[2px] font-semibold tracking-wide uppercase text-[--primary-blue] cursor-pointer select-none ${isAnonymous ? "bg-[--primary-blue] text-[--primary-white]" : ""} transition-all duration-300`}
             >
               Anonymous
