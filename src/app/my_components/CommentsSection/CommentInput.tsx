@@ -8,7 +8,7 @@ import { Label } from "@radix-ui/react-label";
 import { Checkbox } from "@radix-ui/react-checkbox";
 
 interface CommentInputProps {
-  onPost: (text: string) => Promise<{ success: boolean }>;
+  onPost: (text: string, isAnonymous?: boolean) => Promise<{ success: boolean }>;
   isSubmitting: boolean;
   mode?: "overlay" | "standalone";
 }
@@ -21,9 +21,10 @@ export const CommentInput = ({ onPost, isSubmitting, mode }: CommentInputProps) 
   useAutoResizeTextarea(textareaRef.current, commentText);
 
   const handlePost = async () => {
-    const result = await onPost(commentText);
+    const result = await onPost(commentText, isAnonymous);
     if (result.success) {
       setCommentText("");
+      setIsAnonymous(false);
     }
   };
 

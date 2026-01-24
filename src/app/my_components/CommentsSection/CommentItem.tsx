@@ -52,7 +52,7 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
                   mode="view"
                   trigger={
                     <span className="font-bold comment-author-self-tag tracking-wide cursor-pointer transition-colors">
-                      {CommentService.formatAuthorName(comment.user)}:
+                      {CommentService.formatAuthorName(comment.user, comment.is_anonymous)}:
                     </span>
                   }
                 >
@@ -60,7 +60,7 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
                 </ProtectedActionDrawer>
               ) : (
                 <span className="font-bold comment-author-tag tracking-wide">
-                  {CommentService.formatAuthorName(comment.user)}:
+                  {CommentService.formatAuthorName(comment.user, comment.is_anonymous)}:
                 </span>
               )}
 

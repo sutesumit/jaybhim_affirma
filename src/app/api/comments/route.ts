@@ -37,7 +37,7 @@ export async function POST(request: Request): Promise<NextResponse<PostCommentRe
 
     // Parse request body
     const body: PostCommentRequest = await request.json();
-    const { pagePath, commentText } = body;
+    const { pagePath, commentText, isAnonymous } = body;
 
     // Validate input
     if (!pagePath || typeof pagePath !== "string") {
@@ -79,6 +79,7 @@ export async function POST(request: Request): Promise<NextResponse<PostCommentRe
         page_path: pagePath,
         user_id: user.id,
         comment_text: trimmedText,
+        is_anonymous: !!isAnonymous,
       })
       .select()
       .single();
@@ -109,6 +110,7 @@ export async function POST(request: Request): Promise<NextResponse<PostCommentRe
       success: true,
       comment: {
         ...comment,
+        is_anonymous: !!isAnonymous,
         user: { 
           phone: user.phone, 
           email: user.email,
@@ -157,9 +159,24 @@ export async function GET(request: Request): Promise<NextResponse<GetCommentsRes
       );
     }
 
+    // Mask anonymous users and their IDs
+    const currentUser = await AuthManager.getAuthenticatedUser();
+    const maskedComments = (comments || []).map(comment => {
+      const isOwnComment = currentUser && comment.user_id === currentUser.id;
+      
+      if (comment.is_anonymous && !isOwnComment) {
+        return {
+          ...comment,
+          user_id: "anonymous", // Mask the UUID to prevent correlation
+          user: { display_name: "Anonymous" }
+        };
+      }
+      return comment;
+    });
+
     return NextResponse.json({
       success: true,
-      comments: comments || [],
+      comments: maskedComments,
     });
   } catch (error: unknown) {
     console.error("[GET /api/comments] Error:", error);

@@ -44,7 +44,7 @@ export function useComments(pagePath: string) {
     return unsubscribe;
   }, [fetchComments]);
 
-  const handlePostComment = async (commentText: string) => {
+  const handlePostComment = async (commentText: string, isAnonymous: boolean = false) => {
     const trimmed = commentText.trim();
     if (!trimmed || isSubmitting) return { success: false };
 
@@ -52,7 +52,7 @@ export function useComments(pagePath: string) {
     setError(null);
     
     try {
-      const result = await CommentService.postComment(pagePath, trimmed);
+      const result = await CommentService.postComment(pagePath, trimmed, isAnonymous);
       
       if (result.success && result.comment) {
         setComments((prev) => [result.comment!, ...prev]);

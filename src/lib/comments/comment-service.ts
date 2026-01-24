@@ -30,9 +30,9 @@ export class CommentService {
   /**
    * Posts a new comment to a page
    */
-  static async postComment(pagePath: string, commentText: string): Promise<PostCommentResponse> {
+  static async postComment(pagePath: string, commentText: string, isAnonymous: boolean = false): Promise<PostCommentResponse> {
     try {
-      const body: PostCommentRequest = { pagePath, commentText };
+      const body: PostCommentRequest = { pagePath, commentText, isAnonymous };
       const response = await fetch("/api/comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -129,7 +129,8 @@ export class CommentService {
   /**
    * Extracts a display name from user auth data
    */
-  static formatAuthorName(user: { phone?: string | null; email?: string | null; display_name?: string | null } | undefined): string {
+  static formatAuthorName(user: { phone?: string | null; email?: string | null; display_name?: string | null } | undefined, isAnonymous: boolean = false): string {
+    if (isAnonymous) return "Anonymous";
     if (!user) return "Anonymous";
     
     if (user.display_name) {

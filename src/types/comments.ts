@@ -10,6 +10,7 @@ export interface Comment {
   created_at: string;
   updated_at: string;
   deleted_at?: string | null;
+  is_anonymous: boolean;
   // Joined user data (optional)
   user?: {
     phone?: string | null;
@@ -29,6 +30,7 @@ export interface CommentVersion {
 export interface PostCommentRequest {
   pagePath: string;
   commentText: string;
+  isAnonymous?: boolean;
 }
 
 export interface UpdateCommentRequest {
