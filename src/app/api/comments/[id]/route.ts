@@ -25,9 +25,10 @@ export async function PATCH(
 
     // Check authentication
     const user = await AuthManager.getAuthenticatedUser();
-    if (!user) {
+    if (!user || !user.accessToken) {
+      console.warn("[PATCH /api/comments/[id]] Incomplete session for user", user?.id);
       return NextResponse.json(
-        { success: false, error: "Authentication required" },
+        { success: false, error: "Your session is incomplete or expired. Please log out and back in." },
         { status: 401 }
       );
     }
@@ -151,6 +152,9 @@ export async function PATCH(
 
 /**
  * DELETE /api/comments/[id] - Soft delete own comment
+ * 
+ * Implements soft delete by setting the 'deleted_at' timestamp.
+ * Relies on RLS policies to enforce ownership and visibility.
  */
 export async function DELETE(
   request: Request,
@@ -161,9 +165,10 @@ export async function DELETE(
 
     // Check authentication
     const user = await AuthManager.getAuthenticatedUser();
-    if (!user) {
+    if (!user || !user.accessToken) {
+      console.warn("[DELETE /api/comments/[id]] Incomplete session for user", user?.id);
       return NextResponse.json(
-        { success: false, error: "Authentication required" },
+        { success: false, error: "Your session is incomplete or expired. Please log out and back in." },
         { status: 401 }
       );
     }
@@ -176,8 +181,10 @@ export async function DELETE(
       );
     }
 
-    // Fetch existing comment to verify ownership
+    // Use standard authenticated supabase client
     const supabase = await getServerSupabase();
+
+    // Fetch existing comment to verify ownership (extra safety)
     const { data: existingComment, error: fetchError } = await supabase
       .from("comments")
       .select("user_id")
@@ -185,13 +192,14 @@ export async function DELETE(
       .single();
 
     if (fetchError || !existingComment) {
+      console.error("[DELETE /api/comments/[id]] Fetch error:", fetchError);
       return NextResponse.json(
-        { success: false, error: "Comment not found" },
+        { success: false, error: "Comment not found or access denied" },
         { status: 404 }
       );
     }
 
-    // Verify ownership
+    // Verify ownership in application logic
     if (existingComment.user_id !== user.id) {
       return NextResponse.json(
         { success: false, error: "You can only delete your own comments" },
@@ -200,6 +208,7 @@ export async function DELETE(
     }
 
     // Soft delete: set deleted_at timestamp
+    // This requires an RLS policy that allows UPDATE where auth.uid() = user_id
     const { error: deleteError } = await supabase
       .from("comments")
       .update({
@@ -224,3 +233,5 @@ export async function DELETE(
     );
   }
 }
+
+

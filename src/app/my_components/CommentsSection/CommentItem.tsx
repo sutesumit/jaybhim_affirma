@@ -64,7 +64,7 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
                 </span>
               )}
 
-              {comment.updated_at !== comment.created_at && !isEditing ? (
+              {comment.updated_at !== comment.created_at ? (
                 <>
                   
                   <span className="inline-flex text-sm items-center font-light text-[--primary-blue]/40">

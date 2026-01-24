@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/
 import { useAuthContext } from '@/auth/useAuthContext'
 import { AuthService } from '@/lib/auth/auth-service'
 import { toast } from '@/hooks/use-toast'
+import { notifyProfileUpdate } from '@/auth/AuthContext'
 import { Pencil, Check, X, Loader2 } from 'lucide-react'
 
 interface UserSessionCardProps {
@@ -36,6 +37,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
             const result = await AuthService.updateProfile(newName);
             if (result.success && result.user) {
                 setUser(result.user);
+                notifyProfileUpdate();
                 setIsEditing(false);
                 toast({
                     variant: "success",

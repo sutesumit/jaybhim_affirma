@@ -72,15 +72,15 @@
 
   /* --- Comments --- */
   .comment-author-tag {
-    @apply border border-white/5 backdrop-blur-md rounded-sm px-1 transition-all duration-300 ease-in-out;
+    @apply border border-white/20 backdrop-blur-md rounded-sm px-1 transition-all duration-300 ease-in-out;
   }
 
   .comment-author-self-tag {
-    @apply border glass-hover backdrop-blur-md rounded-sm px-1 transition-all duration-300 ease-in-out;
+    @apply border border-white/20 glass-hover backdrop-blur-md rounded-sm px-1 transition-all duration-300 ease-in-out;
   }
 
   .comment-author-tag:hover {
-    @apply border-transparent card-inner-shadow;
+    @apply border-transparent;
   }
   
   .comment-body-text {

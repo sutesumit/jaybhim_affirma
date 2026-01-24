@@ -23,7 +23,7 @@ import {
 
 const AccountBadge: React.FC = () => {
     const { user, isAuthenticated } = useAuthContext();
-    const userName = user?.email?.split('@')[0] || user?.phone || '';
+    const userName = user?.display_name || user?.email?.split('@')[0] || user?.phone || '';
     const authCardTriggerText = `${isAuthenticated ? `Jai Bhim, ${userName}` : 'Log in'}`;
 
 
