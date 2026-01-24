@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Quote, Dot, Pencil, Trash2, X, Check } from "lucide-react";
 import { ProtectedActionDrawer, UserSessionCard } from "@/app/my_components/AuthCard";
 import { CommentService } from "@/lib/comments/comment-service";
+import { MAX_COMMENT_LENGTH } from "@/lib/comments/constants";
 import type { Comment } from "@/types/comments";
 import { CommentContent } from "./CommentContent";
 
@@ -80,7 +81,7 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
               )}
             </div>
 
-            <div className={`relative group/edit-container pl-1 ${isEditing ? 'w-full' : ''}`}>
+            <div className={`relative group/edit-container pl-1 ${isEditing ? 'w-full max-h-32 overflow-y-auto' : ''}`}>
               {isEditing ? (
                 <div className="relative w-full">
                   {/* Ghost Content: Always rendered with same typography to drive container height */}
@@ -96,6 +97,7 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
                     onChange={(e) => setEditValue(e.target.value)}
                     className="absolute card-inner-shadow inset-0 w-full h-full bg-transparent border-none rounded-sm comment-body-text focus:outline-none focus:ring-0 resize-none overflow-hidden"
                     autoFocus
+                    maxLength={MAX_COMMENT_LENGTH}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
                         handleSave();

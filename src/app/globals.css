@@ -84,7 +84,7 @@
   }
   
   .comment-body-text {
-    @apply font-light leading-relaxed whitespace-pre-wrap break-words px-2;
+    @apply inline font-light leading-relaxed whitespace-pre-wrap break-words px-1;
   }
 
   .comment-tiny-button {

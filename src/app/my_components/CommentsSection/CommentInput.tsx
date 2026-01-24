@@ -51,7 +51,7 @@ export const CommentInput = ({ onPost, isSubmitting, mode }: CommentInputProps) 
               {isSubmitting ? <Loader2 className="w-3 h-3 animate-spin" /> : "Post"}
             </button>
           </ProtectedActionDrawer>
-          <div className="flex items-center space-x-1 group/anon opacity-70 hover:opacity-100 transition-opacity">
+          <div className="flex items-center space-x-[1px] group/anon opacity-70 hover:opacity-100 transition-opacity">
             <Checkbox
               id="anonymous"
               checked={isAnonymous}
@@ -61,7 +61,7 @@ export const CommentInput = ({ onPost, isSubmitting, mode }: CommentInputProps) 
             />
             <Label
               htmlFor="anonymous"
-              className={`text-[9px] px-2 rounded-[2px] font-semibold tracking-wide uppercase text-[--primary-blue] cursor-pointer select-none ${isAnonymous ? "bg-[--primary-blue] text-[--primary-white]" : ""} transition-all duration-300`}
+              className={`text-[9px] px-1 rounded-[2px] font-semibold tracking-wide uppercase text-[--primary-blue] cursor-pointer select-none ${isAnonymous ? "bg-[--primary-blue] text-[--primary-white]" : ""} transition-all duration-300`}
             >
               Anonymous
             </Label>
