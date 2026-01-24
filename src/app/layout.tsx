@@ -9,6 +9,9 @@ import { NavMenuProvider } from './my_components/Header/menuContext/MenuContextP
 import NavigationProgressBar from './my_components/NavigationProgressBar';
 
 
+import { Toaster } from '@/components/ui/toaster';
+
+
 interface RootLayoutProps {
   children: React.ReactNode;
 }
@@ -64,6 +67,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               {children}
             </div>
             <Footer />
+            <Toaster />
           </body>
         </NavMenuProvider>
       </AuthProvider>

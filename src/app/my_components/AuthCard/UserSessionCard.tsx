@@ -3,6 +3,7 @@ import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { AuthService } from '@/lib/auth/auth-service'
+import { toast } from '@/hooks/use-toast'
 import { Pencil, Check, X, Loader2 } from 'lucide-react'
 
 interface UserSessionCardProps {
@@ -36,9 +37,19 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
             if (result.success && result.user) {
                 setUser(result.user);
                 setIsEditing(false);
+                toast({
+                    variant: "success",
+                    title: "Profile Updated",
+                    description: "Your display name has been saved.",
+                });
             }
         } catch (error) {
             console.error("Update profile error", error);
+            toast({
+                variant: "destructive",
+                title: "Update Failed",
+                description: "Failed to update your profile.",
+            });
         } finally {
             setIsLoading(false);
         }
@@ -52,9 +63,19 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
     const handleLogout = async () => {
         try {
             await AuthService.logout();
+            toast({
+                variant: "info",
+                title: "Logged Out",
+                description: "You have been successfully logged out.",
+            });
             window.location.reload();
         } catch (error) {
             console.log("Logout Error", error);
+            toast({
+                variant: "destructive",
+                title: "Logout Failed",
+                description: "An error occurred while logging out.",
+            });
         }
     }
 

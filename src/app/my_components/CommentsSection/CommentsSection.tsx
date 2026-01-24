@@ -5,6 +5,7 @@ import { useAuthContext } from "@/auth/useAuthContext";
 import { useComments } from "./hooks/useComments";
 import { CommentInput } from "./CommentInput";
 import { CommentsList } from "./CommentsList";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import Gradient1 from "../gradients/Gradient1";
 
 interface CommentsSectionProps {
@@ -38,7 +39,12 @@ export function CommentsSection({
     fetchComments,
     handlePostComment,
     handleEditComment,
-    handleDeleteComment,
+    // Delete with confirmation
+    requestDeleteComment,
+    confirmDeleteComment,
+    cancelDeleteComment,
+    deleteDialogOpen,
+    isDeleting,
   } = useComments(pagePath);
 
   const content = (
@@ -70,9 +76,23 @@ export function CommentsSection({
         comments={comments}
         isFetching={isFetching}
         currentUser={user}
-        onDelete={handleDeleteComment}
+        onDelete={requestDeleteComment}
         onEdit={handleEditComment}
         mode={mode}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        open={deleteDialogOpen}
+        onOpenChange={(open) => !open && cancelDeleteComment()}
+        title="Delete Comment"
+        description="Sure? Once it’s gone, it’s between you and your memory."
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="destructive"
+        onConfirm={confirmDeleteComment}
+        onCancel={cancelDeleteComment}
+        isLoading={isDeleting}
       />
     </div>
   );
@@ -93,3 +113,4 @@ export function CommentsSection({
     </ConditionalWrapper>
   );
 }
+

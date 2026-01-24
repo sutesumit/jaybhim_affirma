@@ -1,4 +1,5 @@
 import React from 'react'
+import { toast } from '@/hooks/use-toast'
 // import { useMyStories } from '../YourStory/MyStoriesProvider'
 
 const ButtonQueueDraft = () => {
@@ -11,7 +12,11 @@ const ButtonQueueDraft = () => {
 
     const handleQueueDraft = () => {
         // console.log(myStories)
-        alert('Hang on, Sumit is still cooking this feature!')
+        toast({
+            variant: "info",
+            title: "Coming Soon",
+            description: "Hang on, Sumit is still cooking this feature!",
+        })
     }
 
   return (
@@ -26,3 +31,4 @@ const ButtonQueueDraft = () => {
 }
 
 export default ButtonQueueDraft
+

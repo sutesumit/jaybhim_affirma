@@ -2,6 +2,7 @@ import { useAuthContext } from "@/auth/useAuthContext";
 import { AuthService } from "@/lib/auth/auth-service";
 import { AuthMethod, AuthStep } from "@/lib/auth/auth-types";
 import { AuthValidator } from "@/lib/auth/auth-validator";
+import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
@@ -71,7 +72,11 @@ const useAuthFlow = (
             [state.authMethod]: contact,
             loading: false,
             })
-
+            toast({
+              variant: "success",
+              title: "OTP Sent",
+              description: `It's bettween you and ${state.authMethod === 'phone' ? 'phone' : 'email'} inbox now.`,
+            })
         } else {
             const error = result.error || 'Failed to send OTP'
             updateState({error, loading: false})
@@ -114,6 +119,11 @@ const useAuthFlow = (
             if(result.success && result.user){
                 setUser(result.user)
                 updateState({loading: false, authStep: 'verified'})
+                toast({
+                  variant: "success",
+                  title: "Jai bhim, mate!",
+                  description: `Logged in as ${result.user.display_name || result.user.email || 'User'}. Act Natural.`,
+                })
                 onAuthSuccess?.(result.user)
                 router.refresh()
             } else {

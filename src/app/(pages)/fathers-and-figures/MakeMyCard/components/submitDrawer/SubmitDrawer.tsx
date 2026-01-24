@@ -1,5 +1,6 @@
 // 'use client'
 import React from 'react'
+import { toast } from '@/hooks/use-toast'
 import {
     Drawer,
     DrawerClose,
@@ -64,7 +65,11 @@ const SubmitDrawer = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElem
                             className='flex-1'
                             variant="myStyle"
                             onClick={() => {
-                                alert('Sumit is Still working on this feature.')
+                                toast({
+                                    variant: "info",
+                                    title: "Work in Progress",
+                                    description: "This feature is coming soon!",
+                                })
                             }}
                         >
                             <SendIcon/>Submit
