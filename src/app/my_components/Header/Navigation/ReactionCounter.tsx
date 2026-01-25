@@ -10,7 +10,7 @@ interface ReactionCounterProps {
 }
 
 const MOTION = {
-  distance: 4,
+  distance: 14,
   duration: 0.5,
   stagger: 0,
   ease: [0.22, 1, 0.36, 1],
@@ -33,13 +33,13 @@ const leafVariants = {
   exitLike: {
     y: MOTION.distance,
     rotate: 180,
-    scale: 0.2,
+    scale: 0.5,
     opacity: 0,
   },
   exitUnlike: {
     x: -MOTION.distance,
     rotate: -10,
-    scale: 1.2,
+    scale: 1,
     opacity: 0,
   },
 };
@@ -73,12 +73,12 @@ export default function ReactionCounter({ pathName }: ReactionCounterProps) {
       onClick={toggle}
       className="router-tab reaction-counter"
     >
-      <span className={`px-1 rounded-sm ${isLiked ? "bg-[var(--primary-blue)] text-[var(--primary-white)]" : ""} transition-all duration-1000`}>
-        <span className="text-xs min-w-8 text-center inline-block mr-1 border-r border-[var(--primary-blue)] pr-1">
+      <span className={`px-1 justify-center rounded-sm ${isLiked ? "bg-[var(--primary-blue)] text-[var(--primary-white)]" : ""} transition-all duration-700 ease-in-out`}>
+        <span className={`text-xs min-w-8 text-center inline-block border-r border-[var(--primary-blue)] pr-1 mr-1 transition-all duration-700 ease-in-out`}>
           {count}
         </span>
         <motion.div
-          className="inline-block items-center justify-center"
+          className="inline-block items-center justify-center pl-1"
           animate={{ scale: locked ? 1.12 : 1 }}
           transition={{ duration: 0.15, ease: MOTION.ease }}
         >
