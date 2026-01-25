@@ -1,13 +1,14 @@
 "use client";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
 import { Quote, Dot, Pencil, Trash2, X, Check } from "lucide-react";
 import { ProtectedActionDrawer, UserSessionCard } from "@/app/my_components/AuthCard";
 import { CommentService } from "@/lib/comments/comment-service";
 import { MAX_COMMENT_LENGTH } from "@/lib/comments/constants";
 import type { Comment } from "@/types/comments";
 import { CommentContent } from "./CommentContent";
-import { Checkbox } from "@radix-ui/react-checkbox";
-import { Label } from "@radix-ui/react-label";
+import { AnonymousToggle } from "./AnonymousToggle";
 
 interface CommentItemProps {
   comment: Comment;
@@ -51,58 +52,59 @@ export const CommentItem = ({ comment, currentUser, onDelete, onEdit, mode }: Co
         
         <div className="flex justify-between items-start pl-4">
           <div className="flex flex-col min-w-0 w-full">
-            <div className="flex items-center gap-1 flex-wrap">
+            <motion.div layout className="flex items-center gap-1 flex-wrap">
+
               {currentUser?.id === comment.user_id ? (
                 <ProtectedActionDrawer 
                   mode="view"
                   trigger={
-                    <span className="font-bold comment-author-self-tag tracking-wide cursor-pointer transition-colors">
+                    <motion.span 
+                      layout
+                      className="font-bold comment-author-self-tag tracking-wide cursor-pointer transition-colors block"
+                    >
                       {CommentService.formatAuthorName(comment.user, isEditing ? isAnonymous : comment.is_anonymous)}:
-                    </span>
+                    </motion.span>
                   }
                 >
                   <UserSessionCard />
                 </ProtectedActionDrawer>
               ) : (
-                <span className="font-bold comment-author-tag tracking-wide">
+                <motion.span layout className="font-bold comment-author-tag tracking-wide block">
                   {CommentService.formatAuthorName(comment.user, comment.is_anonymous)}:
-                </span>
+                </motion.span>
               )}
 
-              {isEditing && currentUser?.id === comment.user_id ? (
-                <div className="flex items-center space-x-[1px] group/anon opacity-70 hover:opacity-100 transition-opacity">
-                  <Checkbox
-                    id={`anonymous-${comment.id}`}
-                    checked={isAnonymous}
-                    onCheckedChange={(checked) => setIsAnonymous(!!checked)}
-                    className={`border-2 border-[--primary-blue] rounded-[2px] data-[state=checked]:shadow-[inset_0_0_0_2px_rgba(255,255,255,0.6)]
- data-[state=checked]:bg-[--primary-blue] data-[state=checked]:border-[--primary-blue] h-3 w-3 transition-all duration-300`}
-                  />
-                  <Label
-                    htmlFor={`anonymous-${comment.id}`}
-                    className={`text-[9px] px-1 rounded-[2px] font-semibold tracking-wide uppercase text-[--primary-blue] cursor-pointer select-none ${isAnonymous ? "bg-[--primary-blue] text-[--primary-white]" : ""} transition-all duration-300`}
+              <AnimatePresence mode="popLayout">
+                {isEditing && currentUser?.id === comment.user_id && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8, x: -10 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, x: -10 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    Anonymous
-                  </Label>
-                </div>
-              ) : (
-                <></>
-              )}
+                    <AnonymousToggle
+                      id={`anonymous-${comment.id}`}
+                      checked={isAnonymous}
+                      onCheckedChange={setIsAnonymous}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
 
               {comment.updated_at !== comment.created_at ? (
-                <>
-                  <span className="inline-flex text-sm items-center font-light text-[--primary-blue]/40">
-                    <Dot className="w-3 h-3 self-center" />
-                    <span className="text-[--primary-blue]/40">[edited {CommentService.formatTimestamp(comment.updated_at)}]</span>
-                  </span>
-                </>
-              ) : (
-                <span className="inline-flex text-sm items-center font-light text-[--primary-blue]/40">
+                <motion.span layout className="inline-flex text-sm items-center font-light text-[--primary-blue]/40">
                   <Dot className="w-3 h-3 self-center" />
-                    <span className="text-[--primary-blue]/40">[created {CommentService.formatTimestamp(comment.updated_at)}]</span>
-                </span>
+                  <span className="text-[--primary-blue]/40">[edited {CommentService.formatTimestamp(comment.updated_at)}]</span>
+                </motion.span>
+              ) : (
+                <motion.span layout className="inline-flex text-sm items-center font-light text-[--primary-blue]/40">
+                  <Dot className="w-3 h-3 self-center" />
+                  <span className="text-[--primary-blue]/40">[created {CommentService.formatTimestamp(comment.updated_at)}]</span>
+                </motion.span>
               )}
-            </div>
+
+            </motion.div>
 
             <div className={`relative group/edit-container pl-1 ${isEditing ? 'w-full max-h-32 overflow-y-auto' : ''}`}>
               {isEditing ? (

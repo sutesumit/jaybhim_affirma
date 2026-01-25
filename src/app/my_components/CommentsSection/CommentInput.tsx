@@ -4,8 +4,7 @@ import { Loader2 } from "lucide-react";
 import { ProtectedActionDrawer } from "@/app/my_components/AuthCard";
 import { useAutoResizeTextarea } from "@/_hooks/useAutoResizeTextarea";
 import { MAX_COMMENT_LENGTH } from "@/lib/comments/constants";
-import { Label } from "@radix-ui/react-label";
-import { Checkbox } from "@radix-ui/react-checkbox";
+import { AnonymousToggle } from "./AnonymousToggle";
 
 interface CommentInputProps {
   onPost: (text: string, isAnonymous?: boolean) => Promise<{ success: boolean }>;
@@ -51,21 +50,11 @@ export const CommentInput = ({ onPost, isSubmitting, mode }: CommentInputProps) 
               {isSubmitting ? <Loader2 className="w-3 h-3 animate-spin" /> : "Post"}
             </button>
           </ProtectedActionDrawer>
-          <div className="flex items-center space-x-[1px] group/anon opacity-70 hover:opacity-100 transition-opacity">
-            <Checkbox
-              id="anonymous-new"
-              checked={isAnonymous}
-              onCheckedChange={(checked) => setIsAnonymous(!!checked)}
-              className={`border-2 border-[--primary-blue] rounded-[2px] data-[state=checked]:shadow-[inset_0_0_0_2px_rgba(255,255,255,0.6)]
- data-[state=checked]:bg-[--primary-blue] data-[state=checked]:border-[--primary-blue] h-3 w-3 transition-all duration-300`}
-            />
-            <Label
-              htmlFor="anonymous-new"
-              className={`text-[9px] px-1 rounded-[2px] font-semibold tracking-wide uppercase text-[--primary-blue] cursor-pointer select-none ${isAnonymous ? "bg-[--primary-blue] text-[--primary-white]" : ""} transition-all duration-300`}
-            >
-              Anonymous
-            </Label>
-          </div>
+          <AnonymousToggle
+            id="anonymous-new"
+            checked={isAnonymous}
+            onCheckedChange={setIsAnonymous}
+          />
         </div>
       </div>
     </div>
