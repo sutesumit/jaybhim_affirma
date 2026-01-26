@@ -6,6 +6,7 @@ import { Leaf } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProtectedActionDrawer } from "../AuthCard/ProtectedActionDrawer";
 import { useLikes } from "./hooks/useLikes";
+import { OdometerCount } from "./OdometerCount";
 
 interface LikeCounterProps {
   pathName: string | null;
@@ -78,12 +79,12 @@ export function LikeCounter({ pathName }: LikeCounterProps) {
           onClick={handleToggle}
           className="router-tab reaction-counter"
         >
-          <span className={`px-1 justify-center rounded-sm ${isLiked ? "bg-[var(--primary-blue)] text-[var(--primary-white)]" : ""} transition-all duration-700 ease-in-out`}>
-            <span className={`text-xs text-center inline-block border-r border-[var(--primary-blue)] px-1 transition-all duration-700 ease-in-out`}>
-              {likeCount}
+          <span className={`px-1 inline-flex items-center justify-center rounded-sm ${isLiked ? "bg-[var(--primary-blue)] text-[var(--primary-white)]" : ""} transition-all duration-700 ease-in-out`}>
+            <span className={`text-xs inline-flex border-r border-[var(--primary-blue)] px-1 transition-all duration-700 ease-in-out`}>
+              <OdometerCount value={likeCount} minDigits={3} />
             </span>
             <motion.div
-              className="inline-block items-center justify-center pl-1"
+              className="inline-flex items-center justify-center pl-1"
               animate={{ scale: locked ? 1.12 : 1 }}
               transition={{ duration: 0.15, ease: MOTION.ease }}
             >

@@ -73,7 +73,7 @@ export function useLikes(pagePath: string | null) {
           title: result.isLiked ? "Liked" : "Unliked.",
           description: result.isLiked 
             ? "This page feels appreciated now." 
-            : "Changed your mind. Happens to the best of us.",
+            : "Changed your mind? Happens to the best of us.",
         });
 
         return { success: true };
