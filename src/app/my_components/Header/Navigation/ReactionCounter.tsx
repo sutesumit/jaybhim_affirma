@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Leaf } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ProtectedActionDrawer } from "../../AuthCard/ProtectedActionDrawer";
 
 interface ReactionCounterProps {
   pathName: string | null;
@@ -49,9 +50,9 @@ export default function ReactionCounter({ pathName }: ReactionCounterProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [locked, setLocked] = useState(false);
 
-  const toggle = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const toggle = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
 
     if (locked) return;
     setLocked(true);
@@ -68,6 +69,14 @@ export default function ReactionCounter({ pathName }: ReactionCounterProps) {
   };
 
   return (
+    <div 
+      className="relative inline-block"
+      onClick={(e) => e.stopPropagation()}
+    >
+    <ProtectedActionDrawer 
+      title="Login to like" 
+      mode="action"
+    >
     <Link
       href={pathName ?? "/"}
       onClick={toggle}
@@ -106,5 +115,7 @@ export default function ReactionCounter({ pathName }: ReactionCounterProps) {
         </motion.div>
       </span>
     </Link>
+    </ProtectedActionDrawer>
+    </div>
   );
 }
