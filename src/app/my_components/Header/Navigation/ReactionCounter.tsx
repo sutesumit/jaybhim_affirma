@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Leaf } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProtectedActionDrawer } from "../../AuthCard/ProtectedActionDrawer";
+import { LikeService } from "@/lib/likes/like-service";
 
 interface ReactionCounterProps {
   pathName: string | null;
@@ -46,17 +47,46 @@ const leafVariants = {
 };
 
 export default function ReactionCounter({ pathName }: ReactionCounterProps) {
-  const [count, setCount] = useState(201);
+  const [count, setCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [locked, setLocked] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const toggle = (e?: React.MouseEvent) => {
+  // Fetch initial like count and status on mount
+  useEffect(() => {
+    if (!pathName) {
+      setLoading(false);
+      return;
+    }
+
+    const fetchLikes = async () => {
+      try {
+        const response = await LikeService.getLikes(pathName);
+        if (response.success) {
+          setCount(response.likeCount ?? 0);
+          setIsLiked(response.isLiked ?? false);
+        }
+      } catch (error) {
+        console.error("Failed to fetch likes:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLikes();
+  }, [pathName]);
+
+  const toggle = async (e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
 
-    if (locked) return;
+    if (locked || !pathName) return;
     setLocked(true);
 
+    // Optimistically update UI
+    const previousCount = count;
+    const previousIsLiked = isLiked;
+    
     setTimeout(
       () => {
         setCount((c) => (isLiked ? c - 1 : c + 1));
@@ -65,7 +95,30 @@ export default function ReactionCounter({ pathName }: ReactionCounterProps) {
       MOTION.duration * 1000 * 0.5,
     );
 
-    setTimeout(() => setLocked(false), MOTION.duration * 1000 + 120);
+    try {
+      const response = await LikeService.toggleLike(pathName);
+      if (response.success) {
+        // Update with actual values from server
+        if (response.likeCount !== undefined) {
+          setCount(response.likeCount);
+        }
+        if (response.isLiked !== undefined) {
+          setIsLiked(response.isLiked);
+        }
+      } else {
+        // Revert optimistic update on error
+        setCount(previousCount);
+        setIsLiked(previousIsLiked);
+        console.error("Failed to toggle like:", response.error);
+      }
+    } catch (error) {
+      // Revert optimistic update on error
+      setCount(previousCount);
+      setIsLiked(previousIsLiked);
+      console.error("Failed to toggle like:", error);
+    } finally {
+      setTimeout(() => setLocked(false), MOTION.duration * 1000 + 120);
+    }
   };
 
   return (
