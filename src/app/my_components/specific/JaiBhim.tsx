@@ -2,24 +2,15 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useMenuContext } from "../Header/menuContext/useMenuContext";
-import ArtistBioPopup from "../shared/ArtistBioPopup";
 
 const DURATION = 0.2;
 const STAGGER = 0.05;
 
 export default function JaiBhim() {
-    const { setMenuOpen } = useMenuContext();
-    const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-
-    const handleClosePopup = () => {
-        setMenuOpen(true);
-        setIsDialogOpen(false);
-    };
 
     return (
         <div className="relative">
-            <div className="relative group cursor-pointer" onClick={() => setIsDialogOpen(true)}>
+            <div className="relative group cursor-pointer">
                 <motion.div
                     className="relative flex items-center justify-center "
                     initial="initial"
@@ -45,7 +36,7 @@ export default function JaiBhim() {
                             className="animate-spin [animation-duration:10s]"
                         />
                     </motion.div>
-                    <div 
+                    <div
                         className="overflow-hidden relative px-6 font-rajdhani button-style text-[1rem] flex items-center justify-center whitespace-nowrap uppercase"
                         style={{ lineHeight: 1.1 }}
                     >
@@ -57,7 +48,7 @@ export default function JaiBhim() {
                                 hovered: { y: "-100%" },
                             }}
                         >
-                            {"Enter".split("").map((letter, index) => (
+                            {"HELLO".split("").map((letter, index) => (
                                 <motion.span
                                     key={index}
                                     className="inline-block"
@@ -82,31 +73,29 @@ export default function JaiBhim() {
                             variants={{
                                 initial: { y: "100%" },
                                 hovered: { y: 0 },
-                                }}
-                            >
-                                {["ज", "य", " ", "भी", "म"].map((letter, index) => (
-                                    <motion.span
-                                        key={index}
-                                        className="inline-block"
-                                        variants={{
-                                            initial: { y: "100%" },
-                                            hovered: { y: 0 },
-                                        }}
-                                        transition={{
-                                            duration: DURATION,
-                                            ease: "easeInOut",
-                                            delay: STAGGER * index,
-                                        }}
-                                    >
-                                        {letter === " " ? "\u00A0" : letter}
-                                    </motion.span>
-                                ))}
-                            </motion.div>
-                        </div>
-                    </motion.div>
-                </div>
-
-            <ArtistBioPopup isOpen={isDialogOpen} onClose={handleClosePopup} />
+                            }}
+                        >
+                            {["ज", "य", " ", "भी", "म"].map((letter, index) => (
+                                <motion.span
+                                    key={index}
+                                    className="inline-block"
+                                    variants={{
+                                        initial: { y: "100%" },
+                                        hovered: { y: 0 },
+                                    }}
+                                    transition={{
+                                        duration: DURATION,
+                                        ease: "easeInOut",
+                                        delay: STAGGER * index,
+                                    }}
+                                >
+                                    {letter === " " ? "\u00A0" : letter}
+                                </motion.span>
+                            ))}
+                        </motion.div>
+                    </div>
+                </motion.div>
+            </div>
         </div>
     );
 }
