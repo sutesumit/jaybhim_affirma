@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactionCounter from './ReactionCounter';
+import { LikeCounter } from '@/app/my_components/Likes';
 import CurrentTabLink from './CurrentTabLink';
 
 interface PageNavigationStatusProps {
@@ -10,7 +10,7 @@ interface PageNavigationStatusProps {
 const PageNavigationStatus: React.FC<PageNavigationStatusProps> = ({ pathName, tabName }) => {
     return (
         <span className='col-span-1 text-right hidden md:inline-block isolate'>
-            <ReactionCounter pathName={pathName} />
+            <LikeCounter pathName={pathName} />
             <CurrentTabLink pathName={pathName} tabName={tabName} />
         </span>
     );
