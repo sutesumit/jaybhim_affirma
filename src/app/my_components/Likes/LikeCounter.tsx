@@ -79,7 +79,7 @@ export function LikeCounter({ pathName }: LikeCounterProps) {
           className="router-tab reaction-counter"
         >
           <span className={`px-1 justify-center rounded-sm ${isLiked ? "bg-[var(--primary-blue)] text-[var(--primary-white)]" : ""} transition-all duration-700 ease-in-out`}>
-            <span className={`text-xs min-w-8 text-center inline-block border-r border-[var(--primary-blue)] pr-1 mr-1 transition-all duration-700 ease-in-out`}>
+            <span className={`text-xs text-center inline-block border-r border-[var(--primary-blue)] px-1 transition-all duration-700 ease-in-out`}>
               {likeCount}
             </span>
             <motion.div
