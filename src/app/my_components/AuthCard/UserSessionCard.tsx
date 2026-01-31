@@ -6,6 +6,7 @@ import { AuthService } from '@/lib/auth/auth-service'
 import { toast } from '@/hooks/use-toast'
 import { notifyProfileUpdate } from '@/auth/AuthContext'
 import { Pencil, Check, X, Loader2 } from 'lucide-react'
+import { useInteractionAnalytics } from './useInteractionAnalytics'
 
 interface UserSessionCardProps {
     description?: React.ReactNode,
@@ -22,6 +23,12 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
     const [newName, setNewName] = React.useState('');
     const [isEditing, setIsEditing] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
+    const {
+        data: analytics,
+        loading: analyticsLoading,
+        error: analyticsError,
+        isTopUserMe,
+    } = useInteractionAnalytics();
 
     // Initialize newName when entering edit mode or when user changes
     React.useEffect(() => {
@@ -88,7 +95,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                     {description ? description : (
                         <>
                             Jai Bhim, <br />
-                            <div 
+                            <div
                                 className="relative inline-flex items-center justify-center group min-h-[30px] my-1"
                                 onClick={() => !isEditing && setIsEditing(true)}
                             >
@@ -109,7 +116,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                                             if (e.key === 'Enter') handleUpdateName();
                                             if (e.key === 'Escape') handleCancel();
                                         }}
-                                        onClick={(e) => e.stopPropagation()} 
+                                        onClick={(e) => e.stopPropagation()}
                                     />
                                 )}
 
@@ -117,16 +124,16 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                                 <div className="absolute left-full pl-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
                                     {isEditing ? (
                                         <>
-                                            <button 
+                                            <button
                                                 onClick={(e) => { e.stopPropagation(); handleUpdateName(); }}
                                                 disabled={isLoading}
                                                 className="h-7 w-7 glass-hover rounded-sm inline-flex items-center justify-center focus:outline-none transition-colors text-green-400"
                                             >
                                                 {isLoading ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
                                             </button>
-                                            <button 
+                                            <button
                                                 onClick={(e) => { e.stopPropagation(); handleCancel(); }}
-                                                disabled={isLoading} 
+                                                disabled={isLoading}
                                                 className="h-7 w-7 glass-hover rounded-sm inline-flex items-center justify-center transition-colors text-red-400"
                                             >
                                                 <X size={14} />
@@ -140,6 +147,41 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                                 </div>
                             </div>
                             <span className="mt-1 block">You are logged in.</span>
+                            <div className="mt-1 text-[0.7rem] text-muted-foreground">
+                                {analyticsLoading && !analyticsError && (
+                                    <span>Loading interaction stats&hellip;</span>
+                                )}
+
+                                {!analyticsLoading && analyticsError && (
+                                    <span>Interaction stats unavailable.</span>
+                                )}
+
+                                {!analyticsLoading && !analyticsError && analytics && (
+                                    <span>
+                                        your interactions:{" "}
+                                        <span className="font-semibold">{analytics.counters.myTotal}</span>,{" "}
+                                        {analytics.counters.globalTotal > 0 ? (
+                                            <>
+                                                top interactor:{" "}
+                                                <span className="font-semibold">
+                                                    {isTopUserMe ? "You" : (analytics.topUser?.display_name || "Unknown")}
+                                                </span>{" "}
+                                                (
+                                                <span className="font-semibold">
+                                                    {analytics.topUser?.total ?? 0}
+                                                </span>
+                                                ),{" "}
+                                                global interactions:{" "}
+                                                <span className="font-semibold">
+                                                    {analytics.counters.globalTotal}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <>no interactions yet</>
+                                        )}
+                                    </span>
+                                )}
+                            </div>
                         </>
                     )}
                 </CardDescription>
