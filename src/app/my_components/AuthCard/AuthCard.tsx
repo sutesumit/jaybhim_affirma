@@ -6,10 +6,10 @@ import {
   CardDescription,
   CardHeader,
 } from "@/components/ui/card"
-
 import { AuthCardProps } from "@/lib/auth/auth-types"
 import AuthMethodRenderer from "./components/AuthMethodRenderer"
 import useAuthFlow from "./hooks/useAuthFlow"
+import InteractionBoard from "./components/InteractionBoard"
 
 
 
@@ -20,7 +20,7 @@ const AuthCard: React.FC<AuthCardProps> = ({
   title = "Verify to share your thoughts or leave a mark:",
   className = "w-[350px]"
 }) => {
-
+  
   const { 
     authMethod,
     authStep, 
@@ -69,6 +69,7 @@ const AuthCard: React.FC<AuthCardProps> = ({
                 onEditContact={handleChangeContact}
             />
           </div>
+          <InteractionBoard className="mt-2" />
       </CardContent>
     </Card>
   )

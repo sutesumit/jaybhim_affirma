@@ -4,12 +4,14 @@ import type {
   GetInteractionAnalyticsResponse,
   GetTopUserResponse,
 } from "@/types/analytics";
+import { useAuthContext } from "@/auth/useAuthContext";
 
 interface UseInteractionAnalyticsResult {
   data: InteractionAnalyticsData | null;
   loading: boolean;
   error: string | null;
   isTopUserMe: boolean;
+  isAuthenticated: boolean;
 }
 
 /**
@@ -17,6 +19,7 @@ interface UseInteractionAnalyticsResult {
  * Identity checks are performed server-side only.
  */
 export function useInteractionAnalytics(): UseInteractionAnalyticsResult {
+  const { user } = useAuthContext();
   const [data, setData] = useState<InteractionAnalyticsData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -87,7 +90,8 @@ export function useInteractionAnalytics(): UseInteractionAnalyticsResult {
    * Authoritative identity flag.
    * Comes exclusively from the backend.
    */
-  const isTopUserMe = Boolean(data?.topUser?.isMe);
+  const isTopUserMe = Boolean(data?.topUser?.is_me);
+  const isAuthenticated = !!user;
 
-  return { data, loading, error, isTopUserMe };
+  return { data, loading, error, isTopUserMe, isAuthenticated };
 }

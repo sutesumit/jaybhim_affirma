@@ -11,7 +11,7 @@ export interface TopUserStats {
   display_name: string;
   total: number;
   updated_at: string;
-  isMe: boolean;
+  is_me: boolean;
 }
 export interface InteractionAnalyticsData {
   counters: InteractionCounters;

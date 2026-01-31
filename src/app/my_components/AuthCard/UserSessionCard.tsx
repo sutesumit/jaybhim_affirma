@@ -6,7 +6,7 @@ import { AuthService } from '@/lib/auth/auth-service'
 import { toast } from '@/hooks/use-toast'
 import { notifyProfileUpdate } from '@/auth/AuthContext'
 import { Pencil, Check, X, Loader2 } from 'lucide-react'
-import { useInteractionAnalytics } from './hooks/useInteractionAnalytics'
+import InteractionBoard from './components/InteractionBoard'
 
 interface UserSessionCardProps {
     description?: React.ReactNode,
@@ -23,12 +23,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
     const [newName, setNewName] = React.useState('');
     const [isEditing, setIsEditing] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
-    const {
-        data: analytics,
-        loading: analyticsLoading,
-        error: analyticsError,
-        isTopUserMe,
-    } = useInteractionAnalytics();
+    // No longer need internal hook here as InteractionBoard handles it
 
     // Initialize newName when entering edit mode or when user changes
     React.useEffect(() => {
@@ -146,42 +141,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                                     )}
                                 </div>
                             </div>
-                            <span className="mt-1 block">You are logged in.</span>
-                            <div className="mt-1 text-[0.7rem] text-muted-foreground">
-                                {analyticsLoading && !analyticsError && (
-                                    <span>Loading interaction stats&hellip;</span>
-                                )}
-
-                                {!analyticsLoading && analyticsError && (
-                                    <span>Interaction stats unavailable.</span>
-                                )}
-
-                                {!analyticsLoading && !analyticsError && analytics && (
-                                    <span>
-                                        your interactions:{" "}
-                                        <span className="font-semibold">{analytics.counters.myTotal}</span>,{" "}
-                                        {analytics.counters.globalTotal > 0 ? (
-                                            <>
-                                                top interactor:{" "}
-                                                <span className="font-semibold">
-                                                    {isTopUserMe ? "You" : (analytics.topUser?.display_name || "Unknown")}
-                                                </span>{" "}
-                                                (
-                                                <span className="font-semibold">
-                                                    {analytics.topUser?.total ?? 0}
-                                                </span>
-                                                ),{" "}
-                                                global interactions:{" "}
-                                                <span className="font-semibold">
-                                                    {analytics.counters.globalTotal}
-                                                </span>
-                                            </>
-                                        ) : (
-                                            <>no interactions yet</>
-                                        )}
-                                    </span>
-                                )}
-                            </div>
+                            <InteractionBoard />
                         </>
                     )}
                 </CardDescription>
