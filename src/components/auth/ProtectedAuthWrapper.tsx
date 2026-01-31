@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import AuthCard from './AuthCard'
+import React from 'react'
+import { AuthCard } from '@/app/my_components/AuthCard'
 import { User } from '@/lib/auth/auth-types'
 import { useAuthContext } from '@/auth/useAuthContext'
 

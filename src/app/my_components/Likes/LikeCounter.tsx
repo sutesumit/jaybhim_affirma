@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Leaf } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ProtectedActionDrawer } from "../AuthCard/ProtectedActionDrawer";
+import { ProtectedActionDrawer } from "@/components/auth/ProtectedActionDrawer";
 import { useLikes } from "./hooks/useLikes";
 import { OdometerCount } from "./OdometerCount";
 

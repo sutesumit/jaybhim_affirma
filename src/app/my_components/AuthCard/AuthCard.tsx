@@ -7,9 +7,9 @@ import {
   CardHeader,
 } from "@/components/ui/card"
 
-import { AuthCardProps, User } from "@/lib/auth/auth-types"
-import AuthMethodRenderer from "./AuthMethodRenderer"
-import useAuthFlow from "./useAuthFlow"
+import { AuthCardProps } from "@/lib/auth/auth-types"
+import AuthMethodRenderer from "./components/AuthMethodRenderer"
+import useAuthFlow from "./hooks/useAuthFlow"
 
 
 

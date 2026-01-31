@@ -6,7 +6,7 @@ import { AuthService } from '@/lib/auth/auth-service'
 import { toast } from '@/hooks/use-toast'
 import { notifyProfileUpdate } from '@/auth/AuthContext'
 import { Pencil, Check, X, Loader2 } from 'lucide-react'
-import { useInteractionAnalytics } from './useInteractionAnalytics'
+import { useInteractionAnalytics } from './hooks/useInteractionAnalytics'
 
 interface UserSessionCardProps {
     description?: React.ReactNode,

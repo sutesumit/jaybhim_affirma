@@ -12,7 +12,8 @@ import {
     DrawerTrigger,
   } from "@/components/ui/drawer"
 import { Button } from "@/components/ui/button"
-import { ProtectedActionDrawer, UserSessionCard } from '@/app/my_components/AuthCard'
+import { UserSessionCard } from '@/app/my_components/AuthCard'
+import { ProtectedActionDrawer } from '@/components/auth/ProtectedActionDrawer'
 import { X } from 'lucide-react'
 import {
     Card,

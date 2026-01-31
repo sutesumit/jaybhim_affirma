@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import { Loader2 } from "lucide-react";
-import { ProtectedActionDrawer } from "@/app/my_components/AuthCard";
+import { ProtectedActionDrawer } from "@/components/auth/ProtectedActionDrawer";
 import { useAutoResizeTextarea } from "@/_hooks/useAutoResizeTextarea";
 import { MAX_COMMENT_LENGTH } from "@/lib/comments/constants";
 import { AnonymousToggle } from "./AnonymousToggle";

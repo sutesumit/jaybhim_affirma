@@ -15,7 +15,8 @@ import { Button } from "@/components/ui/button"
 import StoryCanvasCard from '../cardBackground/StoryCanvasCard'
 import { DownloadIcon, SendIcon, Loader } from "lucide-react"
 import { useAuthContext } from '@/auth/useAuthContext'
-import { ProtectedActionDrawer, UserSessionCard } from '@/app/my_components/AuthCard'
+import { UserSessionCard } from '@/app/my_components/AuthCard'
+import { ProtectedActionDrawer } from '@/components/auth/ProtectedActionDrawer'
 import { X } from 'lucide-react'
 import ToggleCanvasButton from '../cardBackground/ToggleCanvasButton'
 import { useDownloadImage } from '@/_hooks/useDownloadImage'

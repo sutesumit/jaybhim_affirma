@@ -1,9 +1,9 @@
 import React from 'react'
-import AuthMethodInput from './AuthMethodInput'
+import AuthMethodInput from './inputs/AuthMethodInput'
 import { AuthMethod, AuthStep } from '@/lib/auth/auth-types'
-import PhoneInput from './PhoneInput'
-import EmailInput from './EmailInput'
-import OtpInput from './OtpInput'
+import PhoneInput from './inputs/PhoneInput'
+import EmailInput from './inputs/EmailInput'
+import OtpInput from './inputs/OtpInput'
 
 interface AuthMethodRendererProps {
     onAuthMethodChange: (value: AuthMethod)=> void

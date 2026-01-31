@@ -3,7 +3,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { Quote, Dot, Pencil, Trash2, X, Check } from "lucide-react";
-import { ProtectedActionDrawer, UserSessionCard } from "@/app/my_components/AuthCard";
+import { UserSessionCard } from "@/app/my_components/AuthCard";
+import { ProtectedActionDrawer } from "@/components/auth/ProtectedActionDrawer";
 import { CommentService } from "@/lib/comments/comment-service";
 import { MAX_COMMENT_LENGTH } from "@/lib/comments/constants";
 import type { Comment } from "@/types/comments";

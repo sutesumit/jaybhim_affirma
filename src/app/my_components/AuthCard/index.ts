@@ -1,6 +1,6 @@
 export { default as AuthCard } from './AuthCard'
 
-export { default as ProtectedAuthWrapper } from './ProtectedAuthWrapper'
+export { default as ProtectedAuthWrapper } from '@/components/auth/ProtectedAuthWrapper'
 
-export { default as ProtectedActionDrawer } from './ProtectedActionDrawer'
+export { default as ProtectedActionDrawer } from '@/components/auth/ProtectedActionDrawer'
 export { UserSessionCard } from './UserSessionCard'
