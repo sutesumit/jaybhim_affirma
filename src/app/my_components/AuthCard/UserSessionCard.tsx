@@ -86,7 +86,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
     return (
         <Card className={`w-full min-w-[22rem] card-bg card-shadow ${className}`}>
             <CardHeader>
-                <CardDescription className='text-xs text-center min-h-[4.5rem] flex flex-col items-center justify-center'>
+                <CardDescription className='text-center min-h-[4.5rem] flex flex-col items-center justify-center'>
                     {description ? description : (
                         <>
                             Jai Bhim, <br />
@@ -95,7 +95,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                                 onClick={() => !isEditing && setIsEditing(true)}
                             >
                                 {/* Ghost Span: Drives width, always rendered */}
-                                <span className={`px-2 py-1 text-sm font-semibold text-center glass-hover rounded min-w-[3rem] whitespace-pre select-none ${isEditing ? 'opacity-0' : 'opacity-100'}`}>
+                                <span className={`px-2 py-1 font-semibold text-center glass-hover rounded min-w-[3rem] whitespace-pre select-none ${isEditing ? 'opacity-0' : 'opacity-100'}`}>
                                     {(isEditing ? newName : (user?.display_name || "Digital Bro")).replace(/ /g, "\u00a0") || "\u00a0"}
                                 </span>
 

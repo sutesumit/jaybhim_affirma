@@ -5,6 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import Gradient1 from "@/app/my_components/gradients/Gradient1"
 
 const Dialog = DialogPrimitive.Root
 
@@ -21,11 +22,19 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      "fixed bg-foreground/40 inset-0 z-50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed bg-foreground/5 inset-0 z-50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
-  />
+  >
+    <div
+      className='absolute inset-0 opacity-80'
+      style={{
+        backgroundImage: 'radial-gradient(circle, var(--primary-blue) 1px, transparent 1px)',
+        backgroundSize: '20px 20px',
+      }}
+    />
+  </DialogPrimitive.Overlay>
 ))
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
@@ -39,16 +48,20 @@ DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-1 card-bg card-shadow duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] rounded-sm font-rajdhani text-[--primary-blue]",
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-1 card-bg card-shadow duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] rounded-md font-rajdhani text-[--primary-blue]",
         className
       )}
       {...props}
     >
-      {children}
+      <Gradient1 hoverOn={true} className="relative">
+        <div className="z-10">
+          {children}
+        </div>
       <DialogPrimitive.Close className="absolute right-2 top-2 rounded-sm comment-tiny-button ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[--primary-blue] focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground transition-all duration-300">
         <X className="h-3 w-3" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
+      </Gradient1>
     </DialogPrimitive.Content>
   </DialogPortal>
 ))

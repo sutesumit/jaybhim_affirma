@@ -22,13 +22,13 @@ const Videoscape = ({src, bg_value}: {src: string, bg_value?: string | undefined
 
         <div className={`absolute inset-0 ${bg_value} opacity-60`}></div>
 
-        <div 
+        {/* <div 
           className='absolute inset-0 opacity-80'
           style={{
             backgroundImage: 'radial-gradient(circle, var(--primary-blue) 1px, transparent 1px)',
             backgroundSize: '20px 20px',
           }}
-        ></div>
+        ></div> */}
         
       </>
   );

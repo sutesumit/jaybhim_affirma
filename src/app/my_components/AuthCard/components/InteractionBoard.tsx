@@ -37,10 +37,10 @@ const InteractionBoard: React.FC<InteractionBoardProps> = ({
   const isTopUserMe = topUser?.is_me;
 
   return (
-    <div className={`flex flex-col gap-1 items-center ${className}`}>
+    <div className={`flex flex-col gap-1 items-center text-sm ${className}`}>
       {/* ───────── Personal Contribution ───────── */}
       {isAuthenticated && !isTopUserMe && (
-        <div className="text-[0.7rem] text-muted-foreground text-center">
+        <div className="text-muted-foreground text-center">
           {hasMyInteractions ? (
             <>
               Welcome back! You&apos;ve made{" "}
@@ -56,7 +56,7 @@ const InteractionBoard: React.FC<InteractionBoardProps> = ({
       )}
       {/* ───────── Community Highlight ───────── */}
       {topUser && (
-        <div className="text-xs text-center text-muted-foreground glass-hover p-2 rounded-sm w-full">
+        <div className="text-center text-muted-foreground glass-hover p-2 rounded-sm w-full">
           {isAuthenticated && isTopUserMe ? (
             <span className="p-2">
               Thank you for being at the 💙 <br /> of the support. <span className="font-semibold text-foreground">{topUser.total}</span> interactions, the most so far!

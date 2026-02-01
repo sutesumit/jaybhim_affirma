@@ -6,7 +6,7 @@ const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <Gradient1 hoverOn={true}>
+  <Gradient1 hoverOn={true} className="relative">
     <div
       ref={ref}
       className={cn(
@@ -37,7 +37,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("font-semibold leading-none tracking-tight", className)}
+    className={cn("font-semibold z-10 leading-none tracking-tight", className)}
     {...props}
   />
 ))
@@ -49,7 +49,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm z-10 text-muted-foreground", className)}
     {...props}
   />
 ))
@@ -69,7 +69,7 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center p-6 pt-0", className)}
+    className={cn("flex items-center p-6 pt-0 z-10", className)}
     {...props}
   />
 ))
