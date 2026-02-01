@@ -1,27 +1,15 @@
 // 'use client'
 import React from 'react'
 import { toast } from '@/hooks/use-toast'
-import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-    DrawerTrigger,
-  } from "@/components/ui/drawer"
 import { Button } from "@/components/ui/button"
 import StoryCanvasCard from '../cardBackground/StoryCanvasCard'
 import { DownloadIcon, SendIcon, Loader } from "lucide-react"
 import { useAuthContext } from '@/auth/useAuthContext'
 import { UserSessionCard } from '@/app/my_components/AuthCard'
 import { ProtectedActionDrawer } from '@/components/auth/ProtectedActionDrawer'
-import { X } from 'lucide-react'
 import ToggleCanvasButton from '../cardBackground/ToggleCanvasButton'
 import { useDownloadImage } from '@/_hooks/useDownloadImage'
 import { useRef } from "react"
-import { AuthService } from '@/lib/auth/auth-service'
 
 
 const SubmitDrawer = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElement | null>}) => {

@@ -13,16 +13,16 @@ interface ProtectedActionDrawerProps {
   children: React.ReactNode; 
   trigger?: React.ReactElement<ClickableChildProps>;
   title?: string;
+  description?: string;
   drawerClassName?: string;
   mode?: 'action' | 'view';
-
-
 }
 
 export const ProtectedActionDrawer = ({ 
     children, 
     trigger,
     title = "Authentication Required",
+    description = "Please login to continue",
     drawerClassName = "backdrop-blur-sm min-h-[50vh] w-full p-6 items-center justify-center",
     mode = 'action'
 }: ProtectedActionDrawerProps) => {
@@ -84,7 +84,7 @@ export const ProtectedActionDrawer = ({
         {TriggerElement}
       <DrawerContent className={drawerClassName}>
         <DrawerTitle className="hidden">{title}</DrawerTitle>
-        <ProtectedAuthWrapper onAuthSuccess={handleAuthSuccess}>
+        <ProtectedAuthWrapper description={description} onAuthSuccess={handleAuthSuccess}>
             {mode === 'view' ? children : (
             <div className="flex flex-col items-center justify-center text-center space-y-4">
                 <h2 className="text-xl font-bold font-rajdhani uppercase tracking-widest">Authentication Success</h2>

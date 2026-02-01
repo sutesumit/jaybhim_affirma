@@ -5,6 +5,7 @@ import { ProtectedActionDrawer } from "@/components/auth/ProtectedActionDrawer";
 import { useAutoResizeTextarea } from "@/_hooks/useAutoResizeTextarea";
 import { MAX_COMMENT_LENGTH } from "@/lib/comments/constants";
 import { AnonymousToggle } from "./AnonymousToggle";
+import { usePathname } from "next/navigation";
 
 interface CommentInputProps {
   onPost: (text: string, isAnonymous?: boolean) => Promise<{ success: boolean }>;
@@ -16,6 +17,11 @@ export const CommentInput = ({ onPost, isSubmitting, mode }: CommentInputProps) 
   const [commentText, setCommentText] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const pathName = usePathname();
+  const title = pathName
+    ?.replace(/^\/|-/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase())
+    .trim();
 
   useAutoResizeTextarea(textareaRef.current, commentText);
 
@@ -41,7 +47,10 @@ export const CommentInput = ({ onPost, isSubmitting, mode }: CommentInputProps) 
           maxLength={MAX_COMMENT_LENGTH}
         />
         <div className="flex flex-col justify-between gap-2">
-          <ProtectedActionDrawer title="Login to post a comment">
+          <ProtectedActionDrawer 
+            title="Login to post a comment" 
+            description={`Verify to join the conversation on ${title}`}
+          >
             <button
               onClick={handlePost}
               disabled={isSubmitting || !commentText.trim()}

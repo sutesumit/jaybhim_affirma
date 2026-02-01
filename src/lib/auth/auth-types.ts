@@ -34,6 +34,7 @@ export interface AuthCardProps {
     onAuthSuccess?: (user: User) => void;
     onAuthError?: (error: string) => void;
     title?: string
+    description?: string;
     subtitle?: string;
     className?: string;
 }

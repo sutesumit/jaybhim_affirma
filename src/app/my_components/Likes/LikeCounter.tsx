@@ -49,6 +49,11 @@ const leafVariants = {
 export function LikeCounter({ pathName }: LikeCounterProps) {
   const { likeCount, isLiked, isToggling, toggleLike } = useLikes(pathName);
   const [locked, setLocked] = useState(false);
+  const title = pathName
+  ?.replace(/^\/|-/g, ' ')
+  .replace(/\b\w/g, c => c.toUpperCase())
+  .trim();
+
 
   const handleToggle = async (e?: React.MouseEvent) => {
     e?.preventDefault();
@@ -71,7 +76,8 @@ export function LikeCounter({ pathName }: LikeCounterProps) {
       onClick={(e) => e.stopPropagation()}
     >
       <ProtectedActionDrawer 
-        title="Login to like" 
+        title="Login to like"
+        description={`Verify to leave a little love for ${title}`}
         mode="action"
       >
         <Link

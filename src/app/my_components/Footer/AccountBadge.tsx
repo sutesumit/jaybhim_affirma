@@ -31,6 +31,7 @@ const AccountBadge: React.FC = () => {
     return (
         <ProtectedActionDrawer
             mode="view"
+            description="Verify to leave love (or fair criticism)"
             trigger={
                 <span className='router-tab cursor-pointer'>
                     {authCardTriggerText}

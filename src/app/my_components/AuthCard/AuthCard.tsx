@@ -18,6 +18,7 @@ const AuthCard: React.FC<AuthCardProps> = ({
   onAuthError,
   onAuthSuccess,
   title = "Verify to share your thoughts or leave a mark:",
+  description = "Please login to continue",
   className = "w-[350px]"
 }) => {
   
@@ -45,7 +46,7 @@ const AuthCard: React.FC<AuthCardProps> = ({
         <CardDescription 
             className="text-center"
         >
-            {title}
+            {description}
         </CardDescription>
       </CardHeader>
       <CardContent>

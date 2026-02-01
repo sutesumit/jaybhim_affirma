@@ -7,9 +7,10 @@ interface ProtectedAuthWrapperProps {
     children: React.ReactNode
     onAuthError?: (error: string) => void
     onAuthSuccess?: (user: User) => void
+    description?: string;
 }
 
-const ProtectedAuthWrapper = ({children, onAuthError, onAuthSuccess}: ProtectedAuthWrapperProps) => {
+const ProtectedAuthWrapper = ({children, onAuthError, onAuthSuccess, description}: ProtectedAuthWrapperProps) => {
     const { isAuthenticated, user, loading, error } = useAuthContext()
 
     // Unified handling of AuthSuccess is now moved to ProtectedActionDrawer and AuthCard
@@ -28,6 +29,7 @@ const ProtectedAuthWrapper = ({children, onAuthError, onAuthSuccess}: ProtectedA
             className='w-full max-w-[22rem] shrink'
             onAuthError={onAuthError}
             onAuthSuccess={onAuthSuccess}
+            description={description}
         />
     )
     }
