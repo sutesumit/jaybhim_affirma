@@ -14,3 +14,8 @@ export type DraggablePhotoProps = {
     animate: photoStyleProp;
     dragConstraints: React.RefObject<HTMLDivElement | null>;
 }
+
+// Type for the props of the Instruction component (only needs dragConstraints, not image properties)
+export type InstructionProps = {
+    dragConstraints: React.RefObject<HTMLDivElement | null>;
+}

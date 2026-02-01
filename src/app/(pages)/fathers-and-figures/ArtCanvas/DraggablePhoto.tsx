@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { DraggablePhotoProps } from './types'
@@ -14,7 +14,6 @@ const DraggablePhoto = ({src, alt, animate, dragConstraints }: DraggablePhotoPro
         style={{ cursor: 'grab' }}
         animate={{...animate }}
         whileDrag={{ boxShadow: '0px 0px 10px 0px var(--primary-blue)', rotate: 0, scale: 1.1 }}
-        
     >
     {/* Nextjs image component for lazy and optimized loading of the images  */}
         <Image
