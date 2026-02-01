@@ -6,7 +6,7 @@ import { AuthService } from '@/lib/auth/auth-service'
 import { toast } from '@/hooks/use-toast'
 import { notifyProfileUpdate } from '@/auth/AuthContext'
 import { Pencil, Check, X, Loader2 } from 'lucide-react'
-import InteractionBoard from './components/InteractionBoard'
+import ContributionSummary from './components/ContributionSummary'
 
 interface UserSessionCardProps {
     description?: React.ReactNode,
@@ -23,7 +23,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
     const [newName, setNewName] = React.useState('');
     const [isEditing, setIsEditing] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
-    // No longer need internal hook here as InteractionBoard handles it
+    // No longer need internal hook here as ContributionSummary handles it
 
     // Initialize newName when entering edit mode or when user changes
     React.useEffect(() => {
@@ -141,7 +141,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                                     )}
                                 </div>
                             </div>
-                            <InteractionBoard />
+                            <ContributionSummary />
                         </>
                     )}
                 </CardDescription>

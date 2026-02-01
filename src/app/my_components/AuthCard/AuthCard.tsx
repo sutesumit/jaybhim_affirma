@@ -9,7 +9,7 @@ import {
 import { AuthCardProps } from "@/lib/auth/auth-types"
 import AuthMethodRenderer from "./components/AuthMethodRenderer"
 import useAuthFlow from "./hooks/useAuthFlow"
-import InteractionBoard from "./components/InteractionBoard"
+import ContributionSummary from "./components/ContributionSummary"
 
 
 
@@ -70,7 +70,7 @@ const AuthCard: React.FC<AuthCardProps> = ({
                 onEditContact={handleChangeContact}
             />
           </div>
-          <InteractionBoard className="mt-2" />
+          <ContributionSummary className="mt-2" />
       </CardContent>
     </Card>
   )
