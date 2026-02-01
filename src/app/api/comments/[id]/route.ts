@@ -67,17 +67,25 @@ export async function PATCH(
       );
     }
 
-    // Fetch existing comment to verify ownership and get current text
+    // Fetch existing comment to verify ownership and check if soft-deleted
     const supabase = await getServerSupabase();
     const { data: existingComment, error: fetchError } = await supabase
       .from("comments")
       .select("*")
       .eq("id", id)
-      .single();
+      .maybeSingle();
 
-    if (fetchError || !existingComment) {
+    if (fetchError) {
+      console.error("[PATCH /api/comments/[id]] Fetch error:", fetchError);
       return NextResponse.json(
-        { success: false, error: "Comment not found" },
+        { success: false, error: "Failed to fetch comment" },
+        { status: 500 }
+      );
+    }
+
+    if (!existingComment || existingComment.deleted_at) {
+      return NextResponse.json(
+        { success: false, error: "Comment not found or already deleted" },
         { status: 404 }
       );
     }
@@ -130,12 +138,12 @@ export async function PATCH(
       .update(updatePayload)
       .eq("id", id)
       .select()
-      .single();
+      .maybeSingle();
 
-    if (updateError) {
+    if (updateError || !updatedComment) {
       console.error("[PATCH /api/comments/[id]] Update error:", updateError);
       return NextResponse.json(
-        { success: false, error: "Failed to update comment" },
+        { success: false, error: "Failed to update comment (it may have been deleted)" },
         { status: 500 }
       );
     }
@@ -190,17 +198,25 @@ export async function DELETE(
     // Use standard authenticated supabase client
     const supabase = await getServerSupabase();
 
-    // Fetch existing comment to verify ownership (extra safety)
+    // Fetch existing comment to verify ownership and ensure it's not already deleted
     const { data: existingComment, error: fetchError } = await supabase
       .from("comments")
       .select("user_id")
       .eq("id", id)
-      .single();
+      .is("deleted_at", null)
+      .maybeSingle();
 
-    if (fetchError || !existingComment) {
+    if (fetchError) {
       console.error("[DELETE /api/comments/[id]] Fetch error:", fetchError);
       return NextResponse.json(
-        { success: false, error: "Comment not found or access denied" },
+        { success: false, error: "Internal server error" },
+        { status: 500 }
+      );
+    }
+
+    if (!existingComment) {
+      return NextResponse.json(
+        { success: false, error: "Comment not found, access denied, or already deleted" },
         { status: 404 }
       );
     }

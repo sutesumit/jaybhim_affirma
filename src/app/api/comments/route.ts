@@ -144,11 +144,12 @@ export async function GET(request: Request): Promise<NextResponse<GetCommentsRes
 
     const supabase = await getServerSupabase();
 
-    // Fetch comments (RLS automatically filters deleted_at IS NULL)
+    // Fetch comments (Explicitly filter out soft-deleted ones)
     const { data: comments, error } = await supabase
       .from("comments")
       .select("*, user:profiles(display_name)")
       .eq("page_path", pagePath)
+      .is("deleted_at", null)
       .order("created_at", { ascending: false });
 
     if (error) {
