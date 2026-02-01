@@ -112,7 +112,7 @@ export function LikeCounter({ pathName }: LikeCounterProps) {
                       : "text-[var(--primary-blue)]"
                   }`}
                 >
-                  <Heart className="w-4 h-4 inline" />
+                  <Heart className="w-4 h-4 inline-flex" />
                 </motion.div>
               </AnimatePresence>
             </motion.div>
