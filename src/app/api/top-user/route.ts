@@ -17,7 +17,10 @@ export async function GET() {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    const top = data?.[0] ?? null;
+    const top = data?.[0] ? {
+      ...data[0],
+      is_me: !!data[0].isme
+    } : null;
 
     return NextResponse.json({
       success: true,

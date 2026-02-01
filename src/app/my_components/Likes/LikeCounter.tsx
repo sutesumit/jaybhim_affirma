@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Leaf } from "lucide-react";
+import { Heart, Leaf } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProtectedActionDrawer } from "@/components/auth/ProtectedActionDrawer";
 import { useLikes } from "./hooks/useLikes";
@@ -106,7 +106,7 @@ export function LikeCounter({ pathName }: LikeCounterProps) {
                       : "text-[var(--primary-blue)]"
                   }`}
                 >
-                  <Leaf className="w-4 h-4 inline" />
+                  <Heart className="w-4 h-4 inline" />
                 </motion.div>
               </AnimatePresence>
             </motion.div>

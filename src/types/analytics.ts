@@ -7,8 +7,10 @@ export interface InteractionCounters {
   myTotal: number;
 }
 export interface TopUserStats {
-  user_id: string;
+  user_id?: string;
   display_name: string;
+  like_count?: number;
+  comment_count?: number;
   total: number;
   updated_at: string;
   is_me: boolean;

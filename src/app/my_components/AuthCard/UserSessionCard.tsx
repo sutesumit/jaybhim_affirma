@@ -84,14 +84,14 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
     }
 
     return (
-        <Card className={`w-full min-w-[22rem] card-border card-bg card-shadow ${className}`}>
+        <Card className={`w-full min-w-[22rem] card-bg card-shadow ${className}`}>
             <CardHeader>
                 <CardDescription className='text-xs text-center min-h-[4.5rem] flex flex-col items-center justify-center'>
                     {description ? description : (
                         <>
                             Jai Bhim, <br />
                             <div
-                                className="relative inline-flex items-center justify-center group min-h-[30px] my-1"
+                                className="relative inline-flex items-center justify-center group min-h-[30px] my-1 cursor-text"
                                 onClick={() => !isEditing && setIsEditing(true)}
                             >
                                 {/* Ghost Span: Drives width, always rendered */}

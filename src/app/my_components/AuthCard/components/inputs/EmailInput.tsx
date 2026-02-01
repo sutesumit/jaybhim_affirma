@@ -29,7 +29,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
             value={email}
             onChange={(e)=>onChange(e.target.value) }
             id="name" 
-            placeholder="jaibhim@sumitsute.com" 
+            placeholder="yourname@example.com" 
             disabled={loading}
             className= {error ? `border-red-400 focus:border-red-400 pr-9` : `pr-9`}
         />
