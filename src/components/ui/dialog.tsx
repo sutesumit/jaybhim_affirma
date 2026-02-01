@@ -6,6 +6,7 @@ import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import Gradient1 from "@/app/my_components/gradients/Gradient1"
+import { DotGrid } from "@/components/ui/dot-grid"
 
 const Dialog = DialogPrimitive.Root
 
@@ -27,13 +28,7 @@ const DialogOverlay = React.forwardRef<
     )}
     {...props}
   >
-    <div
-      className='absolute inset-0 opacity-80'
-      style={{
-        backgroundImage: 'radial-gradient(circle, var(--primary-blue) 1px, transparent 1px)',
-        backgroundSize: '20px 20px',
-      }}
-    />
+    <DotGrid interactive />
   </DialogPrimitive.Overlay>
 ))
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName

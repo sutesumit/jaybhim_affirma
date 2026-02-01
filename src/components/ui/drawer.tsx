@@ -4,6 +4,7 @@ import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@/lib/utils"
+import { DotGrid } from "@/components/ui/dot-grid"
 
 const Drawer = ({
   shouldScaleBackground = true,
@@ -31,13 +32,7 @@ const DrawerOverlay = React.forwardRef<
     className={cn("fixed inset-0 z-50 backdrop-blur-sm bg-black/5", className)}
     {...props}
   >
-    <div
-      className='absolute inset-0 opacity-80'
-      style={{
-        backgroundImage: 'radial-gradient(circle, var(--primary-blue) 1px, transparent 1px)',
-        backgroundSize: '20px 20px',
-      }}
-    />
+    <DotGrid interactive />
   </DrawerPrimitive.Overlay>
 ))
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
