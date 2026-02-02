@@ -6,6 +6,7 @@
   /* Brand Colors */
   --primary-blue: #131857;
   --primary-white: #ffffff;
+  --destructive-red: #a50c0c;
   
   /* Fonts */
   --title-font: var(--font-lora);
@@ -93,8 +94,13 @@
 
   /* --- Navigation & Tabs --- */
   .button-shadow { @apply shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6),_inset_0_-1px_1px_rgba(19,24,87,0.4),_0_1px_2px_0_rgba(19,24,87,0.15)]; }
+
   .button-style {
     @apply w-full glass-hover button-shadow rounded-sm p-1 font-rajdhani uppercase cursor-pointer hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] transition duration-500 ease-in-out;
+  }
+
+  .destructive-button-style {
+    @apply w-full glass-hover button-shadow rounded-sm p-1 font-rajdhani uppercase cursor-pointer hover:bg-[var(--destructive-red)] hover:text-[var(--primary-white)] transition duration-500 ease-in-out;
   }
 
   .router-tab {

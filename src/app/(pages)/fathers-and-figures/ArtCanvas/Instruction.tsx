@@ -19,7 +19,7 @@ const Instruction = ({dragConstraints}: InstructionProps) => {
     >
       <Gradient1 hoverOn={true} className='relative'>
         <p className='p-2 z-10'>
-          📝🖼️ Craft a story by arranging these frames and watch as your thoughts weave into a father-son tale! 👨‍👦‍📑
+          📝🖼️ Craft a story by dragging these frames. The story may remain mine, or quietly become yours! 👨‍👦‍📑
         </p>
       </Gradient1>
     </motion.div>

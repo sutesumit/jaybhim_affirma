@@ -17,8 +17,8 @@ const ToggleCanvasButton = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLD
                     <Loader className="mr-2 h-4 w-4 animate-spin" />
                 </span> : 
                 url ? 
-                <span className='flex w-full justify-center items-center'>Clear My Backdrop</span> : 
-                <span className='flex w-full justify-center items-center'>Pull My Collage</span> 
+                <span className='flex w-full justify-center items-center'>Remove Collage</span> : 
+                <span className='flex w-full justify-center items-center'>Add Collage</span> 
                 }
             </span>
         </button>

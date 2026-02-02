@@ -150,7 +150,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                 {children}
                 <div
                     onClick={handleLogout}
-                    className='w-full text-center text-xs cursor-pointer button-style py-2'
+                    className='w-full text-center text-xs cursor-pointer destructive-button-style py-2'
                 >
                     Logout
                 </div>

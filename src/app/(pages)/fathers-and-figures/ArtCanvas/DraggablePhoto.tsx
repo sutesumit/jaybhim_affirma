@@ -21,8 +21,7 @@ const DraggablePhoto = ({src, alt, animate, dragConstraints }: DraggablePhotoPro
             alt={alt}
             width={200}
             height={200}
-            className="rounded-sm shadow-[1px_1px_1px_0px_var(--primary-blue)] pointer-events-none"
-            
+            className="rounded-sm shadow-[1px_1px_1px_0px_var(--primary-blue)] pointer-events-none"   
         />
     </motion.div>
 )
