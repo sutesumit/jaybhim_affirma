@@ -8,15 +8,15 @@ const WriteMyCard = ({ myStory, setMyStory, myName, setMyName }: { myStory: stri
             placeholder={'Tell the tale you created...'}
             name='story'
             value={myStory}
-            className='flex-1 placeholder:font-rajdhani placeholder:text-lg text-justify bg-white/50 p-5 w-full focus:outline-none'
+            className='flex-1 text-2xl font-handwriting placeholder:font-rajdhani bg-transparent placeholder:text-lg text-justify p-5 w-full focus:outline-none'
             onChange={(e) => setMyStory(e.target.value)}
         ></textarea>
         <input
             type='text'
-            placeholder={'Sign your name (optional)'}
+            placeholder={'Sign your name... (optional)'}
             name='name'
             value={myName}
-            className='text-end uppercase placeholder:font-rajdhani placeholder:text-lg placeholder:capitalize bg-white/50 p-5 w-full focus:outline-none'
+            className='text-end uppercase text-xl font-handwriting placeholder:font-rajdhani bg-transparent placeholder:text-lg placeholder:capitalize p-5 w-full focus:outline-none'
             onChange={(e) => {
                 setMyName(e.target.value)
             }}

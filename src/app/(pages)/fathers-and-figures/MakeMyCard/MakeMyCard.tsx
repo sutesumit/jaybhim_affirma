@@ -17,7 +17,7 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
     <div className='w-full relative flex flex-col justify-center overflow-visible'>  
         <InstructionReel />
         <MyCardProvider>
-            <div className='relative h-full my-10 w-full text-container flex gap-5 flex-col items-center justify-center overflow-visible'>
+            <div className='relative h-full my-2 w-full text-container flex gap-2 flex-col items-center justify-center overflow-visible'>
                 <StoryCanvasCard />
                 <div className='flex sm:flex-row flex-col w-full text-xs gap-2'>
                     <ToggleCanvasButton artCanvasRef={artCanvasRef}/>
