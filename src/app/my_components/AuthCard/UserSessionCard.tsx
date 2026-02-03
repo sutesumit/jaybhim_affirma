@@ -85,7 +85,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
 
     return (
         <Card className={`w-full min-w-[22rem] card-bg card-shadow ${className}`}>
-            <CardHeader>
+            <CardHeader className='pb-2'>
                 <CardDescription className='text-center min-h-[4.5rem] flex flex-col items-center justify-center'>
                     {description ? description : (
                         <>
@@ -146,11 +146,11 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                     )}
                 </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-2">
                 {children}
                 <div
                     onClick={handleLogout}
-                    className='w-full text-center text-xs cursor-pointer destructive-button-style py-2'
+                    className='w-full text-center text-xs cursor-pointer destructive-button-style py-1'
                 >
                     Logout
                 </div>

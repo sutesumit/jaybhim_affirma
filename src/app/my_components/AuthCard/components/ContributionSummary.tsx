@@ -22,7 +22,7 @@ const ContributionSummary: React.FC<ContributionSummaryProps> = ({
 
   return (
     <div 
-      className={`flex flex-col gap-1 items-center text-sm overflow-hidden ${className}`}
+      className={`flex flex-col gap-1 w-full items-center text-sm overflow-hidden ${className}`}
     >
       
         {showLoading && (

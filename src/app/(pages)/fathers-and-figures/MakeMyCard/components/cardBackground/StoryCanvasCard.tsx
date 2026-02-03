@@ -22,7 +22,7 @@ const StoryCanvasCard = forwardRef((props, ref) => {
     >
         <Gradient1 hoverOn={true} className='relative w-full h-full'>
             <div
-                className='relative card-shadow z-10 h-[360px] w-full flex flex-col font-handwriting text-xl overflow-hidden submission-card rounded-sm overflow-y-auto scrollbar-thin transition-all duration-300'
+                className='relative card-shadow z-10 h-[360px] sm:min-w-[84ch] flex flex-col font-handwriting text-xl overflow-hidden submission-card rounded-sm overflow-y-auto scrollbar-thin transition-all duration-300'
             >
                 <CardCanvas url={url} rotation={rotation}/>
                 <WriteMyCard myStory={myStory} myName={myName} setMyStory={setMyStory} setMyName={setMyName}/>
