@@ -84,7 +84,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
     }
 
     return (
-        <Card className={`w-full mt-10 isolate min-w-[22rem] max-h-[80vh] overflow-y-auto card-bg card-shadow ${className}`}>
+        <Card className={`w-full sm:mt-0 mt-10 isolate min-w-[22rem] max-h-[80vh] overflow-y-auto card-bg card-shadow ${className}`}>
             <CardHeader className='pb-0.5'>
                 <CardDescription className='text-center flex flex-col items-center justify-center'>
                     {description ? description : (
