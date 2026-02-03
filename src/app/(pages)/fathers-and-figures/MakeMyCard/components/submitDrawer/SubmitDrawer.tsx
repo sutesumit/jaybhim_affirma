@@ -30,11 +30,7 @@ const SubmitDrawer = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElem
                 </button>
             }
         >
-            <UserSessionCard 
-                description={
-                    <>All good! <strong>{user?.email || user?.phone}</strong> is now verified. Thanks for joining!</>
-                }
-            >
+            <UserSessionCard>
                 <div>
                     <div className='flex items-center justify-center'>
                         <StoryCanvasCard ref={storyCardRef}/>
@@ -48,7 +44,7 @@ const SubmitDrawer = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElem
                             disabled={loading}
                             onClick={downloadImage}
                         >
-                            {loading ? <><Loader className='animate-spin' /> Downloading... </>: <><DownloadIcon className="h-4 w-4" />Download</>}
+                            {loading ? <><Loader className='animate-spin h-4 w-4' /> Downloading... </>: <><DownloadIcon className="h-4 w-4" />Download</>}
                         </button>
                         <button
                             className='flex-1 flex items-center justify-center gap-2 button-style'
