@@ -84,14 +84,14 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
     }
 
     return (
-        <Card className={`w-full min-w-[22rem] max-h-[80vh] overflow-y-auto card-bg card-shadow ${className}`}>
-            <CardHeader className='pb-2'>
-                <CardDescription className='text-center min-h-[4.5rem] flex flex-col items-center justify-center'>
+        <Card className={`w-full mt-10 isolate min-w-[22rem] max-h-[80vh] overflow-y-auto card-bg card-shadow ${className}`}>
+            <CardHeader className='pb-0.5'>
+                <CardDescription className='text-center flex flex-col items-center justify-center'>
                     {description ? description : (
                         <>
-                            Jai Bhim, <br />
+                            Jai Bhim,
                             <div
-                                className="relative inline-flex items-center justify-center group min-h-[30px] my-1 cursor-text"
+                                className="relative inline-flex items-center justify-center group min-h-[30px] cursor-text"
                                 onClick={() => !isEditing && setIsEditing(true)}
                             >
                                 {/* Ghost Span: Drives width, always rendered */}
@@ -105,7 +105,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                                         type="text"
                                         value={newName}
                                         onChange={(e) => setNewName(e.target.value)}
-                                        className="absolute inset-0 w-full h-full bg-transparent border-none font-semibold text-center text-sm px-2 py-1 focus:outline-none focus:ring-0"
+                                        className="absolute inset-0 w-full h-full bg-transparent border-none font-semibold text-center text-sm px-2 py-1 rounded-sm focus:card-inner-shadow focus:outline-none focus:ring-0"
                                         autoFocus
                                         onKeyDown={(e) => {
                                             if (e.key === 'Enter') handleUpdateName();
@@ -141,13 +141,13 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
                                     )}
                                 </div>
                             </div>
-                            <ContributionSummary />
                         </>
                     )}
                 </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="space-y-2 max">
                 {children}
+                <ContributionSummary />
                 <div
                     onClick={handleLogout}
                     className='w-full text-center text-xs cursor-pointer destructive-button-style py-1'

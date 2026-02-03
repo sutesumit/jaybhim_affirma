@@ -67,7 +67,7 @@ const ContributionSummary: React.FC<ContributionSummaryProps> = ({
 
             {/* ───────── Community Highlight ───────── */}
             {data.topUser && (
-              <div className="text-center text-muted-foreground glass-hover p-2 rounded-sm w-full">
+              <div className="text-center text-muted-foreground glass-hover p-1 rounded-sm w-full">
                 {isAuthenticated && data.topUser.is_me ? (
                   <span className="p-2">
                     Thank you for being at the 💙 <br /> of the support. <span className="font-semibold text-foreground">{data.topUser.total}</span> interactions, the most so far!
