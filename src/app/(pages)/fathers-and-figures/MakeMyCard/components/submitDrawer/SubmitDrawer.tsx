@@ -1,7 +1,6 @@
 // 'use client'
 import React from 'react'
 import { toast } from '@/hooks/use-toast'
-import { Button } from "@/components/ui/button"
 import StoryCanvasCard from '../cardBackground/StoryCanvasCard'
 import { DownloadIcon, SendIcon, Loader } from "lucide-react"
 import { useAuthContext } from '@/auth/useAuthContext'
@@ -9,14 +8,68 @@ import { UserSessionCard } from '@/app/my_components/AuthCard'
 import { ProtectedActionDrawer } from '@/components/auth/ProtectedActionDrawer'
 import ToggleCanvasButton from '../cardBackground/ToggleCanvasButton'
 import { useDownloadImage } from '@/_hooks/useDownloadImage'
-import { useRef } from "react"
+import { useRef, useState } from "react"
+import { useMyCardContext } from '../../context/MyCardContext'
+import type { PostStoryResponse } from '@/types/stories'
 
 
 const SubmitDrawer = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElement | null>}) => {
 
     const { user } = useAuthContext();
+    const { url, myStory, myName } = useMyCardContext();
     const storyCardRef = useRef<HTMLDivElement>(null)
-    const { downloadImage, loading } = useDownloadImage({ downloadRef: storyCardRef })
+    const { downloadImage, loading: downloadLoading } = useDownloadImage({ downloadRef: storyCardRef })
+    const [submitting, setSubmitting] = useState(false)
+
+    const handleSubmit = async () => {
+        if (!myStory.trim()) {
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "Description is required",
+            });
+            return;
+        }
+
+        setSubmitting(true);
+        try {
+            const response = await fetch('/api/stories', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    storyText: myStory,
+                    signature: myName,
+                    backgroundUrl: url,
+                }),
+            });
+
+            const data: PostStoryResponse = await response.json();
+
+            if (data.success) {
+                toast({
+                    title: "Success!",
+                    description: "Your story has been submitted successfully.",
+                });
+            } else {
+                toast({
+                    variant: "destructive",
+                    title: "Submission failed",
+                    description: data.error || "An unexpected error occurred.",
+                });
+            }
+        } catch (error) {
+            console.error("Submission error:", error);
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "Failed to connect to the server.",
+            });
+        } finally {
+            setSubmitting(false);
+        }
+    }
 
     
   return (
@@ -41,22 +94,21 @@ const SubmitDrawer = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElem
                         <ToggleCanvasButton artCanvasRef={artCanvasRef} />
                         <button 
                             className='flex-1 flex items-center justify-center gap-2 button-style' 
-                            disabled={loading}
+                            disabled={downloadLoading}
                             onClick={downloadImage}
                         >
-                            {loading ? <><Loader className='animate-spin h-4 w-4' /> Downloading... </>: <><DownloadIcon className="h-4 w-4" />Download</>}
+                            {downloadLoading ? <><Loader className='animate-spin h-4 w-4' /> Downloading... </>: <><DownloadIcon className="h-4 w-4" />Download</>}
                         </button>
                         <button
                             className='flex-1 flex items-center justify-center gap-2 button-style'
-                            onClick={() => {
-                                toast({
-                                    variant: "destructive",
-                                    title: "Work in Progress",
-                                    description: "This feature is coming soon!",
-                                })
-                            }}
+                            disabled={submitting}
+                            onClick={handleSubmit}
                         >
-                            <SendIcon className="h-4 w-4"/>Submit
+                            {submitting ? (
+                                <><Loader className='animate-spin h-4 w-4' /> Submitting...</>
+                            ) : (
+                                <><SendIcon className="h-4 w-4"/>Submit</>
+                            )}
                         </button>
                     </div>
                 </div>
