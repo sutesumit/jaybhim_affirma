@@ -19,10 +19,9 @@ export default function Home() {
       <ArtCanvas ref={artCanvasRef} />
       <MakeMyCard artCanvasRef={artCanvasRef} />
       <Submissions />
-
-        <div className="relative">
-            <Seperator />
-        </div>
+      <div className="relative w-full">
+        <Seperator />
+      </div>
 
       {/* Section 4: Maraa BIC Exhibition Photos */}
       <div className='relative isolate p-5 flex flex-col items-center justify-center'>
