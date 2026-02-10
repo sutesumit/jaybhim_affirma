@@ -36,3 +36,19 @@ export interface GetStoriesResponse {
   stories?: FatherSonStory[];
   error?: string;
 }
+
+export interface UpdateStoryRequest {
+  storyText: string;
+  signature?: string;
+}
+
+export interface UpdateStoryResponse {
+  success: boolean;
+  story?: FatherSonStory;
+  error?: string;
+}
+
+export interface DeleteStoryResponse {
+  success: boolean;
+  error?: string;
+}

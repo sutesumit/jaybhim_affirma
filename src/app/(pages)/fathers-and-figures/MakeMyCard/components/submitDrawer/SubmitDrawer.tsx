@@ -31,9 +31,18 @@ const SubmitDrawer = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElem
             return;
         }
 
+        if (myStory.length > 5000) {
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "Story exceeds maximum length of 5000 characters",
+            });
+            return;
+        }
+
         setSubmitting(true);
         try {
-            const response = await fetch('/api/stories', {
+            const response = await fetch('/api/father-son-stories', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

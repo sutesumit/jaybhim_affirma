@@ -10,7 +10,7 @@ import type {
 const MAX_STORY_LENGTH = 5000; // Increased limit for stories
 
 /**
- * POST /api/stories - Create a new father-son story
+ * POST /api/father-son-stories - Create a new father-son story
  */
 export async function POST(request: Request): Promise<NextResponse<PostStoryResponse>> {
   try {
@@ -25,7 +25,7 @@ export async function POST(request: Request): Promise<NextResponse<PostStoryResp
     }
 
     if (!user.accessToken) {
-        console.warn("[POST /api/stories] Missing access token for user", user.id);
+        console.warn("[POST /api/father-son-stories] Missing access token for user", user.id);
         return NextResponse.json(
             { 
               success: false, 
@@ -78,7 +78,7 @@ export async function POST(request: Request): Promise<NextResponse<PostStoryResp
       .single();
 
     if (insertError) {
-      console.error("[POST /api/stories] Insert error:", insertError);
+      console.error("[POST /api/father-son-stories] Insert error:", insertError);
       return NextResponse.json(
         { success: false, error: "Failed to create story" },
         { status: 500 }
@@ -97,7 +97,7 @@ export async function POST(request: Request): Promise<NextResponse<PostStoryResp
       },
     });
   } catch (error: unknown) {
-    console.error("[POST /api/stories] Error:", error);
+    console.error("[POST /api/father-son-stories] Error:", error);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }
@@ -106,7 +106,7 @@ export async function POST(request: Request): Promise<NextResponse<PostStoryResp
 }
 
 /**
- * GET /api/stories - Fetch stories (optionally filter by user)
+ * GET /api/father-son-stories - Fetch stories (optionally filter by user)
  */
 export async function GET(request: Request): Promise<NextResponse<GetStoriesResponse>> {
   try {
@@ -128,7 +128,7 @@ export async function GET(request: Request): Promise<NextResponse<GetStoriesResp
     const { data: stories, error } = await query;
 
     if (error) {
-      console.error("[GET /api/stories] Fetch error:", error);
+      console.error("[GET /api/father-son-stories] Fetch error:", error);
       return NextResponse.json(
         { success: false, error: "Failed to fetch stories" },
         { status: 500 }
@@ -140,7 +140,7 @@ export async function GET(request: Request): Promise<NextResponse<GetStoriesResp
       stories: stories || [],
     });
   } catch (error: unknown) {
-    console.error("[GET /api/stories] Error:", error);
+    console.error("[GET /api/father-son-stories] Error:", error);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }
