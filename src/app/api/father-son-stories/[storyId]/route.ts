@@ -88,7 +88,8 @@ export async function PATCH(request: Request, context: RouteContext) {
       );
     }
 
-    return NextResponse.json({ success: true, story });
+    const { user_id, ...safeStory } = story;
+    return NextResponse.json({ success: true, story: { ...safeStory, is_own: true } });
   } catch (error) {
     console.error("[PATCH /api/father-son-stories] Error:", error);
     return NextResponse.json(

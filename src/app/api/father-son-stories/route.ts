@@ -88,7 +88,14 @@ export async function POST(request: Request): Promise<NextResponse<PostStoryResp
     return NextResponse.json({
       success: true,
       story: {
-        ...story,
+        id: story.id,
+        is_own: true,
+        story_text: story.story_text,
+        signature: story.signature,
+        background_url: story.background_url,
+        created_at: story.created_at,
+        updated_at: story.updated_at,
+        deleted_at: story.deleted_at,
         user: { 
           phone: user.phone, 
           email: user.email,
@@ -135,9 +142,28 @@ export async function GET(request: Request): Promise<NextResponse<GetStoriesResp
       );
     }
 
+    // Check for authenticated user (non-blocking)
+    const user = await AuthManager.getAuthenticatedUser();
+
+    // Transform and sort stories
+    const mappedStories = (stories || []).map((story: any) => {
+      const { user_id, ...rest } = story;
+      return {
+        ...rest,
+        is_own: user?.id === user_id,
+      };
+    });
+
+    // Sort by is_own first, then by created_at (which is already done by the DB query)
+    // Stability of sort is important.
+    mappedStories.sort((a, b) => {
+      if (a.is_own === b.is_own) return 0;
+      return a.is_own ? -1 : 1;
+    });
+
     return NextResponse.json({
       success: true,
-      stories: stories || [],
+      stories: mappedStories,
     });
   } catch (error: unknown) {
     console.error("[GET /api/father-son-stories] Error:", error);

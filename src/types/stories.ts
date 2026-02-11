@@ -4,7 +4,7 @@
 
 export interface FatherSonStory {
   id: string;
-  user_id: string;
+  is_own: boolean;
   story_text: string;
   signature?: string | null;
   background_url?: string | null;

@@ -13,7 +13,6 @@ import type { FatherSonStory } from "@/types/stories";
 
 interface SubmissionCardProps {
   story: FatherSonStory;
-  currentUser: { id: string } | null | undefined;
   onDelete: (id: string) => void;
   onEdit: (
     id: string,
@@ -24,7 +23,6 @@ interface SubmissionCardProps {
 
 export const SubmissionCard = ({
   story,
-  currentUser,
   onDelete,
   onEdit,
 }: SubmissionCardProps) => {
@@ -38,7 +36,7 @@ export const SubmissionCard = ({
   const { rotation, setRotation, randomRotation } = useRandomRotation();
 
   // Check if current user owns this story
-  const isOwner = currentUser?.id === story.user_id;
+  const isOwner = story.is_own;
 
   /**
    * Save edits to the story
@@ -73,7 +71,7 @@ export const SubmissionCard = ({
 
   return (
     <div
-      className="rounded-sm glass-hover transition-all duration-300 w-full  h-full"
+      className="rounded-sm glass-hover p-2 transition-all duration-300 w-full h-full"
       style={{
         transform: `rotate(${rotation}deg)`,
         transition: "transform 1s ease-in-out",
@@ -82,7 +80,7 @@ export const SubmissionCard = ({
       onMouseLeave={() => randomRotation()}
     >
       <Gradient1 hoverOn={true} className="relative w-full h-full">
-        <div className="group relative card-shadow pb-2 z-10 h-[360px] sm:min-w-[84ch] flex flex-col font-handwriting text-xl overflow-hidden submission-card rounded-sm overflow-y-auto scrollbar-thin transition-all duration-300">
+        <div className="group relative card-shadow pb-2 z-10 h-[360px] w-full flex flex-col font-handwriting text-xl submission-card rounded-sm overflow-y-auto scrollbar-thin transition-all duration-300">
           {/* Story Content Area */}
           <div className="flex-1 p-5 pt-10 relative">
             {isEditing ? (
@@ -166,7 +164,7 @@ export const SubmissionCard = ({
             ) : (
               story.signature && (
                 <p
-                  className="text-xl p-1 font-handwriting text-end whitespace-pre-wrap" 
+                  className="text-xl p-1 uppercase font-handwriting text-end whitespace-pre-wrap" 
                   // className="text-end uppercase mb-2 text-xl font-handwriting"
                 >
                   — {story.signature}

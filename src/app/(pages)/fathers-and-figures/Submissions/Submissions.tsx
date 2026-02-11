@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
 import { RotateCw, AlertCircle } from "lucide-react";
-import { useAuthContext } from "@/auth/useAuthContext";
 import { useStories } from "./hooks/useStories";
 import { SubmissionCard } from "./components/SubmissionCard";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import ProjectedActionDrawer from "@/components/auth/ProtectedActionDrawer";
+import Carousel from "@/components/ui/carousel";
 import { toast } from "@/hooks/use-toast";
 
 
 const Submissions = () => {
-  const { user } = useAuthContext();
+
 
   const handleCreateStory = () => {
     toast({
@@ -66,22 +66,29 @@ const Submissions = () => {
 
       {/* Loading State */}
       {isFetching && stories.length === 0 && (
-        <div className="flex justify-center py-10">
-          <div className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin" />
+        <div className="flex flex-1 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full justify-center items-center py-10">
+          <div className="loader2"></div>
         </div>
       )}
 
       {/* Stories List */}
-      <div className="flex flex-col gap-4 w-full">
-        {stories.map((story) => (
-          <SubmissionCard
-            key={story.id}
-            story={story}
-            currentUser={user}
-            onDelete={requestDeleteStory}
-            onEdit={handleEditStory}
-          />
-        ))}
+      <div className="w-full h-[400px]">
+        {stories.length > 0 ? (
+          <Carousel 
+            containerClassName="w-full h-full"
+            slideClassName="w-full h-full"
+          >
+            {stories.map((story) => (
+              <div key={story.id} className="w-full h-full flex justify-center items-center">
+                <SubmissionCard
+                  story={story}
+                  onDelete={requestDeleteStory}
+                  onEdit={handleEditStory}
+                />
+              </div>
+            ))}
+          </Carousel>
+        ) : null}
       </div>
 
       {/* Empty State */}
