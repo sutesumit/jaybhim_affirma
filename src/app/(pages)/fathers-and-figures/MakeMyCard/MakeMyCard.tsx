@@ -3,7 +3,6 @@ import React from 'react'
 import Seperator from '@/app/my_components/shared/Seperator'
 import InstructionReel from './components/InstructionReel'
 import SubmitStoryButton from './components/inputStory/SubmitStoryButton'
-import { MyCardProvider } from './context/MyCardContext'
 import StoryCanvasCard from './components/cardBackground/StoryCanvasCard'
 import ToggleCanvasButton from './components/cardBackground/ToggleCanvasButton'
 
@@ -16,16 +15,14 @@ const MakeMyCard = ({ artCanvasRef }: MakeMyCardProps) => {
     return (
     <div className='w-full relative flex flex-col justify-center overflow-visible'>  
         <InstructionReel />
-        <MyCardProvider>
-            <div className='relative h-full my-2 w-full text-container flex gap-2 flex-col items-center justify-center overflow-visible'>
-                <StoryCanvasCard />
-                <div className='flex sm:flex-row flex-col w-full text-xs gap-2'>
-                    <ToggleCanvasButton artCanvasRef={artCanvasRef}/>
-                    <SubmitStoryButton artCanvasRef={artCanvasRef} />
-                </div>
-                {/* <AuthCard /> */}
+        <div className='relative h-full my-2 w-full text-container flex gap-2 flex-col items-center justify-center overflow-visible'>
+            <StoryCanvasCard />
+            <div className='flex sm:flex-row flex-col w-full text-xs gap-2'>
+                <ToggleCanvasButton artCanvasRef={artCanvasRef}/>
+                <SubmitStoryButton artCanvasRef={artCanvasRef} />
             </div>
-        </MyCardProvider>
+            {/* <AuthCard /> */}
+        </div>
         <div className='relative'>
             <Seperator />
         </div>

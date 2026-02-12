@@ -3,7 +3,7 @@
 // Pattern: Same as CommentItem in src/app/my_components/CommentsSection/CommentItem.tsx
 
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Pencil, Trash2, X, Check, Dot } from "lucide-react";
 import Gradient1 from "@/app/my_components/gradients/Gradient1";
@@ -19,18 +19,29 @@ interface SubmissionCardProps {
     storyText: string,
     signature?: string
   ) => Promise<{ success: boolean; error?: string }>;
+  isEditing?: boolean;
+  onToggleEdit?: (isEditing: boolean) => void;
 }
 
 export const SubmissionCard = ({
   story,
   onDelete,
   onEdit,
+  isEditing = false,
+  onToggleEdit,
 }: SubmissionCardProps) => {
   // Edit state
-  const [isEditing, setIsEditing] = useState(false);
   const [editStoryText, setEditStoryText] = useState(story.story_text);
   const [editSignature, setEditSignature] = useState(story.signature || "");
   const [isSaving, setIsSaving] = useState(false);
+
+  // Sync internal edit state when external editing control changes (e.g. from main button)
+  useEffect(() => {
+    if (isEditing) {
+      setEditStoryText(story.story_text);
+      setEditSignature(story.signature || "");
+    }
+  }, [isEditing, story.story_text, story.signature]);
 
   // Rotation animation (same as StoryCanvasCard)
   const { rotation, setRotation, randomRotation } = useRandomRotation();
@@ -47,7 +58,7 @@ export const SubmissionCard = ({
       editStoryText.trim() === story.story_text &&
       editSignature === (story.signature || "")
     ) {
-      setIsEditing(false);
+      onToggleEdit?.(false);
       return;
     }
 
@@ -56,7 +67,7 @@ export const SubmissionCard = ({
     setIsSaving(false);
 
     if (result.success) {
-      setIsEditing(false);
+      onToggleEdit?.(false);
     }
   };
 
@@ -66,7 +77,7 @@ export const SubmissionCard = ({
   const handleCancel = () => {
     setEditStoryText(story.story_text);
     setEditSignature(story.signature || "");
-    setIsEditing(false);
+    onToggleEdit?.(false);
   };
 
   return (
@@ -237,9 +248,7 @@ export const SubmissionCard = ({
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.8 }}
                       onClick={() => {
-                        setEditStoryText(story.story_text);
-                        setEditSignature(story.signature || "");
-                        setIsEditing(true);
+                        onToggleEdit?.(true);
                       }}
                       className="comment-tiny-button"
                       title="Edit Story"

@@ -87,8 +87,8 @@ const SubmitDrawer = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElem
             description='An small verify to keep stories human' 
             drawerClassName='backdrop-blur-sm min-h-[70vh] w-full p-2 items-center justify-center'
             trigger={
-                <button className='w-full button-style h-full m-auto'>
-                    Submit my card
+                <button className='w-full button-style h-full m-auto text-sm'>
+                    Submit a story
                 </button>
             }
         >

@@ -9,6 +9,7 @@ import Seperator from '@/app/my_components/shared/Seperator';
 import { Submissions } from './Submissions';
 import Gradient1 from '@/app/my_components/gradients/Gradient1';
 import { CommentsSection } from '@/app/my_components/CommentsSection/CommentsSection';
+import { MyCardProvider } from './MakeMyCard/context/MyCardContext';
 
 export default function Home() {
   const artCanvasRef = useRef<HTMLDivElement | null>(null);
@@ -17,8 +18,10 @@ export default function Home() {
     <>
       <HeroSection />
       <ArtCanvas ref={artCanvasRef} />
-      <MakeMyCard artCanvasRef={artCanvasRef} />
-      <Submissions />
+      <MyCardProvider>
+        {/* <MakeMyCard artCanvasRef={artCanvasRef} /> */}
+        <Submissions artCanvasRef={artCanvasRef} />
+      </MyCardProvider>
       <div className="relative w-full">
         <Seperator />
       </div>

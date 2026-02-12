@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { RotateCw, AlertCircle } from "lucide-react";
 import { useStories } from "./hooks/useStories";
 import { SubmissionCard } from "./components/SubmissionCard";
@@ -7,9 +7,16 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import ProjectedActionDrawer from "@/components/auth/ProtectedActionDrawer";
 import Carousel from "@/components/ui/carousel";
 import { toast } from "@/hooks/use-toast";
+import SubmitStoryButton from "../MakeMyCard/components/inputStory/SubmitStoryButton";
+import InstructionReel from "../MakeMyCard/components/InstructionReel";
 
 
-const Submissions = () => {
+
+interface SubmissionsProps {
+    artCanvasRef: React.RefObject<HTMLDivElement | null>
+}
+
+const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
 
 
   const handleCreateStory = () => {
@@ -34,23 +41,46 @@ const Submissions = () => {
     isDeleting,
   } = useStories();
 
+  // Find user's own story from the list
+  const userStory = useMemo(() => stories.find(s => s.is_own), [stories]);
+  
+  // Track which story is being edited (if any)
+  const [editingStoryId, setEditingStoryId] = useState<string | null>(null);
+
+  const handleToggleEdit = (id: string, isEditing: boolean) => {
+    if (isEditing) {
+      setEditingStoryId(id);
+    } else if (editingStoryId === id) {
+      setEditingStoryId(null);
+    }
+  };
+
   return (
+    <div className="relative w-full">
+    <InstructionReel />
     <div className="py-1 relative w-full text-container">
+      
+      {/* <SubmitStoryButton artCanvasRef={artCanvasRef} /> */}
       {/* Header with Refresh Button */}
-      <div className="flex gap-1 items-center justify-between py-2">
-        <ProjectedActionDrawer>
+      <div className="flex h-full gap-1 items-center justify-between py-2">
+        <SubmitStoryButton 
+          artCanvasRef={artCanvasRef} 
+          userStory={userStory}
+          onEditStart={(id) => setEditingStoryId(id)}
+        />
+        {/* <ProjectedActionDrawer>
         <button 
           onClick={handleCreateStory}
           className="flex-1 button-style text-center text-xs font-medium tracking-[0.2em] uppercase px-2 py-1 pointer-events-autos"
         >
           {stories.length} {stories.length === 1 ? "story" : "stories"} shared
         </button>
-        </ProjectedActionDrawer>
+        </ProjectedActionDrawer> */}
         <button
           onClick={fetchStories}
           disabled={isFetching}
           title="Refresh Stories"
-          className="w-fit px-2 py-1.5 button-style text-xs font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-50 flex items-center gap-2"
+          className="w-fit px-2 py-2 h-full button-style text-xs font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-50 flex items-center gap-2"
         >
           <RotateCw className={`w-3 h-3 ${isFetching ? "animate-spin" : ""}`} />
         </button>
@@ -84,6 +114,8 @@ const Submissions = () => {
                   story={story}
                   onDelete={requestDeleteStory}
                   onEdit={handleEditStory}
+                  isEditing={editingStoryId === story.id}
+                  onToggleEdit={(isEditing) => handleToggleEdit(story.id, isEditing)}
                 />
               </div>
             ))}
@@ -111,6 +143,7 @@ const Submissions = () => {
         onCancel={cancelDeleteStory}
         isLoading={isDeleting}
       />
+    </div>
     </div>
   );
 };
