@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { CommentService } from "@/lib/comments/comment-service";
-import { subscribeToProfileUpdates } from "@/auth/AuthContext";
+import { useAuthContext } from "@/auth/useAuthContext";
 import { toast } from "@/hooks/use-toast";
 import type { Comment } from "@/types/comments";
 
@@ -37,12 +37,11 @@ export function useComments(pagePath: string) {
     fetchComments();
   }, [fetchComments]);
 
+  const { user } = useAuthContext();
+
   useEffect(() => {
-    const unsubscribe = subscribeToProfileUpdates(() => {
-       fetchComments();
-    });
-    return unsubscribe;
-  }, [fetchComments]);
+    fetchComments();
+  }, [fetchComments, user?.display_name]);
 
   const handlePostComment = async (commentText: string, isAnonymous: boolean = false) => {
     const trimmed = commentText.trim();

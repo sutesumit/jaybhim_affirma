@@ -4,20 +4,7 @@ import { AuthContextType } from './types';
 import { AuthState, User } from '@/lib/auth/auth-types';
 import { AuthService } from '@/lib/auth/auth-service';
 
-// Profile update subscribers
-type ProfileUpdateCallback = () => void;
-let profileUpdateSubscribers: ProfileUpdateCallback[] = [];
 
-export const subscribeToProfileUpdates = (callback: ProfileUpdateCallback) => {
-    profileUpdateSubscribers.push(callback);
-    return () => {
-        profileUpdateSubscribers = profileUpdateSubscribers.filter(cb => cb !== callback);
-    };
-};
-
-export const notifyProfileUpdate = () => {
-    profileUpdateSubscribers.forEach(cb => cb());
-};
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

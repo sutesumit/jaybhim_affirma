@@ -4,7 +4,7 @@ import MenuBarWrapper from './MenuBar/MenuBarWrapper';
 
 const Header: React.FC = () => {
     return (
-            <MenuBarWrapper />
+        <MenuBarWrapper />
     )
 }
 
