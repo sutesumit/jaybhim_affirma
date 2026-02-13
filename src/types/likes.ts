@@ -11,6 +11,7 @@ export interface Like {
 
 export interface ToggleLikeRequest {
   pagePath: string;
+  intent?: 'like' | 'unlike' | 'toggle';
 }
 
 export interface ToggleLikeResponse {
@@ -18,6 +19,7 @@ export interface ToggleLikeResponse {
   likeCount?: number;
   isLiked?: boolean;
   error?: string;
+  code?: string;
 }
 
 export interface GetLikesResponse {

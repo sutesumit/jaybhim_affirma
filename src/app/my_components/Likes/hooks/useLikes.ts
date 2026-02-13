@@ -50,13 +50,16 @@ export function useLikes(pagePath: string | null) {
     const previousCount = likeCount;
     const previousIsLiked = isLiked;
 
+    // Determine intent
+    const intent = isLiked ? 'unlike' : 'like';
+
     // Optimistically update UI
     const newIsLiked = !isLiked;
     setIsLiked(newIsLiked);
     setLikeCount((prev) => newIsLiked ? prev + 1 : prev - 1);
 
     try {
-      const result = await LikeService.toggleLike(pagePath);
+      const result = await LikeService.toggleLike(pagePath, intent);
       
       if (result.success) {
         // Update with actual values from server
@@ -67,14 +70,23 @@ export function useLikes(pagePath: string | null) {
           setIsLiked(result.isLiked);
         }
 
-        // Show success toast
-        toast({
-          variant: "success",
-          title: result.isLiked ? "Liked" : "Unliked.",
-          description: result.isLiked 
-            ? "This page feels appreciated now." 
-            : "Changed your mind? Happens to the best of us.",
-        });
+        // Handle specific cases
+        if (result.code === 'ALREADY_LIKED') {
+          toast({
+            variant: "default",
+            title: "Already Liked",
+            description: "You’ve already liked this.",
+          });
+        } else {
+          // Show standard success toast
+          toast({
+            variant: "success",
+            title: result.isLiked ? "Liked" : "Unliked.",
+            description: result.isLiked 
+              ? "This page feels appreciated now." 
+              : "Changed your mind? Happens to the best of us.",
+          });
+        }
 
         return { success: true };
       } else {

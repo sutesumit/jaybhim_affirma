@@ -66,41 +66,90 @@ export async function POST(request: Request): Promise<NextResponse<ToggleLikeRes
 
     let isLiked: boolean;
     let likeCount: number;
+    let resultCode: string | undefined;
 
-    if (existingLike) {
-      // User has liked this page - delete the like
-      const { error: deleteError } = await supabase
-        .from("likes")
-        .delete()
-        .eq("id", existingLike.id);
+    const { intent } = body;
 
-      if (deleteError) {
-        console.error("[POST /api/likes] Delete error:", deleteError);
-        return NextResponse.json(
-          { success: false, error: "Failed to remove like" },
-          { status: 500 }
-        );
-      }
-
-      isLiked = false;
-    } else {
-      // User hasn't liked this page - insert new like
-      const { error: insertError } = await supabase
+    if (intent === 'like') {
+      if (existingLike) {
+        // Already liked
+        isLiked = true;
+        resultCode = 'ALREADY_LIKED';
+      } else {
+        // Not liked, insert
+        const { error: insertError } = await supabase
         .from("likes")
         .insert({
           page_path: pagePath,
           user_id: user.id,
         });
 
-      if (insertError) {
-        console.error("[POST /api/likes] Insert error:", insertError);
-        return NextResponse.json(
-          { success: false, error: "Failed to add like" },
-          { status: 500 }
-        );
+        if (insertError) {
+          console.error("[POST /api/likes] Insert error:", insertError);
+          return NextResponse.json(
+            { success: false, error: "Failed to add like" },
+            { status: 500 }
+          );
+        }
+        isLiked = true;
       }
+    } else if (intent === 'unlike') {
+      if (existingLike) {
+        // Liked, delete
+        const { error: deleteError } = await supabase
+        .from("likes")
+        .delete()
+        .eq("id", existingLike.id);
 
-      isLiked = true;
+        if (deleteError) {
+          console.error("[POST /api/likes] Delete error:", deleteError);
+          return NextResponse.json(
+            { success: false, error: "Failed to remove like" },
+            { status: 500 }
+          );
+        }
+        isLiked = false;
+      } else {
+        // Already unliked
+        isLiked = false;
+      }
+    } else {
+      // Default toggle behavior
+      if (existingLike) {
+        // User has liked this page - delete the like
+        const { error: deleteError } = await supabase
+          .from("likes")
+          .delete()
+          .eq("id", existingLike.id);
+  
+        if (deleteError) {
+          console.error("[POST /api/likes] Delete error:", deleteError);
+          return NextResponse.json(
+            { success: false, error: "Failed to remove like" },
+            { status: 500 }
+          );
+        }
+  
+        isLiked = false;
+      } else {
+        // User hasn't liked this page - insert new like
+        const { error: insertError } = await supabase
+          .from("likes")
+          .insert({
+            page_path: pagePath,
+            user_id: user.id,
+          });
+  
+        if (insertError) {
+          console.error("[POST /api/likes] Insert error:", insertError);
+          return NextResponse.json(
+            { success: false, error: "Failed to add like" },
+            { status: 500 }
+          );
+        }
+  
+        isLiked = true;
+      }
     }
 
     // Get updated like count
@@ -122,6 +171,7 @@ export async function POST(request: Request): Promise<NextResponse<ToggleLikeRes
       success: true,
       likeCount: count ?? 0,
       isLiked,
+      code: resultCode,
     });
   } catch (error: unknown) {
     console.error("[POST /api/likes] Error:", error);

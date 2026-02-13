@@ -26,9 +26,9 @@ export class LikeService {
   /**
    * Toggles like status for a page (like if not liked, unlike if liked)
    */
-  static async toggleLike(pagePath: string): Promise<ToggleLikeResponse> {
+  static async toggleLike(pagePath: string, intent: 'like' | 'unlike' | 'toggle' = 'toggle'): Promise<ToggleLikeResponse> {
     try {
-      const body = { pagePath };
+      const body = { pagePath, intent };
       const response = await fetch("/api/likes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
