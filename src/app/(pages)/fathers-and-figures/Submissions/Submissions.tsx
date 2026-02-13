@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useMemo } from "react";
+import { AnimatePresence, motion as m } from "framer-motion";
 import { RotateCw, AlertCircle } from "lucide-react";
 import { useStories } from "./hooks/useStories";
 import { SubmissionCard } from "./components/SubmissionCard";
@@ -101,8 +102,29 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
             containerClassName="w-full h-full"
             slideClassName="w-full h-full"
           >
-            {stories.map((story) => (
-              <div key={story.id} className="w-full h-full flex justify-center items-center">
+            {stories.map((story, index) => (
+              <m.div
+                key={story.id}
+                className="w-full h-full flex justify-center items-center"
+                initial={{
+                  opacity: 0,
+                  scale: 0.8,
+                  rotate: 5,
+                  y: 50
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  rotate: 0,
+                  y: 0
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 20,
+                  delay: index * 0.1 
+                }}
+              >
                 <SubmissionCard
                   story={story}
                   onDelete={requestDeleteStory}
@@ -111,7 +133,7 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
                   isEditing={editingStoryId === story.id}
                   onToggleEdit={(isEditing) => handleToggleEdit(story.id, isEditing)}
                 />
-              </div>
+              </m.div>
             ))}
           </Carousel>
         ) : null}

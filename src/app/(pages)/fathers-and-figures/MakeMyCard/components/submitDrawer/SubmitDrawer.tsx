@@ -11,6 +11,7 @@ import { useDownloadImage } from '@/_hooks/useDownloadImage'
 import { useRef, useState } from "react"
 import { useMyCardContext } from '../../context/MyCardContext'
 import type { PostStoryResponse } from '@/types/stories'
+import { DrawerClose } from '@/components/ui/drawer'
 
 
 const SubmitDrawer = ({
@@ -21,9 +22,9 @@ const SubmitDrawer = ({
     onSuccess?: () => void
 }) => {
 
-    const { user } = useAuthContext();
     const { url, myStory, myName } = useMyCardContext();
     const storyCardRef = useRef<HTMLDivElement>(null)
+    const closeRef = useRef<HTMLButtonElement>(null);
     const { downloadImage, loading: downloadLoading } = useDownloadImage({ downloadRef: storyCardRef })
     const [submitting, setSubmitting] = useState(false)
 
@@ -63,6 +64,9 @@ const SubmitDrawer = ({
             const data: PostStoryResponse = await response.json();
 
             if (data.success) {
+                // Close the drawer automatically first for immediate feedback
+                closeRef.current?.click();
+                
                 toast({
                     title: "Success!",
                     description: "Your story has been submitted successfully.",
@@ -129,6 +133,9 @@ const SubmitDrawer = ({
                     </div>
                 </div>
             </UserSessionCard>
+            <DrawerClose asChild>
+                <button ref={closeRef} className='hidden' />
+            </DrawerClose>
         </ProtectedActionDrawer>
   )
 }

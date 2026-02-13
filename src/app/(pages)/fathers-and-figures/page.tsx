@@ -18,7 +18,7 @@ export default function Home() {
       <HeroSection />
       <ArtCanvas ref={artCanvasRef} />
       <MyCardProvider>
-        <Submissions artCanvasRef={artCanvasRef} />
+      <Submissions artCanvasRef={artCanvasRef} />
       </MyCardProvider>
       <div className="relative w-full">
         <Seperator />
