@@ -67,15 +67,8 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
           artCanvasRef={artCanvasRef} 
           userStory={userStory}
           onEditStart={(id) => setEditingStoryId(id)}
+          onSuccess={fetchStories}
         />
-        {/* <ProjectedActionDrawer>
-        <button 
-          onClick={handleCreateStory}
-          className="flex-1 button-style text-center text-xs font-medium tracking-[0.2em] uppercase px-2 py-1 pointer-events-autos"
-        >
-          {stories.length} {stories.length === 1 ? "story" : "stories"} shared
-        </button>
-        </ProjectedActionDrawer> */}
         <button
           onClick={fetchStories}
           disabled={isFetching}
@@ -114,6 +107,7 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
                   story={story}
                   onDelete={requestDeleteStory}
                   onEdit={handleEditStory}
+                  onRefresh={fetchStories}
                   isEditing={editingStoryId === story.id}
                   onToggleEdit={(isEditing) => handleToggleEdit(story.id, isEditing)}
                 />

@@ -7,11 +7,13 @@ import { Pencil } from 'lucide-react'
 const SubmitStoryButton = ({
   artCanvasRef, 
   userStory, 
-  onEditStart
+  onEditStart,
+  onSuccess
 }: {
   artCanvasRef: React.RefObject<HTMLDivElement | null>,
   userStory?: FatherSonStory,
-  onEditStart?: (id: string) => void
+  onEditStart?: (id: string) => void,
+  onSuccess?: () => void
 }) => {
     
   return (
@@ -25,7 +27,7 @@ const SubmitStoryButton = ({
            Edit your story
          </button>
        ) : (
-         <SubmitDrawer artCanvasRef={artCanvasRef}/>
+         <SubmitDrawer artCanvasRef={artCanvasRef} onSuccess={onSuccess}/>
        )}
     </div>
   )

@@ -13,7 +13,13 @@ import { useMyCardContext } from '../../context/MyCardContext'
 import type { PostStoryResponse } from '@/types/stories'
 
 
-const SubmitDrawer = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElement | null>}) => {
+const SubmitDrawer = ({
+    artCanvasRef,
+    onSuccess
+}: {
+    artCanvasRef: React.RefObject<HTMLDivElement | null>,
+    onSuccess?: () => void
+}) => {
 
     const { user } = useAuthContext();
     const { url, myStory, myName } = useMyCardContext();
@@ -61,6 +67,7 @@ const SubmitDrawer = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElem
                     title: "Success!",
                     description: "Your story has been submitted successfully.",
                 });
+                onSuccess?.();
             } else {
                 toast({
                     variant: "destructive",

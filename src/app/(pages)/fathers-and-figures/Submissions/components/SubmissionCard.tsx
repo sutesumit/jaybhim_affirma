@@ -19,6 +19,7 @@ interface SubmissionCardProps {
     storyText: string,
     signature?: string
   ) => Promise<{ success: boolean; error?: string }>;
+  onRefresh?: () => void;
   isEditing?: boolean;
   onToggleEdit?: (isEditing: boolean) => void;
 }
@@ -27,6 +28,7 @@ export const SubmissionCard = ({
   story,
   onDelete,
   onEdit,
+  onRefresh,
   isEditing = false,
   onToggleEdit,
 }: SubmissionCardProps) => {
@@ -68,6 +70,7 @@ export const SubmissionCard = ({
 
     if (result.success) {
       onToggleEdit?.(false);
+      onRefresh?.();
     }
   };
 
@@ -173,36 +176,34 @@ export const SubmissionCard = ({
                 />
               </div>
             ) : (
-              story.signature && (
-                <p
-                  className="text-xl p-1 uppercase font-handwriting text-end whitespace-pre-wrap" 
-                  // className="text-end uppercase mb-2 text-xl font-handwriting"
-                >
-                  — {story.signature}
-                </p>
-              )
+              <p
+                className="text-xl p-1 uppercase font-handwriting text-end whitespace-pre-wrap" 
+                // className="text-end uppercase mb-2 text-xl font-handwriting"
+              >
+                — {story.signature || "Anonymous"}
+              </p>
             )}
           </div>
 
           {/* Timestamp */}
           <motion.div
             layout
-            className="absolute bottom-2 left-4 text-xs font-rajdhani text-[--primary-blue] flex items-center"
+            className="bottom-2 opacity-50 left-4 text-xs font-rajdhani text-[--primary-blue] flex items-center"
           >
             {story.updated_at !== story.created_at ? (
               <>
                 <Dot className="w-3 h-3" />
-                <span>[edited {StoryService.formatTimestamp(story.updated_at)}]</span>
+                <span className="italic">[Edited {StoryService.formatTimestamp(story.updated_at)}]</span>
               </>
             ) : (
               <>
                 <Dot className="w-3 h-3" />
-                <span className="italic opacity-50">Created {StoryService.formatTimestamp(story.created_at)}</span>
+                <span className="italic">[Created {StoryService.formatTimestamp(story.created_at)}]</span>
               </>
             )}
           </motion.div>
 
-          {/* === ACTION BUTTONS (only visible to owner) === */}
+          {/* === ACTION BUTTONS (only visible to owner or refresh available) === */}
           <div
             className={`absolute top-3 right-5 flex gap-1 ${
               isEditing ? "opacity-100" : "opacity-0 group-hover:opacity-100"
@@ -241,32 +242,34 @@ export const SubmissionCard = ({
                 </div>
               ) : (
                 /* Edit/Delete buttons when not editing (only for owner) */
-                isOwner && (
-                  <div className="flex gap-1">
-                    <motion.button
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      onClick={() => {
-                        onToggleEdit?.(true);
-                      }}
-                      className="comment-tiny-button"
-                      title="Edit Story"
-                    >
-                      <Pencil className="w-3 h-3" />
-                    </motion.button>
-                    <motion.button
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      onClick={() => onDelete(story.id)}
-                      className="comment-tiny-button text-red-500"
-                      title="Delete Story"
-                    >
-                      <Trash2 className="w-3 h-3" />
-                    </motion.button>
-                  </div>
-                )
+                <div className="flex gap-1">
+                  {isOwner && (
+                    <>
+                      <motion.button
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        onClick={() => {
+                          onToggleEdit?.(true);
+                        }}
+                        className="comment-tiny-button"
+                        title="Edit Story"
+                      >
+                        <Pencil className="w-3 h-3" />
+                      </motion.button>
+                      <motion.button
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        onClick={() => onDelete(story.id)}
+                        className="comment-tiny-button text-red-500"
+                        title="Delete Story"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </motion.button>
+                    </>
+                  )}
+                </div>
               )}
             </AnimatePresence>
           </div>
