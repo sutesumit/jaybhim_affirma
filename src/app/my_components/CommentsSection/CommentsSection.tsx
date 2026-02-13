@@ -103,7 +103,7 @@ export function CommentsSection({
       wrapper={(children) => (
         <Gradient1
           hoverOn
-          className="w-full max-w-2xl mx-auto min-h-64 my-4 p-4 glass-hover card-shadow card-bg rounded-sm"
+          className="w-full max-w-2xl min-h-64 my-4 p-4 glass-hover card-shadow card-bg rounded-sm"
         >
           {children}
         </Gradient1>

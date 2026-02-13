@@ -5,7 +5,7 @@ import Link from 'next/link';
 const MaraaSection = () => {
   return (
     <div className='relative isolate p-5 flex flex-col items-center justify-center'>
-      <div className="text-container my-2 p-1 border-[1px] border-[var(--primary-blue)] hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)] rounded-sm transition-all duration-300 ease-in-out">
+      <div className="text-container glass-hover my-2 p-1 rounded-sm transition-all duration-300 ease-in-out">
         <div className='text-xs opacity-80 text-center'>
           This project was nurtured with the support of <Link target='_blank' href="https://maraa.in/portfolio/mirrors-fellowship/" className="link-text">Maraa&apos;s Mirrors</Link> (2024) — A Creative Fellowship on Masculinity.
         </div>
@@ -27,7 +27,7 @@ const MaraaSection = () => {
           className="rounded-sm overflow-hidden"
         />
       </div>
-      <div className='text-container !text-xs !text-center p-1'>
+      <div className='text-container glass-hover !text-xs !text-center p-1'>
         Scenes from the <Link className='link-text' target='_blank' href="https://bangaloreinternationalcentre.org/event/mirrors/">Mirrors Group Show</Link> on Experiences & Expressions of Masculine & Feminine at Bangalore International Center, November 2024. <span className="opacity-50">Image courtesy of <span className="italic">Angarika</span> from the Maraa team.</span>
       </div>
       {/* Maraa Post Fellowship Interview Video */}

@@ -125,7 +125,7 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
 
       {/* Empty State */}
       {!isFetching && stories.length === 0 && !error && (
-        <div className="text-center py-10 opacity-50">
+        <div className="text-center font-rajdhani py-10 opacity-50">
           <p>No stories yet. Be the first to share yours!</p>
         </div>
       )}
