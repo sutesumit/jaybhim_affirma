@@ -2,20 +2,27 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import ChakraCursor from "../shared/cursorPointers/ChakraCursor";
 
 const DURATION = 0.2;
 const STAGGER = 0.05;
 
 export default function JaiBhim() {
+    const [isHovered, setIsHovered] = React.useState(false);
 
     return (
         <div className="relative">
-            <div className="relative group cursor-pointer">
+            <div 
+                className={`relative group`}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+            >
                 <motion.div
                     className="relative flex items-center justify-center "
                     initial="initial"
                     whileHover="hovered"
                 >
+                    {isHovered && <ChakraCursor />}
                     {/* Bottom Ashok Chakra - slides in */}
                     <motion.div
                         className="absolute m-auto inset-0 flex items-center justify-center -z-10 pointer-events-none"
@@ -37,7 +44,7 @@ export default function JaiBhim() {
                         />
                     </motion.div>
                     <div
-                        className="overflow-hidden relative px-6 font-rajdhani button-style text-[1rem] flex items-center justify-center whitespace-nowrap uppercase"
+                        className="overflow-hidden relative px-6 font-rajdhani button-style !cursor-none text-[1rem] flex items-center justify-center whitespace-nowrap uppercase"
                         style={{ lineHeight: 1.1 }}
                     >
                         {/* Top Text layer - slides out */}
