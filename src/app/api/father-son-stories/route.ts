@@ -6,8 +6,10 @@ import type {
   PostStoryResponse, 
   GetStoriesResponse 
 } from "@/types/stories";
+import { MAX_FATHER_SON_STORY_LENGTH } from "@/lib/constants";
 
-const MAX_STORY_LENGTH = 5000; // Increased limit for stories
+
+
 
 /**
  * POST /api/father-son-stories - Create a new father-son story
@@ -55,9 +57,9 @@ export async function POST(request: Request): Promise<NextResponse<PostStoryResp
       );
     }
 
-    if (trimmedText.length > MAX_STORY_LENGTH) {
+    if (trimmedText.length > MAX_FATHER_SON_STORY_LENGTH) {
       return NextResponse.json(
-        { success: false, error: `Story exceeds maximum length of ${MAX_STORY_LENGTH} characters` },
+        { success: false, error: `Story exceeds maximum length of ${MAX_FATHER_SON_STORY_LENGTH} characters` },
         { status: 400 }
       );
     }

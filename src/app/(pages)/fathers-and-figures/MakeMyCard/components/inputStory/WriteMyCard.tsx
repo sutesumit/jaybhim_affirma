@@ -1,4 +1,6 @@
 import React from 'react'
+import { MAX_FATHER_SON_STORY_LENGTH } from '@/lib/constants'
+
 
 const WriteMyCard = ({ myStory, setMyStory, myName, setMyName }: { myStory: string, setMyStory: (story: string) => void, myName: string, setMyName: (name: string) => void }) => {
 
@@ -16,10 +18,10 @@ const WriteMyCard = ({ myStory, setMyStory, myName, setMyName }: { myStory: stri
         {/* Character Counter */}
         <div 
           className={`absolute bottom-2 right-5 text-sm font-rajdhani pointer-events-none select-none transition-colors duration-300 ${
-            myStory.length > 5000 ? 'text-red-500 font-bold' : 'text-[--primary-blue]/40'
+            myStory.length > MAX_FATHER_SON_STORY_LENGTH ? 'text-red-500 font-bold' : 'text-[--primary-blue]/40'
           }`}
         >
-          {myStory.length}/5000
+          {myStory.length}/{MAX_FATHER_SON_STORY_LENGTH}
         </div>
       </div>
 

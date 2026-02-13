@@ -4,6 +4,8 @@
 import { AuthManager } from "@/lib/auth/auth-manager";
 import { getServerSupabase } from "@/lib/supabase-server";
 import { NextResponse } from "next/server";
+import { MAX_FATHER_SON_STORY_LENGTH } from "@/lib/constants";
+
 
 interface RouteContext {
   params: Promise<{ storyId: string }>;
@@ -28,7 +30,7 @@ export async function PATCH(request: Request, context: RouteContext) {
     const body = await request.json();
     const { storyText, signature } = body;
 
-    const MAX_STORY_LENGTH = 5000;
+
 
     if (!storyText || typeof storyText !== "string" || storyText.trim().length === 0) {
       return NextResponse.json(
@@ -37,9 +39,9 @@ export async function PATCH(request: Request, context: RouteContext) {
       );
     }
 
-    if (storyText.trim().length > MAX_STORY_LENGTH) {
+    if (storyText.trim().length > MAX_FATHER_SON_STORY_LENGTH) {
       return NextResponse.json(
-        { success: false, error: `Story exceeds maximum length of ${MAX_STORY_LENGTH} characters` },
+        { success: false, error: `Story exceeds maximum length of ${MAX_FATHER_SON_STORY_LENGTH} characters` },
         { status: 400 }
       );
     }

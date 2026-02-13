@@ -12,6 +12,8 @@ import { useRef, useState } from "react"
 import { useMyCardContext } from '../../context/MyCardContext'
 import type { PostStoryResponse } from '@/types/stories'
 import { DrawerClose } from '@/components/ui/drawer'
+import { MAX_FATHER_SON_STORY_LENGTH } from '@/lib/constants'
+
 
 
 const SubmitDrawer = ({
@@ -38,11 +40,11 @@ const SubmitDrawer = ({
             return;
         }
 
-        if (myStory.length > 5000) {
+        if (myStory.length > MAX_FATHER_SON_STORY_LENGTH) {
             toast({
                 variant: "destructive",
                 title: "Error",
-                description: "Story exceeds maximum length of 5000 characters",
+                description: `Story exceeds maximum length of ${MAX_FATHER_SON_STORY_LENGTH} characters`,
             });
             return;
         }

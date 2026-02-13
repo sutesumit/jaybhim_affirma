@@ -10,6 +10,8 @@ import Gradient1 from "@/app/my_components/gradients/Gradient1";
 import { useRandomRotation } from "@/_hooks/useRandomRotation";
 import { StoryService } from "@/lib/stories/story-service";
 import type { FatherSonStory } from "@/types/stories";
+import { MAX_FATHER_SON_STORY_LENGTH } from "@/lib/constants";
+
 
 interface SubmissionCardProps {
   story: FatherSonStory;
@@ -116,7 +118,7 @@ export const SubmissionCard = ({
                   autoFocus
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-                      if (editStoryText.trim().length > 0 && editStoryText.length <= 5000) {
+                      if (editStoryText.trim().length > 0 && editStoryText.length <= MAX_FATHER_SON_STORY_LENGTH) {
                         handleSave();
                       }
                     }
@@ -128,12 +130,12 @@ export const SubmissionCard = ({
 
                 {/* Character Counter Overlay */}
                 <div 
-                  className={`absolute bottom-2 right-2 text-xs font-rajdhani pointer-events-none select-none ${
-                    editStoryText.length > 5000 ? 'text-red-500' : 'text-[--primary-blue]'
-                  }`}
-                >
-                  {editStoryText.length}/5000
-                </div>
+                   className={`absolute bottom-2 right-2 text-xs font-rajdhani pointer-events-none select-none ${
+                     editStoryText.length > MAX_FATHER_SON_STORY_LENGTH ? 'text-red-500' : 'text-[--primary-blue]'
+                   }`}
+                 >
+                   {editStoryText.length}/{MAX_FATHER_SON_STORY_LENGTH}
+                 </div>
               </div>
             ) : (
               /* === VIEW MODE: Static text === */
@@ -165,7 +167,7 @@ export const SubmissionCard = ({
                   // className="absolute inset-0 w-full h-full bg-transparent card-inner-shadow text-end uppercase text-xl font-handwriting focus:outline-none resize-none overflow-hidden placeholder:font-rajdhani  placeholder:capitalize"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-                      if (editStoryText.trim().length > 0 && editStoryText.length <= 5000) {
+                      if (editStoryText.trim().length > 0 && editStoryText.length <= MAX_FATHER_SON_STORY_LENGTH) {
                         handleSave();
                       }
                     }
@@ -218,7 +220,7 @@ export const SubmissionCard = ({
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
                     onClick={handleSave}
-                    disabled={isSaving || !editStoryText.trim() || editStoryText.length > 5000}
+                    disabled={isSaving || !editStoryText.trim() || editStoryText.length > MAX_FATHER_SON_STORY_LENGTH}
                     className="comment-tiny-button"
                     title="Save (Ctrl+Enter)"
                   >
