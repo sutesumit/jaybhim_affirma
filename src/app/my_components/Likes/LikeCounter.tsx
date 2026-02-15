@@ -77,7 +77,7 @@ export function LikeCounter({ pathName }: LikeCounterProps) {
 
   return (
     <div 
-      className={`relative inline-block ${isNotFound ? "opacity-50 cursor-not-allowed filter grayscale" : ""}`}
+      className={`relative hidden lg:inline-block ${isNotFound ? "opacity-50 cursor-not-allowed filter grayscale" : ""}`}
       onClick={(e) => e.stopPropagation()}
     >
       <ProtectedActionDrawer 

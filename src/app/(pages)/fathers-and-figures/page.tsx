@@ -9,6 +9,7 @@ import { Submissions } from './Submissions';
 import { CommentsSection } from '@/app/my_components/CommentsSection/CommentsSection';
 import { MyCardProvider } from './MakeMyCard/context/MyCardContext';
 import { MaraaSection } from './MaraaSection';
+import AcknowledgementSection from '@/app/my_components/AcknowledgementSection/AcknowledgementSection';
 
 export default function Home() {
   const artCanvasRef = useRef<HTMLDivElement | null>(null);
@@ -29,6 +30,10 @@ export default function Home() {
         <Seperator />
       </div>
       <CommentsSection pagePath="/fathers-and-figures" mode="standalone" />
+      <div className='relative w-full'>
+        <Seperator />
+      </div>
+      <AcknowledgementSection names={["Digambar Sute", "Angarika", "Geetanjali Sharma", "Debottam"]} />
     </>
   );
 }

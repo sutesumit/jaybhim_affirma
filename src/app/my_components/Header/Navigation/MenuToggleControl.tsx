@@ -14,7 +14,7 @@ const MenuToggleControl: React.FC = () => {
             </span> */}
             <Link 
                 href='/' 
-                className='router-tab gradient-button py-1'
+                className='router-tab button-shadow gradient-button py-1'
                 onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();

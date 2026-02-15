@@ -317,10 +317,23 @@
   100% { --gradient-angle: 360deg; }
 }
 
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 /* --- Animation Classes --- */
 .typewriter {
   @apply inline-block overflow-hidden whitespace-nowrap border-r-[1px] border-[var(--primary-blue)];
   animation: typing 8s steps(47, end) infinite, blink-cursor 0.75s step-end infinite;
+}
+
+.marquee-track {
+  animation: marquee-scroll 20s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
 }
 
 /* --- Loaders --- */
