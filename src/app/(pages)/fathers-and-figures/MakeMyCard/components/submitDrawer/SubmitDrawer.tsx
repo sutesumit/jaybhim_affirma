@@ -2,7 +2,7 @@
 import React from 'react'
 import { toast } from '@/hooks/use-toast'
 import StoryCanvasCard from '../cardBackground/StoryCanvasCard'
-import { DownloadIcon, SendIcon, Loader } from "lucide-react"
+import { DownloadIcon, SendIcon, Loader, X } from "lucide-react"
 import { ProtectedActionDrawer } from '@/components/auth/ProtectedActionDrawer'
 import ToggleCanvasButton from '../cardBackground/ToggleCanvasButton'
 import { useDownloadImage } from '@/_hooks/useDownloadImage'
@@ -97,7 +97,7 @@ const SubmitDrawer = ({
         // Replace ProtectedActionDrawer with regular Drawer
 <Drawer open={isOpen} onOpenChange={setIsOpen}>
   <DrawerTrigger asChild>
-    <button className='w-full button-style h-full m-auto text-sm'>
+    <button className='w-full button-style gradient-button hover:brightness-150 hover:tracking-wider h-full m-auto text-sm'>
       Submit a story
     </button>
   </DrawerTrigger>
@@ -144,6 +144,15 @@ const SubmitDrawer = ({
       </div>
     </div>
     
+    
+    {/* Visible close button */}
+    <DrawerClose asChild>
+      <button className='absolute top-2 right-2 p-1 rounded-full card-border hover:bg-[var(--primary-blue)] hover:text-white transition-colors duration-200'>
+        <X className='h-3 w-3' />
+      </button>
+    </DrawerClose>
+
+    {/* Hidden close button for programmatic closing */}
     <DrawerClose asChild>
       <button ref={closeRef} className='hidden' />
     </DrawerClose>
