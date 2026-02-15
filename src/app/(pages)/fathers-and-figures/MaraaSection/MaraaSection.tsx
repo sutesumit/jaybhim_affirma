@@ -7,7 +7,7 @@ import Seperator from '@/app/my_components/shared/Seperator';
 const MaraaSection = () => {
   return (
     <div className='flex text-container flex-col items-center justify-center gap-2'>
-      <div className='button-style text-xs text-center tracking-widest uppercase'>Notes</div>
+      <div className='inline-title-style'>Notes</div>
       <Gradient1>
         <div className='relative glass-hover isolate p-5 flex flex-col items-center justify-center'>
 

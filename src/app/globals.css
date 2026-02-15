@@ -60,6 +60,12 @@
   .text-container p { @apply pt-4; }
   .checkbox { @apply border-2 border-pink-400 z-50; }
 
+  /* Inline Titles */
+  .inline-title-style {
+    @apply w-full font-rajdhani text-center rounded-sm border-b border-dotted border-[var(--primary-blue)] mx-auto px-6 py-1 text-[var(--primary-blue)];
+  }
+
+
   /* --- Glassmorphism & Cards --- */
   .card-bg { @apply bg-white/40 backdrop-blur-md; }
   .card-border { @apply border-[1px] border-[var(--primary-blue)]; }

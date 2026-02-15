@@ -51,14 +51,14 @@ export function CommentsSection({
     <div className="z-10 max-h-[60vh] h-full flex flex-col overflow-y-auto overflow-x-hidden scroll-smooth font-rajdhani pr-1 antialiased custom-scrollbar">
       {/* Interaction Header */}
       <div className="flex gap-1 items-center justify-between bg-transparent z-10 py-1">
-        <button className="button-style text-xs font-medium tracking-[0.2em] uppercase px-2 py-1 pointer-events-auto">
+        <button className="inline-title-style">
           Common Ground
         </button>
         <button
           onClick={fetchComments}
           disabled={isFetching}
           title="Refresh Comments"
-          className="w-fit px-2 py-1.5 button-style text-xs font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-50 flex items-center gap-2"
+          className="w-fit px-2 py-2.5 button-style text-xs font-bold uppercase tracking-widest transition-all duration-300 disabled:opacity-50 flex items-center gap-2"
         >
           <RotateCw className={`w-3 h-3 ${isFetching ? "animate-spin" : ""}`} />
         </button>
