@@ -44,7 +44,7 @@ export default function JaiBhim() {
                         />
                     </motion.div>
                     <div
-                        className="overflow-hidden relative px-6 font-rajdhani button-style !cursor-none text-[1rem] flex items-center justify-center whitespace-nowrap uppercase"
+                        className="overflow-hidden relative px-6 font-rajdhani button-style cursor-default text-[1rem] flex items-center justify-center whitespace-nowrap uppercase"
                         style={{ lineHeight: 1.1 }}
                     >
                         {/* Top Text layer - slides out */}
