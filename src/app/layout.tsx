@@ -6,6 +6,7 @@ import './globals.css';
 import { Header } from './my_components/Header/';
 import { AuthProvider } from '@/auth/AuthContext';
 import { NavMenuProvider } from './my_components/Header/menuContext/MenuContextProvider';
+import { NotFoundProvider } from './context/NotFoundContext';
 import NavigationProgressBar from './my_components/NavigationProgressBar';
 
 
@@ -58,19 +59,21 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${lora.variable} ${merriweather.variable} ${vesper_libre.variable} ${rajdhani.variable} ${reenieBeanie.variable}`}>
-      <AuthProvider>
-        <NavMenuProvider>
-          <body className="min-h-screen flex flex-col justify-between">
-            <NavigationProgressBar />
-            <Header />
-            <div className="flex-1 flex flex-col items-center">
-              {children}
-            </div>
-            <Footer />
-            <Toaster />
-          </body>
-        </NavMenuProvider>
-      </AuthProvider>
+      <NotFoundProvider>
+        <AuthProvider>
+          <NavMenuProvider>
+            <body className="min-h-screen flex flex-col justify-between">
+              <NavigationProgressBar />
+              <Header />
+              <div className="flex-1 flex flex-col items-center">
+                {children}
+              </div>
+              <Footer />
+              <Toaster />
+            </body>
+          </NavMenuProvider>
+        </AuthProvider>
+      </NotFoundProvider>
     </html>
   );
 

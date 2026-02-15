@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ProtectedActionDrawer } from "@/components/auth/ProtectedActionDrawer";
 import { useLikes } from "./hooks/useLikes";
 import { OdometerCount } from "./OdometerCount";
+import { useNotFound } from "@/app/context/NotFoundContext";
 
 interface LikeCounterProps {
   pathName: string | null;
@@ -48,6 +49,10 @@ const leafVariants = {
 
 export function LikeCounter({ pathName }: LikeCounterProps) {
   const { likeCount, isLiked, isToggling, toggleLike } = useLikes(pathName);
+  const { isNotFound } = useNotFound();
+  
+  console.log("LikeCounter: render", { pathName, isNotFound });
+
   const [locked, setLocked] = useState(false);
   const title = pathName
   ?.replace(/^\/|-/g, ' ')
@@ -59,7 +64,7 @@ export function LikeCounter({ pathName }: LikeCounterProps) {
     e?.preventDefault();
     e?.stopPropagation();
 
-    if (locked || isToggling || !pathName) return;
+    if (locked || isToggling || !pathName || isNotFound) return;
     
     setLocked(true);
 
@@ -72,18 +77,18 @@ export function LikeCounter({ pathName }: LikeCounterProps) {
 
   return (
     <div 
-      className="relative inline-block"
+      className={`relative inline-block ${isNotFound ? "opacity-50 cursor-not-allowed filter grayscale" : ""}`}
       onClick={(e) => e.stopPropagation()}
     >
       <ProtectedActionDrawer 
-        title="Login to like"
-        description={`Verify to leave a little love for ${title}`}
-        mode="action"
+        title={isNotFound ? "Page Not Found" : "Login to like"}
+        description={isNotFound ? "This page doesn't exist, so it can't be liked." : `Verify to leave a little love for ${title}`}
+        mode={isNotFound ? "view" : "action"}
       >
         <Link
           href={pathName ?? "/"}
           onClick={handleToggle}
-          className="router-tab reaction-counter"
+          className={`router-tab reaction-counter ${isNotFound ? "pointer-events-none cursor-not-allowed" : ""}`}
         >
           <span className={`px-1 inline-flex items-center justify-center rounded-sm ${isLiked ? "bg-[var(--primary-blue)] text-[var(--primary-white)]" : ""} transition-all duration-700 ease-in-out`}>
             <span className={`text-xs inline-flex border-r border-[var(--primary-blue)] px-1 transition-all duration-700 ease-in-out`}>
