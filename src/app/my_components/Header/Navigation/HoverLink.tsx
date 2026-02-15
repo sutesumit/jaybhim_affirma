@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useMenuContext } from '../menuContext/useMenuContext';
 
 interface HoverLinkProps {
     href: string;
@@ -13,13 +14,17 @@ interface HoverLinkProps {
 
 const HoverLink: React.FC<HoverLinkProps> = ({ href, target, className, children, hoverContent }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const { setMenuOpen } = useMenuContext();
 
     return (
         <Link 
             href={href} 
             target={target}
             className={className}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+                e.stopPropagation();
+                setMenuOpen(false);
+            }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >

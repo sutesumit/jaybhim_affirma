@@ -5,7 +5,7 @@ import MenuToggleIcon from '@/app/my_components/Header/Navigation/MenuToggleIcon
 import { Circle } from 'lucide-react';
 
 const MenuToggleControl: React.FC = () => {
-    const { isMenuOpen } = useMenuContext();
+    const { isMenuOpen, toggleMenu } = useMenuContext();
 
     return (
         <span className='col-span-3 relative md:col-span-1 text-center md:inline-block'>
@@ -17,6 +17,8 @@ const MenuToggleControl: React.FC = () => {
                 className='router-tab gradient-button py-1'
                 onClick={(e) => {
                     e.preventDefault();
+                    e.stopPropagation();
+                    toggleMenu();
                 }}
             >
                 <span className='inline-block align-middle text-sm'>
