@@ -19,7 +19,7 @@ export default function Home() {
       <HeroSection />
       <ArtCanvas ref={artCanvasRef} />
       <MyCardProvider>
-      <Submissions artCanvasRef={artCanvasRef} />
+        <Submissions artCanvasRef={artCanvasRef} />
       </MyCardProvider>
       <div className="relative w-full">
         <Seperator />
@@ -33,7 +33,7 @@ export default function Home() {
       <div className='relative w-full'>
         <Seperator />
       </div>
-      <AcknowledgementSection names={["Digambar Sute", "Angarika", "Geetanjali Sharma", "Debottam"]} />
+      <AcknowledgementSection names={["Maraa's Mirrors Fellowship (2024)", "Digambar Sute", "Angarika", "Geetanjali Sharma", "Debottam"]} />
     </>
   );
 }

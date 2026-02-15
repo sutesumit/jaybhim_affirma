@@ -19,7 +19,6 @@ interface SubmissionsProps {
 
 const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
 
-
   const handleCreateStory = () => {
     toast({
         variant: "default",

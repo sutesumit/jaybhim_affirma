@@ -3,15 +3,13 @@ import React from 'react'
 import { toast } from '@/hooks/use-toast'
 import StoryCanvasCard from '../cardBackground/StoryCanvasCard'
 import { DownloadIcon, SendIcon, Loader } from "lucide-react"
-import { useAuthContext } from '@/auth/useAuthContext'
-import { UserSessionCard } from '@/app/my_components/AuthCard'
 import { ProtectedActionDrawer } from '@/components/auth/ProtectedActionDrawer'
 import ToggleCanvasButton from '../cardBackground/ToggleCanvasButton'
 import { useDownloadImage } from '@/_hooks/useDownloadImage'
 import { useRef, useState } from "react"
 import { useMyCardContext } from '../../context/MyCardContext'
 import type { PostStoryResponse } from '@/types/stories'
-import { DrawerClose } from '@/components/ui/drawer'
+import { Drawer, DrawerTitle, DrawerContent, DrawerTrigger, DrawerClose } from '@/components/ui/drawer'
 import { MAX_FATHER_SON_STORY_LENGTH } from '@/lib/constants'
 
 
@@ -29,6 +27,7 @@ const SubmitDrawer = ({
     const closeRef = useRef<HTMLButtonElement>(null);
     const { downloadImage, loading: downloadLoading } = useDownloadImage({ downloadRef: storyCardRef })
     const [submitting, setSubmitting] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
 
     const handleSubmit = async () => {
         if (!myStory.trim()) {
@@ -95,50 +94,62 @@ const SubmitDrawer = ({
 
     
   return (
-        <ProtectedActionDrawer
-            mode="view"
-            description='An small verify to keep stories human' 
-            drawerClassName='backdrop-blur-sm min-h-[70vh] w-full p-2 items-center justify-center'
-            trigger={
-                <button className='w-full button-style h-full m-auto text-sm'>
-                    Submit a story
-                </button>
-            }
+        // Replace ProtectedActionDrawer with regular Drawer
+<Drawer open={isOpen} onOpenChange={setIsOpen}>
+  <DrawerTrigger asChild>
+    <button className='w-full button-style h-full m-auto text-sm'>
+      Submit a story
+    </button>
+  </DrawerTrigger>
+  <DrawerContent className='backdrop-blur-sm min-h-[70vh] p-2 items-center justify-center'>
+    <DrawerTitle className="hidden">Submit Your Story</DrawerTitle>
+    
+    {/* Show story canvas and controls to everyone */}
+    <div>
+      <div className='flex items-center justify-center'>
+        <StoryCanvasCard ref={storyCardRef}/>
+      </div>
+    </div>
+    
+    <div className='flex text-container flex-col gap-2 justify-center items-center w-full'>
+      <div className='flex flex-row gap-2 text-xs justify-between w-full'>
+        <ToggleCanvasButton artCanvasRef={artCanvasRef} />
+        
+        {/* Download button - no auth needed */}
+        <button 
+          className='flex-1 flex items-center justify-center gap-2 button-style' 
+          disabled={downloadLoading}
+          onClick={downloadImage}
         >
-            <UserSessionCard>
-                <div>
-                    <div className='flex items-center justify-center'>
-                        <StoryCanvasCard ref={storyCardRef}/>
-                    </div>
-                </div>
-                <div className='flex flex-col gap-2 justify-center items-center w-full'>
-                    <div className='flex flex-row gap-2 text-xs justify-between w-full'>
-                        <ToggleCanvasButton artCanvasRef={artCanvasRef} />
-                        <button 
-                            className='flex-1 flex items-center justify-center gap-2 button-style' 
-                            disabled={downloadLoading}
-                            onClick={downloadImage}
-                        >
-                            {downloadLoading ? <><Loader className='animate-spin h-4 w-4' /> Downloading... </>: <><DownloadIcon className="h-4 w-4" />Download</>}
-                        </button>
-                        <button
-                            className='flex-1 flex items-center justify-center gap-2 button-style'
-                            disabled={submitting}
-                            onClick={handleSubmit}
-                        >
-                            {submitting ? (
-                                <><Loader className='animate-spin h-4 w-4' /> Submitting...</>
-                            ) : (
-                                <><SendIcon className="h-4 w-4"/>Submit</>
-                            )}
-                        </button>
-                    </div>
-                </div>
-            </UserSessionCard>
-            <DrawerClose asChild>
-                <button ref={closeRef} className='hidden' />
-            </DrawerClose>
+          {downloadLoading ? <><Loader className='animate-spin h-4 w-4' /> Downloading...</> : <><DownloadIcon className="h-4 w-4" />Download</>}
+        </button>
+        
+        {/* Submit button - wrapped with auth protection */}
+        <ProtectedActionDrawer
+          mode="action"
+          description='An small verify to keep stories human'
+        >
+          <button
+            className={`flex-1 flex items-center justify-center gap-2 button-style ${submitting || !myStory.trim() ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={submitting || !myStory.trim()}
+            onClick={handleSubmit}
+          >
+            {submitting ? (
+              <><Loader className='animate-spin h-4 w-4' /> Submitting...</>
+            ) : (
+              <><SendIcon className="h-4 w-4"/>Submit</>
+            )}
+          </button>
         </ProtectedActionDrawer>
+      </div>
+    </div>
+    
+    <DrawerClose asChild>
+      <button ref={closeRef} className='hidden' />
+    </DrawerClose>
+  </DrawerContent>
+</Drawer>
+
   )
 }
 
