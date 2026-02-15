@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Gradient1 from '@/app/my_components/gradients/Gradient1';
-import Seperator from '@/app/my_components/shared/Seperator';
 
 const MaraaSection = () => {
   return (
