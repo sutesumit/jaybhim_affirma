@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
 :root {
   /* Brand Colors */
   --primary-blue: #131857;
@@ -106,6 +112,32 @@
   .router-tab {
     @apply glass-hover hover:py-2 px-5 mx-1 rounded-sm transition-all duration-300;
   }
+
+  /* .menu-toggle-btn {
+    @apply bg-[var(--primary-blue)] py-1 text-white hover:text-[var(--primary-blue)];
+  } */
+
+  .gradient-button {
+    @apply cursor-pointer text-white transition-all duration-500 ease-in-out;
+    background: linear-gradient(var(--gradient-angle), 
+      var(--primary-blue), #2a3196, #455dd6, 
+      var(--primary-blue), #2a3196, #455dd6,
+      var(--primary-blue)
+    );
+    background-size: 200% 200%;
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.15), 
+                0 2px 8px 0 rgba(19,24,87,0.3);
+    animation: 
+      gradient-shift 12s ease-in-out infinite,
+      rotate-angle 12s ease-in-out infinite;
+  }
+
+  .gradient-button:hover {
+    background-position: left;
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.2), 
+                0 4px 16px 0 rgba(19,24,87,0.4);
+  }
+
 
   .rootsite-tab {
     @apply glass-hover hover:py-2 hover:px-5 rounded-sm transition-all duration-300;
@@ -267,6 +299,16 @@
 @keyframes l7-2 {
   0%,55%,100% { border-bottom-left-radius: 0; border-top-right-radius: 0 }
   20%,30%     { border-bottom-left-radius: 50%; border-top-right-radius: 50% }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+@keyframes rotate-angle {
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
 }
 
 /* --- Animation Classes --- */

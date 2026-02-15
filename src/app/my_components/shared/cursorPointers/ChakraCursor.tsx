@@ -13,15 +13,15 @@ const ChakraCursor = () => {
                 top: y,
                 left: x,
                 transform: 'translate(-50%, -50%)',
-                width: '20px',
-                height: '20px',
+                width: '30px',
+                height: '30px',
             }}
         >
             <Image
                 src="/ashoka-chakra.svg"
                 alt="Ashok Chakra Cursor"
-                width={20}
-                height={20}
+                width={30}
+                height={30}
                 className="animate-spin [animation-duration:5s]"
                 style={{ filter: 'brightness(0) invert(1)' }}
             />
