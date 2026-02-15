@@ -12,7 +12,7 @@ const CurrentTabLink: React.FC<CurrentTabLinkProps> = ({ pathName, tabName }) =>
     return (
         <Link 
             href={pathName ?? '/'} 
-            className='router-tab capitalize'
+            className='router-tab capitalize truncate'
             onClick={(e) => e.stopPropagation()}
         >
             {tabName}
