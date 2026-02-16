@@ -101,7 +101,7 @@ const SubmitDrawer = ({
           Submit a story
         </button>
       </DrawerTrigger>
-      <DrawerContent className='backdrop-blur-sm min-h-[70vh] p-2 items-center justify-center'>
+      <DrawerContent className='backdrop-blur-sm checkbox max-h-[70vh] overflow-y-auto p-2 items-center justify-center'>
         <DrawerTitle className="hidden">Submit Your Story</DrawerTitle>
 
         {/* Show story canvas and controls to everyone */}
