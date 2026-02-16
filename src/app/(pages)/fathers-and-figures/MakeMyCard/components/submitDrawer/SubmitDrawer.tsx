@@ -101,11 +101,11 @@ const SubmitDrawer = ({
           Submit a story
         </button>
       </DrawerTrigger>
-      <DrawerContent className='backdrop-blur-sm checkbox max-h-[70vh] overflow-y-auto p-2 items-center justify-center'>
+      <DrawerContent className='backdrop-blur-sm p-2 items-center justify-center'>
         <DrawerTitle className="hidden">Submit Your Story</DrawerTitle>
 
         {/* Show story canvas and controls to everyone */}
-        <div className='flex flex-col max-w-[60ch] gap-2 sm:p-2 pt-6 justify-center items-center w-full'>
+        <div className='flex flex-col max-w-[60ch] gap-2 sm:p-2 p-2 justify-center items-center w-full'>
             <div className='w-full items-center justify-center'>
               <StoryCanvasCard ref={storyCardRef} />
             </div>

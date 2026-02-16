@@ -1,4 +1,5 @@
 "use client";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 // import { IconArrowNarrowRight } from "@tabler/icons-react";
 import { useState, useRef, useId, useEffect, ReactNode } from "react";
 
@@ -105,7 +106,9 @@ const CarouselControl = ({
       title={title}
       onClick={handleClick}
     >
-      <span className="w-3 h-3 flex font-rajdhani items-center justify-center transition-colors">{type === "previous" ? "<" : ">"}</span>
+      <span className="w-3 h-3 flex font-rajdhani items-center justify-center transition-colors">
+        {type === "previous" ? <ChevronLeft /> : <ChevronRight />}
+      </span>
     </button>
   );
 };

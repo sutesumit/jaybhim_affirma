@@ -15,6 +15,12 @@ const InstructionReel = () => {
   const smoothX = useSpring(x, { stiffness: 100, damping: 20 })
   const smoothRotation = useSpring(rotation, { stiffness: 100, damping: 20 })
 
+  const instructionX = useTransform(scrollYProgress, [0.15, 0.4, 0.7, 1], [-50, 0, 0, -50])
+  const instructionOpacity = useTransform(scrollYProgress, [0.15, 0.3, 0.8, 1], [0, 1, 1, 0])
+  
+  const smoothInstructionX = useSpring(instructionX, { stiffness: 100, damping: 20 })
+  const smoothInstructionOpacity = useSpring(instructionOpacity, { stiffness: 100, damping: 20 })
+
   const phoneCaseStyle = {
     x: smoothX,
     rotate: smoothRotation
@@ -24,7 +30,7 @@ const InstructionReel = () => {
 
   return (
     <m.div
-      className='phone-wrapper z-10 relative lg:absolute md:left-2 left-0 md:-rotate-2'
+      className='phone-wrapper isolate h-full flex z-10 relative lg:absolute md:left-2 left-0 md:-rotate-2'
       ref={phoneCaseRef}
       style={phoneCaseStyle}
     >
@@ -33,7 +39,7 @@ const InstructionReel = () => {
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         dragElastic={1}
         whileTap={{ cursor: 'grabbing', rotate: 4 }}
-        className="relative cursor-grab col-span-1 flex-1 md:my-0 my-5 m-auto max-h-[80vh] aspect-[7/12] bg-black/85 rounded-2xl p-2 overflow-hidden shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]"
+        className="relative z-100 card-shadow cursor-grab col-span-1 flex-1 md:my-0 my-5 m-auto max-h-[80vh] aspect-[7/12] bg-black/85 rounded-2xl p-2 overflow-hidden shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]"
       >
         <div className="speaker-knotch flex flex-row gap-2 items-center justify-center absolute m-[1/2] top-0 left-1/2 -translate-x-1/2 bg-black/85 w-1/2 h-5 rounded-b-2xl">
           <div className="w-1/6 h-1 bg-gray-800"></div>
@@ -54,6 +60,13 @@ const InstructionReel = () => {
         >
         </iframe>
       </m.div>
+      <div className='py-5 -z-10'>
+        <m.div 
+          style={{ x: smoothInstructionX, opacity: smoothInstructionOpacity, rotate: 180 }}
+          className='card-shadow h-full w-fit text-sm font-rajdhani text-center rounded-l-lg bg-black/90 text-[var(--primary-white)] [writing-mode:vertical-rl]'>
+          Play the reel for the instructions
+        </m.div>
+      </div>
     </m.div>
   )
 }
