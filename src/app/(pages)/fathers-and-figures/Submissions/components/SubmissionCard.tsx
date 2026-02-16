@@ -96,7 +96,7 @@ export const SubmissionCard = ({
       onMouseLeave={() => randomRotation()}
     >
       <Gradient1 hoverOn={true} className="relative w-full h-full">
-        <div className="group relative card-shadow pb-2 z-10 h-[360px] w-full flex flex-col font-handwriting text-xl submission-card rounded-sm overflow-y-auto scrollbar-thin transition-all duration-300">
+        <div className="group relative checkbox card-shadow pb-2 z-10 h-[360px] w-full flex flex-col font-handwriting text-xl submission-card rounded-sm overflow-y-auto scrollbar-thin transition-all duration-300">
           {/* Story Content Area */}
           <div className="flex-1 p-5 pt-10 relative">
             {isEditing ? (
