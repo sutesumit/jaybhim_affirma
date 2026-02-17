@@ -4,9 +4,11 @@ import { useMyCardContext } from '../../context/MyCardContext'
 import { Loader } from 'lucide-react'
 
 const ToggleCanvasButton = ({artCanvasRef}: {artCanvasRef: React.RefObject<HTMLDivElement | null>}) => {
-    const {url} = useMyCardContext()
+    const {url, isHydrated} = useMyCardContext()
     const {handleCanvasUrl, pendingUrl} = useCanvasOperations({artCanvasRef})
   
+    if (!isHydrated) return null
+
   return (
     <>
         <button className={`button-style flex-1 ${pendingUrl ? 'cursor-wait' : ''}`} onClick={handleCanvasUrl} disabled={pendingUrl}>

@@ -8,6 +8,7 @@ type MyCardContextType = {
     setUrl: (url: string | null) => void
     setMyStory: (story: string) => void
     setMyName: (name: string) => void
+    isHydrated: boolean
 }
 
 const MyCardContext = React.createContext<MyCardContextType | null>(null)
@@ -16,12 +17,14 @@ export const MyCardProvider = ({children}: {children: ReactNode}) => {
     const [url, setUrl] = useState<string | null>(null)
     const [myStory, setMyStory] = useState<string>('')
     const [myName, setMyName] = useState<string>('')
+    const [isHydrated, setIsHydrated] = useState(false)
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setUrl(localStorage.getItem('url'));
             setMyStory(localStorage.getItem('myStory') || '');
             setMyName(localStorage.getItem('myName') || '');
+            setIsHydrated(true)
         }
     }, [])
     
@@ -32,7 +35,7 @@ export const MyCardProvider = ({children}: {children: ReactNode}) => {
     }, [myStory, myName, url])
 
     return (
-        <MyCardContext.Provider value={{url, myStory, myName, setUrl, setMyStory, setMyName}}>
+        <MyCardContext.Provider value={{url, myStory, myName, setUrl, setMyStory, setMyName, isHydrated}}>
             {children}
         </MyCardContext.Provider>
     )

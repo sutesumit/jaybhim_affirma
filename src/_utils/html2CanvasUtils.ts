@@ -17,7 +17,13 @@ export const getCanvasUrl = async (
     element: HTMLElement
 ): Promise<string | null> => {
     try {
-        const canvas = await html2canvas(element)
+        const canvas = await html2canvas(element, {
+            useCORS: true,
+            allowTaint: false,
+            logging: false,
+            scale: typeof window !== 'undefined' ? window.devicePixelRatio : 1,
+            backgroundColor: null,
+        })
         return canvas.toDataURL('image/png')
     } catch (error){
         console.error('Error getting canvas url:', error)
