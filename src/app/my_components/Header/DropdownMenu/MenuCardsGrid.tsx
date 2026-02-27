@@ -25,7 +25,7 @@ const MenuCardsGrid: React.FC = () => {
         >
             <motion.div
                 key="menu-content relative"
-                className="menu-content relative flex-grow w-full z-20 p-2 rounded-lg flex flex-col overflow-y-auto gap-1"
+                className="menu-content relative flex-grow w-full z-20 p-2 flex flex-col overflow-y-auto gap-1"
                 initial={{ y: "-100%" }}
                 animate={{ y: 0, transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] } }}
                 exit={{ y: "-100%", transition: { duration: 0.1, ease: [0.4, 0, 0.1, 1] } }}

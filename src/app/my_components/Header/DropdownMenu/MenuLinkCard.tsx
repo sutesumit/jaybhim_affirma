@@ -3,15 +3,10 @@ import React from 'react'
 import Link from 'next/link';
 import Gradient1 from '../../gradients/Gradient1';
 import { motion, AnimatePresence } from 'framer-motion';
+import { MenuItem } from './hooks/useMenuFilter';
 
 interface MenuLinkCardProps {
-    object : {
-        href: string,
-        id: number,
-        title: string,
-        description: string,
-        image: string
-    },
+    object : MenuItem,
     setHoveredCard: (id: number | null) => void,
     hoveredCard: number | null,
     setMenuOpen: (open: boolean) => void,

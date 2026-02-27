@@ -16,7 +16,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ searchTerm, onClear }) => {
                 hoverOn={true} 
                 className="relative group glass-hover card-border rounded-sm flex-grow flex flex-col overflow-hidden"
             >
-                <div className="flex flex-grow relative z-10 flex-col items-center justify-center py-5 text-[var(--primary-blue)] space-y-3">
+                <div className="flex flex-grow relative z-10 flex-col items-center justify-center p-5 text-[var(--primary-blue)] space-y-3">
                     <div className="p-4 rounded-full">
                         <Search className="h-6 w-6" />
                     </div>
