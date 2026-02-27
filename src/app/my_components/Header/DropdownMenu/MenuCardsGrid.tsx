@@ -19,16 +19,16 @@ const MenuCardsGrid: React.FC = () => {
     const { searchTerm, setSearchTerm, filteredItems, clearSearch } = useMenuFilter(menuConfig as MenuItem[]);
 
     return (
-        <div 
-            className="menu-container card-border rounded-sm mx-2 mb-2 flex flex-col flex-grow overflow-hidden"
+        <motion.div 
+            key="menu-cards-grid-container"
+            className="menu-container card-border rounded-sm mx-2 mb-2 flex flex-col flex-grow overflow-hidden relative"
             onClick={(e) => e.stopPropagation()}
+            initial={{ y: "-100%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1, transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] } }}
+            exit={{ y: "-100%", opacity: 0, transition: { duration: 0.2, ease: [0.4, 0, 0.1, 1] } }}
         >
-            <motion.div
-                key="menu-content relative"
+            <div
                 className="menu-content relative flex-grow w-full z-20 p-2 flex flex-col overflow-y-auto gap-1"
-                initial={{ y: "-100%" }}
-                animate={{ y: 0, transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] } }}
-                exit={{ y: "-100%", transition: { duration: 0.1, ease: [0.4, 0, 0.1, 1] } }}
             >
                 <SearchBar 
                     searchTerm={searchTerm} 
@@ -46,7 +46,7 @@ const MenuCardsGrid: React.FC = () => {
                 {filteredItems.length === 0 && (
                     <EmptyState searchTerm={searchTerm} onClear={clearSearch} />
                 )}
-            </motion.div>
+            </div>
 
             <ImagePreviews 
                 items={filteredItems} 
@@ -54,7 +54,7 @@ const MenuCardsGrid: React.FC = () => {
                 x={x} 
                 y={y} 
             />
-        </div>
+        </motion.div>
     )
 }
 
