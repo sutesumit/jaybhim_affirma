@@ -1,7 +1,5 @@
 'use client'
 import React, { useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { HeroSection } from './HeroSection';
 import { ArtCanvas } from './ArtCanvas';
 import Seperator from '@/app/my_components/shared/Seperator';
@@ -24,7 +22,6 @@ export default function Home() {
       <div className="relative w-full">
         <Seperator />
       </div>
-
       <MaraaSection />
       <div className='relative w-full'>
         <Seperator />
@@ -33,7 +30,7 @@ export default function Home() {
       <div className='relative w-full'>
         <Seperator />
       </div>
-      <AcknowledgementSection names={["Maraa's Mirrors Fellowship (2024)", "Digambar Sute", "Angarika", "Geetanjali Sharma", "Debottam"]} />
+      <AcknowledgementSection names={["Maraa's Mirrors Fellowship (2024)", "Digambar Sute", "Angarika", "Geetanjali", "Debottam"]} />
     </>
   );
 }

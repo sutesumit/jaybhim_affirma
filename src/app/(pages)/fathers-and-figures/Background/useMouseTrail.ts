@@ -1,59 +1,43 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import { generateTrailImage } from './generateTrailImage';
 
-// Define the structure for the trail object
 interface Trail {
-    id: number; // Unique Identifier for the trail image
-    src: string; // Source URL or path of the trail image
-    x: number; // x-coordinate of the image on the screen
-    y: number; // y-coordinate of the image on the screen
-   };
+  id: number;
+  src: string;
+  x: number;
+  y: number;
+}
 
 /**
- * useMouseTrail is a custom React hook to create and manage a mouse trail effect.
- * 
- * @param bgtrailsRef - A ref to the container element inside which the trail should appear
- * @param addToTrail - A Function to add a new trail object to the trail array/state
- * @param removeFromTrail - A Function to remove a trail object from the trail array/state
- *  */ 
-
-
+ * useMouseTrail manages a mouse trail effect within a container.
+ * Following DIP, it depends on an injected trail generator function.
+ */
 export const useMouseTrail = (
-  bgtrailsRef: React.RefObject<HTMLDivElement | null>, 
+  containerRef: React.RefObject<HTMLDivElement | null>, 
   addToTrail: (trail: Trail) => void, 
-  removeFromTrail: (id: number) => void
+  removeFromTrail: (id: number) => void,
+  generateTrail: (x: number, y: number) => Trail // Injected dependency
 ) => {
-  // keep track of mouse movement count to limit trail generation frequency
   const mouseMoveCounter = useRef(0)
-  // trail frequency to adjust the trail clutter
   const trailFrequency = 15
+
   useEffect(() => {
-    // handle mouse movement
-        const handleMouseMove = (event: MouseEvent) => {
-          // only generate the trail if the mouse is over the specified container
-          if (bgtrailsRef.current?.contains(event.target as Node)) { 
-            mouseMoveCounter.current++
+    const handleMouseMove = (event: MouseEvent) => {
+      if (containerRef.current?.contains(event.target as Node)) { 
+        mouseMoveCounter.current++
 
-            // Only create a trail image every given trailFrequency mouse events to limit the trail clutter
-            if (mouseMoveCounter.current % trailFrequency === 0){
-              const newTrail: Trail = generateTrailImage(event.clientX, event.clientY);
-              
-              // Add the trail image to the DOM and trail State
-              addToTrail(newTrail);
-              
-              // Remove the trail image after a delay to simulate fading effect
-              setTimeout(() => {
-                  removeFromTrail(newTrail.id);
-              }, 1600);
-            }
-          }
-        };
+        if (mouseMoveCounter.current % trailFrequency === 0) {
+          const newTrail = generateTrail(event.clientX, event.clientY);
+          addToTrail(newTrail);
+          
+          setTimeout(() => {
+            removeFromTrail(newTrail.id);
+          }, 1600);
+        }
+      }
+    };
 
-        // Add event listener for mouse movement
-        window.addEventListener("mousemove", handleMouseMove);
-
-        // Cleanup the event listener on component unmount
-        return () => window.removeEventListener("mousemove", handleMouseMove);
-      }, [bgtrailsRef, addToTrail, removeFromTrail]);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [containerRef, addToTrail, removeFromTrail, generateTrail]);
 }

@@ -4,18 +4,47 @@ import Instruction from './Instruction'
 import DraggablePhoto from './DraggablePhoto'
 import { usePhotoStyle } from './usePhotoStyleHook'
 import Gradient1 from '@/app/my_components/gradients/Gradient1'
+import { photoStyleProp } from './types'
 
-// ArtCanvas component for the Fathers and Figures page, using forwardRef to allow `YourStoryForm` component to pass a ref to the canvas element
-// This component is responsible for rendering the canvas where the draggable photo elements are displayed
+/* ==========================================================================
+   Internal Sub-Component (SRP: Photo List Rendering)
+   ========================================================================== */
+
+/**
+ * Renders the collection of draggable photos based on provided styles.
+ */
+const PhotoCollection = ({ 
+  styles, 
+  constraints 
+}: { 
+  styles: photoStyleProp[], 
+  constraints: React.RefObject<HTMLDivElement | null> 
+}) => (
+  <>
+    {Array.from({ length: 23 }, (_, i) => i).map((i) => (
+      <DraggablePhoto
+        key={i + 200}
+        src={`/fathersandfigures/${i + 1}.jpg`}
+        alt={`Image ${i + 1}`}
+        animate={styles[i]}
+        dragConstraints={constraints}
+      />
+    ))}
+  </>
+);
+
+/* ==========================================================================
+   Main Component
+   ========================================================================== */
+
+/**
+ * ArtCanvas component for the Fathers and Figures page.
+ * Provides a workspace for users to interact with and arrange photo elements.
+ */
 const ArtCanvas = forwardRef((props, ref) => {
-    // Reference tag to the .art-canvas div container where dragable photo elements live
     const artCanvasRef = useRef<HTMLDivElement | null>(null)
-
-    // Custom hook to return state to store the style properties for the dragable photo elements
     const photoStyle = usePhotoStyle()
 
-    // useImperativeHandle is used to expose the artCanvasRef to the parent component (page)
-    // This allows the parent component to access the DOM element directly, allowing for manipulation or measurement of the element
     useImperativeHandle(ref, () => artCanvasRef.current);
 
     return (
@@ -24,30 +53,14 @@ const ArtCanvas = forwardRef((props, ref) => {
                 className='art-canvas relative flex flex-wrap gap-5 items-center justify-center p-[5vh] min-h-screen w-screen rounded-lg overflow-hidden'
                 ref={artCanvasRef}
             >
-                <Instruction 
-                    dragConstraints={artCanvasRef}
-                    // animate={{...photoStyle[0] }}
-                />
-                {/* Generate 23 draggable photocomponets dynamically
-                    1. Create an array of 23 elements from 0 to 22
-                    2. Map over the array and generate 23 draggable photocomponets dynamically
-                */}
-                {Array.from({length: 23}, (_,i) => i).map((i) =>{
-                    return (
-                        <DraggablePhoto
-                            key={i+200}
-                            src={`/fathersandfigures/${i + 1}.jpg`}
-                            alt={`Image ${i + 1}`}
-                            animate={photoStyle[i]}
-                            dragConstraints={artCanvasRef}
-                        />
-                    )
-                })}
+                <Instruction dragConstraints={artCanvasRef} />
+                
+                <PhotoCollection styles={photoStyle} constraints={artCanvasRef} />
+                
                 <Seperator />
             </div>
         </Gradient1>
-  )
+    )
 })
 
-// This is a default export of the ArtCanvas component, which can be imported and used in other parts of the application
 export default ArtCanvas

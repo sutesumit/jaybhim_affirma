@@ -3,6 +3,7 @@ import React, { useState, useCallback, useRef } from "react";
 import CursorDot from "@/app/my_components/shared/cursorPointers/CursorDot";
 import TrailingImage from "./TrailingImage";
 import { useMouseTrail } from "./useMouseTrail";
+import { generateTrailImage } from "./generateTrailImage";
 import { AnimatePresence } from 'framer-motion'
 
 interface Trail {
@@ -23,7 +24,7 @@ const Background = (): React.ReactElement => {
       setTrails((prevTrails) => prevTrails.filter((trail) => trail.id !== id));
   }, []);
 
-  useMouseTrail(bgtrailsRef, addToTrail, removeFromTrail);
+  useMouseTrail(bgtrailsRef, addToTrail, removeFromTrail, generateTrailImage);
 
   return (
     <div 

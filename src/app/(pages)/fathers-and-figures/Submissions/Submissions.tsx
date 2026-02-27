@@ -1,13 +1,12 @@
 "use client";
 import React, { useState, useMemo } from "react";
-import { AnimatePresence, motion as m } from "framer-motion";
+import { motion as m } from "framer-motion";
 import { RotateCw, AlertCircle } from "lucide-react";
 import { useStories } from "./hooks/useStories";
 import { SubmissionCard } from "./components/SubmissionCard";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
-import ProjectedActionDrawer from "@/components/auth/ProtectedActionDrawer";
 import Carousel from "@/components/ui/carousel";
-import { toast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import SubmitStoryButton from "../MakeMyCard/components/inputStory/SubmitStoryButton";
 import InstructionReel from "../MakeMyCard/components/InstructionReel";
 
@@ -19,13 +18,7 @@ interface SubmissionsProps {
 
 const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
 
-  const handleCreateStory = () => {
-    toast({
-        variant: "default",
-        title: "Experiement",
-        description: "This is a test toast",
-    });
-  };
+  const { toast } = useToast();
 
   const {
     stories,
@@ -60,7 +53,6 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
     <InstructionReel />
     <div className="py-1 relative w-full text-container">
       
-      {/* <SubmitStoryButton artCanvasRef={artCanvasRef} /> */}
       {/* Header with Refresh Button */}
       <div className="flex h-full gap-1 items-center justify-between py-2">
         <SubmitStoryButton 
@@ -98,7 +90,7 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
       <div className="w-full h-[400px]">
         {stories.length > 0 ? (
           <Carousel 
-            containerClassName="w-full h-full"
+            containerClassName="w-full h-full isolate"
             slideClassName="w-full h-full"
           >
             {stories.map((story, index) => (
