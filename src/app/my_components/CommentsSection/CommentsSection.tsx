@@ -98,19 +98,21 @@ export function CommentsSection({
   );
 
   return (
-    <ConditionalWrapper
-      condition={mode === "standalone"}
-      wrapper={(children) => (
-        <Gradient1
-          hoverOn
-          className="w-full max-w-2xl min-h-64 m-auto my-4 p-4 glass-hover card-shadow card-bg rounded-sm"
-        >
-          {children}
-        </Gradient1>
-      )}
-    >
-      {content}
-    </ConditionalWrapper>
+    <div className="w-full px-4 sm:px-6 lg:px-8">
+      <ConditionalWrapper
+        condition={mode === "standalone"}
+        wrapper={(children) => (
+          <Gradient1
+            hoverOn
+            className="w-full max-w-2xl min-h-64 mx-auto my-8 p-4 glass-hover card-shadow card-bg rounded-sm"
+          >
+            {children}
+          </Gradient1>
+        )}
+      >
+        {content}
+      </ConditionalWrapper>
+    </div>
   );
 }
 
