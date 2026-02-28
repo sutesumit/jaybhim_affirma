@@ -29,7 +29,7 @@ const MenuBarWrapper: React.FC = () => {
       {/* The suggestion: A dedicated interactive layer controlled by isMenuOpen */}
       <div 
         className={cn(
-          "fixed inset-0 z-30 flex flex-col pt-[64px]",
+          "fixed inset-0 z-30 flex flex-col pt-14",
           isMenuOpen ? "pointer-events-auto" : "pointer-events-none"
         )}
       >

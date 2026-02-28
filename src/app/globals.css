@@ -73,7 +73,7 @@
   .card-inner-shadow { @apply hover:shadow-[inset_0px_0px_10px_-1px_rgba(59,_130,_246,_0.5)] ; }
   
   .glass-hover {
-    @apply backdrop-blur-lg bg-white/5 hover:backdrop-blur-sm hover:bg-white/50 transition-all duration-300 ease-in-out;
+    @apply relative isolate backdrop-blur-lg bg-white/5 hover:backdrop-blur-sm hover:bg-white/50 transition-all duration-300 ease-in-out;
     @apply hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_inset_0_-1px_1px_rgba(19,24,87,0.5),_0_0_12px_rgba(19,24,87,0.2)];
   }
 

@@ -27,14 +27,17 @@ const MenuCardsGrid: React.FC = () => {
             animate={{ y: 0, opacity: 1, transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] } }}
             exit={{ y: "-100%", opacity: 0, transition: { duration: 0.2, ease: [0.4, 0, 0.1, 1] } }}
         >
-            <div
-                className="menu-content relative flex-grow w-full z-20 p-2 flex flex-col overflow-y-auto gap-1"
-            >
+            <div className="absolute top-2 left-2 right-2 z-30">
                 <SearchBar 
                     searchTerm={searchTerm} 
                     onSearchChange={setSearchTerm} 
                     onClear={clearSearch} 
                 />
+            </div>
+
+            <div
+                className="menu-content relative flex-grow w-full z-20 px-2 pb-2 pt-14 flex flex-col overflow-y-auto gap-1"
+            >
 
                 <CardsGrid 
                     items={filteredItems} 
