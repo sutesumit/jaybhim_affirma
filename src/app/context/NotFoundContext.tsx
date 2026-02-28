@@ -1,7 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import React, { createContext, useContext, useState } from "react";
 
 interface NotFoundContextType {
   isNotFound: boolean;
@@ -12,15 +11,15 @@ const NotFoundContext = createContext<NotFoundContextType | undefined>(undefined
 
 export function NotFoundProvider({ children }: { children: React.ReactNode }) {
   const [isNotFound, setIsNotFound] = useState(false);
-  const pathname = usePathname();
 
-  const value = { 
+  const setNotFound = React.useCallback((val: boolean) => {
+    setIsNotFound(val);
+  }, []);
+
+  const value = React.useMemo(() => ({ 
     isNotFound, 
-    setNotFound: (val: boolean) => {
-      console.log("NotFoundProvider: setNotFound called with", val);
-      setIsNotFound(val);
-    } 
-  };
+    setNotFound 
+  }), [isNotFound, setNotFound]);
 
   return (
     <NotFoundContext.Provider value={value}>
