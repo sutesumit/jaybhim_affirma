@@ -1,45 +1,59 @@
 'use client'
-import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React from 'react'
+import { TitleDiscription } from '@/app/my_components/PageTitleSection'
+import { CommentsSection } from '@/app/my_components/CommentsSection/CommentsSection'
+import Seperator from '@/app/my_components/shared/Seperator'
+import AcknowledgementSection from '@/app/my_components/AcknowledgementSection/AcknowledgementSection'
+import Videoscape from '@/app/my_components/specific/image_bodies/videoscape'
 
-export default function Home() {
-
-  return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center px-4">
-
-        
-        <div 
-          className="404-container flex flex-col items-center justify-center mx-2 p-10 rounded-lg font-rajdhani text-center overflow-clip bg-white/50 backdrop-blur-sm border-[1px] border-[var(--primary-blue)] hover:scale-90 hover:shadow-[8px_8px_0px_0px_var(--primary-blue)] transition-transition duration-300 ease-in-out"
-        >
-          <div className='loader mb-5'></div>
-          <div className="space-y-6">
-            <div className="text-container !text-center">
-              Arre! This page is under construction.
-            </div>
-            <div className="text-container !text-xs !text-center !leading-relaxed">
-              But worry not, sumit is rolling up his sleeves,
-              chasing down time and resources, and will bring this <span className='opacity-50'>Home Photobook</span> page to life soon.<br />Hang tight!
-            </div>
-          
-            <div className='text-container flex justify-center gap-2 font-title bg-blend-difference transition-colors duration-1000 ease-out'>
-              <Link
-                href="https://youtu.be/llARFMPOTB0?t=1137"
-                target="_blank"
-                className="flex justify-center items-center flex-1 px-4 py-2 text-center rounded-sm border-[1px] border-[var(--primary-blue)] text-xs hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]"
-              >
-                Watch the old walkthrough video here.
-              </Link>
-              <Link
-                href="https://familialphoto.tumblr.com/"
-                target="_blank"
-                className="flex justify-center items-center flex-1 px-4 py-2 text-center rounded-sm border-[1px] border-[var(--primary-blue)] text-xs hover:bg-[var(--primary-blue)] hover:text-[var(--primary-white)]"
-              >
-                Check out the work on the old blog.
-              </Link>
-            </div>
-          </div>
-        </div>
-      
-    </div>
-  );
+const content = {
+  title: "Home // घर",
+  description: {
+    eng: "Photographing my parents has been a private experience for me. Initially, I started taking their pictures with an intention to record my mother’s recovery from schizophrenia and my father’s recovery from long term depression. Although, the act of photographing them has mostly been helping me to visually articulate and re-establish the emotional intimacy in my relationship with them.\n\nThe inability to be always mindful of anxieties and to express verbally and communicate the feelings has always had a crippling effect on our familial environment. As we are healing through generational and familial traumas together, I personally find the intentional and specific act of making a family portrait very burdening. For me, the ultimate aim of the engagement with photography is to heal and beget self compassion.",
+    mar: "आईवडिलांचे फोटोज काढणे तशी माझ्यासाठी खूप व्यक्तीगत गोष्ट आहे. सुरुवातीला मला वाटलेलं कि आईची स्कीझोफ्रेनियातुन आणि पप्पांची दीर्घ नैराश्यातून होणारी सुधारणा मी 'डॉक्युमेन्ट’ करत आहे. खरं तर त्या फोटो काढण्यांतून मला आमचं डळमळलेलं नातं समजण्यासाठी-जुळवण्यासाठी भावनिक भाषा सापडत जात आहे.\n\nजीवाला लागलेले घोर नेहमीच शब्दांत घालून ठेवता येतात किंवा भावनांना नेहमीच बडबडायला येतं असं नाही, पण तरीही नात्यांच्या पांगुळलेपणावर त्यामुळे व्हायचा तो परिणाम होतोच. पिढीजात आणि कौटुंबिक आघातांमधून भरून येत असताना मुद्दामहून काढायचे फॅमिली ग्रुप फोटो खूप तकलादू, दिखाऊ आणि थोडे कामचुकार वाटतात. जखमा भरवून स्व-स्नेह रुजवणे हेच कलेशी असलेल्या नात्याचं माझ्यासाठी परमोच्च ध्येय.",
+  },
 }
+
+const background = (
+  <Videoscape 
+    src="https://www.youtube.com/embed/llARFMPOTB0?start=1137&autoplay=1&mute=1&controls=0&loop=1&playlist=llARFMPOTB0&modestbranding=1&showinfo=0&rel=0"
+    bg_value="bg-white"
+  />
+)
+
+const Home = () => {
+  return (
+    <div className='flex flex-col items-center min-h-screen'>
+      <TitleDiscription 
+        title={content.title}
+        description={content.description}
+      />
+      
+      {/* Photobook / Gallery Section */}
+      <div className='relative flex w-screen h-auto md:aspect-video md:max-h-screen py-4 items-center justify-center overflow-hidden'>
+        <Videoscape 
+          src="https://www.youtube.com/embed/INBzyeMpWzo?autoplay=1&mute=1&controls=0&loop=1&playlist=INBzyeMpWzo&modestbranding=1&showinfo=0&version=3&playlist=INBzyeMpWzo&rel=0"
+          bg_value="bg-black"
+        />
+        {/* Placeholder for future artwork/gallery overlay */}
+        <div className='text-container mix-blend-difference text-[--primary-white] opacity-100 z-10'>
+           {/* Add text or interactive elements here if needed */}
+        </div>
+      </div>
+
+      <div className='relative w-full'>
+        <Seperator />
+      </div>
+
+      <CommentsSection pagePath="/home-photobook" mode="standalone" />
+
+      <div className='relative w-full'>
+        <Seperator />
+      </div>
+
+      <AcknowledgementSection names={["Digambar Sute", "Angarika Sute", "Family", "Friends"]} />
+    </div>
+  )
+}
+
+export default Home
