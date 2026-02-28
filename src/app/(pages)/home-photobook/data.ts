@@ -11,7 +11,7 @@ export const content = {
 export const videoSources = {
   background: "https://www.youtube.com/embed/llARFMPOTB0?start=1137&autoplay=1&mute=1&controls=0&loop=1&playlist=llARFMPOTB0&modestbranding=1&showinfo=0&rel=0",
   gallery: "https://www.youtube.com/embed/INBzyeMpWzo?autoplay=1&mute=1&controls=0&loop=1&playlist=INBzyeMpWzo&modestbranding=1&showinfo=0&version=3&playlist=INBzyeMpWzo&rel=0",
-  galleryDuration: 335 // Duration in seconds (placeholder, should be actual video length)
+  galleryDuration: 118 // Duration in seconds (placeholder, should be actual video length)
 }
 
 export const timelineItems = [
