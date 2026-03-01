@@ -3,8 +3,8 @@ import React from 'react'
 import { CommentsSection } from '@/app/my_components/CommentsSection/CommentsSection'
 import Seperator from '@/app/my_components/shared/Seperator'
 import AcknowledgementSection from '@/app/my_components/AcknowledgementSection/AcknowledgementSection'
-import HomePhotobookHeader from './_components/HomePhotobookHeader'
-import HomePhotobookGallery from './_components/HomePhotobookGallery'
+import { HeroSection } from './HeroSection'
+import { GallerySection } from './GallerySection'
 import { acknowledgements } from './data'
 
 /**
@@ -17,12 +17,12 @@ import { acknowledgements } from './data'
  */
 const Home = () => {
   return (
-    <div className='flex flex-col items-center min-h-screen'>
-      {/* Title and Description Section */}
-      <HomePhotobookHeader />
+    <div className='flex flex-col w-full items-center isolate'>
+      {/* Title and Description Section with Video Background */}
+      <HeroSection />
       
-      {/* Photobook / Gallery Section */}
-      <HomePhotobookGallery />
+      {/* Photobook / Gallery Section with Canvas-like styling */}
+      <GallerySection />
 
       <div className='relative w-full'>
         <Seperator />

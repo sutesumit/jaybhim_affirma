@@ -1,15 +1,19 @@
 'use client'
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Videoscape from '@/app/my_components/specific/image_bodies/videoscape'
 import { videoSources, timelineItems } from '../data'
 import RunningTimeline from './RunningTimeline'
 
-export const HomePhotobookGallery = () => {
+/**
+ * GallerySection for the Home Photobook page.
+ * Renders an interactive photobook/video gallery with a synchronized timeline.
+ */
+const GallerySection = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const [isPlaying, setIsPlaying] = React.useState(true) // Autoplay is on by default
+  const [isPlaying, setIsPlaying] = useState(true) // Autoplay is on by default
 
   // Listen for state changes from YouTube IFrame
-  React.useEffect(() => {
+  useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (event.origin !== 'https://www.youtube.com') return
       
@@ -57,21 +61,18 @@ export const HomePhotobookGallery = () => {
   }
 
   return (
-    <div className='relative flex flex-col w-screen h-auto md:aspect-video md:max-h-screen items-center justify-center overflow-hidden'>
-      <div className='relative w-full h-full flex items-center justify-center'>
+    <div className='relative flex flex-col h-screen items-center justify-center overflow-hidden w-full'>
+      <div className={`absolute inset-0 bg-black`}></div>
+      {/* Inner container that takes up the full width and defines height via aspect-video */}
+      <div className='relative z-10 w-full h-full aspect-video flex items-center justify-center overflow-hidden'>
         <Videoscape 
           ref={iframeRef}
           src={videoSources.gallery}
           bg_value="bg-black"
           id="gallery-video"
         />
-        
-        {/* Placeholder for future artwork/gallery overlay */}
-        <div className='text-container mix-blend-difference text-[--primary-white] opacity-100 z-10'>
-           {/* Add text or interactive elements here if needed */}
-        </div>
 
-        {/* Running Timeline like YouTube */}
+        {/* Running Timeline */}
         <RunningTimeline 
           items={timelineItems} 
           duration={videoSources.galleryDuration} 
@@ -83,7 +84,6 @@ export const HomePhotobookGallery = () => {
       </div>
     </div>
   )
-}
+  }
 
-export default HomePhotobookGallery
-
+export default GallerySection

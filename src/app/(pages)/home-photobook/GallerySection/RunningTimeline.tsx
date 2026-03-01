@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { cn } from '@/lib/utils'
 
 export interface TimelineItem {
   timestamp: number; // in seconds
@@ -17,9 +16,12 @@ interface RunningTimelineProps {
   onTogglePlay: () => void;
 }
 
-const RunningTimeline: React.FC<RunningTimelineProps> = ({ items, duration, onSeek, iframeRef, isPlaying, onTogglePlay }) => {
+/**
+ * RunningTimeline component.
+ * Provides a synchronized progress bar for the video gallery.
+ */
+const RunningTimeline: React.FC<RunningTimelineProps> = ({ duration, onSeek, iframeRef, isPlaying, onTogglePlay }) => {
   const [currentTime, setCurrentTime] = useState(0)
-  const [isHovering, setIsHovering] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const progressBarRef = useRef<HTMLDivElement>(null)
 
@@ -70,9 +72,24 @@ const RunningTimeline: React.FC<RunningTimelineProps> = ({ items, duration, onSe
     setCurrentTime(newTime)
   }
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true)
+    const newTime = calculateSeekTime(e.touches[0].clientX)
+    onSeek(newTime)
+    setCurrentTime(newTime)
+  }
+
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (isDragging) {
       const newTime = calculateSeekTime(e.clientX)
+      onSeek(newTime)
+      setCurrentTime(newTime)
+    }
+  }, [isDragging, calculateSeekTime, onSeek])
+
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    if (isDragging) {
+      const newTime = calculateSeekTime(e.touches[0].clientX)
       onSeek(newTime)
       setCurrentTime(newTime)
     }
@@ -86,24 +103,26 @@ const RunningTimeline: React.FC<RunningTimelineProps> = ({ items, duration, onSe
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove)
       window.addEventListener('mouseup', handleMouseUp)
+      window.addEventListener('touchmove', handleTouchMove)
+      window.addEventListener('touchend', handleMouseUp)
     } else {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseup', handleMouseUp)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleMouseUp)
     }
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseup', handleMouseUp)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleMouseUp)
     }
-  }, [isDragging, handleMouseMove, handleMouseUp])
+  }, [isDragging, handleMouseMove, handleTouchMove, handleMouseUp])
 
   const progressPercent = (currentTime / duration) * 100
 
   return (
-    <div 
-      className="absolute bottom-6 left-0 right-0 z-30 flex flex-col items-center px-8 md:px-20 gap-4"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
+    <div className="absolute bottom-6 left-0 right-0 z-30 flex flex-col items-center px-4 md:px-20 gap-4">
       <div className="flex flex-col items-center gap-4 w-full">
         {/* Play/Pause Button */}
         <button 
@@ -123,7 +142,12 @@ const RunningTimeline: React.FC<RunningTimelineProps> = ({ items, duration, onSe
         </button>
 
         {/* Progress Bar Container */}
-        <div className="relative w-full flex-1 group cursor-pointer py-1" ref={progressBarRef} onMouseDown={handleMouseDown}>
+        <div 
+          className="relative w-full flex-1 group cursor-pointer py-1" 
+          ref={progressBarRef} 
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
+        >
           {/* Background Track */}
           <div className="h-1 w-full bg-white/10 overflow-hidden">
             {/* Progress Fill */}
@@ -137,16 +161,6 @@ const RunningTimeline: React.FC<RunningTimelineProps> = ({ items, duration, onSe
           </div>
         </div>
       </div>
-
-      <style jsx global>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </div>
   )
 }
