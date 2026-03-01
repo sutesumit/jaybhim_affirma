@@ -40,7 +40,7 @@ const CardImagePreview: React.FC<CardImagePreviewProps> = ({ object, hoveredCard
                 width={500}
                 height={500}
                 style={{
-                borderRadius: '10px',
+                borderRadius: '5px',
                 position: 'fixed',
                 objectFit: 'contain',
                 visibility: 'visible',
