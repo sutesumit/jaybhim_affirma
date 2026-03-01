@@ -10,7 +10,7 @@
 
 ## Screenshots
 
-![Screenshot 1](/artsumitsute.gif)
+![Screenshot 1](/public/repo-assets/artsumitsute.gif)
 
 ## Features
 

@@ -14,7 +14,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ searchTerm, onClear }) => {
         <div className="flex-grow flex flex-col">
             <Gradient1 
                 hoverOn={true} 
-                className="relative group glass-hover card-border rounded-sm flex-grow flex flex-col overflow-hidden"
+                className="relative group glass-hover card-shadow rounded-sm flex-grow flex flex-col overflow-hidden"
             >
                 <div className="flex flex-grow relative z-10 flex-col items-center justify-center p-5 text-[var(--primary-blue)] space-y-3">
                     <div className="p-4 rounded-full">
