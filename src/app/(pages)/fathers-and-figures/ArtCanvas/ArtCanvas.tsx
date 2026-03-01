@@ -24,7 +24,7 @@ const PhotoCollection = ({
     {Array.from({ length: 23 }, (_, i) => i).map((i) => (
       <DraggablePhoto
         key={i + 200}
-        src={`/fathersandfigures/${i + 1}.jpg`}
+        src={`/fathersandfigures/${i + 1}.webp`}
         alt={`Image ${i + 1}`}
         animate={styles[i]}
         dragConstraints={constraints}

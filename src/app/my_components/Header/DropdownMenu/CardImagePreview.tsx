@@ -28,27 +28,27 @@ const CardImagePreview: React.FC<CardImagePreviewProps> = ({ object, hoveredCard
             {hoveredCard === object.id && (
             <MotionImage
                 key={object.id}
-                initial={{ opacity: 0, scale: 0, rotate: 180 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                exit={{ opacity: 0, scale: 0, rotate: -180 }}
+                initial={{ opacity: 0, scale: 0, rotate: 180, x: '-50%', y: '-50%' }}
+                animate={{ opacity: 1, scale: 1, rotate: 0, x: '-50%', y: '-50%' }}
+                exit={{ opacity: 0, scale: 0, rotate: -180, x: '-50%', y: '-50%' }}
                 transition={{
                     duration: 0.3
                 }}
                 className='menu-image'
                 src={object.image}
                 alt={object.title}
-                width={100}
-                height={100}
+                width={500}
+                height={500}
                 style={{
                 borderRadius: '10px',
-                position: 'absolute',
+                position: 'fixed',
                 objectFit: 'contain',
                 visibility: 'visible',
                 width: '20vw',
                 zIndex: 10,
                 pointerEvents: 'none',
-                left: `calc(${x}px - 10vw)`,
-                top: `calc(${y}px - 10vw)`,
+                left: `${x}px`,
+                top: `${y}px`,
                 }}
             />
             )}

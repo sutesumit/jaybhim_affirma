@@ -11,6 +11,11 @@ const Flipbook = () => {
     };
     
 
+    const getPageSrc = (page: number) => {
+        const extension = 'webp';
+        return `/lunchbox_pages/Lunchboxe_Page_${page}.${extension}`;
+    };
+
   return (
     <div className='flipbook-container font-rajdhani text-[--primary-white] max-w-[80ch] w-full mx-auto py-10 px-4 sm:px-6'>
           <div className="spread flex overflow-x-auto snap-x snap-mandatory w-full scrollbar-hide gap-4 p-[1px]">
@@ -18,7 +23,7 @@ const Flipbook = () => {
               <div key={page} className="border-[1px] border-[--primary-blue] rounded-sm w-full flex-shrink-0 snap-center">
                 <div className="flex flex-row items-center gap-0 p-6">
                     <Image 
-                        src={`/lunchbox_pages/Lunchboxe_Page_${page}.jpg`} 
+                        src={getPageSrc(page)} 
                         alt={`Lunchboxe Page ${page}`} 
                         width={50} 
                         height={50}
@@ -29,7 +34,7 @@ const Flipbook = () => {
                         }}
                     />
                     <Image 
-                        src={`/lunchbox_pages/Lunchboxe_Page_${page+1}.jpg`} 
+                        src={getPageSrc(page + 1)} 
                         alt={`Lunchboxe Page ${page}`} 
                         width={50} 
                         height={50} 

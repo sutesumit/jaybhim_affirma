@@ -35,14 +35,14 @@ const MaraaSection = () => {
           </div>
           <div className="relative glass-hover isolate text-container flex flex-1 md:flex-row flex-col items-center justify-center gap-4">
             <Image
-              src='/fathersandfigures/maraa_exhibition/1.jpg'
+              src='/fathersandfigures/maraa_exhibition/1.webp'
               alt='A visitor during the exhibition'
               width={220}
               height={200}
               className="rounded-sm overflow-hidden"
             />
             <Image
-              src='/fathersandfigures/maraa_exhibition/2.jpg'
+              src='/fathersandfigures/maraa_exhibition/2.webp'
               alt='A visitor during the exhibition'
               style={{ transform: 'scaleX(-1)' }}
               width={220}

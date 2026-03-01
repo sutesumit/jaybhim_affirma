@@ -23,4 +23,4 @@ export const timelineItems = [
   { timestamp: 300, label: 'End' }
 ]
 
-export const acknowledgements = ["Alka", "Pallavi", "Printo Priting Services", "A Tailer from Murugeshpalya"]
+export const acknowledgements = ["Alka", "Pallavi", "Printo Priting Services", "A Tailor from Murugeshpalya"]

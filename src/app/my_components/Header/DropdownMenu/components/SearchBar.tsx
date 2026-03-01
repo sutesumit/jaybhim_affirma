@@ -13,12 +13,12 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, onSearchChange, onClear }) => {
     return (
-        <div className="card-border glass-hover rounded-sm w-full">
+        <div className="card-shadow glass-hover rounded-sm w-full">
             <Gradient1 hoverOn={true} className="relative group p-0">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--primary-blue)] opacity-50 group-focus-within:opacity-100 transition-opacity z-10" />
                 <Input
                     placeholder="Search works and projects"
-                    className="pl-10 pr-10 border-none bg-transparent focus-visible:ring-0 font-bold text-[var(--primary-blue)] font-rajdhani placeholder:text-[var(--primary-blue)] placeholder:opacity-50 relative z-10 h-10 w-full"
+                    className="pl-10 pr-10 border-none bg-transparent focus-visible:card-inner-shadow rounded-sm font-bold text-[var(--primary-blue)] font-rajdhani placeholder:text-[var(--primary-blue)] placeholder:opacity-50 relative z-10 h-10 w-full"
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
                 />

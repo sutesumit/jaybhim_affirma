@@ -21,13 +21,13 @@ const EmptyState: React.FC<EmptyStateProps> = ({ searchTerm, onClear }) => {
                         <Search className="h-6 w-6" />
                     </div>
                     
-                    <div className="text-center">
-                        <p className="text-md font-rajdhani uppercase tracking-wider"><span className="font-bold italic">{searchTerm}</span> hasn't made any debut yet. No matches.</p>
+                    <div className="text-center pb-4">
+                        <p className="text-sm font-rajdhani tracking-wider"><span className="font-bold italic">{searchTerm}</span> hasn't made any debut yet. No matches.</p>
                     </div>
 
                     <button 
                         onClick={onClear}
-                        className="text-sm button-style w-fit px-8 py-2"
+                        className="text-sm button-style w-fit px-8 py-1"
                     >
                         Clear search
                     </button>

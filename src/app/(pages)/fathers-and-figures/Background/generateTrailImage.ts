@@ -14,7 +14,7 @@
 
 export const generateTrailImage = (x: number, y: number) => ({
     id: Date.now() + Math.random(),
-    src: `/fathersandfigures/${Math.floor(Math.random() * 22 + 1)}.jpg`,
+    src: `/fathersandfigures/${Math.floor(Math.random() * 22 + 1)}.webp`,
     x,
     y
   });
