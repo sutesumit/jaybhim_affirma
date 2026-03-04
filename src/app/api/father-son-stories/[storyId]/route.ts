@@ -2,9 +2,9 @@
 // Handles individual story operations: update and soft-delete
 
 import { AuthManager } from "@/lib/auth/auth-manager";
-import { getServerSupabase } from "@/lib/supabase-server";
+import { getServerSupabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
-import { MAX_FATHER_SON_STORY_LENGTH } from "@/lib/constants";
+import { MAX_FATHER_SON_STORY_LENGTH } from "@/lib/utils/constants";
 
 
 interface RouteContext {

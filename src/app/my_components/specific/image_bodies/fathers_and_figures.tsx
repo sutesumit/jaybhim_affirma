@@ -43,7 +43,7 @@ const FathersAndFigures = () => {
         className="fathers-and-figures-image-container w-full h-[500%]"
       >
         <Image
-          src={'/FathersAndFigures.png'}
+          src={'/FathersAndFigures.webp'}
           alt="Fathers and Figures"
           fill
           style={{ objectFit: 'cover' }}

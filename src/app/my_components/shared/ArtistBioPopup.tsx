@@ -2,7 +2,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { TitleDiscription } from "../PageTitleSection";
-import { randomInRange } from "@/_hooks/useRandomRotation";
+import { randomInRange } from "@/hooks";
 
 interface ArtistBioPopupProps {
     isOpen: boolean;

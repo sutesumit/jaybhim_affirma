@@ -1,5 +1,5 @@
 import { AuthManager } from "@/lib/auth/auth-manager";
-import { getServerSupabase } from "@/lib/supabase-server";
+import { getServerSupabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 import type { 
   ToggleLikeRequest, 

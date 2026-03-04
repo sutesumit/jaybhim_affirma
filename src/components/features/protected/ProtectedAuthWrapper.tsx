@@ -1,0 +1,43 @@
+import React from 'react'
+import { AuthCard } from '@/components/features/auth-card'
+import { User } from '@/lib/auth/auth-types'
+import { useAuthContext } from '@/auth/useAuthContext'
+
+interface ProtectedAuthWrapperProps {
+    children: React.ReactNode
+    onAuthError?: (error: string) => void
+    onAuthSuccess?: (user: User) => void
+    description?: string;
+}
+
+const ProtectedAuthWrapper = ({children, onAuthError, onAuthSuccess, description}: ProtectedAuthWrapperProps) => {
+    const { isAuthenticated, user, loading, error } = useAuthContext()
+
+    // Unified handling of AuthSuccess is now moved to ProtectedActionDrawer and AuthCard
+
+    if (loading) {
+    return (
+      <div className={`flex justify-center items-center`}>
+        <p>Loading authentication status...</p> {/* Or a spinner */}
+      </div>
+    );
+    }
+    
+    if(!user || !isAuthenticated){
+        return (
+        <AuthCard 
+            className='w-full max-w-[22rem] shrink'
+            onAuthError={onAuthError}
+            onAuthSuccess={onAuthSuccess}
+            description={description}
+        />
+    )
+    }
+  return (
+    <>
+     {children} 
+    </>
+  )
+}
+
+export default ProtectedAuthWrapper

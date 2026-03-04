@@ -1,4 +1,4 @@
-import { LinkPreview } from '@/_components/aceternity_ui/link-preview'
+import { LinkPreview } from '@/components/vendor/aceternity-ui'
 import React from 'react'
 
 const Paragraph_4 = () => {

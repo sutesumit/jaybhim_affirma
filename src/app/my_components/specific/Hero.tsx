@@ -1,5 +1,5 @@
 'use client'
-import { EvervaultCard } from '@/_components/aceternity_ui/evervault-card'
+import { EvervaultCard } from '@/components/vendor/aceternity-ui'
 import React from 'react'
 import JaiBhim from './JaiBhim'
 

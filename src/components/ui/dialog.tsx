@@ -5,7 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import Gradient1 from "@/app/my_components/gradients/Gradient1"
+import { Gradient1 } from "@/components/features/shared"
 import { DotGrid } from "@/components/ui/dot-grid"
 
 const Dialog = DialogPrimitive.Root

@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { InstructionProps } from './types'
-import Gradient1 from '@/app/my_components/gradients/Gradient1'
+import { Gradient1 } from '@/components/features/shared'
 
 /**
  * Instruction component for ArtCanvas.

@@ -2,7 +2,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { flashFictions } from './flash_fiction_object';
-import { LinkPreview } from '../../../../_components/aceternity_ui/link-preview';
+import { LinkPreview } from '@/components/vendor/aceternity-ui';
 import { ExternalLink, Link, Pointer } from 'lucide-react';
 
 const SampleWriting = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
-import useMousePosition from '@/_hooks/useMousePosition'
+import { useMousePosition } from '@/hooks'
 
 type GradientProps = {
   hoverOn?: boolean,

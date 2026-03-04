@@ -65,10 +65,7 @@ const Jumper = () => {
             </m.div>
           </AnimatePresence>
         </div>
-
-      <div className="w-full">
-          <Seperator ref={seperatorRef} />
-      </div>
+        <Seperator ref={seperatorRef} />
     </div>
   )
 }

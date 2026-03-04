@@ -1,11 +1,10 @@
 'use client'
 import React from 'react'
-import { CommentsSection } from '@/app/my_components/CommentsSection/CommentsSection'
-import Seperator from '@/app/my_components/shared/Seperator'
-import AcknowledgementSection from '@/app/my_components/AcknowledgementSection/AcknowledgementSection'
-import { HeroSection } from './HeroSection'
-import { GallerySection } from './GallerySection'
-import { acknowledgements } from './data'
+import { CommentsSection } from '@/components/features/comments'
+import { Separator, AcknowledgementSection } from '@/components/features/shared'
+import { HeroSection } from './components/HeroSection'
+import { GallerySection } from './ArtCanvas'
+import { acknowledgements } from './content'
 
 /**
  * HomePhotobook page component.
@@ -20,20 +19,19 @@ const Home = () => {
     <div className='flex flex-col w-full items-center isolate'>
       {/* Title and Description Section with Video Background */}
       <HeroSection />
+
+      <Separator />
       
       {/* Photobook / Gallery Section with Canvas-like styling */}
       <GallerySection />
 
-      <div className='relative w-full'>
-        <Seperator />
-      </div>
+      <Separator />
+
 
       {/* Community Interaction Section */}
       <CommentsSection pagePath="/home-photobook" mode="standalone" />
 
-      <div className='relative w-full'>
-        <Seperator />
-      </div>
+      <Separator />
 
       {/* Credits Section */}
       <AcknowledgementSection names={acknowledgements} />

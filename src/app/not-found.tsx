@@ -2,8 +2,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { NotFoundReporter } from './components/NotFoundReporter';
-import Gradient1 from '@/app/my_components/gradients/Gradient1';
-import MenuToggleControl from './my_components/Header/Navigation/MenuToggleControl';
+import { Gradient1 } from '@/components/features/shared'
+import MenuToggleControl from '@/components/features/header/Navigation/MenuToggleControl'
 
 export default function NotFound() {
   return (

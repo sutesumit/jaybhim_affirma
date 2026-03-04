@@ -13,9 +13,7 @@ const Footer: React.FC = () => {
 
     return (
         <>
-            <div className='separator-container relative'>
-                <Seperator />
-            </div>
+            <Seperator />
             <footer className='relative m-2 overflow-hidden rounded-sm text-[var(--primary-blue)] font-rajdhani font-medium text-sm cursor-pointer glass-hover card-bg card-shadow'>
                 <Gradient1 className='grid grid-cols-1 md:grid-cols-3 justify-between items-center px-4 h-10 w-full' hoverOn={true}>
                     <span 

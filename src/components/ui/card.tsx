@@ -1,5 +1,5 @@
 import * as React from "react"
-import Gradient1 from "@/app/my_components/gradients/Gradient1"
+import { Gradient1 } from "@/components/features/shared"
 import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef<

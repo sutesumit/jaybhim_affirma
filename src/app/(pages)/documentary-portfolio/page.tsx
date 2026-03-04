@@ -1,5 +1,5 @@
 import React from 'react';
-import DocumentaryGallery from './DocumentaryGallery';
+import { DocumentaryGallery } from './components/DocumentaryGallery';
 import { getImageList } from './imageList';
 
 export default function DocumentaryPortfolio() {

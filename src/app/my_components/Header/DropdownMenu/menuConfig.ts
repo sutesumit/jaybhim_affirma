@@ -27,8 +27,8 @@ const menuConfig = [
     },
     {
         id: 3,
-        title: 'घरात घर // Homing Home',
-        href: '/homing-home',
+        title: 'घरात घर // At Home Elsewhere',
+        href: '/at-home-elsewhere',
         image: '/thumbnails/4.jpg',
         description: ' As I imagine a visual presence of my friends on the walls of my parental house, the digital phoniness of my attempts fail to antidote my loneliness during Covid-19.',
         searchContent: 'Friends, Lockdown, Covid-19, Loneliness, Parental house, Walls'

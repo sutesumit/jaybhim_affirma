@@ -1,13 +1,13 @@
 import { Lora, Merriweather, Vesper_Libre, Rajdhani, Reenie_Beanie } from 'next/font/google';
 import type { Metadata } from 'next';
 import React from 'react';
-import { Footer } from './my_components/Footer/';
+import { Footer } from '@/components/features/footer';
 import './globals.css';
-import { Header } from './my_components/Header/';
+import { Header } from '@/components/features/header';
 import { AuthProvider } from '@/auth/AuthContext';
-import { NavMenuProvider } from './my_components/Header/menuContext/MenuContextProvider';
+import { NavMenuProvider } from '@/components/features/header/menuContext/MenuContextProvider';
 import { NotFoundProvider } from './context/NotFoundContext';
-import NavigationProgressBar from './my_components/NavigationProgressBar';
+import { NavigationProgressBar } from '@/components/features/shared';
 
 
 import { Toaster } from '@/components/ui/toaster';

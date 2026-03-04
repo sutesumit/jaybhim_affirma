@@ -1,12 +1,12 @@
 import { AuthManager } from "@/lib/auth/auth-manager";
-import { getServerSupabase } from "@/lib/supabase-server";
+import { getServerSupabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 import type { 
   PostStoryRequest, 
   PostStoryResponse, 
   GetStoriesResponse 
 } from "@/types/stories";
-import { MAX_FATHER_SON_STORY_LENGTH } from "@/lib/constants";
+import { MAX_FATHER_SON_STORY_LENGTH } from "@/lib/utils/constants";
 
 
 

@@ -1,72 +1,24 @@
 'use client';
-import WritingsSnapscroll from "@/app/my_components/specific/image_bodies/writings_snapscroll";
-import { TitleDiscription } from "@/app/my_components/PageTitleSection";
-import { flashFictions } from "@/app/my_components/specific/image_bodies/flash_fiction_object";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { useState } from "react";
-import Seperator from "@/app/my_components/shared/Seperator";
-import { CommentsSection } from "@/app/my_components/CommentsSection";
+import React, { useRef } from 'react';
+import { HeroSection } from './components';
+import { ArtCanvas } from './ArtCanvas';
+import { Separator, AcknowledgementSection } from '@/components/features/shared';
+import { CommentsSection } from '@/components/features/comments';
+import { acknowledgements } from './content';
 
-const content = {
-  title: "Imagining Images",
-  description: {
-    eng: "Few convoluted flash-fictions titled by abstract visuals, in a secret pursuit of articulating & visualizing disturbed relationships with the self and others.",
-    mar: "काही अमूर्त चित्रांनी शीर्षकबद्ध करून संदर्भहिन स्पष्टीकरणात गुंडाळलेल्या फ्लॅश-फिक्शन कथा. स्वतःशी आणि इतरांशी असलेल्या अस्थिर नातेसंबंधांना शब्द आणि रूप देण्याच्या सुप्त हेतूने.",
-  },
-};
+export default function MarathiShortStories() {
+  const artCanvasRef = useRef<HTMLDivElement | null>(null);
 
-
-
-const background = () => {
   return (
-    <motion.div 
-      className='h-full w-auto py-6 gap-6 inline-flex items-center overflow-hidden filter'
-      animate={{ x: ["0%", "-50%"] }}
-      transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
-    >
-      <div className="absolute inset-0 z-50 bg-[--primary-blue] opacity-20"></div>
-      {[...flashFictions, ...flashFictions].map((fiction, index) => (
-        <motion.div 
-          key={index}
-          className='background-image-container h-full aspect-square grayscale opacity-70'
-          initial={{ scale: 3.1, rotate: 0 }}
-          animate={{ scale: ["5.1", "3.1", "5.1"], rotate: 360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "easeInOut" }}
-        
-        >
-            <Image
-              src={fiction.imageUrl}
-              alt={fiction.title}
-              width={800}
-              height={800}
-              style={{ objectFit: "cover" }}
-            />
-        </motion.div>
-      ))}
-    </motion.div>
-  )
-}
-
-
-export default function Home() {
-  const [isBgOn, setIsBgOn] = useState(true);
-  return (
-    <div className="min-h-screen">
-      <div onMouseEnter={() => setIsBgOn(true)} onMouseLeave={() => setIsBgOn(false)}>
-        <TitleDiscription
-          title={content.title}
-          description={content.description}
-          background={isBgOn && <>{background()}</>}
-        />
-      </div>
-      <div className='flex h-screen w-screen items-center justify-center bg-gradient-to-br from-blue-100 via-[--primary-white] to-blue-100'>
-        <WritingsSnapscroll />
-      </div>
-      <div className='relative w-full'>
-        <Seperator />
-      </div>
+    <div className="flex flex-col w-full items-center isolate">
+      <HeroSection />
+      
+      <ArtCanvas ref={artCanvasRef} />
+      
+      <Separator />
       <CommentsSection pagePath="/marathi-short-stories" mode="standalone" />
+      {/* <Separator />
+      <AcknowledgementSection names={acknowledgements} /> */}
     </div>
-  )
+  );
 }

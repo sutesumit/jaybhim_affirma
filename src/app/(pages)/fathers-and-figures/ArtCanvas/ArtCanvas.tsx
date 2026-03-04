@@ -1,9 +1,8 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react'
-import Seperator from '@/app/my_components/shared/Seperator'
+import { Separator, Gradient1 } from '@/components/features/shared'
 import Instruction from './Instruction'
 import DraggablePhoto from './DraggablePhoto'
 import { usePhotoStyle } from './usePhotoStyleHook'
-import Gradient1 from '@/app/my_components/gradients/Gradient1'
 import { photoStyleProp } from './types'
 
 /* ==========================================================================
@@ -50,15 +49,14 @@ const ArtCanvas = forwardRef((props, ref) => {
     return (
         <Gradient1>
             <div
-                className='art-canvas relative flex flex-wrap gap-5 items-center justify-center p-[5vh] min-h-screen w-screen rounded-lg overflow-hidden'
+                className='art-canvas relative flex flex-wrap gap-5 items-center justify-center p-[5vh] min-h-screen w-screen overflow-hidden'
                 ref={artCanvasRef}
             >
                 <Instruction dragConstraints={artCanvasRef} />
                 
                 <PhotoCollection styles={photoStyle} constraints={artCanvasRef} />
-                
-                <Seperator />
             </div>
+            <Separator />
         </Gradient1>
     )
 })

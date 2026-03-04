@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react'
-import { LinkPreview } from '@/_components/aceternity_ui/link-preview'
+import { LinkPreview } from '@/components/vendor/aceternity-ui'
 
 const Paragraph_1 = () => {
   return (
