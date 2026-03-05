@@ -12,15 +12,30 @@ const TitleDiscription = ({
   description,
   background,
   onClose,
+  startDate,
+  finishDate,
 }: { 
   variant?: string, 
   title: string, 
   description: { eng?: string | undefined, mar?: string | undefined }, 
   background?: React.ReactNode | React.ReactElement,
-  onClose?: () => void
+  onClose?: () => void,
+  startDate?: string,
+  finishDate?: string,
 }) => {
 
   const [isMarathi, setIsMarathi] = useState(false)
+  function formatDateRange(startDate?: string, finishDate?: string) {
+    if (startDate && finishDate) {
+      if (startDate === finishDate) return startDate
+      return `${startDate} — ${finishDate}`
+    }
+
+    if (startDate) return `${startDate} — Ongoing`
+    if (finishDate) return finishDate
+
+    return ''
+  }
 
   return (
       <div 
@@ -37,8 +52,15 @@ const TitleDiscription = ({
               <ChevronDown className='w-3 h-3' />
             </div>}
             <div className={`text-center flex flex-col justify-center items-center relative`}>
-              <div className={`p-5 mb-2 text-${variant !== 'popup-bio' ? '2xl' : 'lg'}`}>
-                {title}
+              <div className='flex flex-col justify-center items-center my-5'>
+                <div className={`text-${variant !== 'popup-bio' ? '2xl' : 'lg'}`}>
+                  {title}
+                </div>
+                {(startDate || finishDate) && (
+                  <div className="text-sm italic opacity-60 mb-2">
+                    {formatDateRange(startDate, finishDate)}
+                  </div>
+                )}
               </div>
               <LanguageSwitch
                 isMarathi={isMarathi}

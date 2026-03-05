@@ -9,7 +9,6 @@ This document defines the standard structure for all pages in `(pages)/`.
 ```
 src/app/(pages)/[page-name]/
 ├── page.tsx              # Main page component
-├── content.ts           # Page metadata only (title, description, acknowledgements)
 ├── components/           # UI wrappers and helpers
 │   ├── index.ts          # Barrel file
 │   ├── HeroSection/     # Title + description + background
@@ -22,16 +21,19 @@ src/app/(pages)/[page-name]/
     └── [Component].tsx   # Main content (flipbook, gallery, etc.)
 ```
 
+**Note:** Page metadata (title, description, acknowledgements) is now stored in `@/data/pages-registry.ts` and accessed via the `usePageMetadata()` hook. Do NOT create local content.ts files for metadata.
+
 ---
 
 ## Key Principles
 
-1. **`content.ts`** - Contains only metadata (title, description, acknowledgements) - NO JSX
-2. **`components/`** - Houses HeroSection and other UI wrappers
-3. **`ArtCanvas/`** - Houses the main content component (the "meat" of the page)
-3. **Barrel files (index.ts)** - Always create for each folder
-4. **PascalCase** - All folder and component names
-5. **Import from barrels** - Use `./components` not `./components/HeroSection`
+1. **Metadata via hook** - Use `usePageMetadata()` from `@/lib/hooks/use-page-metadata` to get page metadata (title, description, acknowledgements, startDate, finishDate)
+2. **Dates in HeroSection** - Pass `startDate` and `finishDate` to `TitleDiscription` to display project timeline
+3. **`components/`** - Houses HeroSection and other UI wrappers
+4. **`ArtCanvas/`** - Houses the main content component (the "meat" of the page)
+5. **Barrel files (index.ts)** - Always create for each folder
+6. **PascalCase** - All folder and component names
+7. **Import from barrels** - Use `./components` not `./components/HeroSection`
 
 ---
 
@@ -39,7 +41,7 @@ src/app/(pages)/[page-name]/
 
 ### `components/`
 
-- **HeroSection** - Wraps TitleDiscription with title, description, background
+- **HeroSection** - Wraps TitleDiscription with title, description, startDate, finishDate, and background
 - Any other page-specific UI wrappers
 
 ### `ArtCanvas/`
@@ -80,15 +82,17 @@ import { HeroSection } from './components'
 import { PageUnderConstructionWrapper } from './ArtCanvas'
 import { Separator, AcknowledgementSection } from '@/components/features/shared'
 import { CommentsSection } from '@/components/features/comments'
-import { content, acknowledgements } from './content'
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata'
 
 export default function Page() {
+  const { acknowledgements, pagePath } = usePageMetadata()
+
   return (
     <div className="flex flex-col w-full items-center isolate">
       <HeroSection />
       <PageUnderConstructionWrapper />
       <Separator />
-      <CommentsSection pagePath="/page-name" mode="standalone" />
+      <CommentsSection pagePath={pagePath} mode="standalone" />
       <Separator />
       {acknowledgements.length > 0 && (
         <AcknowledgementSection names={acknowledgements} />
@@ -101,13 +105,15 @@ export default function Page() {
 ```tsx
 // ArtCanvas/PageUnderConstructionWrapper.tsx
 import { PageUnderConstruction } from '@/components/features/shared'
-import { content } from '../content'
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata'
 
 export function PageUnderConstructionWrapper() {
+  const { title } = usePageMetadata()
+
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center px-4">
       <PageUnderConstruction 
-        pageName={content.title}
+        pageName={title}
         youtubeTimestamp="856"
       />
     </div>
@@ -129,15 +135,17 @@ import { HeroSection } from './components'
 import { MyContent } from './ArtCanvas'
 import { Separator, AcknowledgementSection } from '@/components/features/shared'
 import { CommentsSection } from '@/components/features/comments'
-import { acknowledgements } from './content'
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata'
 
 export default function Page() {
+  const { acknowledgements, pagePath } = usePageMetadata()
+
   return (
     <div className="flex flex-col w-full items-center isolate">
       <HeroSection />
       <MyContent />
       <Separator />
-      <CommentsSection pagePath="/page-name" mode="standalone" />
+      <CommentsSection pagePath={pagePath} mode="standalone" />
       <Separator />
       <AcknowledgementSection names={acknowledgements} />
     </div>
@@ -157,10 +165,11 @@ import { MyProvider } from './components/MyProvider'
 import { Submissions } from './components/Submissions'
 import { Separator, AcknowledgementSection } from '@/components/features/shared'
 import { CommentsSection } from '@/components/features/comments'
-import { acknowledgements } from './content'
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata'
 
 export default function Page() {
   const artCanvasRef = useRef(null)
+  const { acknowledgements, pagePath } = usePageMetadata()
 
   return (
     <div className="flex flex-col w-full items-center isolate">
@@ -170,7 +179,7 @@ export default function Page() {
         <Submissions artCanvasRef={artCanvasRef} />
       </MyProvider>
       <Separator />
-      <CommentsSection pagePath="/page-name" mode="standalone" />
+      <CommentsSection pagePath={pagePath} mode="standalone" />
       <Separator />
       <AcknowledgementSection names={acknowledgements} />
     </div>
@@ -197,22 +206,50 @@ import { MyArtCanvas } from './ArtCanvas'
 
 ## Creating a New Page
 
-### Step 1: Create directory
+### Step 1: Add metadata to registry
 
-```bash
-mkdir -p src/app/(pages)/new-page
+Before creating the page, add the page metadata to `@/data/pages-registry.ts`:
+
+```typescript
+// src/data/pages-registry.ts
+export const pagesRegistry: PageRegistry = {
+  'new-page': {
+    id: X,
+    slug: '/new-page',
+    title: 'Page Title',
+    thumbnail: '/thumbnails/x.jpg',
+    shortDescription: 'Short description for menu',
+    fullDescription: {
+      eng: "English description...",
+      mar: "मराठी वर्णन..."
+    },
+    acknowledgements: ["Name 1", "Name 2"],
+    startDate: "Jan 2024",
+    finishDate: "Dec 2024"
+  }
+}
 ```
 
-### Step 2: Create page.tsx
+### Step 2: Create directory
+
+```bash
+mkdir -p src/app/(pages)/new-page/components/HeroSection
+mkdir -p src/app/(pages)/new-page/ArtCanvas
+```
+
+### Step 3: Create page.tsx
 
 ```tsx
+// page.tsx
 'use client'
 import { HeroSection } from './components'
 import { Separator, AcknowledgementSection } from '@/components/features/shared'
 import { CommentsSection } from '@/components/features/comments'
-import { acknowledgements } from './content'
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata'
 
 export default function NewPage() {
+  const { acknowledgements, pagePath } = usePageMetadata()
+
   return (
     <div className="flex flex-col w-full">
       <HeroSection />
@@ -220,7 +257,7 @@ export default function NewPage() {
       {/* Your content here */}
       
       <Separator />
-      <CommentsSection pagePath="/new-page" mode="standalone" />
+      <CommentsSection pagePath={pagePath} mode="standalone" />
       <Separator />
       <AcknowledgementSection names={acknowledgements} />
     </div>
@@ -228,45 +265,25 @@ export default function NewPage() {
 }
 ```
 
-### Step 3: Create content.ts
-
-```typescript
-// content.ts - metadata only, NO JSX
-export const content = {
-  title: "Page Title",
-  description: {
-    eng: "English description...",
-    mar: "मराठी वर्णन..."
-  }
-}
-
-export const acknowledgements = ["Name 1", "Name 2"]
-```
-
-### Step 4: Create components folder structure
-
-```bash
-mkdir -p src/app/(pages)/new-page/components/HeroSection
-mkdir -p src/app/(pages)/new-page/ArtCanvas
-```
-
-### Step 5: Create HeroSection
+### Step 4: Create HeroSection
 
 ```tsx
 // components/HeroSection/HeroSection.tsx
+'use client'
 import { TitleDiscription } from '@/components/features/page-title'
-import { content } from '../../content'
-
-// Place background JSX here (NOT in content.ts)
-const background = <div className='h-full w-full'></div>
-// OR import Background from './Background'
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata'
+import Background from './Background'
 
 export function HeroSection() {
+  const { title, description, startDate, finishDate } = usePageMetadata()
+
   return (
     <TitleDiscription
-      title={content.title}
-      description={content.description}
-      background={background}
+      title={title}
+      description={description}
+      startDate={startDate}
+      finishDate={finishDate}
+      background={<Background />}
     />
   )
 }
@@ -282,7 +299,7 @@ export { HeroSection } from './HeroSection'
 export { HeroSection } from './HeroSection'
 ```
 
-### Step 6: Create ArtCanvas (if needed)
+### Step 5: Create ArtCanvas (if needed)
 
 ```tsx
 // ArtCanvas/MyComponent.tsx
@@ -298,6 +315,36 @@ export { MyComponent } from './MyComponent'
 
 ---
 
+## Using startDate and finishDate
+
+The `usePageMetadata()` hook returns `startDate` and `finishDate` from the registry. To display these in the HeroSection, pass them to `TitleDiscription`:
+
+```tsx
+// components/HeroSection/HeroSection.tsx
+'use client'
+import { TitleDiscription } from '@/components/features/page-title'
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata'
+import Background from './Background'
+
+export function HeroSection() {
+  const { title, description, startDate, finishDate } = usePageMetadata()
+
+  return (
+    <TitleDiscription
+      title={title}
+      description={description}
+      startDate={startDate}
+      finishDate={finishDate}
+      background={<Background />}
+    />
+  )
+}
+```
+
+**Note:** Not all pages have start/finish dates. The `TitleDiscription` component handles `undefined` values gracefully - the dates simply won't be displayed.
+
+---
+
 ## Refactoring Existing Pages
 
 ### Checklist
@@ -306,18 +353,22 @@ export { MyComponent } from './MyComponent'
 - [ ] Move HeroSection to `components/HeroSection/`
 - [ ] Create barrel files (index.ts) for each folder
 - [ ] Update imports in page.tsx to use barrels
-- [ ] Move content to content.ts
+- [ ] Use `usePageMetadata()` hook instead of local content.ts
+- [ ] Remove local content.ts (metadata is now in pages-registry.ts)
 
 ### Import Changes
 
 ```tsx
 // Before
 import { HeroSection } from './components/HeroSection'
-import { MyContent } from './components/MyContent'
+import { content, acknowledgements } from './content'
 
 // After
 import { HeroSection } from './components'
-import { MyContent } from './ArtCanvas'
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata'
+
+// In component:
+const { title, description, acknowledgements } = usePageMetadata()
 ```
 
 ---
@@ -328,7 +379,6 @@ import { MyContent } from './ArtCanvas'
 
 ```
 ├── page.tsx
-├── content.ts
 ├── components/
 │   ├── index.ts
 │   ├── HeroSection/
@@ -348,7 +398,7 @@ import { MyContent } from './ArtCanvas'
 
 ```
 ├── page.tsx
-├── content.ts
+├── content.ts          # Page-specific data (videoSources, timelineItems)
 ├── components/
 │   ├── index.ts
 │   └── HeroSection/
@@ -362,7 +412,7 @@ import { MyContent } from './ArtCanvas'
 
 ```
 ├── page.tsx
-├── content.ts
+├── content.tsx         # Page-specific data (pages array)
 ├── components/
 │   ├── index.ts
 │   └── HeroSection/
@@ -375,7 +425,7 @@ import { MyContent } from './ArtCanvas'
 
 ```
 ├── page.tsx
-├── content.ts
+├── content.ts          # (can be deleted, metadata is now in registry)
 ├── components/
 │   ├── index.ts
 │   └── HeroSection/
@@ -391,5 +441,6 @@ import { MyContent } from './ArtCanvas'
 - ❌ Components at page root level (not in `components/` or `ArtCanvas/`)
 - ❌ Missing barrel files (index.ts)
 - ❌ Importing from subfolders instead of barrels
-- ❌ Inline content that should be in content.ts
+- ❌ Creating local content.ts for metadata (use `usePageMetadata()` hook)
+- ❌ Hardcoding page slugs in components (use hook to auto-detect)
 - ❌ kebab-case folder names (use PascalCase)
