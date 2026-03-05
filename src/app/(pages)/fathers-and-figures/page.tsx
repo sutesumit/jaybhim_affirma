@@ -1,16 +1,14 @@
 'use client'
 import React, { useRef } from 'react';
-import { HeroSection } from './components/HeroSection';
+import { HeroSection, Submissions, MyCardProvider, MaraaSection } from './components'
 import { ArtCanvas } from './ArtCanvas';
 import { Separator, AcknowledgementSection } from '@/components/features/shared'
 import { CommentsSection } from '@/components/features/comments'
-import { Submissions } from './components/Submissions';
-import { MyCardProvider } from './components/MakeMyCard/context/MyCardContext';
-import { MaraaSection } from './components/MaraaSection';
-import { acknowledgements } from './content';
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata';
 
 export default function Home() {
   const artCanvasRef = useRef<HTMLDivElement | null>(null);
+  const { acknowledgements, pagePath } = usePageMetadata();
 
   return (
     <div className="flex flex-col w-full items-center isolate">
@@ -22,9 +20,9 @@ export default function Home() {
       <Separator />
       <MaraaSection />
       <Separator />
-      <CommentsSection pagePath="/fathers-and-figures" mode="standalone" />
+      <CommentsSection pagePath={pagePath} mode="standalone" />
       <Separator />
-      <AcknowledgementSection names={acknowledgements} />
+      {acknowledgements.length > 0 && <AcknowledgementSection names={acknowledgements} />}
     </div>
   );
 }

@@ -4,10 +4,11 @@ import { HeroSection } from './components';
 import { ArtCanvas } from './ArtCanvas';
 import { Separator, AcknowledgementSection } from '@/components/features/shared';
 import { CommentsSection } from '@/components/features/comments';
-import { acknowledgements } from './content';
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata';
 
 export default function MarathiShortStories() {
   const artCanvasRef = useRef<HTMLDivElement | null>(null);
+  const { acknowledgements, pagePath } = usePageMetadata();
 
   return (
     <div className="flex flex-col w-full items-center isolate">
@@ -16,9 +17,7 @@ export default function MarathiShortStories() {
       <ArtCanvas ref={artCanvasRef} />
       
       <Separator />
-      <CommentsSection pagePath="/marathi-short-stories" mode="standalone" />
-      {/* <Separator />
-      <AcknowledgementSection names={acknowledgements} /> */}
+      <CommentsSection pagePath={pagePath} mode="standalone" />
     </div>
   );
 }

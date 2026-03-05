@@ -1,15 +1,19 @@
 'use client'
 
 import { TitleDiscription } from '@/components/features/page-title'
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata'
 import Background from './Background'
-import { content } from '../../content'
 
 export function HeroSection() {
+  const { title, description, startDate, finishDate } = usePageMetadata()
+
   return (
     <TitleDiscription
-      title={content.title}
-      description={content.description}
+      title={title}
+      description={description}
       background={<Background />}
+      startDate={startDate}
+      finishDate={finishDate}
     />
   )
 }

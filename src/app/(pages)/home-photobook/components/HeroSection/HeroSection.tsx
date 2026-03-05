@@ -1,17 +1,19 @@
+'use client'
+
 import React from 'react'
 import { TitleDiscription } from '@/components/features/page-title'
+import { usePageMetadata } from '@/lib/hooks/use-page-metadata'
 import Background from './Background'
-import { content } from '../../content'
 
-/**
- * HeroSection for the Home Photobook page.
- * Renders title and description over an ambient video background.
- */
 const HeroSection = () => {
+  const { title, description, startDate, finishDate } = usePageMetadata()
+
   return (
     <TitleDiscription 
-      title={content.title}
-      description={content.description}
+      title={title}
+      description={description}
+      startDate={startDate}
+      finishDate={finishDate}
       background={<Background />}
     />
   )
