@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion } from 'framer-motion';
-import menuConfig from './menuConfig';
+import { getMenuConfig } from '@/lib/metadata';
 import { useMenuContext } from '@/app/my_components/Header/menuContext/useMenuContext';
 
 // Hooks & Sub-components
@@ -16,7 +16,7 @@ const MenuCardsGrid: React.FC = () => {
     const { setMenuOpen, hoveredCard, setHoveredCard, x, y } = useMenuContext();
     
     // Logic extraction (SRP)
-    const { searchTerm, setSearchTerm, filteredItems, clearSearch } = useMenuFilter(menuConfig as MenuItem[]);
+    const { searchTerm, setSearchTerm, filteredItems, clearSearch } = useMenuFilter(getMenuConfig() as MenuItem[]);
 
     return (
         <motion.div 

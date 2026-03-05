@@ -8,6 +8,8 @@ export interface MenuItem {
     href: string;
     image: string;
     searchContent?: string; // Optional field for deep content search
+    startDate?: string;
+    finishDate?: string;
 }
 
 export const useMenuFilter = (items: MenuItem[]) => {

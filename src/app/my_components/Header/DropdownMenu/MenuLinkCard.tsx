@@ -63,6 +63,11 @@ const MenuLinkCard: React.FC<MenuLinkCardProps> = ({
                         className="menu-card-description z-[2]"
                         style={{ scrollbarWidth: 'thin' }}
                     >
+                        {(object.startDate || object.finishDate) && (
+                            <div className="text-xs opacity-60 mb-2 font-mono uppercase tracking-wider">
+                                {object.startDate || '???'} — {object.finishDate || '???'}
+                            </div>
+                        )}
                         {object.description}
                     </motion.div>
                 )}
