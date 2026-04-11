@@ -38,36 +38,47 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
   const [editingStoryId, setEditingStoryId] = useState<string | null>(null);
   const [activeStoryIndex, setActiveStoryIndex] = useState(0);
   const [disableCarouselTransition, setDisableCarouselTransition] = useState(false);
+  const lastAppliedHashRef = React.useRef<string | null>(null);
 
   useEffect(() => {
     if (stories.length === 0 || typeof window === "undefined") return;
+
+    let outerAnimationFrameId: number | null = null;
+    let innerAnimationFrameId: number | null = null;
 
     const applyTargetFromHash = () => {
       const hash = window.location.hash.trim();
       if (!hash.startsWith("#story-")) {
         setDisableCarouselTransition(false);
         setActiveStoryIndex(0);
+        lastAppliedHashRef.current = null;
         return;
       }
 
       const targetStoryId = hash.slice("#story-".length);
       const targetIndex = stories.findIndex((story) => story.id === targetStoryId);
 
+      if (lastAppliedHashRef.current === hash && targetIndex >= 0) {
+        return;
+      }
+
       if (targetIndex >= 0) {
         setDisableCarouselTransition(true);
         setActiveStoryIndex(targetIndex);
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
+        outerAnimationFrameId = requestAnimationFrame(() => {
+          innerAnimationFrameId = requestAnimationFrame(() => {
             document.getElementById(`story-${targetStoryId}`)?.scrollIntoView({
               block: "start",
               behavior: "auto",
             });
             setDisableCarouselTransition(false);
+            lastAppliedHashRef.current = hash;
           });
         });
       } else {
         setDisableCarouselTransition(false);
         setActiveStoryIndex(0);
+        lastAppliedHashRef.current = null;
       }
     };
 
@@ -76,6 +87,12 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
 
     return () => {
       window.removeEventListener("hashchange", applyTargetFromHash);
+      if (outerAnimationFrameId !== null) {
+        cancelAnimationFrame(outerAnimationFrameId);
+      }
+      if (innerAnimationFrameId !== null) {
+        cancelAnimationFrame(innerAnimationFrameId);
+      }
     };
   }, [stories]);
 
