@@ -108,9 +108,9 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
   };
 
   return (
-    <div id="submissions" className="relative w-full scroll-mt-14">
+    <div className="relative w-full">
     <InstructionReel />
-    <div className="py-1 relative w-full text-container">
+    <div id="submissions" className="py-1 scroll-mt-14 relative w-full text-container">
       
       {/* Header with Refresh Button */}
       <div className="flex h-full gap-1 items-center justify-between py-2">
