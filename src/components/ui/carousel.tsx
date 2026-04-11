@@ -117,10 +117,43 @@ interface CarouselProps {
   children: ReactNode[];
   containerClassName?: string;
   slideClassName?: string;
+  activeIndex?: number;
+  onActiveIndexChange?: (index: number) => void;
+  disableTransition?: boolean;
 }
 
-export default function Carousel({ children, containerClassName = "", slideClassName = "" }: CarouselProps) {
-  const [current, setCurrent] = useState(0);
+export default function Carousel({
+  children,
+  containerClassName = "",
+  slideClassName = "",
+  activeIndex,
+  onActiveIndexChange,
+  disableTransition = false,
+}: CarouselProps) {
+  const [internalCurrent, setInternalCurrent] = useState(0);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchEndXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const touchEndYRef = useRef<number | null>(null);
+  const current = activeIndex ?? internalCurrent;
+
+  useEffect(() => {
+    if (children.length === 0) {
+      setInternalCurrent(0);
+      return;
+    }
+
+    if (current > children.length - 1) {
+      const nextIndex = children.length - 1;
+      setInternalCurrent(nextIndex);
+      onActiveIndexChange?.(nextIndex);
+    }
+  }, [children.length, current, onActiveIndexChange]);
+
+  const setCurrent = (index: number) => {
+    setInternalCurrent(index);
+    onActiveIndexChange?.(index);
+  };
 
   const handlePreviousClick = () => {
     const previous = current - 1;
@@ -136,6 +169,53 @@ export default function Carousel({ children, containerClassName = "", slideClass
     if (current !== index) {
       setCurrent(index);
     }
+  };
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = event.touches[0]?.clientX ?? null;
+    touchStartYRef.current = event.touches[0]?.clientY ?? null;
+    touchEndXRef.current = null;
+    touchEndYRef.current = null;
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchEndXRef.current = event.touches[0]?.clientX ?? null;
+    touchEndYRef.current = event.touches[0]?.clientY ?? null;
+  };
+
+  const handleTouchEnd = () => {
+    if (
+      touchStartXRef.current === null ||
+      touchEndXRef.current === null ||
+      touchStartYRef.current === null ||
+      touchEndYRef.current === null
+    ) {
+      touchStartXRef.current = null;
+      touchEndXRef.current = null;
+      touchStartYRef.current = null;
+      touchEndYRef.current = null;
+      return;
+    }
+
+    const swipeDistanceX = touchStartXRef.current - touchEndXRef.current;
+    const swipeDistanceY = touchStartYRef.current - touchEndYRef.current;
+    const swipeThreshold = 48;
+    const isHorizontalSwipe =
+      Math.abs(swipeDistanceX) >= swipeThreshold &&
+      Math.abs(swipeDistanceX) > Math.abs(swipeDistanceY);
+
+    if (isHorizontalSwipe) {
+      if (swipeDistanceX > 0) {
+        handleNextClick();
+      } else {
+        handlePreviousClick();
+      }
+    }
+
+    touchStartXRef.current = null;
+    touchEndXRef.current = null;
+    touchStartYRef.current = null;
+    touchEndYRef.current = null;
   };
 
   const id = useId();
@@ -159,9 +239,14 @@ export default function Carousel({ children, containerClassName = "", slideClass
         ))}
       </div>
       {/* Slide Wrapper with overflow-hidden */}
-      <div className="overflow-hidden w-full h-full relative">
+      <div
+        className="overflow-hidden w-full h-full relative"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <ul
-          className="absolute flex transition-transform duration-1000 ease-in-out"
+          className={`absolute flex ${disableTransition ? "" : "transition-transform duration-1000 ease-in-out"}`}
           style={{
             transform: `translateX(-${current * (100 / children.length)}%)`,
             width: `${children.length * 100}%`,

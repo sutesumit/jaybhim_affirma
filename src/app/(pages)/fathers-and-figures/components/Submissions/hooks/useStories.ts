@@ -150,6 +150,35 @@ export function useStories() {
     setPendingDeleteId(null);
   };
 
+  /**
+   * Copies a shareable deep link for a story card.
+   */
+  const handleShareStory = async (storyId: string) => {
+    if (typeof window === "undefined") {
+      return { success: false, error: "Window is not available" };
+    }
+
+    const shareUrl = `${window.location.origin}${window.location.pathname}#story-${storyId}`;
+
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      toast({
+        variant: "success",
+        title: "Link Copied",
+        description: "The story link is with you now. Pass it along.",
+      });
+      return { success: true };
+    } catch (err) {
+      toast({
+        variant: "destructive",
+        title: "Copy Failed",
+        description: "Couldn’t copy the link. Try again?",
+      });
+      console.error(err);
+      return { success: false, error: "Clipboard write failed" };
+    }
+  };
+
   return {
     stories,
     isFetching,
@@ -161,6 +190,7 @@ export function useStories() {
     requestDeleteStory,
     confirmDeleteStory,
     cancelDeleteStory,
+    handleShareStory,
     deleteDialogOpen,
     isDeleting,
   };

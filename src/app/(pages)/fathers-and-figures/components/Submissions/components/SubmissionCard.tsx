@@ -5,7 +5,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Pencil, Trash2, X, Check, Dot } from "lucide-react";
+import { Pencil, Trash2, X, Check, Dot, Share2 } from "lucide-react";
 import { Gradient1 } from "@/components/features/shared";
 import { useRandomRotation } from "@/hooks";
 import { StoryService } from "@/lib/stories/story-service";
@@ -95,6 +95,7 @@ const CardActions = ({
   onCancel, 
   onEditToggle, 
   onDelete,
+  onShare,
   canSave
 }: { 
   isEditing: boolean; 
@@ -104,39 +105,55 @@ const CardActions = ({
   onCancel: () => void; 
   onEditToggle: (val: boolean) => void; 
   onDelete: () => void;
+  onShare: () => void;
   canSave: boolean;
 }) => (
-  <div className={`absolute top-3 right-5 flex gap-1 ${isEditing ? "opacity-100" : "opacity-0 group-hover:opacity-100"} transition-opacity duration-300`}>
+  <div className={`absolute top-3 right-5 flex gap-1 ${isEditing ? "opacity-100" : "opacity-100 md:opacity-0 md:group-hover:opacity-100"} transition-opacity duration-300`}>
     <AnimatePresence mode="popLayout">
       {isEditing ? (
         <div className="flex gap-1" key="edit-actions">
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
+            whileTap={{ scale: 0.92 }}
             onClick={onSave} disabled={isSaving || !canSave} className="comment-tiny-button" title="Save (Ctrl+Enter)"
           >
             {isSaving ? <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" /> : <Check className="w-3 h-3" />}
           </motion.button>
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
+            whileTap={{ scale: 0.92 }}
             onClick={onCancel} disabled={isSaving} className="comment-tiny-button text-red-500" title="Cancel (Esc)"
           >
             <X className="w-3 h-3" />
           </motion.button>
         </div>
-      ) : isOwner && (
+      ) : (
         <div className="flex gap-1" key="view-actions">
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
+            whileTap={{ scale: 0.92 }}
+            onClick={onShare} className="comment-tiny-button" title="Copy Story Link"
+          >
+            <Share2 className="w-3 h-3" />
+          </motion.button>
+          {isOwner && (
+            <>
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
+            whileTap={{ scale: 0.92 }}
             onClick={() => onEditToggle(true)} className="comment-tiny-button" title="Edit Story"
           >
             <Pencil className="w-3 h-3" />
           </motion.button>
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
+            whileTap={{ scale: 0.92 }}
             onClick={onDelete} className="comment-tiny-button text-red-500" title="Delete Story"
           >
             <Trash2 className="w-3 h-3" />
           </motion.button>
+            </>
+          )}
         </div>
       )}
     </AnimatePresence>
@@ -151,6 +168,7 @@ interface SubmissionCardProps {
   story: FatherSonStory;
   onDelete: (id: string) => void;
   onEdit: (id: string, text: string, sig?: string) => Promise<{ success: boolean; error?: string }>;
+  onShare: (id: string) => void;
   onRefresh?: () => void;
   isEditing?: boolean;
   onToggleEdit?: (isEditing: boolean) => void;
@@ -160,6 +178,7 @@ export const SubmissionCard = ({
   story,
   onDelete,
   onEdit,
+  onShare,
   onRefresh,
   isEditing = false,
   onToggleEdit,
@@ -201,7 +220,8 @@ export const SubmissionCard = ({
 
   return (
     <div
-      className="rounded-sm glass-hover p-2 transition-all duration-300 w-full h-full"
+      id={`story-${story.id}`}
+      className="rounded-sm glass-hover p-2 transition-all duration-300 w-full h-full scroll-mt-24"
       style={{ transform: `rotate(${rotation}deg)`, transition: "transform 1s ease-in-out" }}
       onMouseEnter={() => setRotation(0)}
       onMouseLeave={() => randomRotation()}
@@ -236,6 +256,7 @@ export const SubmissionCard = ({
             onCancel={handleCancel} 
             onEditToggle={(val) => onToggleEdit?.(val)} 
             onDelete={() => onDelete(story.id)}
+            onShare={() => onShare(story.id)}
             canSave={canSave}
           />
         </div>

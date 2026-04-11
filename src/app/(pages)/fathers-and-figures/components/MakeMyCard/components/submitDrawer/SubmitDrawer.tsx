@@ -21,13 +21,15 @@ import { MAX_FATHER_SON_STORY_LENGTH } from '@/lib/utils/constants'
 const useStorySubmission = (onSuccess?: () => void) => {
   const { url, myStory, myName } = useMyCardContext();
   const [submitting, setSubmitting] = useState(false);
+  const isStoryTooLong = myStory.length > MAX_FATHER_SON_STORY_LENGTH;
+  const isStoryEmpty = !myStory.trim();
 
   const validate = () => {
-    if (!myStory.trim()) {
+    if (isStoryEmpty) {
       toast({ variant: "destructive", title: "Error", description: "Description is required" });
       return false;
     }
-    if (myStory.length > MAX_FATHER_SON_STORY_LENGTH) {
+    if (isStoryTooLong) {
       toast({ variant: "destructive", title: "Error", description: `Story exceeds maximum length of ${MAX_FATHER_SON_STORY_LENGTH} characters` });
       return false;
     }
@@ -62,7 +64,7 @@ const useStorySubmission = (onSuccess?: () => void) => {
     }
   };
 
-  return { submit, submitting, isStoryEmpty: !myStory.trim() };
+  return { submit, submitting, isStoryEmpty, isStoryTooLong };
 };
 
 /* ==========================================================================
@@ -81,7 +83,7 @@ const SubmitDrawer = ({
   const [isOpen, setIsOpen] = useState(false)
   
   const { downloadImage, loading: downloadLoading } = useDownloadImage({ downloadRef: storyCardRef })
-  const { submit, submitting, isStoryEmpty } = useStorySubmission(onSuccess);
+  const { submit, submitting, isStoryEmpty, isStoryTooLong } = useStorySubmission(onSuccess);
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
@@ -113,8 +115,8 @@ const SubmitDrawer = ({
 
               <ProtectedActionDrawer mode="action" description='An small verify to keep stories human'>
                 <button
-                  className={`flex-1 flex items-center justify-center gap-2 button-style ${submitting || isStoryEmpty ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  disabled={submitting || isStoryEmpty}
+                  className={`flex-1 flex items-center justify-center gap-2 button-style ${submitting || isStoryEmpty || isStoryTooLong ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={submitting || isStoryEmpty || isStoryTooLong}
                   onClick={() => submit(() => closeRef.current?.click())}
                 >
                   {submitting ? <><Loader className='animate-spin h-4 w-4' /> Submitting...</> : <><SendIcon className="h-4 w-4" />Submit</>}

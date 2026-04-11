@@ -1,12 +1,11 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion as m } from "framer-motion";
 import { RotateCw, AlertCircle } from "lucide-react";
 import { useStories } from "./hooks/useStories";
 import { SubmissionCard } from "./components/SubmissionCard";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import Carousel from "@/components/ui/carousel";
-import { useToast } from "@/hooks/use-toast";
 import SubmitStoryButton from "../MakeMyCard/components/inputStory/SubmitStoryButton";
 import InstructionReel from "../MakeMyCard/components/InstructionReel";
 
@@ -17,15 +16,13 @@ interface SubmissionsProps {
 }
 
 const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
-
-  const { toast } = useToast();
-
   const {
     stories,
     isFetching,
     error,
     fetchStories,
     handleEditStory,
+    handleShareStory,
     // Delete with confirmation
     requestDeleteStory,
     confirmDeleteStory,
@@ -39,6 +36,48 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
   
   // Track which story is being edited (if any)
   const [editingStoryId, setEditingStoryId] = useState<string | null>(null);
+  const [activeStoryIndex, setActiveStoryIndex] = useState(0);
+  const [disableCarouselTransition, setDisableCarouselTransition] = useState(false);
+
+  useEffect(() => {
+    if (stories.length === 0 || typeof window === "undefined") return;
+
+    const applyTargetFromHash = () => {
+      const hash = window.location.hash.trim();
+      if (!hash.startsWith("#story-")) {
+        setDisableCarouselTransition(false);
+        setActiveStoryIndex(0);
+        return;
+      }
+
+      const targetStoryId = hash.slice("#story-".length);
+      const targetIndex = stories.findIndex((story) => story.id === targetStoryId);
+
+      if (targetIndex >= 0) {
+        setDisableCarouselTransition(true);
+        setActiveStoryIndex(targetIndex);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            document.getElementById(`story-${targetStoryId}`)?.scrollIntoView({
+              block: "start",
+              behavior: "auto",
+            });
+            setDisableCarouselTransition(false);
+          });
+        });
+      } else {
+        setDisableCarouselTransition(false);
+        setActiveStoryIndex(0);
+      }
+    };
+
+    applyTargetFromHash();
+    window.addEventListener("hashchange", applyTargetFromHash);
+
+    return () => {
+      window.removeEventListener("hashchange", applyTargetFromHash);
+    };
+  }, [stories]);
 
   const handleToggleEdit = (id: string, isEditing: boolean) => {
     if (isEditing) {
@@ -92,6 +131,9 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
           <Carousel 
             containerClassName="w-full h-full isolate"
             slideClassName="w-full h-full"
+            activeIndex={activeStoryIndex}
+            onActiveIndexChange={setActiveStoryIndex}
+            disableTransition={disableCarouselTransition}
           >
             {stories.map((story, index) => (
               <m.div
@@ -120,6 +162,7 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
                   story={story}
                   onDelete={requestDeleteStory}
                   onEdit={handleEditStory}
+                  onShare={handleShareStory}
                   onRefresh={fetchStories}
                   isEditing={editingStoryId === story.id}
                   onToggleEdit={(isEditing) => handleToggleEdit(story.id, isEditing)}

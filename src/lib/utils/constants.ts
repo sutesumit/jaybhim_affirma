@@ -1,1 +1,1 @@
-export const MAX_FATHER_SON_STORY_LENGTH = 500;
+export const MAX_FATHER_SON_STORY_LENGTH = 2500;
