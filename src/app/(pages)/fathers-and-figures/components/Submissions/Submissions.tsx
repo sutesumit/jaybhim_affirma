@@ -39,19 +39,27 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
   const [activeStoryIndex, setActiveStoryIndex] = useState(0);
   const [disableCarouselTransition, setDisableCarouselTransition] = useState(false);
   const lastAppliedHashRef = React.useRef<string | null>(null);
-  const pendingRafIdsRef = React.useRef<number[]>([]);
 
+  // Scroll to submissions section on mount if hash targets a specific story
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const hash = window.location.hash.trim();
+    if (hash.startsWith("#story-")) {
+      requestAnimationFrame(() => {
+        document.getElementById("submissions")?.scrollIntoView({
+          block: "start",
+          behavior: "auto",
+        });
+      });
+    }
+  }, []);
+
+  // Handle hash changes when stories are loaded
   useEffect(() => {
     if (stories.length === 0 || typeof window === "undefined") return;
 
-    const cancelPendingFrames = () => {
-      pendingRafIdsRef.current.forEach((frameId) => cancelAnimationFrame(frameId));
-      pendingRafIdsRef.current = [];
-    };
-
     const applyTargetFromHash = () => {
-      cancelPendingFrames();
-
       const hash = window.location.hash.trim();
       if (!hash.startsWith("#story-")) {
         setDisableCarouselTransition(false);
@@ -70,19 +78,12 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
       if (targetIndex >= 0) {
         setDisableCarouselTransition(true);
         setActiveStoryIndex(targetIndex);
-        const outerAnimationFrameId = requestAnimationFrame(() => {
-          const innerAnimationFrameId = requestAnimationFrame(() => {
-            document.getElementById(`story-${targetStoryId}`)?.scrollIntoView({
-              block: "start",
-              behavior: "auto",
-            });
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
             setDisableCarouselTransition(false);
             lastAppliedHashRef.current = hash;
-            pendingRafIdsRef.current = [];
           });
-          pendingRafIdsRef.current.push(innerAnimationFrameId);
         });
-        pendingRafIdsRef.current.push(outerAnimationFrameId);
       } else {
         setDisableCarouselTransition(false);
         setActiveStoryIndex(0);
@@ -95,7 +96,6 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
 
     return () => {
       window.removeEventListener("hashchange", applyTargetFromHash);
-      cancelPendingFrames();
     };
   }, [stories]);
 
@@ -108,7 +108,7 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
   };
 
   return (
-    <div className="relative w-full">
+    <div id="submissions" className="relative w-full scroll-mt-14">
     <InstructionReel />
     <div className="py-1 relative w-full text-container">
       
