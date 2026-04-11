@@ -39,14 +39,19 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
   const [activeStoryIndex, setActiveStoryIndex] = useState(0);
   const [disableCarouselTransition, setDisableCarouselTransition] = useState(false);
   const lastAppliedHashRef = React.useRef<string | null>(null);
+  const pendingRafIdsRef = React.useRef<number[]>([]);
 
   useEffect(() => {
     if (stories.length === 0 || typeof window === "undefined") return;
 
-    let outerAnimationFrameId: number | null = null;
-    let innerAnimationFrameId: number | null = null;
+    const cancelPendingFrames = () => {
+      pendingRafIdsRef.current.forEach((frameId) => cancelAnimationFrame(frameId));
+      pendingRafIdsRef.current = [];
+    };
 
     const applyTargetFromHash = () => {
+      cancelPendingFrames();
+
       const hash = window.location.hash.trim();
       if (!hash.startsWith("#story-")) {
         setDisableCarouselTransition(false);
@@ -65,16 +70,19 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
       if (targetIndex >= 0) {
         setDisableCarouselTransition(true);
         setActiveStoryIndex(targetIndex);
-        outerAnimationFrameId = requestAnimationFrame(() => {
-          innerAnimationFrameId = requestAnimationFrame(() => {
+        const outerAnimationFrameId = requestAnimationFrame(() => {
+          const innerAnimationFrameId = requestAnimationFrame(() => {
             document.getElementById(`story-${targetStoryId}`)?.scrollIntoView({
               block: "start",
               behavior: "auto",
             });
             setDisableCarouselTransition(false);
             lastAppliedHashRef.current = hash;
+            pendingRafIdsRef.current = [];
           });
+          pendingRafIdsRef.current.push(innerAnimationFrameId);
         });
+        pendingRafIdsRef.current.push(outerAnimationFrameId);
       } else {
         setDisableCarouselTransition(false);
         setActiveStoryIndex(0);
@@ -87,12 +95,7 @@ const Submissions = ({ artCanvasRef }: SubmissionsProps) => {
 
     return () => {
       window.removeEventListener("hashchange", applyTargetFromHash);
-      if (outerAnimationFrameId !== null) {
-        cancelAnimationFrame(outerAnimationFrameId);
-      }
-      if (innerAnimationFrameId !== null) {
-        cancelAnimationFrame(innerAnimationFrameId);
-      }
+      cancelPendingFrames();
     };
   }, [stories]);
 

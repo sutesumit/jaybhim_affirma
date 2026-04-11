@@ -135,20 +135,30 @@ export default function Carousel({
   const touchEndXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const touchEndYRef = useRef<number | null>(null);
+  const previousChildrenLengthRef = useRef(children.length);
   const current = activeIndex ?? internalCurrent;
+  const currentRef = useRef(current);
+
+  useEffect(() => {
+    currentRef.current = current;
+  }, [current]);
 
   useEffect(() => {
     if (children.length === 0) {
       setInternalCurrent(0);
+      previousChildrenLengthRef.current = 0;
       return;
     }
 
-    if (current > children.length - 1) {
-      const nextIndex = children.length - 1;
+    const previousChildrenLength = previousChildrenLengthRef.current;
+    if (children.length < previousChildrenLength && currentRef.current > children.length - 1) {
+      const nextIndex = Math.max(0, children.length - 1);
       setInternalCurrent(nextIndex);
       onActiveIndexChange?.(nextIndex);
     }
-  }, [children.length, current, onActiveIndexChange]);
+
+    previousChildrenLengthRef.current = children.length;
+  }, [children.length, onActiveIndexChange]);
 
   const setCurrent = (index: number) => {
     setInternalCurrent(index);
