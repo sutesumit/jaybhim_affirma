@@ -92,10 +92,6 @@ const PageFlip = () => {
     };
   }, []);
 
-  const onFlip = (e: any) => {
-    console.log('Current page: ' + e.data);
-  };
-
   return (
     // @ts-ignore
     <HTMLFlipBook
@@ -104,7 +100,6 @@ const PageFlip = () => {
       height={500}
       drawShadow={true}
       startZIndex={0}
-      onFlip={onFlip}
     //   size='stretch'
     >
       {pages.map((page, index) => (

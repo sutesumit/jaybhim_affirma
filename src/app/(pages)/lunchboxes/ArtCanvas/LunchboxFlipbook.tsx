@@ -17,10 +17,6 @@ export function LunchboxFlipbook() {
     };
   }, []);
 
-  const onFlip = (e: any) => {
-    console.log('Current page: ' + e.data);
-  };
-
   return (
     <div className='flex min-h-screen w-screen justify-center bg-gradient-to-br from-blue-100 via-[--primary-white] to-blue-100'>
       {/* @ts-ignore */}
@@ -30,7 +26,6 @@ export function LunchboxFlipbook() {
         height={500}
         drawShadow={true}
         startZIndex={0}
-        onFlip={onFlip}
       >
         {pages.map((page, index) => (
           <div className="demoPage shadow-[--primary-blue] shadow-sm rounded-sm overflow-hidden" key={index}>

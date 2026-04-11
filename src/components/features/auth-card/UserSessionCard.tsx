@@ -74,7 +74,7 @@ export const UserSessionCard: React.FC<UserSessionCardProps> = ({
             });
             window.location.reload();
         } catch (error) {
-            console.log("Logout Error", error);
+            console.error("Logout Error", error);
             toast({
                 variant: "destructive",
                 title: "Logout Failed",

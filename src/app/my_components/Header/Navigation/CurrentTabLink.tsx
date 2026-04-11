@@ -12,9 +12,7 @@ interface CurrentTabLinkProps {
 const CurrentTabLink: React.FC<CurrentTabLinkProps> = ({ pathName, tabName }) => {
     const { setMenuOpen } = useMenuContext();
     const { isNotFound } = useNotFound();
-    
-    console.log("CurrentTabLink: isNotFound =", isNotFound, "for tabName =", tabName);
-    
+
     if (!tabName) return null;
 
     return (

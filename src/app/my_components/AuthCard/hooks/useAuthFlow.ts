@@ -114,7 +114,6 @@ const useAuthFlow = (
                 phone,
                 email
             )
-            console.log(`My results: ${result.success} for ${submittedOtp} and ${phone}`)
 
             if(result.success && result.user){
                 setUser(result.user)

@@ -16,7 +16,6 @@ export class AuthService {
                     return { success: false, error: phoneValidation.error}
                 }
                 const sanitizedPhone = AuthValidator.sanitizePhone(contact)
-                console.log(`AuthService: Sending the otp to ${sanitizedPhone}`)
                 payLoad = { 'phone' : sanitizedPhone}
             } else {
                 const emailValidation = AuthValidator.validateEmail(contact)
@@ -24,7 +23,6 @@ export class AuthService {
                     return { success: false, error: emailValidation.error}
                 }
                 const sanitizedEmail = AuthValidator.sanitizeEmail(contact)
-                console.log(`AuthService: Sending the otp to ${sanitizedEmail}`)
                 payLoad = { 'email' : sanitizedEmail}
             }
 
@@ -77,14 +75,11 @@ export class AuthService {
             }
 
             const sanitizedOtp = AuthValidator.sanitizeOtp(otp)
-            console.log(`AuthService: Initiate OTP verification of OTP: ${sanitizedOtp} for ${authMethod}: ${sanitizedContact}`)
 
             payLoad = {
                 [authMethod]:  sanitizedContact,
                 token: sanitizedOtp
             }
-
-            console.log(`My Playload: ${payLoad}`)
 
             const response = await fetch(`${this.API_BASE}/verify-otp`, {
                 method: 'POST',
@@ -111,8 +106,6 @@ export class AuthService {
 
     static async logout(): Promise<{success: boolean, error?: string}>{
         try {
-            console.log(`AuthService: Logging you out!`)
-
             const response = await fetch(`${this.API_BASE}/logout`, {
                 method: 'POST',
             })
@@ -154,7 +147,6 @@ export class AuthService {
     static async getCurrentUser(): Promise<AuthResult>{
 
         try {
-            console.log(`Getting the current user.`)
             // await new Promise (resolve=>setTimeout(resolve, 1500))
             const response = await fetch(`${this.API_BASE}/me`)
 
@@ -168,7 +160,7 @@ export class AuthService {
             return { success: true, user: data as User}
 
         } catch (error) {
-            console.log('AuthService: Error in getting current user.', error)
+            console.error('AuthService: Error in getting current user.', error)
             return { success: false, error: 'Network error, Try again!'}
         }
 

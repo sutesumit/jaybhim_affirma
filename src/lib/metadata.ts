@@ -42,9 +42,5 @@ export function getMenuConfig(): MenuItem[] {
       finishDate: page.finishDate
     }));
   
-  if (process.env.NODE_ENV === 'development') {
-    console.log('Menu items count:', items.length);
-    console.table(items.map(i => ({ id: i.id, title: i.title, href: i.href })));
-  }
   return items;
 }

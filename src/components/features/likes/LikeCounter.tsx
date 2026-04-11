@@ -50,8 +50,6 @@ const leafVariants = {
 export function LikeCounter({ pathName }: LikeCounterProps) {
   const { likeCount, isLiked, isToggling, toggleLike } = useLikes(pathName);
   const { isNotFound } = useNotFound();
-  
-  console.log("LikeCounter: render", { pathName, isNotFound });
 
   const [locked, setLocked] = useState(false);
   const title = pathName
