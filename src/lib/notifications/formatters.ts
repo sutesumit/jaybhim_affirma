@@ -63,7 +63,8 @@ export function formatVisitorNotification(
 export function formatLikeNotification(like: LikeNotificationPayload): string {
   const userWithContact = formatUserWithContact(like.userName, like.contact);
   const ipInfo = like.ip ? ` from <code>${escapeHtml(like.ip)}</code>` : "";
-  return `${PROJECT_HEADER}\n❤️ ${userWithContact}${ipInfo} liked\n<a href="${SITE_URL}${escapeHtml(like.pagePath)}">${escapeHtml(like.pagePath)}</a>\ntotal ${like.likeCount}`;
+  const verb = like.isLiked ? "liked" : "unliked";
+  return `${PROJECT_HEADER}\n❤️ ${userWithContact}${ipInfo} ${verb}\n<a href="${SITE_URL}${escapeHtml(like.pagePath)}">${escapeHtml(like.pagePath)}</a>\ntotal ${like.likeCount}`;
 }
 
 export function formatCommentNotification(

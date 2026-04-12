@@ -12,6 +12,7 @@ export type VisitorNotificationPayload = {
 export type LikeNotificationPayload = {
   pagePath: string;
   likeCount: number;
+  isLiked: boolean;
   userName: string;
   contact?: string | null;
   ip?: string | null;

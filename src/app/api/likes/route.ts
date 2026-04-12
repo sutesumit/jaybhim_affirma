@@ -179,6 +179,7 @@ export async function POST(request: Request): Promise<NextResponse<ToggleLikeRes
       .notifyLike({
         pagePath,
         likeCount: count ?? 0,
+        isLiked,
         userName: user.display_name ?? "Anonymous",
         contact,
         ip,
