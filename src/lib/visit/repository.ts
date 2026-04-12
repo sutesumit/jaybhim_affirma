@@ -1,16 +1,29 @@
 import { supabase } from "@/lib/supabase";
 import type { VisitRepository, VisitRequestPayload } from "./types";
 
+interface UpsertResult {
+  r_ip: string;
+  r_city: string | null;
+  r_region: string | null;
+  r_country: string | null;
+  r_visit_count: number;
+  r_last_visit_time: string;
+}
+
 export function createSupabaseVisitRepository(): VisitRepository {
   return {
     async upsertVisitorState(payload: VisitRequestPayload) {
       const { data, error } = await supabase.rpc("upsert_visit_state", {
         target_ip: payload.ip,
-      });
+      }).single() as { data: UpsertResult | null; error: null };
 
       if (error) {
         console.error("[VisitRepository] upsert error:", error);
         throw error;
+      }
+
+      if (!data) {
+        throw new Error("No data returned from upsert_visit_state");
       }
 
       return {
@@ -23,34 +36,15 @@ export function createSupabaseVisitRepository(): VisitRepository {
       };
     },
 
-    async getMostRecentVisitor(ip: string) {
-      const { data, error } = await supabase
-        .from("visitors")
-        .select("city, country, last_visit_time")
-        .eq("ip", ip)
-        .single();
-
-      if (error) return null;
-      if (!data) return null;
-
-      return {
-        city: data.city,
-        country: data.country,
-        lastVisitTime: data.last_visit_time,
-      };
-    },
-
     async countUniqueVisitors() {
-      const { count, error } = await supabase
-        .from("visitors")
-        .select("*", { count: "exact", head: true });
+      const { data, error } = await supabase.rpc("count_unique_visitors");
 
       if (error) {
         console.error("[VisitRepository] count error:", error);
         return 0;
       }
 
-      return count ?? 0;
+      return (data as number) ?? 0;
     },
   };
 }
