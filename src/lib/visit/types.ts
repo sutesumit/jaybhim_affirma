@@ -20,10 +20,5 @@ export interface VisitRepository {
     visitCount: number;
     lastVisitTime: string;
   }>;
-  getMostRecentVisitor(ip: string): Promise<{
-    city: string | null;
-    country: string | null;
-    lastVisitTime: string;
-  } | null>;
   countUniqueVisitors(): Promise<number>;
 }

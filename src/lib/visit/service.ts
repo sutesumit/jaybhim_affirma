@@ -51,9 +51,10 @@ export function createVisitService(deps?: {
       auth?: { userName?: string; contact?: string | null }
     ): Promise<VisitSummary> {
       const deviceType = parseDeviceType(userAgent);
+      let visitorState = null;
 
       if (body.ip) {
-        const visitorState = await repository.upsertVisitorState(body);
+        visitorState = await repository.upsertVisitorState(body);
         const timestamp = now().toISOString();
 
         const city = body.city ?? visitorState.city ?? undefined;
@@ -82,16 +83,16 @@ export function createVisitService(deps?: {
           });
       }
 
-      const [lastVisitor, uniqueCount] = await Promise.all([
-        body.ip ? repository.getMostRecentVisitor(body.ip) : Promise.resolve(null),
-        repository.countUniqueVisitors(),
-      ]);
+      const uniqueCount = await repository.countUniqueVisitors();
+
+      const lastVisitorLocation = body.ip && visitorState
+        ? formatVisitorLocation(visitorState.city, visitorState.country)
+        : null;
+      const lastVisitTime = body.ip && visitorState ? visitorState.lastVisitTime ?? null : null;
 
       return {
-        lastVisitorLocation: lastVisitor
-          ? formatVisitorLocation(lastVisitor.city, lastVisitor.country)
-          : null,
-        lastVisitTime: lastVisitor?.lastVisitTime ?? null,
+        lastVisitorLocation,
+        lastVisitTime,
         visitorCount: uniqueCount,
       };
     },
