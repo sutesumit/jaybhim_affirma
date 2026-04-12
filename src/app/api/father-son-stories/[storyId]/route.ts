@@ -92,7 +92,7 @@ export async function PATCH(request: Request, context: RouteContext) {
     }
 
     // Fire-and-forget Telegram notification for story edit
-    const contact = user.phone ?? user.email ?? null;
+    const contact = user.phone || user.email || null;
     const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
     const parsedIp = serverIp?.split(",")[0]?.trim();
     const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
@@ -177,7 +177,7 @@ export async function DELETE(request: Request, context: RouteContext) {
     }
 
     // Fire-and-forget Telegram notification for story delete
-    const contact = user.phone ?? user.email ?? null;
+    const contact = user.phone || user.email || null;
     const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
     const parsedIp = serverIp?.split(",")[0]?.trim();
     const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";

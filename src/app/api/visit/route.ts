@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createVisitService } from "@/lib/visit/service";
 import { createSupabaseVisitRepository } from "@/lib/visit/repository";
 import { telegramNotifier } from "@/lib/notifications/telegram-notifier";
+import { AuthManager } from "@/lib/auth/auth-manager";
 
 const visitService = createVisitService({
   repository: createSupabaseVisitRepository(),
@@ -23,10 +24,15 @@ export async function POST(request: Request) {
     const isLocalhost = parsedServerIp?.startsWith("127.") || parsedServerIp === "::ffff:127.0.0.1" || parsedServerIp === "::1";
     const ip = !isLocalhost && parsedServerIp ? parsedServerIp : clientIp;
 
+    const authUser = await AuthManager.getAuthenticatedUser();
+    const userName = authUser?.display_name ?? undefined;
+    const contact = authUser?.phone || authUser?.email || undefined;
+
     const result = await visitService.trackVisit(
       { ip: ip ?? "", city: clientCity, region: clientRegion, country: clientCountry },
       userAgent,
-      clientReferrer
+      clientReferrer,
+      { userName, contact }
     );
 
     return NextResponse.json(result);

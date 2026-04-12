@@ -89,7 +89,7 @@ export async function POST(request: Request): Promise<NextResponse<PostStoryResp
     }
 
     // Fire-and-forget Telegram notification
-    const contact = user.phone ?? user.email ?? null;
+    const contact = user.phone || user.email || null;
     const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
     const parsedIp = serverIp?.split(",")[0]?.trim();
     const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";

@@ -133,7 +133,7 @@ export async function POST(request: Request){
         AuthManager.setAuthCookie(response, userData, session?.access_token)
 
         // Fire-and-forget Telegram notification
-        const contact = user.phone ?? user.email ?? "unknown";
+        const contact = user.phone || user.email || "unknown";
         const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
         const parsedIp = serverIp?.split(",")[0]?.trim();
         const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
@@ -141,7 +141,7 @@ export async function POST(request: Request){
         
         void telegramNotifier
           .notifyOtpVerified({
-            phone: contact,
+            contact,
             isNewUser,
             userName: displayNameToUse,
             ip,

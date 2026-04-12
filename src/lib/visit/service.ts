@@ -47,7 +47,8 @@ export function createVisitService(deps?: {
     async trackVisit(
       body: VisitRequestPayload,
       userAgent: string | null,
-      referrer?: string
+      referrer?: string,
+      auth?: { userName?: string; contact?: string }
     ): Promise<VisitSummary> {
       const deviceType = parseDeviceType(userAgent);
 
@@ -55,15 +56,10 @@ export function createVisitService(deps?: {
         const visitorState = await repository.upsertVisitorState(body);
         const timestamp = now().toISOString();
 
-        const location = body.city ?? body.region ?? body.country
-          ? [body.city, body.region, body.country].filter(Boolean).join(", ")
-          : visitorState.city ?? visitorState.region ?? visitorState.country ?? null;
-
         const city = body.city ?? visitorState.city ?? undefined;
         const region = body.region ?? visitorState.region ?? undefined;
         const country = body.country ?? visitorState.country ?? undefined;
 
-        // Fire-and-forget notification
         const notificationIp = body.ip || visitorState.ip || undefined;
         void notifier
           .notifyVisitor(
@@ -76,6 +72,8 @@ export function createVisitService(deps?: {
               isReturning: visitorState.visitCount > 1,
               visitCount: visitorState.visitCount,
               timestamp,
+              userName: auth?.userName,
+              contact: auth?.contact,
             },
             referrer
           )

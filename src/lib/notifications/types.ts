@@ -7,6 +7,8 @@ export type VisitorNotificationPayload = {
   isReturning?: boolean;
   visitCount?: number;
   timestamp?: string;
+  userName?: string;
+  contact?: string | null;
 };
 
 export type LikeNotificationPayload = {
@@ -24,6 +26,7 @@ export type CommentNotificationPayload = {
   userName: string;
   contact?: string | null;
   ip?: string | null;
+  isAnonymous?: boolean;
 };
 
 export type CommentEditNotificationPayload = {
@@ -33,6 +36,8 @@ export type CommentEditNotificationPayload = {
   userName: string;
   contact?: string | null;
   ip?: string | null;
+  wasAnonymous?: boolean;
+  isAnonymous?: boolean;
 };
 
 export type CommentDeleteNotificationPayload = {
@@ -70,7 +75,7 @@ export type StoryDeleteNotificationPayload = {
 };
 
 export type AuthOtpVerifiedPayload = {
-  phone: string;
+  contact: string;
   isNewUser: boolean;
   userName?: string;
   ip?: string | null;

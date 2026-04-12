@@ -150,12 +150,14 @@ export async function PATCH(
     }
 
     // Fire-and-forget Telegram notification for comment edit
-    const contact = user.phone ?? user.email ?? null;
+    const contact = user.phone || user.email || null;
     const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
     const parsedIp = serverIp?.split(",")[0]?.trim();
     const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
     const ip = isLocalhost ? null : (parsedIp ?? null);
     
+    const newIsAnonymous = typeof isAnonymous === "boolean" ? !!isAnonymous : !!existingComment.is_anonymous;
+
     void telegramNotifier
       .notifyCommentEdit({
         pagePath: existingComment.page_path,
@@ -164,6 +166,8 @@ export async function PATCH(
         userName: user.display_name ?? "Anonymous",
         contact,
         ip,
+        wasAnonymous: !!existingComment.is_anonymous,
+        isAnonymous: newIsAnonymous,
       })
       .catch((err: unknown) => {
         console.error("Comment edit notification error:", err);
@@ -268,7 +272,7 @@ export async function DELETE(
     }
 
     // Fire-and-forget Telegram notification for comment delete
-    const contact = user.phone ?? user.email ?? null;
+    const contact = user.phone || user.email || null;
     const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
     const parsedIp = serverIp?.split(",")[0]?.trim();
     const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";

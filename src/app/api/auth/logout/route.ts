@@ -8,7 +8,7 @@ export async function POST(request: Request){
         // Get user info before clearing cookie
         const user = await AuthManager.getAuthenticatedUser();
         const userName = user?.display_name ?? "Anonymous";
-        const contact = user?.phone ?? user?.email ?? null;
+        const contact = user?.phone || user?.email || null;
         
         const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
         const parsedIp = serverIp?.split(",")[0]?.trim();
