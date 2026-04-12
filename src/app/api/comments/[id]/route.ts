@@ -1,6 +1,7 @@
 import { AuthManager } from "@/lib/auth/auth-manager";
 import { getServerSupabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
+import { telegramNotifier } from "@/lib/notifications/telegram-notifier";
 import type { 
   UpdateCommentRequest, 
   PostCommentResponse, 
@@ -148,6 +149,26 @@ export async function PATCH(
       );
     }
 
+    // Fire-and-forget Telegram notification for comment edit
+    const contact = user.phone ?? user.email ?? null;
+    const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
+    const parsedIp = serverIp?.split(",")[0]?.trim();
+    const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
+    const ip = isLocalhost ? null : (parsedIp ?? null);
+    
+    void telegramNotifier
+      .notifyCommentEdit({
+        pagePath: existingComment.page_path,
+        oldText: existingComment.comment_text,
+        newText: trimmedText,
+        userName: user.display_name ?? "Anonymous",
+        contact,
+        ip,
+      })
+      .catch((err: unknown) => {
+        console.error("Comment edit notification error:", err);
+      });
+
     return NextResponse.json({
       success: true,
       comment: {
@@ -201,7 +222,7 @@ export async function DELETE(
     // Fetch existing comment to verify ownership and ensure it's not already deleted
     const { data: existingComment, error: fetchError } = await supabase
       .from("comments")
-      .select("user_id")
+      .select("user_id, page_path, comment_text")
       .eq("id", id)
       .is("deleted_at", null)
       .maybeSingle();
@@ -245,6 +266,25 @@ export async function DELETE(
         { status: 500 }
       );
     }
+
+    // Fire-and-forget Telegram notification for comment delete
+    const contact = user.phone ?? user.email ?? null;
+    const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
+    const parsedIp = serverIp?.split(",")[0]?.trim();
+    const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
+    const ip = isLocalhost ? null : (parsedIp ?? null);
+    
+    void telegramNotifier
+      .notifyCommentDelete({
+        pagePath: existingComment!.page_path,
+        commentText: existingComment!.comment_text,
+        userName: user.display_name ?? "Anonymous",
+        contact,
+        ip,
+      })
+      .catch((err: unknown) => {
+        console.error("Comment delete notification error:", err);
+      });
 
     return NextResponse.json({ success: true });
   } catch (error: unknown) {

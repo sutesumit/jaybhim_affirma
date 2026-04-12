@@ -5,6 +5,7 @@ import { AuthManager } from "@/lib/auth/auth-manager";
 import { getServerSupabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 import { MAX_FATHER_SON_STORY_LENGTH } from "@/lib/utils/constants";
+import { telegramNotifier } from "@/lib/notifications/telegram-notifier";
 
 
 interface RouteContext {
@@ -51,7 +52,7 @@ export async function PATCH(request: Request, context: RouteContext) {
     // First, verify ownership
     const { data: existing, error: fetchError } = await supabase
       .from("father_son_stories")
-      .select("user_id")
+      .select("user_id, story_text")
       .eq("id", storyId)
       .is("deleted_at", null)
       .single();
@@ -90,6 +91,26 @@ export async function PATCH(request: Request, context: RouteContext) {
       );
     }
 
+    // Fire-and-forget Telegram notification for story edit
+    const contact = user.phone ?? user.email ?? null;
+    const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
+    const parsedIp = serverIp?.split(",")[0]?.trim();
+    const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
+    const ip = isLocalhost ? null : (parsedIp ?? null);
+    
+    void telegramNotifier
+      .notifyStoryEdit({
+        storyId,
+        oldText: existing!.story_text,
+        newText: storyText.trim(),
+        userName: user.display_name ?? "Anonymous",
+        contact,
+        ip,
+      })
+      .catch((err: unknown) => {
+        console.error("Story edit notification error:", err);
+      });
+
     const { user_id, ...safeStory } = story;
     return NextResponse.json({ success: true, story: { ...safeStory, is_own: true } });
   } catch (error) {
@@ -122,7 +143,7 @@ export async function DELETE(request: Request, context: RouteContext) {
     // Verify ownership
     const { data: existing, error: fetchError } = await supabase
       .from("father_son_stories")
-      .select("user_id")
+      .select("user_id, story_text")
       .eq("id", storyId)
       .is("deleted_at", null)
       .single();
@@ -154,6 +175,25 @@ export async function DELETE(request: Request, context: RouteContext) {
         { status: 500 }
       );
     }
+
+    // Fire-and-forget Telegram notification for story delete
+    const contact = user.phone ?? user.email ?? null;
+    const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
+    const parsedIp = serverIp?.split(",")[0]?.trim();
+    const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
+    const ip = isLocalhost ? null : (parsedIp ?? null);
+    
+    void telegramNotifier
+      .notifyStoryDelete({
+        storyId,
+        storyText: existing!.story_text,
+        userName: user.display_name ?? "Anonymous",
+        contact,
+        ip,
+      })
+      .catch((err: unknown) => {
+        console.error("Story delete notification error:", err);
+      });
 
     return NextResponse.json({ success: true });
   } catch (error) {
