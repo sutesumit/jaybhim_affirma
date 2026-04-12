@@ -3,6 +3,7 @@ import { AuthValidator } from "@/lib/auth/auth-validator"
 import { supabase } from "@/lib/supabase"
 import { NextResponse } from "next/server"
 import { telegramNotifier } from "@/lib/notifications/telegram-notifier"
+import { extractRequestContext } from "@/lib/notifications/helpers"
 
 
 export async function POST(request: Request){
@@ -134,10 +135,7 @@ export async function POST(request: Request){
 
         // Fire-and-forget Telegram notification
         const contact = user.phone || user.email || "unknown";
-        const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
-        const parsedIp = serverIp?.split(",")[0]?.trim();
-        const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
-        const ip = isLocalhost ? null : (parsedIp ?? null);
+        const { ip } = extractRequestContext(request);
         
         void telegramNotifier
           .notifyOtpVerified({

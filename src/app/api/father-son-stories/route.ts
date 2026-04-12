@@ -2,6 +2,7 @@ import { AuthManager } from "@/lib/auth/auth-manager";
 import { getServerSupabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 import { telegramNotifier } from "@/lib/notifications/telegram-notifier";
+import { extractRequestContext } from "@/lib/notifications/helpers";
 import type { 
   PostStoryRequest, 
   PostStoryResponse, 
@@ -89,18 +90,14 @@ export async function POST(request: Request): Promise<NextResponse<PostStoryResp
     }
 
     // Fire-and-forget Telegram notification
-    const contact = user.phone || user.email || null;
-    const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
-    const parsedIp = serverIp?.split(",")[0]?.trim();
-    const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
-    const ip = isLocalhost ? null : (parsedIp ?? null);
+    const { ip, contact, userName } = extractRequestContext(request, user);
     
     void telegramNotifier
       .notifyStory({
         storyId: story.id,
         storyText: trimmedText,
         signature: story.signature,
-        userName: user.display_name ?? "Anonymous",
+        userName,
         contact,
         ip,
       })

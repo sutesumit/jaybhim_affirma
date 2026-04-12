@@ -17,8 +17,3 @@ export async function initBot(): Promise<Bot> {
 
   return botInstance;
 }
-
-export async function sendMessage(chatId: string, message: string): Promise<void> {
-  const bot = await initBot();
-  await bot.api.sendMessage(chatId, message, { parse_mode: "HTML" });
-}

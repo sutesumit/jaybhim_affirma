@@ -6,6 +6,7 @@ import { getServerSupabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 import { MAX_FATHER_SON_STORY_LENGTH } from "@/lib/utils/constants";
 import { telegramNotifier } from "@/lib/notifications/telegram-notifier";
+import { extractRequestContext } from "@/lib/notifications/helpers";
 
 
 interface RouteContext {
@@ -92,18 +93,14 @@ export async function PATCH(request: Request, context: RouteContext) {
     }
 
     // Fire-and-forget Telegram notification for story edit
-    const contact = user.phone || user.email || null;
-    const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
-    const parsedIp = serverIp?.split(",")[0]?.trim();
-    const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
-    const ip = isLocalhost ? null : (parsedIp ?? null);
+    const { ip, contact, userName } = extractRequestContext(request, user);
     
     void telegramNotifier
       .notifyStoryEdit({
         storyId,
         oldText: existing!.story_text,
         newText: storyText.trim(),
-        userName: user.display_name ?? "Anonymous",
+        userName,
         contact,
         ip,
       })
@@ -177,17 +174,13 @@ export async function DELETE(request: Request, context: RouteContext) {
     }
 
     // Fire-and-forget Telegram notification for story delete
-    const contact = user.phone || user.email || null;
-    const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
-    const parsedIp = serverIp?.split(",")[0]?.trim();
-    const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
-    const ip = isLocalhost ? null : (parsedIp ?? null);
+    const { ip, contact, userName } = extractRequestContext(request, user);
     
     void telegramNotifier
       .notifyStoryDelete({
         storyId,
         storyText: existing!.story_text,
-        userName: user.display_name ?? "Anonymous",
+        userName,
         contact,
         ip,
       })

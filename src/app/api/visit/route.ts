@@ -1,13 +1,7 @@
 import { NextResponse } from "next/server";
-import { createVisitService } from "@/lib/visit/service";
-import { createSupabaseVisitRepository } from "@/lib/visit/repository";
-import { telegramNotifier } from "@/lib/notifications/telegram-notifier";
+import { visitService } from "@/lib/visit/service";
 import { AuthManager } from "@/lib/auth/auth-manager";
-
-const visitService = createVisitService({
-  repository: createSupabaseVisitRepository(),
-  notifier: telegramNotifier,
-});
+import { extractRequestContext } from "@/lib/notifications/helpers";
 
 export async function POST(request: Request) {
   try {
@@ -25,8 +19,7 @@ export async function POST(request: Request) {
     const ip = !isLocalhost && parsedServerIp ? parsedServerIp : clientIp;
 
     const authUser = await AuthManager.getAuthenticatedUser();
-    const userName = authUser?.display_name ?? undefined;
-    const contact = authUser?.phone || authUser?.email || undefined;
+    const { userName, contact } = extractRequestContext(request, authUser);
 
     const result = await visitService.trackVisit(
       { ip: ip ?? "", city: clientCity, region: clientRegion, country: clientCountry },

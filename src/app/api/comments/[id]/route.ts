@@ -2,6 +2,7 @@ import { AuthManager } from "@/lib/auth/auth-manager";
 import { getServerSupabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 import { telegramNotifier } from "@/lib/notifications/telegram-notifier";
+import { extractRequestContext } from "@/lib/notifications/helpers";
 import type { 
   UpdateCommentRequest, 
   PostCommentResponse, 
@@ -150,12 +151,7 @@ export async function PATCH(
     }
 
     // Fire-and-forget Telegram notification for comment edit
-    const contact = user.phone || user.email || null;
-    const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
-    const parsedIp = serverIp?.split(",")[0]?.trim();
-    const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
-    const ip = isLocalhost ? null : (parsedIp ?? null);
-    
+    const { ip, contact, userName } = extractRequestContext(request, user);
     const newIsAnonymous = typeof isAnonymous === "boolean" ? !!isAnonymous : !!existingComment.is_anonymous;
 
     void telegramNotifier
@@ -163,7 +159,7 @@ export async function PATCH(
         pagePath: existingComment.page_path,
         oldText: existingComment.comment_text,
         newText: trimmedText,
-        userName: user.display_name ?? "Anonymous",
+        userName,
         contact,
         ip,
         wasAnonymous: !!existingComment.is_anonymous,
@@ -272,17 +268,13 @@ export async function DELETE(
     }
 
     // Fire-and-forget Telegram notification for comment delete
-    const contact = user.phone || user.email || null;
-    const serverIp = request.headers.get("x-forwarded-for") ?? undefined;
-    const parsedIp = serverIp?.split(",")[0]?.trim();
-    const isLocalhost = parsedIp?.startsWith("127.") || parsedIp === "::ffff:127.0.0.1" || parsedIp === "::1";
-    const ip = isLocalhost ? null : (parsedIp ?? null);
+    const { ip, contact, userName } = extractRequestContext(request, user);
     
     void telegramNotifier
       .notifyCommentDelete({
         pagePath: existingComment!.page_path,
         commentText: existingComment!.comment_text,
-        userName: user.display_name ?? "Anonymous",
+        userName,
         contact,
         ip,
       })

@@ -25,78 +25,60 @@ import type {
   VisitorNotificationPayload,
 } from "./types";
 
-async function sendMessage(chatId: string, message: string): Promise<void> {
+async function sendToOwner(formatMessage: () => string): Promise<void> {
+  const ownerChatId = getOwnerChatId();
+  if (!ownerChatId) return;
+
+  const message = formatMessage();
+
   if (process.env.NODE_ENV === "development") {
     console.log("[Dev] Telegram notification skipped:", message.slice(0, 100) + "...");
     return;
   }
   const { initBot } = await import("@/lib/telegram/bot");
   const bot = await initBot();
-  await bot.api.sendMessage(chatId, message, { parse_mode: "HTML" });
+  await bot.api.sendMessage(ownerChatId, message, { parse_mode: "HTML" });
 }
 
 export class TelegramBotNotifier implements TelegramNotifier {
-  async notifyVisitor(
-    visitor: VisitorNotificationPayload,
-    referrer?: string
-  ): Promise<void> {
-    const ownerChatId = getOwnerChatId();
-    if (!ownerChatId) return;
-    await sendMessage(ownerChatId, formatVisitorNotification(visitor, referrer));
+  async notifyVisitor(visitor: VisitorNotificationPayload, referrer?: string): Promise<void> {
+    await sendToOwner(() => formatVisitorNotification(visitor, referrer));
   }
 
   async notifyLike(like: LikeNotificationPayload): Promise<void> {
-    const ownerChatId = getOwnerChatId();
-    if (!ownerChatId) return;
-    await sendMessage(ownerChatId, formatLikeNotification(like));
+    await sendToOwner(() => formatLikeNotification(like));
   }
 
   async notifyComment(comment: CommentNotificationPayload): Promise<void> {
-    const ownerChatId = getOwnerChatId();
-    if (!ownerChatId) return;
-    await sendMessage(ownerChatId, formatCommentNotification(comment));
-  }
-
-  async notifyStory(story: StoryNotificationPayload): Promise<void> {
-    const ownerChatId = getOwnerChatId();
-    if (!ownerChatId) return;
-    await sendMessage(ownerChatId, formatStoryNotification(story));
+    await sendToOwner(() => formatCommentNotification(comment));
   }
 
   async notifyCommentEdit(comment: CommentEditNotificationPayload): Promise<void> {
-    const ownerChatId = getOwnerChatId();
-    if (!ownerChatId) return;
-    await sendMessage(ownerChatId, formatCommentEditNotification(comment));
+    await sendToOwner(() => formatCommentEditNotification(comment));
   }
 
   async notifyCommentDelete(comment: CommentDeleteNotificationPayload): Promise<void> {
-    const ownerChatId = getOwnerChatId();
-    if (!ownerChatId) return;
-    await sendMessage(ownerChatId, formatCommentDeleteNotification(comment));
+    await sendToOwner(() => formatCommentDeleteNotification(comment));
+  }
+
+  async notifyStory(story: StoryNotificationPayload): Promise<void> {
+    await sendToOwner(() => formatStoryNotification(story));
   }
 
   async notifyStoryEdit(story: StoryEditNotificationPayload): Promise<void> {
-    const ownerChatId = getOwnerChatId();
-    if (!ownerChatId) return;
-    await sendMessage(ownerChatId, formatStoryEditNotification(story));
+    await sendToOwner(() => formatStoryEditNotification(story));
   }
 
   async notifyStoryDelete(story: StoryDeleteNotificationPayload): Promise<void> {
-    const ownerChatId = getOwnerChatId();
-    if (!ownerChatId) return;
-    await sendMessage(ownerChatId, formatStoryDeleteNotification(story));
+    await sendToOwner(() => formatStoryDeleteNotification(story));
   }
 
   async notifyOtpVerified(auth: AuthOtpVerifiedPayload): Promise<void> {
-    const ownerChatId = getOwnerChatId();
-    if (!ownerChatId) return;
-    await sendMessage(ownerChatId, formatOtpVerifiedNotification(auth));
+    await sendToOwner(() => formatOtpVerifiedNotification(auth));
   }
 
   async notifyLogout(auth: AuthLogoutPayload): Promise<void> {
-    const ownerChatId = getOwnerChatId();
-    if (!ownerChatId) return;
-    await sendMessage(ownerChatId, formatLogoutNotification(auth));
+    await sendToOwner(() => formatLogoutNotification(auth));
   }
 }
 

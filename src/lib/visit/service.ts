@@ -48,7 +48,7 @@ export function createVisitService(deps?: {
       body: VisitRequestPayload,
       userAgent: string | null,
       referrer?: string,
-      auth?: { userName?: string; contact?: string }
+      auth?: { userName?: string; contact?: string | null }
     ): Promise<VisitSummary> {
       const deviceType = parseDeviceType(userAgent);
 
@@ -99,6 +99,5 @@ export function createVisitService(deps?: {
 }
 
 export const visitService = createVisitService({
-  repository: createSupabaseVisitRepository(),
   notifier: telegramNotifier,
 });
