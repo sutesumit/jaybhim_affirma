@@ -14,6 +14,6 @@ export function extractRequestContext(request: Request, user?: AuthUser) {
   return {
     ip: isLocalhost ? null : (parsedIp ?? null),
     contact: user?.phone || user?.email || null,
-    userName: user?.display_name ?? "Anonymous",
+    userName: user?.display_name ?? undefined,
   };
 }

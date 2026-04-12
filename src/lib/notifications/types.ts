@@ -15,7 +15,7 @@ export type LikeNotificationPayload = {
   pagePath: string;
   likeCount: number;
   isLiked: boolean;
-  userName: string;
+  userName?: string;
   contact?: string | null;
   ip?: string | null;
 };
@@ -23,7 +23,7 @@ export type LikeNotificationPayload = {
 export type CommentNotificationPayload = {
   pagePath: string;
   commentText: string;
-  userName: string;
+  userName?: string;
   contact?: string | null;
   ip?: string | null;
   isAnonymous?: boolean;
@@ -33,7 +33,7 @@ export type CommentEditNotificationPayload = {
   pagePath: string;
   oldText: string;
   newText: string;
-  userName: string;
+  userName?: string;
   contact?: string | null;
   ip?: string | null;
   wasAnonymous?: boolean;
@@ -43,7 +43,7 @@ export type CommentEditNotificationPayload = {
 export type CommentDeleteNotificationPayload = {
   pagePath: string;
   commentText: string;
-  userName: string;
+  userName?: string;
   contact?: string | null;
   ip?: string | null;
 };
@@ -52,7 +52,7 @@ export type StoryNotificationPayload = {
   storyId: string;
   storyText: string;
   signature?: string | null;
-  userName: string;
+  userName?: string;
   contact?: string | null;
   ip?: string | null;
 };
@@ -61,7 +61,7 @@ export type StoryEditNotificationPayload = {
   storyId: string;
   oldText: string;
   newText: string;
-  userName: string;
+  userName?: string;
   contact?: string | null;
   ip?: string | null;
 };
@@ -69,7 +69,7 @@ export type StoryEditNotificationPayload = {
 export type StoryDeleteNotificationPayload = {
   storyId: string;
   storyText: string;
-  userName: string;
+  userName?: string;
   contact?: string | null;
   ip?: string | null;
 };
@@ -82,7 +82,7 @@ export type AuthOtpVerifiedPayload = {
 };
 
 export type AuthLogoutPayload = {
-  userName: string;
+  userName?: string;
   contact?: string | null;
   ip?: string | null;
 };

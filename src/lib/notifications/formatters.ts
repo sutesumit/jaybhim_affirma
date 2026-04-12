@@ -46,9 +46,10 @@ function maskContact(contact: string | null | undefined): string {
   return contact.slice(0, 3) + "****" + contact.slice(-2);
 }
 
-function formatUserWithContact(userName: string, contact?: string | null): string {
+function formatUserWithContact(userName?: string, contact?: string | null): string {
+  const name = userName || "Anonymous";
   const masked = maskContact(contact);
-  return masked ? `${escapeHtml(userName)} (${masked})` : escapeHtml(userName);
+  return masked ? `${escapeHtml(name)} (${masked})` : escapeHtml(name);
 }
 
 export function formatVisitorNotification(
@@ -68,6 +69,7 @@ export function formatVisitorNotification(
   const device = escapeHtml(visitor.deviceType || "Unknown");
   const ip = escapeHtml(visitor.ip || "Unknown IP");
 
+  // Only show auth badge if userName is truthy (authenticated user)
   const userPart = visitor.userName
     ? ` 🔐 ${formatUserWithContact(visitor.userName, visitor.contact)}`
     : "";
