@@ -1,6 +1,8 @@
 import { AuthManager } from "@/lib/auth/auth-manager";
 import { getServerSupabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
+import { telegramNotifier } from "@/lib/notifications/telegram-notifier";
+import { extractRequestContext } from "@/lib/notifications/helpers";
 import type { 
   ToggleLikeRequest, 
   ToggleLikeResponse, 
@@ -166,6 +168,22 @@ export async function POST(request: Request): Promise<NextResponse<ToggleLikeRes
         isLiked,
       });
     }
+
+    // Fire-and-forget Telegram notification
+    const { ip, contact, userName } = extractRequestContext(request, user);
+    
+    void telegramNotifier
+      .notifyLike({
+        pagePath,
+        likeCount: count ?? 0,
+        isLiked,
+        userName,
+        contact,
+        ip,
+      })
+      .catch((error: unknown) => {
+        console.error("Like notification error:", error);
+      });
 
     return NextResponse.json({
       success: true,

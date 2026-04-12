@@ -8,6 +8,7 @@ import { AuthProvider } from '@/auth/AuthContext';
 import { NavMenuProvider } from '@/components/features/header/menuContext/MenuContextProvider';
 import { NotFoundProvider } from './context/NotFoundContext';
 import { NavigationProgressBar } from '@/components/features/shared';
+import { AnalyticsTracker } from '@/components/features/analytics';
 
 
 import { Toaster } from '@/components/ui/toaster';
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <NavMenuProvider>
             <body className="min-h-screen flex flex-col justify-between">
               <NavigationProgressBar />
+              <AnalyticsTracker />
               <Header />
               <div className="flex-1 flex flex-col items-center">
                 {children}

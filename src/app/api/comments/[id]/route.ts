@@ -1,6 +1,8 @@
 import { AuthManager } from "@/lib/auth/auth-manager";
 import { getServerSupabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
+import { telegramNotifier } from "@/lib/notifications/telegram-notifier";
+import { extractRequestContext } from "@/lib/notifications/helpers";
 import type { 
   UpdateCommentRequest, 
   PostCommentResponse, 
@@ -148,6 +150,25 @@ export async function PATCH(
       );
     }
 
+    // Fire-and-forget Telegram notification for comment edit
+    const { ip, contact, userName } = extractRequestContext(request, user);
+    const newIsAnonymous = typeof isAnonymous === "boolean" ? !!isAnonymous : !!existingComment.is_anonymous;
+
+    void telegramNotifier
+      .notifyCommentEdit({
+        pagePath: existingComment.page_path,
+        oldText: existingComment.comment_text,
+        newText: trimmedText,
+        userName,
+        contact,
+        ip,
+        wasAnonymous: !!existingComment.is_anonymous,
+        isAnonymous: newIsAnonymous,
+      })
+      .catch((err: unknown) => {
+        console.error("Comment edit notification error:", err);
+      });
+
     return NextResponse.json({
       success: true,
       comment: {
@@ -201,7 +222,7 @@ export async function DELETE(
     // Fetch existing comment to verify ownership and ensure it's not already deleted
     const { data: existingComment, error: fetchError } = await supabase
       .from("comments")
-      .select("user_id")
+      .select("user_id, page_path, comment_text")
       .eq("id", id)
       .is("deleted_at", null)
       .maybeSingle();
@@ -245,6 +266,21 @@ export async function DELETE(
         { status: 500 }
       );
     }
+
+    // Fire-and-forget Telegram notification for comment delete
+    const { ip, contact, userName } = extractRequestContext(request, user);
+    
+    void telegramNotifier
+      .notifyCommentDelete({
+        pagePath: existingComment!.page_path,
+        commentText: existingComment!.comment_text,
+        userName,
+        contact,
+        ip,
+      })
+      .catch((err: unknown) => {
+        console.error("Comment delete notification error:", err);
+      });
 
     return NextResponse.json({ success: true });
   } catch (error: unknown) {

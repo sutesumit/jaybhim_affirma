@@ -1,6 +1,8 @@
 import { AuthManager } from "@/lib/auth/auth-manager";
 import { getServerSupabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
+import { telegramNotifier } from "@/lib/notifications/telegram-notifier";
+import { extractRequestContext } from "@/lib/notifications/helpers";
 import type { 
   PostCommentRequest, 
   PostCommentResponse, 
@@ -105,6 +107,22 @@ export async function POST(request: Request): Promise<NextResponse<PostCommentRe
       console.error("[POST /api/comments] Version insert error:", versionError);
       // Comment was created, version insert failed - log but don't fail the request
     }
+
+    // Fire-and-forget Telegram notification
+    const { ip, contact, userName } = extractRequestContext(request, user);
+    
+    void telegramNotifier
+      .notifyComment({
+        pagePath,
+        commentText: trimmedText,
+        userName,
+        contact,
+        ip,
+        isAnonymous: !!isAnonymous,
+      })
+      .catch((error: unknown) => {
+        console.error("Comment notification error:", error);
+      });
 
     return NextResponse.json({
       success: true,

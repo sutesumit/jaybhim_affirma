@@ -2,6 +2,8 @@ import { AuthManager } from "@/lib/auth/auth-manager"
 import { AuthValidator } from "@/lib/auth/auth-validator"
 import { supabase } from "@/lib/supabase"
 import { NextResponse } from "next/server"
+import { telegramNotifier } from "@/lib/notifications/telegram-notifier"
+import { extractRequestContext } from "@/lib/notifications/helpers"
 
 
 export async function POST(request: Request){
@@ -110,9 +112,10 @@ export async function POST(request: Request){
             .eq('id', user.id)
             .single();
 
+        const isNewUser = !profile;
         let displayNameToUse = profile?.display_name || defaultDisplayName;
 
-        if (!profile) {
+        if (isNewUser) {
             await supabase.from('profiles').insert({
                 id: user.id,
                 display_name: defaultDisplayName
@@ -129,6 +132,22 @@ export async function POST(request: Request){
 
         const response = NextResponse.json({ success: true, user: userData})
         AuthManager.setAuthCookie(response, userData, session?.access_token)
+
+        // Fire-and-forget Telegram notification
+        const contact = user.phone || user.email || "unknown";
+        const { ip } = extractRequestContext(request);
+        
+        void telegramNotifier
+          .notifyOtpVerified({
+            contact,
+            isNewUser,
+            userName: displayNameToUse,
+            ip,
+          })
+          .catch((err: unknown) => {
+            console.error("OTP verified notification error:", err);
+          });
+
         return response
 
     } catch (error: any){
