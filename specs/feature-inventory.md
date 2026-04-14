@@ -23,6 +23,7 @@ The application is a `Next.js` App Router site that presents multiple bodies of 
 - It includes multilingual metadata and language-aware content presentation.
 - It includes engagement analytics endpoints backed by database RPCs.
 - It has a documented architecture and evidence of deliberate refactoring for maintainability.
+- It includes real-time owner notifications via Telegram for visitor tracking, engagement events, and auth activity.
 
 ---
 
@@ -453,6 +454,66 @@ Relevant files:
 
 ---
 
+## Real-Time Telegram Notifications
+
+The project includes a Telegram-based notification system that alerts the site owner of visitor activity, engagement events, and authentication actions in real-time.
+
+The notification system delivers push-style alerts through a Telegram bot using the grammy library, operating on a fire-and-forget basis to avoid impacting request latency.
+
+Capabilities include:
+
+- visitor arrival notifications with referrer, IP, and user-agent context
+- like event notifications with page path and count
+- comment notifications including edit and delete actions
+- story submission notifications
+- OTP verification success notifications
+- logout event notifications
+- TelegramNotifier interface with noop fallback for development mode
+- Grammy bot singleton with lazy initialization
+- HTML message escaping for secure rendering
+- contact masking for privacy
+- message length clamping for Telegram API compatibility
+- request context extraction (IP, user agent, referrer)
+
+The system is designed as non-blocking—notifications are sent asynchronously after the API response completes, preserving the user's request experience.
+
+Relevant files:
+- `src/lib/telegram/bot.ts`
+- `src/lib/notifications/telegram-notifier.ts`
+- `src/lib/notifications/formatters.ts`
+- `src/lib/notifications/helpers.ts`
+- `src/lib/notifications/types.ts`
+- `src/app/api/likes/route.ts`
+- `src/app/api/comments/route.ts`
+- `src/app/api/comments/[id]/route.ts`
+- `src/app/api/auth/verify-otp/route.ts`
+- `src/app/api/father-son-stories/route.ts`
+
+### Visit Tracking and Visitor Analytics
+
+The project includes a visit tracking service that records visitor sessions and provides unique visitor counts through Supabase RPCs.
+
+The visit tracking feature operates alongside the notification system, triggering owner alerts when new visitors arrive.
+
+Capabilities include:
+
+- visit session recording with page path, referrer, and device metadata
+- unique visitor identification through browser fingerprint
+- Supabase RPC-backed visit state upsertion
+- unique daily visitor counting via database function
+- fire-and-forget notification trigger on new visits
+- visitor analytics available through dedicated API routes
+
+This feature provides the owner with visibility into audience engagement without requiring authentication from visitors.
+
+Relevant files:
+- `src/lib/visit/service.ts`
+- `src/lib/visit/repository.ts`
+- `src/lib/visit/types.ts`
+- `src/app/api/visit/route.ts`
+
+---
+
 ## Analytics and Personalization Features
 
 ### Interaction analytics endpoint
@@ -591,6 +652,8 @@ The codebase includes service abstractions for:
 - comments
 - likes
 - stories
+- notifications
+- visit tracking
 - Supabase access
 
 This shows that the project uses a structured frontend/backend boundary instead of binding components directly to data concerns.
@@ -652,6 +715,11 @@ Relevant files:
 - `Supabase Auth`
 - `Supabase Database`
 - RPC-backed analytics endpoints
+- `grammy` (Telegram Bot API)
+
+### Notifications
+
+- `grammy` (Telegram Bot API)
 
 ### Discovery and search
 
@@ -695,6 +763,7 @@ These are not final polished bullets, but they preserve defensible claims that c
 - Added metadata-driven navigation, fuzzy search, and bilingual content support to improve discoverability and accessibility across a growing archive of artistic work.
 - Implemented Supabase RPC-backed engagement analytics and contributor-ranking endpoints to support personalized and community-aware experiences.
 - Refactored the codebase into documented feature modules and service layers, improving maintainability, discoverability, and scalability as the platform expanded.
+- Implemented a real-time Telegram notification system using grammy with fire-and-forget patterns across 8 API routes to deliver owner alerts for visitor activity, engagement events, and authentication actions without impacting request latency.
 
 ---
 
@@ -702,6 +771,7 @@ These are not final polished bullets, but they preserve defensible claims that c
 
 This repo can support interview discussions around:
 
+- designing a non-blocking notification system that delivers real-time alerts without degrading user experience
 - translating artistic goals into interaction design
 - balancing expressive visuals with reusable engineering patterns
 - designing auth without harming UX

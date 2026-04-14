@@ -22,6 +22,7 @@ This document describes the refactored architecture of the Jaybhim Affirma proje
 - **Third-party**: aceternity UI components
 - **Backend**: Supabase (Auth, Database)
 - **Animation**: Framer Motion, Motion
+- **Notifications**: Grammy (Telegram Bot API)
 
 ---
 
@@ -45,7 +46,8 @@ src/
 │   │   ├── likes/
 │   │   ├── father-son-stories/
 │   │   ├── analytics/
-│   │   └── top-user/
+│   │   ├── top-user/
+│   │   └── visit/
 │   ├── context/                  # App-level React contexts
 │   ├── my_components/            # Page-specific content (legacy, being phased out)
 │   └── globals.css
@@ -155,6 +157,22 @@ src/
 │   │
 │   ├── stories/               # Story service
 │   │   └── story-service.ts
+│   │
+│   ├── notifications/        # Telegram notification system
+│   │   ├── telegram-notifier.ts
+│   │   ├── formatters.ts
+│   │   ├── helpers.ts
+│   │   └── types.ts
+│   │
+│   ├── telegram/            # Grammy bot singleton
+│   │   ├── bot.ts
+│   │   └── middleware/
+│   │       └── auth.ts
+│   │
+│   ├── visit/               # Visit tracking service
+│   │   ├── service.ts
+│   │   ├── repository.ts
+│   │   └── types.ts
 │   │
 │   ├── utils/                # Utilities
 │   │   ├── cn.ts             # classnames utility

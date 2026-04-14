@@ -20,37 +20,41 @@
 
 - **Innovative Web Technologies**: Implements modern frameworks to push the boundaries of web-based artistic expression.
 
+- **Real-Time Telegram Notifications**: Owner receives instant Telegram alerts for visitor activity, engagement events (likes, comments, story submissions), and authentication events.
+
 ## Tech Stack
 
 This project is built using Next.js and React, with additional UI and animation libraries to enhance the interactive experience.
 
 ### Frontend
 
-- **Framework**: Next.js, React
+- **Framework**: Next.js, React, TypeScript
+- **UI Components**: Radix UI, shadcn/ui, Aceternity UI, Lucide React, React Icons
+- **Styling**: Tailwind CSS, Tailwind Merge, PostCSS
 
-- **UI Components**: Radix UI, Lucide React, React Icons
+### Animations & Interaction
 
-- **Animations**: Framer Motion, Tailwind CSS Animate
+- **Animation**: Framer Motion, Motion
+- **Interactive Elements**: React Pageflip, html2canvas
 
-- **Styling**: Tailwind CSS, Tailwind Merge
+### Backend & Services
 
-- **Interactive Elements**: React Pageflip, Turn.js
+- **Database & Auth**: Supabase (Auth, Database, RPCs)
+- **Notifications**: Grammy (Telegram Bot API)
 
-## Backend & Utilities
+### Utilities
 
+- **Search**: Fuse.js
+- **Dialogs**: Vaul
 - **State Management**: QSS
-
 - **Loading Indicators**: React Loading Indicators
-
 - **jQuery Support**: jQuery
 
-## Development Tools
+### Development Tools
 
 - **Linting & Code Quality**: ESLint, ESLint Config Next
-
-- **Type Support**: TypeScript, @types for React, Node, and jQuery
-
-- **Build & Styling**: PostCSS, Autoprefixer, PostCSS Loader
+- **Type Support**: @types for React, Node, and jQuery
+- **Build**: Autoprefixer
 
 ## Installation & Setup
 

@@ -10,6 +10,7 @@ This project is a digital art showcase and portfolio for visual artist Sumit Sut
     - **UI**: React 19, Tailwind CSS, shadcn/ui (Radix UI)
     - **Backend**: Supabase (Auth, Database for likes/comments)
     - **Animation**: Framer Motion, Motion
+    - **Notifications**: Grammy (Telegram Bot API)
     - **Specialty**: `react-pageflip` and `turn.js` for photobook experiences.
 - **Architecture**: Follows a strict 3-layer architecture as documented in `ARCHITECTURE.md`.
 
@@ -26,13 +27,13 @@ The codebase is organized into three primary layers:
 
 1.  **App Layer (`src/app/`)**: Handles routing, API routes, and app-level context.
     - `(pages)/`: Feature-based route groups (e.g., `home-photobook`, `fathers-and-figures`).
-    - `api/`: Backend functionality for likes, comments, and analytics.
+    - `api/`: Backend functionality for likes, comments, visit, and analytics.
 2.  **Shared Components Layer (`src/components/`)**:
     - `ui/`: shadcn/ui primitive components (base UI elements).
     - `features/`: Complete, self-contained feature modules (e.g., `header`, `likes`, `comments`).
     - `vendor/`: Third-party UI wrappers (e.g., Aceternity UI).
 3.  **Infrastructure Layer (`src/lib/`, `src/hooks/`, etc.)**:
-    - `lib/`: Business logic, services (Auth, Comments, Likes), and Supabase clients.
+    - `lib/`: Business logic, services (Auth, Comments, Likes, Notifications, Visit), and Supabase clients.
     - `hooks/`: Global and feature-specific React hooks.
     - `types/`: TypeScript definitions.
     - `utils/`: Pure utility functions.
