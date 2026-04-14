@@ -7,7 +7,7 @@ export const SITE_DESCRIPTION =
   'Lens-based visual art portfolio of Sumit Sute — documentary photography, personal visual diaries, and digital explorations of caste, family, and identity.';
 export const SITE_OG_DESCRIPTION =
   'Art portfolio of Sumit Sute — documentary photography, visual diaries, and explorations of caste, family, and identity in rural and urban India.';
-export const DEFAULT_OG_IMAGE = '/thumbnails/27.jpg';
+export const DEFAULT_OG_IMAGE = '/thumbnails/metaimage.jpg';
 export const DEFAULT_TWITTER_CARD = 'summary_large_image' as const;
 export const SITE_LOCALE = 'en_US';
 export const SITE_ALTERNATE_LOCALE = 'mr';
@@ -29,7 +29,7 @@ export const HOME_PAGE_META = {
     'Art portfolio of Sumit Sute — documentary photography, visual diaries, and explorations of caste, family, and identity.',
   ogType: 'website' as const,
   schemaKind: 'WebPage' as const,
-  ogImage: '/thumbnails/27.jpg',
+  ogImage: '/thumbnails/metaimage.jpg',
   sitemapPriority: 1.0,
 };
 
