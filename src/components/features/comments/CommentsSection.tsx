@@ -48,7 +48,7 @@ export function CommentsSection({
   } = useComments(pagePath);
 
   const content = (
-    <div className="z-10 max-h-[60vh] h-full flex flex-col overflow-y-auto overflow-x-hidden scroll-smooth font-rajdhani pr-1 antialiased custom-scrollbar">
+    <div className="z-10 max-h-[60vh] h-full w-full flex flex-col overflow-y-auto overflow-x-hidden scroll-smooth font-rajdhani pr-1 antialiased custom-scrollbar">
       {/* Interaction Header */}
       <div className="flex gap-1 items-center justify-between bg-transparent z-10 py-1">
         <button className="inline-title-style">
