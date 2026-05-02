@@ -45,19 +45,16 @@ export function ImageModal({ image, onClose }: ImageModalProps) {
   ];
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4">
+    <div className="flex flex-col items-center gap-4 p-4 max-h-[90vh] overflow-y-auto">
       {/* Large image container */}
-      <div className="relative w-full max-h-[70vh] flex items-center justify-center overflow-auto">
-        <div className="relative w-auto h-auto max-w-full max-h-full">
-          <Image
-            src={image.src}
-            alt={image.alt}
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="object-contain"
-          />
-        </div>
+      <div className="relative w-full h-[50vh] sm:h-[55vh] md:h-[60vh]">
+        <Image
+          src={image.src}
+          alt={image.alt}
+          fill
+          className="object-contain"
+          priority
+        />
       </div>
 
       {/* Metadata section */}
