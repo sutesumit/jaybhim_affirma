@@ -7,7 +7,8 @@ import { ThumbnailStrip } from "../ThumbnailStrip";
 import { GalleryControls } from "../GalleryControls";
 import type { GalleryImage } from "../../imageList";
 import { ImageModal } from "../ImageModal/ImageModal";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 interface Props {
   images: GalleryImage[];
@@ -140,6 +141,11 @@ export function DocumentaryGallery({ images }: Props) {
 
       <Dialog open={modalOpen} onOpenChange={(open) => !open && closeModal()}>
         <DialogContent className="max-w-4xl">
+          <VisuallyHidden.Root>
+            <DialogTitle>
+              {selectedImage?.alt || "Documentary portfolio image"}
+            </DialogTitle>
+          </VisuallyHidden.Root>
           {selectedImage && (
             <ImageModal image={selectedImage} onClose={closeModal} />
           )}
