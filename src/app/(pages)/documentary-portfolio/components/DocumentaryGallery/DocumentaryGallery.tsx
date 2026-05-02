@@ -26,6 +26,38 @@ export function DocumentaryGallery({ images }: Props) {
   const previousPlayStateRef = useRef<boolean | null>(null);
   const initialOpenDone = useRef(false);
 
+  const goPrev = useCallback(() =>{ 
+    setDirection(-1);
+    setCurrent(i => (i === 0 ? images.length - 1 : i - 1));
+  }, [images.length]);
+  const goNext = useCallback(() => {
+    setDirection(1);
+    setCurrent(i => (i === images.length - 1 ? 0 : i + 1));
+  }, [images.length]);
+
+  const openModal = useCallback((image: GalleryImage, updateUrl: boolean = true) => {
+    previousPlayStateRef.current = isSlideShowPlaying;
+    setSelectedImage(image);
+    setModalOpen(true);
+    setIsSlideShowPlaying(false);
+    if (updateUrl) {
+      router.replace(`?image=${encodeURIComponent(image.filename)}`);
+    }
+  }, [isSlideShowPlaying, router]);
+
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+    // Clear query param only if it's currently set to the current image
+    const currentImageParam = searchParams.get("image");
+    if (currentImageParam === selectedImage?.filename) {
+      router.replace(window.location.pathname);
+    }
+    if (previousPlayStateRef.current !== null) {
+      setIsSlideShowPlaying(previousPlayStateRef.current);
+      previousPlayStateRef.current = null;
+    }
+  }, [router, searchParams, selectedImage]);
+
   // Deep link: open modal on mount if ?image= is present
   useEffect(() => {
     if (initialOpenDone.current) return;
@@ -63,38 +95,6 @@ export function DocumentaryGallery({ images }: Props) {
       }
     }
   }, [searchParams, modalOpen, selectedImage, images, closeModal]);
-
-  const goPrev = useCallback(() =>{ 
-    setDirection(-1);
-    setCurrent(i => (i === 0 ? images.length - 1 : i - 1));
-  }, [images.length]);
-  const goNext = useCallback(() => {
-    setDirection(1);
-    setCurrent(i => (i === images.length - 1 ? 0 : i + 1));
-  }, [images.length]);
-
-  const openModal = useCallback((image: GalleryImage, updateUrl: boolean = true) => {
-    previousPlayStateRef.current = isSlideShowPlaying;
-    setSelectedImage(image);
-    setModalOpen(true);
-    setIsSlideShowPlaying(false);
-    if (updateUrl) {
-      router.replace(`?image=${encodeURIComponent(image.filename)}`);
-    }
-  }, [isSlideShowPlaying, router]);
-
-  const closeModal = useCallback(() => {
-    setModalOpen(false);
-    // Clear query param only if it's currently set to the current image
-    const currentImageParam = searchParams.get("image");
-    if (currentImageParam === selectedImage?.filename) {
-      router.replace(window.location.pathname);
-    }
-    if (previousPlayStateRef.current !== null) {
-      setIsSlideShowPlaying(previousPlayStateRef.current);
-      previousPlayStateRef.current = null;
-    }
-  }, [router, searchParams, selectedImage]);
 
   useEffect(() => {
     if (!isSlideShowPlaying) return;
