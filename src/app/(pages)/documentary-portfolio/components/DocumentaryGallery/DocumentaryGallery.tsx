@@ -106,22 +106,13 @@ export function DocumentaryGallery({ images }: Props) {
         goPrev={goPrev}
         goNext={goNext}
         onOpenModal={openModal}
+        disabled={modalOpen}
       />
       <ThumbnailStrip
         images={images}
         currentIndex={current}
         onSelect={setCurrent}
       />
-
-      {/* Temporary dev button to test modal */}
-      {process.env.NODE_ENV === "development" && (
-        <button
-          onClick={() => openModal(images[current])}
-          className="fixed bottom-4 right-4 z-50 px-3 py-2 bg-red-600 text-white text-xs rounded"
-        >
-          DEV: Open Modal
-        </button>
-      )}
 
       <Dialog open={modalOpen} onOpenChange={(open) => !open && closeModal()}>
         <DialogContent className="max-w-4xl">

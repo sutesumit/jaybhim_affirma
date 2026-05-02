@@ -16,6 +16,7 @@ interface Props {
   goNext: () => void;
   currentImage: GalleryImage;
   onOpenModal?: (image: GalleryImage) => void;
+  disabled?: boolean;
 }
 
 const SECTIONS = [
@@ -31,6 +32,7 @@ export function GalleryControls({
   goNext, 
   currentImage,
   onOpenModal,
+  disabled = false,
 }: Props) {
   const [activeTab, setActiveTab] = useState<SectionId | null>("captions");
 
@@ -53,9 +55,10 @@ export function GalleryControls({
             <IconButton
               key={id}
               Icon={id === "captions" ? (activeTab === id ? CaptionsOff : Captions) : Icon}
-              onClick={() => toggleSection(id as SectionId)}
-              isActive={activeTab === id}
+              onClick={() => !disabled && toggleSection(id as SectionId)}
+              isActive={activeTab === id && !disabled}
               aria-label={`Toggle ${label}`}
+              disabled={disabled}
             />
           ))}
         </motion.div>
@@ -66,14 +69,15 @@ export function GalleryControls({
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
         >
-          <IconButton Icon={ChevronFirst} onClick={goPrev} aria-label="Previous image" />
+          <IconButton Icon={ChevronFirst} onClick={goPrev} aria-label="Previous image" disabled={disabled} />
           <IconButton 
             Icon={isPlaying ? Pause : Play} 
             onClick={onTogglePlay} 
             fill={!isPlaying}
             aria-label={isPlaying ? "Pause" : "Play"}
+            disabled={disabled}
           />
-          <IconButton Icon={ChevronLast} onClick={goNext} aria-label="Next image" />
+          <IconButton Icon={ChevronLast} onClick={goNext} aria-label="Next image" disabled={disabled} />
         </motion.div>
       </div>
 

@@ -10,6 +10,7 @@ interface IconButtonProps {
   className?: string;
   "aria-label"?: string;
   fill?: boolean;
+  disabled?: boolean;
 }
 
 export function IconButton({ 
@@ -18,20 +19,23 @@ export function IconButton({
   isActive = false, 
   className,
   "aria-label": ariaLabel,
-  fill = false
+  fill = false,
+  disabled = false,
 }: IconButtonProps) {
   return (
     <motion.button
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
-      onClick={onClick}
+      whileHover={disabled ? false : { scale: 1.1 }}
+      whileTap={disabled ? false : { scale: 0.9 }}
+      onClick={disabled ? (e) => e.preventDefault() : onClick}
       aria-label={ariaLabel}
+      aria-disabled={disabled}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       className={cn(
         "p-2 rounded-sm transition-colors button-style group pointer-events-auto duration-300 ease-in-out",
         isActive 
           ? "bg-[var(--primary-blue)] text-white" 
           : "",
+        disabled && "opacity-50 cursor-not-allowed",
         className
       )}
     >
