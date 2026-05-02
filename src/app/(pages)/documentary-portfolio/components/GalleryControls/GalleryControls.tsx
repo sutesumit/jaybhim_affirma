@@ -15,6 +15,7 @@ interface Props {
   goPrev: () => void;
   goNext: () => void;
   currentImage: GalleryImage;
+  onOpenModal?: (image: GalleryImage) => void;
 }
 
 const SECTIONS = [
@@ -28,7 +29,8 @@ export function GalleryControls({
   onTogglePlay, 
   goPrev, 
   goNext, 
-  currentImage 
+  currentImage,
+  onOpenModal,
 }: Props) {
   const [activeTab, setActiveTab] = useState<SectionId | null>("captions");
 
@@ -78,7 +80,7 @@ export function GalleryControls({
       <div className="relative top-2 md:left-2 w-full flex justify-center items-center md:justify-start">
         <AnimatePresence>
           {activeTab && (
-            <InfoCard id={activeTab} data={currentImage} />
+            <InfoCard id={activeTab} data={currentImage} onOpenModal={onOpenModal} />
           )}
         </AnimatePresence>
       </div>

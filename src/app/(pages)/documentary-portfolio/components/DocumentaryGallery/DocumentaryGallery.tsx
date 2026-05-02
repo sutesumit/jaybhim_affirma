@@ -79,6 +79,7 @@ export function DocumentaryGallery({ images }: Props) {
         currentImage={images[current]}
         goPrev={goPrev}
         goNext={goNext}
+        onOpenModal={openModal}
       />
       <ThumbnailStrip
         images={images}
