@@ -5,12 +5,15 @@ import { ExperienceSection } from "../ExperienceSection";
 import { CommentsSection } from "../CommentsSection";
 import { CaptionsSection } from "../CaptionsSection";
 import { Gradient1 } from "@/components/features/shared";
+import { Button } from "@/components/ui/button";
+import { ShoppingBag } from "lucide-react";
 
 export type SectionId = "experience" | "comments" | "captions";
 
 interface InfoCardProps {
   id: SectionId;
   data: GalleryImage;
+  onOpenModal?: (image: GalleryImage) => void;
 }
 
 export function InfoCard({ id, data }: InfoCardProps) {
@@ -53,6 +56,24 @@ export function InfoCard({ id, data }: InfoCardProps) {
               {renderContent()}
             </motion.div>
           </AnimatePresence>
+
+          {/* Buy Photo button */}
+          {onOpenModal && (
+            <div className="mt-4 pt-3 border-t border-white/10">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => onOpenModal(data)}
+                className="w-full comment-tiny-button"
+                aria-label="Buy photo"
+                title="Buy prints — coming soon"
+              >
+                <ShoppingBag className="w-4 h-4 mr-2" />
+                Buy Photo
+              </Button>
+            </div>
+          )}
         </div>
       </Gradient1>
     </motion.div>
