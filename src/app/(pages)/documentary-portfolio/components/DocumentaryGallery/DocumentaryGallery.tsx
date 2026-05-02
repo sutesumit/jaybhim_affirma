@@ -1,5 +1,6 @@
 "use client";
 import { useState, useCallback, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import { PreviewImage } from "../PreviewImage";
 import { ThumbnailStrip } from "../ThumbnailStrip";
@@ -15,6 +16,7 @@ interface Props {
 const SLIDE_SHOW_INTERVAL = 5000;
 
 export function DocumentaryGallery({ images }: Props) {
+  const router = useRouter();
   const [isSlideShowPlaying, setIsSlideShowPlaying] = useState(true);
   const [direction, setDirection] = useState(0);
   const [current, setCurrent] = useState(0);
@@ -36,15 +38,19 @@ export function DocumentaryGallery({ images }: Props) {
     setSelectedImage(image);
     setModalOpen(true);
     setIsSlideShowPlaying(false);
-  }, [isSlideShowPlaying]);
+    // Update URL with query param (replace to avoid stacking history)
+    router.replace(`?image=${encodeURIComponent(image.filename)}`);
+  }, [isSlideShowPlaying, router]);
 
   const closeModal = useCallback(() => {
     setModalOpen(false);
+    // Clear query param
+    router.replace(window.location.pathname);
     if (previousPlayStateRef.current !== null) {
       setIsSlideShowPlaying(previousPlayStateRef.current);
       previousPlayStateRef.current = null;
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     if (!isSlideShowPlaying) return;
