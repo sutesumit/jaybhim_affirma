@@ -16,7 +16,7 @@ interface InfoCardProps {
   onOpenModal?: (image: GalleryImage) => void;
 }
 
-export function InfoCard({ id, data }: InfoCardProps) {
+export function InfoCard({ id, data, onOpenModal }: InfoCardProps) {
   const renderContent = () => {
     switch (id) {
       case "experience":
@@ -68,6 +68,7 @@ export function InfoCard({ id, data }: InfoCardProps) {
                 className="w-full comment-tiny-button"
                 aria-label="Buy photo"
                 title="Buy prints — coming soon"
+                disabled={false} // Could disable while modal open, but not required
               >
                 <ShoppingBag className="w-4 h-4 mr-2" />
                 Buy Photo

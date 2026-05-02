@@ -43,6 +43,27 @@ export function DocumentaryGallery({ images }: Props) {
     initialOpenDone.current = true;
   }, [searchParams, images, isSlideShowPlaying]);
 
+  // Sync: if modal is open and URL changes (back/forward or manual edit), keep modal in sync
+  useEffect(() => {
+    if (!modalOpen) return;
+    const imageParam = searchParams.get("image");
+    // If URL lost the image param, close modal
+    if (!imageParam) {
+      closeModal();
+      return;
+    }
+    // If URL points to a different image, switch to it
+    if (imageParam && (!selectedImage || imageParam !== selectedImage.filename)) {
+      const match = images.find(img => img.filename === imageParam);
+      if (match) {
+        setSelectedImage(match);
+      } else {
+        // Image not found → close
+        closeModal();
+      }
+    }
+  }, [searchParams, modalOpen, selectedImage, images, closeModal]);
+
   const goPrev = useCallback(() =>{ 
     setDirection(-1);
     setCurrent(i => (i === 0 ? images.length - 1 : i - 1));
@@ -64,13 +85,16 @@ export function DocumentaryGallery({ images }: Props) {
 
   const closeModal = useCallback(() => {
     setModalOpen(false);
-    // Clear query param
-    router.replace(window.location.pathname);
+    // Clear query param only if it's currently set to the current image
+    const currentImageParam = searchParams.get("image");
+    if (currentImageParam === selectedImage?.filename) {
+      router.replace(window.location.pathname);
+    }
     if (previousPlayStateRef.current !== null) {
       setIsSlideShowPlaying(previousPlayStateRef.current);
       previousPlayStateRef.current = null;
     }
-  }, [router]);
+  }, [router, searchParams, selectedImage]);
 
   useEffect(() => {
     if (!isSlideShowPlaying) return;
