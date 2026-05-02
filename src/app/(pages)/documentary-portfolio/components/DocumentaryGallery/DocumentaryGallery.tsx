@@ -7,7 +7,7 @@ import { ThumbnailStrip } from "../ThumbnailStrip";
 import { GalleryControls } from "../GalleryControls";
 import type { GalleryImage } from "../../imageList";
 import { ImageModal } from "../ImageModal/ImageModal";
-import { Dialog } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 interface Props {
   images: GalleryImage[];
