@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ImageModal } from "../components/ImageModal/ImageModal";
-import type { GalleryImage } from "../components/documentary-portfolio/imageList";
+import { ImageModal } from "../../(pages)/documentary-portfolio/components/ImageModal/ImageModal";
+import type { GalleryImage } from "../../(pages)/documentary-portfolio/imageList";
 
 const DUMMY_IMAGE: GalleryImage = {
   filename: "test.jpg",
@@ -31,7 +31,7 @@ export default function TestImageModalPage() {
           <Button>Open Modal</Button>
         </DialogTrigger>
         <DialogContent className="max-w-4xl">
-          <ImageModal image={DUMMY_IMAGE} onClose={() => setOpen(false)} />
+          <ImageModal image={DUMMY_IMAGE} />
         </DialogContent>
       </Dialog>
 

@@ -26,6 +26,8 @@ export function DocumentaryGallery({ images }: Props) {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const previousPlayStateRef = useRef<boolean | null>(null);
   const initialOpenDone = useRef(false);
+  const pendingOpenRef = useRef(false);
+  const initialIsPlaying = useRef(isSlideShowPlaying);
 
   const goPrev = useCallback(() =>{ 
     setDirection(-1);
@@ -42,7 +44,10 @@ export function DocumentaryGallery({ images }: Props) {
     setModalOpen(true);
     setIsSlideShowPlaying(false);
     if (updateUrl) {
+      pendingOpenRef.current = true;
       router.replace(`?image=${encodeURIComponent(image.filename)}`);
+    } else {
+      pendingOpenRef.current = false;
     }
   }, [isSlideShowPlaying, router]);
 
@@ -67,18 +72,23 @@ export function DocumentaryGallery({ images }: Props) {
       const match = images.find(img => img.filename === imageParam);
       if (match) {
         // Direct state updates (skip URL update - already present)
-        previousPlayStateRef.current = isSlideShowPlaying;
+        previousPlayStateRef.current = initialIsPlaying.current;
         setSelectedImage(match);
         setModalOpen(true);
         setIsSlideShowPlaying(false);
       }
     }
     initialOpenDone.current = true;
-  }, [searchParams, images, isSlideShowPlaying]);
+  }, [searchParams, images]);
 
   // Sync: if modal is open and URL changes (back/forward or manual edit), keep modal in sync
   useEffect(() => {
     if (!modalOpen) return;
+    // Skip the first sync after user-initiated open — router.replace hasn't propagated yet
+    if (pendingOpenRef.current) {
+      pendingOpenRef.current = false;
+      return;
+    }
     const imageParam = searchParams.get("image");
     // If URL lost the image param, close modal
     if (!imageParam) {
@@ -105,12 +115,13 @@ export function DocumentaryGallery({ images }: Props) {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
+      if (modalOpen) return;
       if (e.key === "ArrowLeft") goPrev();
       if (e.key === "ArrowRight") goNext();
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [goPrev, goNext]);
+  }, [goPrev, goNext, modalOpen]);
 
   if (images.length === 0) return null;
 
@@ -147,7 +158,7 @@ export function DocumentaryGallery({ images }: Props) {
             </DialogTitle>
           </VisuallyHidden.Root>
           {selectedImage && (
-            <ImageModal image={selectedImage} onClose={closeModal} />
+            <ImageModal image={selectedImage} />
           )}
         </DialogContent>
       </Dialog>
