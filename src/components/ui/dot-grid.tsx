@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 export interface DotGridProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -10,31 +9,31 @@ export interface DotGridProps extends React.HTMLAttributes<HTMLDivElement> {
    * @default 1
    */
   dotSize?: number
-  
+
   /**
    * Spacing between dots in pixels
    * @default 20
    */
   spacing?: number
-  
+
   /**
    * Opacity of the background
    * @default 0.8
    */
   opacity?: number
-  
+
   /**
    * CSS variable name for the dot color
    * @default "var(--primary-blue)"
    */
   dotColor?: string
-  
+
   /**
    * Enable interactive mouse tracking
    * @default false
    */
   interactive?: boolean
-  
+
   /**
    * Radius of influence for mouse tracking (in pixels)
    * @default 150
@@ -42,146 +41,146 @@ export interface DotGridProps extends React.HTMLAttributes<HTMLDivElement> {
   influenceRadius?: number
 }
 
+type DotGridStyle = React.CSSProperties & Record<`--${string}`, string>
+
+const HIDDEN_CURSOR_POSITION = "-999px"
+
+function createDotPattern(color: string, size: number) {
+  const radius = `${Math.max(size / 2, 0.5)}px`
+  return `radial-gradient(circle, ${color} ${radius}, transparent calc(${radius} + 1px))`
+}
+
 const DotGrid = React.forwardRef<HTMLDivElement, DotGridProps>(
   (
     {
       dotSize = 1,
-      spacing = 20,
-      opacity = 0.8,
+      spacing = 25,
+      opacity = 0.5,
       dotColor = "var(--primary-blue)",
       interactive = false,
       influenceRadius = 150,
       className,
       style,
+      onMouseMove,
+      onMouseLeave,
       ...props
     },
     ref
   ) => {
     const containerRef = React.useRef<HTMLDivElement>(null)
-    const mousePos = React.useRef({ x: -1000, y: -1000 })
-    const rafId = React.useRef<number>(0)
-    const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 })
-    const [, forceUpdate] = React.useReducer((x) => x + 1, 0)
+    const frameRef = React.useRef<number | null>(null)
 
-    React.useEffect(() => {
-      if (!containerRef.current) return
-      
-      const updateDimensions = () => {
-        if (containerRef.current) {
-          const rect = containerRef.current.getBoundingClientRect()
-          setDimensions({ width: rect.width, height: rect.height })
-        }
-      }
-      
-      updateDimensions()
-      window.addEventListener('resize', updateDimensions)
-      return () => window.removeEventListener('resize', updateDimensions)
+    const dotPattern = React.useMemo(
+      () => createDotPattern(dotColor, dotSize),
+      [dotColor, dotSize]
+    )
+
+    const highlightPattern = React.useMemo(
+      () => createDotPattern(dotColor, dotSize * 4),
+      [dotColor, dotSize]
+    )
+
+    const setCursorPosition = React.useCallback((x: string, y: string) => {
+      const node = containerRef.current
+      if (!node) return
+
+      node.style.setProperty("--dot-grid-x", x)
+      node.style.setProperty("--dot-grid-y", y)
     }, [])
 
-    const handleMouseMove = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    React.useEffect(() => {
+      return () => {
+        if (frameRef.current !== null) {
+          cancelAnimationFrame(frameRef.current)
+        }
+      }
+    }, [])
+
+    const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+      onMouseMove?.(event)
       if (!interactive || !containerRef.current) return
-      
-      const rect = containerRef.current.getBoundingClientRect()
-      mousePos.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
+
+      const { left, top } = containerRef.current.getBoundingClientRect()
+      const x = `${event.clientX - left}px`
+      const y = `${event.clientY - top}px`
+
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current)
       }
 
-      // Cancel previous frame and request new one
-      if (rafId.current) {
-        cancelAnimationFrame(rafId.current)
-      }
-      
-      rafId.current = requestAnimationFrame(() => {
-        forceUpdate()
+      frameRef.current = requestAnimationFrame(() => {
+        setCursorPosition(x, y)
+        frameRef.current = null
       })
-    }, [interactive])
+    }
 
-    const handleMouseLeave = React.useCallback(() => {
-      if (interactive) {
-        mousePos.current = { x: -1000, y: -1000 }
-        if (rafId.current) {
-          cancelAnimationFrame(rafId.current)
-        }
-        forceUpdate()
+    const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
+      onMouseLeave?.(event)
+      if (!interactive) return
+
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current)
+        frameRef.current = null
       }
-    }, [interactive])
 
-    // Calculate number of dots needed
-    const cols = Math.ceil(dimensions.width / spacing) + 1
-    const rows = Math.ceil(dimensions.height / spacing) + 1
+      setCursorPosition(HIDDEN_CURSOR_POSITION, HIDDEN_CURSOR_POSITION)
+    }
 
-    // Generate dots
-    const dots = React.useMemo(() => {
-      const dotArray = []
-      for (let row = 0; row < rows; row++) {
-        for (let col = 0; col < cols; col++) {
-          dotArray.push({ row, col, key: `${row}-${col}` })
-        }
-      }
-      return dotArray
-    }, [cols, rows])
+    const baseStyle: DotGridStyle = {
+      opacity,
+      "--dot-grid-x": HIDDEN_CURSOR_POSITION,
+      "--dot-grid-y": HIDDEN_CURSOR_POSITION,
+      ...style,
+    }
 
-    // Separate onDrag and other conflicting props
-    const { onDrag, ...restProps } = props
+    const layerStyle: React.CSSProperties = {
+      backgroundImage: dotPattern,
+      backgroundPosition: "top left",
+      backgroundRepeat: "repeat",
+      backgroundSize: `${spacing}px ${spacing}px`,
+    }
 
     return (
       <div
+        {...props}
         ref={(node) => {
           containerRef.current = node
-          if (typeof ref === 'function') ref(node)
-          else if (ref) ref.current = node
+
+          if (typeof ref === "function") {
+            ref(node)
+            return
+          }
+
+          if (ref) {
+            ref.current = node
+          }
         }}
         className={cn(
           "absolute inset-0 overflow-hidden",
           interactive ? "pointer-events-auto" : "pointer-events-none",
           className
         )}
-        style={{
-          opacity,
-          ...style,
-        }}
+        style={baseStyle}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        {...(restProps as any)}
       >
-        {dots.map(({ row, col, key }) => {
-          const x = col * spacing
-          const y = row * spacing
-
-          // Calculate distance from mouse to this dot
-          const dx = mousePos.current.x - x
-          const dy = mousePos.current.y - y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-
-          // Calculate scale based on distance (inverse relationship)
-          const scale = interactive && distance < influenceRadius
-            ? 1 + (1 - distance / influenceRadius) * 2 // Scale up to 3x at cursor position
-            : 1
-
-          return (
-            <motion.div
-              key={key}
-              className="absolute rounded-full"
-              style={{
-                left: x,
-                top: y,
-                width: dotSize,
-                height: dotSize,
-                backgroundColor: dotColor,
-                transformOrigin: 'center',
-              }}
-              animate={{
-                scale,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 500,
-                damping: 10,
-              }}
-            />
-          )
-        })}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={layerStyle}
+        />
+        {interactive ? (
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 transition-[opacity] duration-200"
+            style={{
+              ...layerStyle,
+              backgroundImage: highlightPattern,
+              maskImage: `radial-gradient(circle ${influenceRadius}px at var(--dot-grid-x) var(--dot-grid-y), black 0%, black 55%, transparent 100%)`,
+              WebkitMaskImage: `radial-gradient(circle ${influenceRadius}px at var(--dot-grid-x) var(--dot-grid-y), black 0%, black 55%, transparent 100%)`,
+            }}
+          />
+        ) : null}
       </div>
     )
   }

@@ -24,8 +24,8 @@ export function IconButton({
 }: IconButtonProps) {
   return (
     <motion.button
-      whileHover={disabled ? false : { scale: 1.1 }}
-      whileTap={disabled ? false : { scale: 0.9 }}
+      whileHover={disabled ? undefined : { scale: 1.1 }}
+      whileTap={disabled ? undefined : { scale: 0.9 }}
       onClick={disabled ? (e) => e.preventDefault() : onClick}
       aria-label={ariaLabel}
       aria-disabled={disabled}

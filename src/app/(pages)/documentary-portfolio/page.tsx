@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { DocumentaryGallery } from './components/DocumentaryGallery';
 import { getImageList } from './imageList';
@@ -15,7 +15,9 @@ export default function DocumentaryPortfolio() {
   return (
     <section className="flex flex-col items-center justify-center h-screen w-full isolate">
       {pageData && renderJsonLd(buildProjectPageSchema(pageData))}
-      <DocumentaryGallery images={images} />
+      <Suspense fallback={<div className='loader' />}>
+        <DocumentaryGallery images={images} />
+      </Suspense>
     </section>
   );
 }

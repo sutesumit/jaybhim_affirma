@@ -30,7 +30,7 @@ export default function TestImageModalPage() {
         <DialogTrigger asChild>
           <Button>Open Modal</Button>
         </DialogTrigger>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-4xl overflow-hidden">
           <ImageModal image={DUMMY_IMAGE} />
         </DialogContent>
       </Dialog>

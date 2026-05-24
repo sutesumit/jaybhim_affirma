@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Code Review Decision Board - 2026-05-18</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0d1117; --panel:#161b22; --text:#e6edf3; --muted:#8b949e; --line:#30363d; --accent:#58a6ff; --req:#ff7b72; --opt:#d29922; }
+    body { margin:0; font:14px/1.45 system-ui, -apple-system, Segoe UI, sans-serif; background:var(--bg); color:var(--text); }
+    main { max-width:1100px; margin:0 auto; padding:32px 20px 60px; }
+    h1 { margin:0 0 8px; font-size:28px; }
+    h2 { margin:28px 0 12px; font-size:18px; }
+    .muted { color:var(--muted); }
+    .summary, .finding, textarea { background:var(--panel); border:1px solid var(--line); border-radius:8px; }
+    .summary { padding:16px; display:grid; gap:10px; }
+    .filters { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
+    button, select { background:#21262d; color:var(--text); border:1px solid var(--line); border-radius:6px; padding:7px 10px; }
+    button:hover, select:hover { border-color:var(--accent); }
+    .finding { padding:16px; margin:12px 0; }
+    .meta { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+    .pill { border:1px solid var(--line); border-radius:999px; padding:2px 8px; color:var(--muted); }
+    .required { color:var(--req); border-color:#8e3b36; }
+    .optional { color:var(--opt); border-color:#6e5622; }
+    .location { font-family:ui-monospace, SFMono-Regular, Consolas, monospace; color:#a5d6ff; }
+    label { margin-right:14px; white-space:nowrap; }
+    textarea { width:100%; min-height:180px; color:var(--text); padding:12px; box-sizing:border-box; font-family:ui-monospace, SFMono-Regular, Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Code Review Decision Board</h1>
+    <p class="muted">Decision question: classify each finding as <strong>fix-now</strong>, <strong>defer</strong>, <strong>keep</strong>, or <strong>needs-discussion</strong>.</p>
+
+    <section class="summary">
+      <div><strong>Verdict:</strong> approve-with-required-fixes</div>
+      <div><strong>Summary:</strong> 4 required findings, 2 optional findings, 2 evidence gaps.</div>
+      <div><strong>Verification:</strong> `npm test` passed; `npm run build` exited 0 with warnings; Playwright passed after escalated browser launch.</div>
+      <div><strong>Calibration:</strong> asked before final review; no answer was provided before artifacts were produced.</div>
+    </section>
+
+    <div class="filters">
+      <button data-filter="all">All</button>
+      <button data-filter="Required">Required</button>
+      <button data-filter="Optional">Optional</button>
+      <button data-filter="Architecture">Architecture</button>
+      <button data-filter="Correctness / Tests">Correctness / Tests</button>
+      <button data-filter="Merge hygiene">Merge hygiene</button>
+      <button data-filter="Reliability">Reliability</button>
+    </div>
+
+    <section id="findings"></section>
+
+    <h2>Copy For Agent</h2>
+    <textarea id="copyBox" readonly></textarea>
+  </main>
+
+  <script>
+    const findings = [
+      {
+        id: "F1",
+        severity: "Required",
+        axis: "Architecture",
+        location: "ARCHITECTURE.md:527, ARCHITECTURE.md:546, ARCHITECTURE.md:701",
+        summary: "The new architecture section calls DocumentaryGallery.tsx canonical but documents old pendingOpenRef/single closeModal patterns instead of the reducer-based requestClose/completeClose implementation.",
+        evidence: "The implementation now lives in useDocumentaryGalleryController and useGalleryRouteState; the docs still instruct future maintainers to use pendingOpenRef and one closeModal.",
+        rationale: "Stale canonical docs are high leverage confusion in a repo that future agents will read first.",
+        suggested: "fix-now"
+      },
+      {
+        id: "F2",
+        severity: "Required",
+        axis: "Architecture",
+        location: "src/app/my_components/Likes/ImageLikeButton.tsx:1",
+        summary: "ImageLikeButton is added under legacy src/app/my_components even though architecture guidance says new features belong under src/components/features/[feature-name]/.",
+        evidence: "ARCHITECTURE.md marks my_components as legacy/being phased out and already has components/features/likes.",
+        rationale: "This deepens duplicate ownership for the likes feature.",
+        suggested: "fix-now"
+      },
+      {
+        id: "F3",
+        severity: "Required",
+        axis: "Correctness / Tests",
+        location: "useDocumentaryGalleryController.test.tsx:12",
+        summary: "Controller tests do not cover externally initiated route state: initial valid routeImageId, route changes between images, or invalid route id clearing.",
+        evidence: "Existing tests cover user open catch-up and close clearing, but not direct deep link/back-forward transitions into the controller.",
+        rationale: "These are the main regression paths for URL-driven gallery state.",
+        suggested: "fix-now"
+      },
+      {
+        id: "F4",
+        severity: "Required",
+        axis: "Merge hygiene",
+        location: ".kilo/package-lock.json, .kilo/plans/*.md",
+        summary: "Local/tool planning artifacts are untracked in the worktree.",
+        evidence: "git status shows .kilo package lock and plan markdown files as untracked.",
+        rationale: "A broad git add would commit tool state that does not look like project source.",
+        suggested: "fix-now"
+      },
+      {
+        id: "F5",
+        severity: "Optional",
+        axis: "Readability",
+        location: "ImageModal.tsx:130",
+        summary: "imageVariants.enter is defined but never used.",
+        evidence: "motion.div passes an inline initial object and only animate/exit variant names.",
+        rationale: "Small dead branch in otherwise readable animation code.",
+        suggested: "defer"
+      },
+      {
+        id: "F6",
+        severity: "Optional",
+        axis: "Reliability",
+        location: "ImageLikeButton.tsx:65",
+        summary: "The lock-release timeout is not cleared on unmount.",
+        evidence: "ImageModal already has timeout cleanup; ImageLikeButton does not.",
+        rationale: "Low risk, but easy to align with existing cleanup pattern.",
+        suggested: "defer"
+      }
+    ];
+
+    const findingsEl = document.getElementById("findings");
+    const copyBox = document.getElementById("copyBox");
+
+    function render(filter = "all") {
+      findingsEl.innerHTML = "";
+      findings
+        .filter(f => filter === "all" || f.severity === filter || f.axis === filter)
+        .forEach(f => {
+          const card = document.createElement("article");
+          card.className = "finding";
+          card.innerHTML = `
+            <div class="meta">
+              <span class="pill">${f.id}</span>
+              <span class="pill ${f.severity === "Required" ? "required" : "optional"}">${f.severity}</span>
+              <span class="pill">${f.axis}</span>
+              <span class="pill">suggested: ${f.suggested}</span>
+            </div>
+            <div class="location">${f.location}</div>
+            <p><strong>${f.summary}</strong></p>
+            <p><span class="muted">Evidence:</span> ${f.evidence}</p>
+            <p><span class="muted">Rationale:</span> ${f.rationale}</p>
+            <div>
+              ${["fix-now","defer","keep","needs-discussion"].map(decision => `
+                <label><input type="radio" name="${f.id}" value="${decision}" ${decision === f.suggested ? "checked" : ""}> ${decision}</label>
+              `).join("")}
+            </div>
+          `;
+          findingsEl.appendChild(card);
+        });
+      updateCopy();
+      document.querySelectorAll("input[type=radio]").forEach(input => input.addEventListener("change", updateCopy));
+    }
+
+    function updateCopy() {
+      const rows = findings.map(f => {
+        const selected = document.querySelector(`input[name="${f.id}"]:checked`);
+        return `| ${f.id} | ${selected ? selected.value : ""} | |`;
+      });
+      copyBox.value = `## Human Decisions\n\n| ID | Decision | Rationale |\n|---|---|---|\n${rows.join("\n")}\n`;
+    }
+
+    document.querySelectorAll("[data-filter]").forEach(btn => {
+      btn.addEventListener("click", () => render(btn.dataset.filter));
+    });
+    render();
+  </script>
+</body>
+</html>

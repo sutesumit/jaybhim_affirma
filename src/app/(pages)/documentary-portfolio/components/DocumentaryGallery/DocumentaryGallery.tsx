@@ -1,14 +1,15 @@
 "use client";
-import { useState, useCallback, useEffect, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+
+import { useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { PreviewImage } from "../PreviewImage";
 import { ThumbnailStrip } from "../ThumbnailStrip";
 import { GalleryControls } from "../GalleryControls";
 import type { GalleryImage } from "../../imageList";
 import { ImageModal } from "../ImageModal/ImageModal";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useDocumentaryGalleryController } from "./useDocumentaryGalleryController";
+import { useGalleryRouteState } from "./useGalleryRouteState";
 
 interface Props {
   images: GalleryImage[];
@@ -17,148 +18,129 @@ interface Props {
 const SLIDE_SHOW_INTERVAL = 5000;
 
 export function DocumentaryGallery({ images }: Props) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [isSlideShowPlaying, setIsSlideShowPlaying] = useState(true);
-  const [direction, setDirection] = useState(0);
-  const [current, setCurrent] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
-  const previousPlayStateRef = useRef<boolean | null>(null);
-  const initialOpenDone = useRef(false);
-  const pendingOpenRef = useRef(false);
-  const initialIsPlaying = useRef(isSlideShowPlaying);
+  const { selectedImageId, setSelectedImageId } = useGalleryRouteState();
+  const {
+    currentIndex,
+    currentImage,
+    direction,
+    isDialogOpen,
+    isSlideShowPlaying,
+    modalImage,
+    modalPhase,
+    shouldRenderModalContent,
+    canInteractWithGallery,
+    openImage,
+    requestClose,
+    completeClose,
+    goNext,
+    goPrev,
+    goNextInModal,
+    goPrevInModal,
+    selectIndex,
+    toggleSlideShow,
+  } = useDocumentaryGalleryController({
+    images,
+    slideShowInterval: SLIDE_SHOW_INTERVAL,
+    routeImageId: selectedImageId,
+    setRouteImageId: setSelectedImageId,
+  });
 
-  const goPrev = useCallback(() =>{ 
-    setDirection(-1);
-    setCurrent(i => (i === 0 ? images.length - 1 : i - 1));
-  }, [images.length]);
-  const goNext = useCallback(() => {
-    setDirection(1);
-    setCurrent(i => (i === images.length - 1 ? 0 : i + 1));
-  }, [images.length]);
-
-  const openModal = useCallback((image: GalleryImage, updateUrl: boolean = true) => {
-    previousPlayStateRef.current = isSlideShowPlaying;
-    setSelectedImage(image);
-    setModalOpen(true);
-    setIsSlideShowPlaying(false);
-    if (updateUrl) {
-      pendingOpenRef.current = true;
-      router.replace(`?image=${encodeURIComponent(image.filename)}`);
-    } else {
-      pendingOpenRef.current = false;
-    }
-  }, [isSlideShowPlaying, router]);
-
-  const closeModal = useCallback(() => {
-    setModalOpen(false);
-    // Clear query param only if it's currently set to the current image
-    const currentImageParam = searchParams.get("image");
-    if (currentImageParam === selectedImage?.filename) {
-      router.replace(window.location.pathname);
-    }
-    if (previousPlayStateRef.current !== null) {
-      setIsSlideShowPlaying(previousPlayStateRef.current);
-      previousPlayStateRef.current = null;
-    }
-  }, [router, searchParams, selectedImage]);
-
-  // Deep link: open modal on mount if ?image= is present
   useEffect(() => {
-    if (initialOpenDone.current) return;
-    const imageParam = searchParams.get("image");
-    if (imageParam) {
-      const match = images.find(img => img.filename === imageParam);
-      if (match) {
-        // Direct state updates (skip URL update - already present)
-        previousPlayStateRef.current = initialIsPlaying.current;
-        setSelectedImage(match);
-        setModalOpen(true);
-        setIsSlideShowPlaying(false);
+    const handler = (event: KeyboardEvent) => {
+      if (
+        event.target instanceof HTMLInputElement ||
+        event.target instanceof HTMLTextAreaElement ||
+        event.target instanceof HTMLSelectElement
+      ) {
+        return;
       }
-    }
-    initialOpenDone.current = true;
-  }, [searchParams, images]);
 
-  // Sync: if modal is open and URL changes (back/forward or manual edit), keep modal in sync
-  useEffect(() => {
-    if (!modalOpen) return;
-    // Skip the first sync after user-initiated open — router.replace hasn't propagated yet
-    if (pendingOpenRef.current) {
-      pendingOpenRef.current = false;
-      return;
-    }
-    const imageParam = searchParams.get("image");
-    // If URL lost the image param, close modal
-    if (!imageParam) {
-      closeModal();
-      return;
-    }
-    // If URL points to a different image, switch to it
-    if (imageParam && (!selectedImage || imageParam !== selectedImage.filename)) {
-      const match = images.find(img => img.filename === imageParam);
-      if (match) {
-        setSelectedImage(match);
-      } else {
-        // Image not found → close
-        closeModal();
+      if (event.key === "ArrowLeft") {
+        if (isDialogOpen) {
+          goPrevInModal();
+          return;
+        }
+
+        if (canInteractWithGallery) {
+          goPrev();
+        }
+
+        return;
       }
-    }
-  }, [searchParams, modalOpen, selectedImage, images, closeModal]);
 
-  useEffect(() => {
-    if (!isSlideShowPlaying) return;
-    const interval = setInterval(() => goNext(), SLIDE_SHOW_INTERVAL);
-    return () => clearInterval(interval);
-  }, [isSlideShowPlaying, goNext, current]);
+      if (event.key === "ArrowRight") {
+        if (isDialogOpen) {
+          goNextInModal();
+          return;
+        }
 
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (modalOpen) return;
-      if (e.key === "ArrowLeft") goPrev();
-      if (e.key === "ArrowRight") goNext();
+        if (canInteractWithGallery) {
+          goNext();
+        }
+      }
     };
+
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [goPrev, goNext, modalOpen]);
+  }, [
+    canInteractWithGallery,
+    goNext,
+    goNextInModal,
+    goPrev,
+    goPrevInModal,
+    isDialogOpen,
+  ]);
 
-  if (images.length === 0) return null;
+  if (images.length === 0 || !currentImage) {
+    return null;
+  }
 
   return (
-    <section className="relative flex flex-col items-center justify-center w-full h-full overflow-hidden">
+    <section className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden">
       <AnimatePresence initial={false} mode="popLayout" custom={direction}>
         <PreviewImage
-          key={current}
-          src={images[current].src}
-          alt={images[current].alt}
+          key={currentIndex}
+          image={currentImage}
           custom={direction}
         />
       </AnimatePresence>
+
       <GalleryControls
         isPlaying={isSlideShowPlaying}
-        onTogglePlay={() => setIsSlideShowPlaying(prev => !prev)}
-        currentImage={images[current]}
+        onTogglePlay={toggleSlideShow}
+        currentImage={currentImage}
         goPrev={goPrev}
         goNext={goNext}
-        onOpenModal={openModal}
-        disabled={modalOpen}
-      />
-      <ThumbnailStrip
-        images={images}
-        currentIndex={current}
-        onSelect={setCurrent}
+        onOpenModal={openImage}
+        disabled={!canInteractWithGallery}
       />
 
-      <Dialog open={modalOpen} onOpenChange={(open) => !open && closeModal()}>
-        <DialogContent className="max-w-4xl">
-          <VisuallyHidden.Root>
-            <DialogTitle>
-              {selectedImage?.alt || "Documentary portfolio image"}
-            </DialogTitle>
-          </VisuallyHidden.Root>
-          {selectedImage && (
-            <ImageModal image={selectedImage} />
+      <ThumbnailStrip
+        images={images}
+        currentIndex={currentIndex}
+        onSelect={selectIndex}
+      />
+
+      <Dialog open={isDialogOpen} onOpenChange={(open) => !open && requestClose()}>
+        <DialogContent
+          className="max-w-4xl overflow-hidden"
+          onAnimationEnd={(event) => {
+            if (
+              modalPhase === "closing" &&
+              event.target === event.currentTarget &&
+              event.currentTarget.getAttribute("data-state") === "closed"
+            ) {
+              completeClose();
+            }
+          }}
+        >
+          {shouldRenderModalContent && modalImage && (
+            <ImageModal
+              image={modalImage}
+              onPrev={goPrevInModal}
+              onNext={goNextInModal}
+              direction={direction}
+            />
           )}
         </DialogContent>
       </Dialog>

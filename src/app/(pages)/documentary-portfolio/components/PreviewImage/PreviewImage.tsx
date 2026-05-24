@@ -1,10 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import type { GalleryImage } from "../../imageList";
+import { GalleryImageViewport } from "../GalleryImageViewport";
 
 interface Props {
-    src: string;
-    alt: string;
+    image: Pick<GalleryImage, "src" | "alt">;
     custom?: number;
 }
 
@@ -26,7 +26,7 @@ const variants = {
     })
 }
 
-export function PreviewImage({ src, alt, custom }: Props) {
+export function PreviewImage({ image, custom }: Props) {
     return (
         <motion.div
             className="absolute inset-0 w-full h-full overflow-hidden"
@@ -55,7 +55,7 @@ export function PreviewImage({ src, alt, custom }: Props) {
                 }
              }}
         >
-            <Image src={src} alt={alt} fill className="object-cover" priority />
+            <GalleryImageViewport image={image} fit="cover" priority />
         </motion.div>
     );
 }

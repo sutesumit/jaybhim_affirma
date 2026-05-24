@@ -60,11 +60,7 @@ export function getImageList(): GalleryImage[] {
     };
   });
 
-  // Randomize order
-  for (let i = images.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [images[i], images[j]] = [images[j], images[i]];
-  }
+  images.sort((a, b) => a.filename.localeCompare(b.filename));
 
   cachedImages = images;
   return images;

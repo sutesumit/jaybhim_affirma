@@ -1,0 +1,1430 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Documentary Gallery — Deep Dive for Junior Engineers</title>
+  <style>
+    :root {
+      --bg: #07131f;
+      --panel: #0d1c2c;
+      --panel-2: #10253a;
+      --text: #e8f1f7;
+      --muted: #a9bfd1;
+      --line: #28445d;
+      --accent: #7fd0ff;
+      --accent-2: #ffd36c;
+      --good: #92e3a9;
+      --warn: #ffb86b;
+      --bad: #ff8f8f;
+      --code: #0a1118;
+      --agent: #c084fc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Inter", system-ui, sans-serif;
+      background: radial-gradient(circle at top left, rgba(127,208,255,0.12), transparent 28%),
+                  radial-gradient(circle at top right, rgba(255,211,108,0.08), transparent 24%),
+                  linear-gradient(180deg, #061019 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 40px 20px 80px; }
+
+    .hero, .panel {
+      background: linear-gradient(180deg, rgba(16,37,58,0.96), rgba(10,20,31,0.96));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.28);
+    }
+
+    .hero { padding: 28px 28px 22px; margin-bottom: 24px; }
+    .hero h1 { margin: 0 0 10px; font-size: clamp(28px,5vw,44px); line-height: 1.05; letter-spacing: 0.02em; }
+    .hero p { margin: 8px 0; color: var(--muted); max-width: 980px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line);
+      background: rgba(6,16,25,0.7); color: var(--muted); font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .panel { padding: 22px; margin-bottom: 20px; }
+    .span-12 { grid-column: span 12; }
+    .span-7 { grid-column: span 7; }
+    .span-5 { grid-column: span 5; }
+    .span-6 { grid-column: span 6; }
+    .span-4 { grid-column: span 4; }
+    .span-8 { grid-column: span 8; }
+
+    h2, h3, h4 { margin-top: 0; letter-spacing: 0.02em; }
+    h2 { font-size: 26px; margin-bottom: 12px; }
+    h3 { font-size: 18px; margin-bottom: 10px; color: var(--accent); }
+    h4 { font-size: 15px; margin-bottom: 8px; color: var(--accent-2); text-transform: uppercase; letter-spacing: 0.08em; }
+    h5 { font-size: 14px; margin: 14px 0 6px; color: var(--agent); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    p, li { color: var(--muted); }
+    ul, ol { margin: 10px 0 0 20px; padding: 0; }
+    li + li { margin-top: 7px; }
+
+    code {
+      font-family: Consolas, "SFMono-Regular", monospace;
+      background: rgba(7,19,31,0.85);
+      border: 1px solid rgba(64,98,124,0.7);
+      border-radius: 8px;
+      padding: 1px 6px; color: var(--text); font-size: 0.95em;
+    }
+
+    pre {
+      margin: 14px 0 0; padding: 16px; overflow-x: auto;
+      background: var(--code); border: 1px solid var(--line);
+      border-radius: 14px; color: #dff3ff; line-height: 1.45; font-size: 13px;
+    }
+
+    table {
+      width: 100%; border-collapse: collapse; margin-top: 14px;
+      overflow: hidden; border-radius: 12px; border: 1px solid var(--line);
+    }
+    th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+    th { background: rgba(7,19,31,0.85); color: var(--text); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
+    tr:last-child td { border-bottom: 0; }
+
+    .callout { margin-top: 14px; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: rgba(7,19,31,0.8); }
+    .good { border-color: rgba(146,227,169,0.38); }
+    .warn { border-color: rgba(255,184,107,0.38); }
+    .bad { border-color: rgba(255,143,143,0.38); }
+    .agent { border-color: rgba(192,132,252,0.38); }
+    .good strong { color: var(--good); }
+    .warn strong { color: var(--warn); }
+    .bad strong { color: var(--bad); }
+    .agent strong { color: var(--agent); }
+
+    .small { font-size: 14px; color: var(--muted); }
+
+    .toc { margin: 0; padding: 0; list-style: none; }
+    .toc li { margin: 4px 0; }
+    .toc a { color: var(--accent); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    .diagram {
+      margin: 14px 0; padding: 16px;
+      background: var(--code); border: 1px solid var(--line);
+      border-radius: 14px; font-size: 13px; line-height: 1.5;
+      overflow-x: auto; white-space: pre;
+      font-family: Consolas, "SFMono-Regular", monospace;
+      color: #dff3ff;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px; border-radius: 6px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+      margin-right: 4px;
+    }
+    .tag-hook { background: #1a3a5c; color: #7fd0ff; }
+    .tag-comp { background: #2d4a2d; color: #92e3a9; }
+    .tag-svc { background: #5c3a1a; color: #ffb86b; }
+    .tag-anim { background: #4a2d5c; color: #c084fc; }
+    .tag-test { background: #5c1a1a; color: #ff8f8f; }
+
+    @media (max-width: 980px) {
+      .span-7, .span-5, .span-6, .span-4, .span-8 { grid-column: span 12; }
+    }
+
+    .file-badge {
+      display: inline-block;
+      font-family: Consolas, monospace;
+      font-size: 12px;
+      padding: 2px 10px;
+      border-radius: 6px;
+      background: rgba(127,208,255,0.12);
+      border: 1px solid rgba(127,208,255,0.3);
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Documentary Gallery — Full Walkthrough</h1>
+      <p>
+        A complete mental-model, data-flow, and agentic-engineering guide for the documentary-portfolio
+        image gallery feature. Designed for a junior engineer who wants to understand every line
+        <em>and</em> learn how to use AI coding agents to build similar features.
+      </p>
+      <div class="meta">
+        <span class="chip">Branch: <code>feat/documentary-portfolio-image-modal</code></span>
+        <span class="chip">~4,300 lines changed</span>
+        <span class="chip">14 modified + 15 new files</span>
+        <span class="chip">Next.js 15 + React 19 + Supabase + Framer Motion</span>
+      </div>
+    </section>
+
+    <!-- ============================== TABLE OF CONTENTS ============================== -->
+    <section class="panel">
+      <h2>Table of Contents</h2>
+      <ol class="toc">
+        <li><a href="#mental-model">1. Mental Model — The Feature in One Picture</a></li>
+        <li><a href="#component-tree">2. Component Tree &amp; File Map</a></li>
+        <li><a href="#data-model">3. Data Model &amp; Types</a></li>
+        <li><a href="#state-architecture">4. State Architecture &amp; Reducer Pattern</a></li>
+        <li><a href="#url-sync">5. URL Synchronization (Deep Linking)</a></li>
+        <li><a href="#data-flows">6. Data Flow Diagrams</a></li>
+        <li><a href="#keyboard-nav">7. Keyboard Navigation System</a></li>
+        <li><a href="#modal-lifecycle">8. Modal Lifecycle (3-Phase Close)</a></li>
+        <li><a href="#slideshow">9. Slideshow Engine</a></li>
+        <li><a href="#animation">10. Animation Patterns</a></li>
+        <li><a href="#testing">11. Testing Strategy</a></li>
+        <li><a href="#patterns">12. Reusable Architecture Patterns</a></li>
+        <li><a href="#agentic">13. Agentic Engineering — How to Use AI Agents Here</a></li>
+        <li><a href="#reading">14. Recommended Reading Order</a></li>
+      </ol>
+    </section>
+
+    <!-- ============================== 1. MENTAL MODEL ============================== -->
+    <section class="panel" id="mental-model">
+      <h2>1. Mental Model — The Feature in One Picture</h2>
+      <div class="grid">
+        <div class="span-7">
+          <p>Think of the gallery as a <strong>slideshow player</strong> with a <strong>detail inspector</strong> that opens as a modal.</p>
+          <ul>
+            <li><strong>Gallery (background):</strong> Full-bleed preview image, thumbnail strip at bottom, overlay controls (prev/next/play-pause/info toggles).</li>
+            <li><strong>Modal (foreground):</strong> A dialog that opens on top with the same image, metadata, like button, share-to-clipboard, and its own prev/next chevrons.</li>
+            <li><strong>URL state:</strong> The <code>?image=filename</code> query param deep-links to a specific image. Change it via browser back/forward and the modal syncs.</li>
+            <li><strong>Controller:</strong> A <code>useReducer</code>-based hook owns all state transitions so no two components disagree about what's open.</li>
+          </ul>
+        </div>
+        <div class="span-5">
+          <div class="diagram">
+┌──────────────────────────────────┐
+│  page.tsx (server)               │
+│  └─ getImageList()               │
+│  └─ &lt;Suspense&gt;                    │
+│     └─ DocumentaryGallery        │
+│        └─ useGalleryRouteState   │
+│        └─ useController          │
+│        ├─ PreviewImage           │
+│        ├─ GalleryControls        │
+│        │  └─ IconButton (×5)     │
+│        │  └─ InfoCard            │
+│        ├─ ThumbnailStrip         │
+│        └─ Dialog                 │
+│           └─ ImageModal          │
+│              ├─ ImageViewport    │
+│              ├─ metadata         │
+│              └─ ImageLikeButton  │
+└──────────────────────────────────┘
+          </div>
+        </div>
+      </div>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "I need to understand the high-level architecture of a Next.js gallery feature. Read the page.tsx,
+          DocumentaryGallery.tsx, and the controller hook in this directory. Explain the data flow from
+          server to client, and identify which component owns which piece of state."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 2. COMPONENT TREE ============================== -->
+    <section class="panel" id="component-tree">
+      <h2>2. Component Tree &amp; File Map</h2>
+      <p>Every file in the feature, its responsibility, and the data it receives.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Role</th>
+            <th>Receives</th>
+            <th>Emits</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>page.tsx</code></td>
+            <td>Server entry: loads images, wraps in Suspense</td>
+            <td><code>getImageList()</code></td>
+            <td><code>images: GalleryImage[]</code></td>
+          </tr>
+          <tr>
+            <td><code>imageList.ts</code></td>
+            <td>Reads filesystem + metadata.json, builds <code>GalleryImage[]</code></td>
+            <td>File system</td>
+            <td>Normalized image array (cached)</td>
+          </tr>
+          <tr>
+            <td><code>useGalleryRouteState.ts</code> <span class="tag tag-hook">hook</span></td>
+            <td>Reads/writes <code>?image=</code> search param via Next.js router</td>
+            <td>SearchParams</td>
+            <td><code>selectedImageId</code>, <code>setSelectedImageId()</code></td>
+          </tr>
+          <tr>
+            <td><code>useDocumentaryGalleryController.ts</code> <span class="tag tag-hook">hook</span></td>
+            <td>Single source of truth: reducer + derived state + actions</td>
+            <td><code>images</code>, <code>routeImageId</code>, interval</td>
+            <td>18 outputs (state + action fns)</td>
+          </tr>
+          <tr>
+            <td><code>DocumentaryGallery.tsx</code> <span class="tag tag-comp">comp</span></td>
+            <td>Orchestrator: wires controller → UI, keyboard listener</td>
+            <td>Controller outputs</td>
+            <td>Renders sub-trees, delegates events</td>
+          </tr>
+          <tr>
+            <td><code>PreviewImage.tsx</code> <span class="tag tag-comp">comp</span></td>
+            <td>Full-bleed background image with Framer Motion transitions</td>
+            <td><code>image</code>, <code>direction</code></td>
+            <td>Animation only</td>
+          </tr>
+          <tr>
+            <td><code>GalleryControls.tsx</code> <span class="tag tag-comp">comp</span></td>
+            <td>Overlay: play/pause, prev/next, info-tab toggles</td>
+            <td><code>isPlaying</code>, <code>currentImage</code>, callbacks, <code>disabled</code></td>
+            <td>Calls controller actions</td>
+          </tr>
+          <tr>
+            <td><code>IconButton.tsx</code> <span class="tag tag-comp">comp</span></td>
+            <td>Reusable animated button wrapper</td>
+            <td><code>Icon</code>, <code>onClick</code>, <code>disabled</code>, <code>isActive</code></td>
+            <td>Click events</td>
+          </tr>
+          <tr>
+            <td><code>InfoCard.tsx</code> <span class="tag tag-comp">comp</span></td>
+            <td>Tabbed info panel: Experience / Comments / Captions + "Get a Print"</td>
+            <td><code>id</code>, <code>data</code>, <code>onOpenModal</code></td>
+            <td>Calls <code>onOpenModal(data)</code></td>
+          </tr>
+          <tr>
+            <td><code>ThumbnailStrip.tsx</code> <span class="tag tag-comp">comp</span></td>
+            <td>Bottom scrollable thumbnail rail with auto-hide idle timer</td>
+            <td><code>images[]</code>, <code>currentIndex</code></td>
+            <td>Calls <code>onSelect(index)</code></td>
+          </tr>
+          <tr>
+            <td><code>ImageModal.tsx</code> <span class="tag tag-comp">comp</span></td>
+            <td>Modal body: image viewport, metadata grid, share, like, nav</td>
+            <td><code>image</code>, <code>direction</code>, prev/next callbacks</td>
+            <td>Calls prev/next, toast, clipboard</td>
+          </tr>
+          <tr>
+            <td><code>GalleryImageViewport.tsx</code> <span class="tag tag-comp">comp</span></td>
+            <td>Next.js <code>Image</code> wrapper with fill and fit modes</td>
+            <td><code>src</code>, <code>alt</code>, <code>fit</code>, <code>priority</code></td>
+            <td>Renders <code>&lt;Image&gt;</code></td>
+          </tr>
+          <tr>
+            <td><code>dialog.tsx</code></td>
+            <td>Styled Radix dialog shell + overlay with DotGrid</td>
+            <td>Controlled <code>open</code> + <code>onOpenChange</code></td>
+            <td>CSS close/open animations</td>
+          </tr>
+          <tr>
+            <td><code>dot-grid.tsx</code> <span class="tag tag-anim">anim</span></td>
+            <td>Interactive dot-pattern overlay; mouse-follow highlight</td>
+            <td><code>interactive</code>, <code>dotSize</code>, <code>spacing</code></td>
+            <td>CSS mask animation via RAF</td>
+          </tr>
+          <tr>
+            <td><code>ImageLikeButton.tsx</code> <span class="tag tag-comp">comp</span></td>
+            <td>Heart-toggle with odometer count, protected-action drawer</td>
+            <td><code>pathName</code></td>
+            <td>Calls <code>useLikes</code> hook, toggles like</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout warn">
+        <strong>Key insight for juniors:</strong> <code>page.tsx</code> runs on the server (it's an async Server Component).
+        Everything under <code>DocumentaryGallery</code> is <code>"use client"</code>. The boundary is at
+        <code>&lt;Suspense&gt;</code>. This is a classic Next.js App Router pattern: load data on the server,
+        hydrate interactivity on the client.
+      </div>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "I'm refactoring a Next.js app. Find all components that have <code>"use client"</code> directives,
+          trace the props being passed from the server page.tsx down through the client tree, and check
+          if any server-only data (like fs reads) is accidentally leaking to the client bundle."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 3. DATA MODEL ============================== -->
+    <section class="panel" id="data-model">
+      <h2>3. Data Model &amp; Types</h2>
+      <div class="grid">
+        <div class="span-6">
+          <h3>GalleryImage</h3>
+          <div class="diagram">interface GalleryImage {
+  filename: string        // e.g. "photo-1.jpg"
+  src: string             // "/documentary_portfolio/photo-1.jpg"
+  alt: string             // fallback = caption or filename
+  year: string
+  caption?: string
+  organization?: string
+  camera?: string         // EXIF
+  lens?: string
+  exposure?: string
+  focalLength?: string
+  iso?: string
+}</div>
+          <p>Built in <code>imageList.ts</code> from filesystem scan + <code>metadata.json</code> lookup.</p>
+        </div>
+        <div class="span-6">
+          <h3>Controller State</h3>
+          <div class="diagram">interface DocumentaryGalleryState {
+  currentIndex: number           // gallery cursor position
+  direction: number             // -1 | 0 | 1 (animation dir)
+  isSlideShowPlaying: boolean   // autoplay on/off
+  modalPhase: "closed"          // lifecycle state machine
+              | "open"
+              | "closing"
+  selectedImageId: string | null // which image in modal (or null)
+  wasSlideShowPlaying: boolean  // saved for restore on close
+}</div>
+        </div>
+      </div>
+
+      <div class="callout good">
+        <strong>Critical invariant:</strong> <code>currentIndex</code> is the <em>gallery cursor</em>.
+        <code>selectedImageId</code> is the <em>modal subject</em>. When the modal is open, they point to the same image.
+        When the modal closes, <code>selectedImageId</code> goes null but <code>currentIndex</code> stays — the gallery
+        continues from where you left off.
+      </div>
+
+      <div class="callout good">
+        <strong>Why <code>direction</code> exists:</strong> Framer Motion needs a <code>custom</code> prop to know
+        whether to animate left-to-right (direction=1) or right-to-left (direction=-1). Direction=0 means
+        "no slide animation" — used on initial mount and URL-sync opens.
+      </div>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "From the Typescript interfaces in this project, generate a Zod schema or JSON Schema for the
+          GalleryImage type. Also, trace how the metadata.json fields map onto GalleryImage — are there
+          any fields in metadata.json that are being dropped? Report mismatches."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 4. STATE ARCHITECTURE ============================== -->
+    <section class="panel" id="state-architecture">
+      <h2>4. State Architecture &amp; Reducer Pattern</h2>
+      <p>
+        The feature uses <code>useReducer</code> instead of multiple <code>useState</code> calls.
+        This is deliberate: a reducer guarantees that state transitions are atomic, predictable, and testable
+        without rendering a component.
+      </p>
+
+      <h3>Action Types</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>When it fires</th>
+            <th>State changes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>OPEN</code></td><td>User clicks "Get a Print" or thumbnail to open modal</td><td><code>modalPhase="open"</code>, sets <code>selectedImageId</code>, pauses slideshow</td></tr>
+          <tr><td><code>REQUEST_CLOSE</code></td><td>User clicks overlay, Escape, or close button</td><td><code>modalPhase="closing"</code></td></tr>
+          <tr><td><code>CLOSE_COMPLETE</code></td><td>Dialog animation finishes (onAnimationEnd)</td><td><code>modalPhase="closed"</code>, clears <code>selectedImageId</code>, restores slideshow</td></tr>
+          <tr><td><code>GO_NEXT</code></td><td>Slideshow interval or gallery next arrow</td><td><code>currentIndex++</code>, wraps, <code>direction=1</code></td></tr>
+          <tr><td><code>GO_PREV</code></td><td>Gallery prev arrow</td><td><code>currentIndex--</code>, wraps, <code>direction=-1</code></td></tr>
+          <tr><td><code>MODAL_NEXT</code></td><td>Modal chevron right or ArrowRight while modal open</td><td>Same as GO_NEXT + updates <code>selectedImageId</code></td></tr>
+          <tr><td><code>MODAL_PREV</code></td><td>Modal chevron left or ArrowLeft while modal open</td><td>Same as GO_PREV + updates <code>selectedImageId</code></td></tr>
+          <tr><td><code>SELECT_INDEX</code></td><td>Thumbnail strip click</td><td><code>currentIndex = action.index</code></td></tr>
+          <tr><td><code>TOGGLE_SLIDESHOW</code></td><td>Play/Pause button</td><td>Flips <code>isSlideShowPlaying</code></td></tr>
+          <tr><td><code>SYNC_FROM_ROUTE</code></td><td>URL searchParams change</td><td>Opens/closes modal based on <code>?image=</code> param</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Why useReducer vs useState?</h3>
+      <table>
+        <thead>
+          <tr><th>Criterion</th><th>useState</th><th>useReducer</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Multiple interdependent fields</td><td>Risk of stale closures, missed updates</td><td>One dispatch, one atomic transition</td></tr>
+          <tr><td>Testability</td><td>Need to render component</td><td>Pure function: <code>reducer(state, action) → state</code></td></tr>
+          <tr><td>Complexity scaling</td><td>Becomes spaghetti beyond 3-4 states</td><td>New action = new case. Scales linearly.</td></tr>
+          <tr><td>Debugging</td><td>Hard to log state transitions</td><td>Easy to log every dispatch + before/after</td></tr>
+        </tbody>
+      </tbody>
+      </table>
+
+      <div class="diagram">// Pure function — testable without React
+function documentaryGalleryReducer(
+  state: DocumentaryGalleryState,
+  action: DocumentaryGalleryAction
+): DocumentaryGalleryState {
+  switch (action.type) {
+    case "OPEN":
+      return {
+        ...state,
+        currentIndex: action.index,
+        modalPhase: "open",
+        selectedImageId: action.imageId,
+        wasSlideShowPlaying: state.isSlideShowPlaying, // save for restore
+        isSlideShowPlaying: false,                     // pause
+      };
+    case "CLOSE_COMPLETE":
+      if (state.modalPhase !== "closing") return state; // guard
+      return {
+        ...state,
+        modalPhase: "closed",
+        selectedImageId: null,
+        isSlideShowPlaying: state.wasSlideShowPlaying, // restore
+      };
+    // ... more cases
+  }
+}</div>
+
+      <div class="callout warn">
+        <strong>Guard pattern:</strong> Notice how <code>CLOSE_COMPLETE</code> checks
+        <code>state.modalPhase !== "closing"</code> and returns early. This is called a
+        <strong>state-machine guard</strong>. It prevents a close animation from completing twice,
+        or from completing before the close was ever requested. Every action that only makes sense
+        in a specific phase should have a guard.
+      </div>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "I have a useReducer with 10 action types. Write a test for every reducer case using vitest.
+          The test should verify state transitions, edge cases (guards, wrapping around array boundaries),
+          and that <code>wasSlideShowPlaying</code> is properly saved and restored. Use the
+          <code>documentaryGalleryReducer</code> function directly — no rendering needed."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 5. URL SYNC ============================== -->
+    <section class="panel" id="url-sync">
+      <h2>5. URL Synchronization (Deep Linking)</h2>
+
+      <p>
+        The gallery uses the URL <code>?image=filename</code> as a <strong>shared source of truth</strong>
+        between the controller (internal state) and the browser (external navigation).
+      </p>
+
+      <h3>The Two Hooks Pattern</h3>
+      <p>
+        Rather than putting URL logic inside the controller, the code splits it into <strong>two hooks</strong>
+        that communicate via a <em>bridge pattern</em>:
+      </p>
+
+      <div class="grid">
+        <div class="span-6">
+          <div class="diagram">useGalleryRouteState.ts
+  ─── reads: useSearchParams()
+  ─── writes: router.replace()
+  ─── exposes: { selectedImageId, setSelectedImageId }</div>
+          <p class="small">This hook is the I/O boundary. It talks to Next.js router. It knows nothing about modals, slideshows, or state machines.</p>
+        </div>
+        <div class="span-6">
+          <div class="diagram">useDocumentaryGalleryController.ts
+  ─── reads: routeImageId (prop)
+  ─── writes: setRouteImageId (prop)
+  ─── owns: reducer, slideshow, modal lifecycle</div>
+          <p class="small">This hook is the state engine. It receives URL state as a prop (dependency injection via the parent). It calls <code>setRouteImageId</code> when modal state changes.</p>
+        </div>
+      </div>
+
+      <h3>Bidirectional Sync Flow</h3>
+      <div class="grid">
+        <div class="span-6">
+          <h4>State → URL (controller writes)</h4>
+          <pre>useEffect [modalPhase, selectedImageId]:
+  desiredImageId = modalPhase === "open"
+    ? selectedImageId
+    : null
+
+  if (desiredImageId !== routeImageId):
+    setRouteImageId(desiredImageId) // triggers router.replace</pre>
+        </div>
+        <div class="span-6">
+          <h4>URL → State (controller reads)</h4>
+          <pre>useEffect [routeImageId]:
+  dispatch({
+    type: "SYNC_FROM_ROUTE",
+    imageId: routeImageId,
+    index: routeImageId
+      ? imageIndexById.get(routeImageId)
+      : null
+  })
+
+SYNC_FROM_ROUTE reducer:
+  • imageId=null, modalPhase="open" → start closing
+  • imageId=null, modalPhase≠"open" → no-op
+  • index=null → no-op (bad URL)
+  • same as current → no-op
+  • valid → open modal at that image</pre>
+        </div>
+      </div>
+
+      <div class="callout good">
+        <strong>Why this matters for deeply-linked sharing:</strong> A user can share a URL like
+        <code>/documentary-portfolio?image=photo-1.jpg</code>. A friend who opens it will see the modal
+        open on that exact image. The initial state is computed via
+        <code>getInitialStateFromRoute()</code> which reads <code>routeImageId</code> before the first render.
+      </div>
+
+      <div class="callout warn">
+        <strong>Architectural risk:</strong> The URL sync uses a <code>useEffect</code>, which means there's
+        a one-tick delay between "user opens modal" and "URL updates". The guard <code>pendingOpenRef</code>
+        (documented in ARCHITECTURE.md) prevents the URL-update effect from re-triggering itself.
+        In this implementation, the guard is handled implicitly: the controller writes to
+        <code>setRouteImageId</code>, which triggers <code>router.replace</code>, which updates
+        <code>searchParams</code>, which re-runs the <code>SYNC_FROM_ROUTE</code> effect — but by then
+        the state is already in sync, so the reducer's early-return guard prevents loops.
+      </div>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "I'm debugging a URL-sync loop in Next.js. Two effects are racing: one writes to
+          <code>router.replace</code>, the other reads from <code>useSearchParams</code>. Find all
+          <code>useEffect</code> hooks in the documentary gallery that depend on URL state,
+          analyze their dependency arrays, and identify if a <code>pendingOpenRef</code> guard is needed
+          to prevent infinite loops. Write a suggestion."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 6. DATA FLOWS ============================== -->
+    <section class="panel" id="data-flows">
+      <h2>6. Data Flow Diagrams</h2>
+
+      <div class="grid">
+        <div class="span-6">
+          <h3>Flow A: Initial Page Load with Deep Link</h3>
+          <div class="diagram">Browser: /documentary-portfolio?image=two.jpg
+
+1. page.tsx (server)
+   └─ getImageList() → reads filesystem + metadata.json
+   └─ returns GalleryImage[]
+
+2. DocumentaryGallery (client mount)
+   └─ useGalleryRouteState()
+      └─ useSearchParams().get("image") → "two.jpg"
+   └─ useDocumentaryGalleryController()
+      └─ getInitialStateFromRoute({ routeImageId: "two.jpg" })
+         └─ finds index=1 in images array
+         └─ returns: { currentIndex:1, modalPhase:"open",
+                       selectedImageId:"two.jpg",
+                       isSlideShowPlaying:false }
+   └─ Render:
+      ├─ PreviewImage at index 1
+      ├─ GalleryControls (disabled=true during modal)
+      ├─ ThumbnailStrip at index 1
+      └─ Dialog open={true}
+         └─ ImageModal with image two</div>
+        </div>
+
+        <div class="span-6">
+          <h3>Flow B: User Opens Modal from InfoCard</h3>
+          <div class="diagram">Gallery is autoplaying at index 3.
+
+1. User clicks "Get a Print" in InfoCard
+2. InfoCard calls onOpenModal(currentImage)
+3. Controller.openImage(image)
+   └─ dispatch(OPEN, imageId, index=3)
+   └─ reducer:
+      ├─ currentIndex = 3
+      ├─ modalPhase = "open"
+      ├─ selectedImageId = "three.jpg"
+      ├─ wasSlideShowPlaying = true  (save)
+      └─ isSlideShowPlaying = false  (pause)
+
+4. Re-render:
+   ├─ isDialogOpen = true → Dialog renders
+   ├─ modalImage = images[3]
+   ├─ canInteractWithGallery = false → controls disabled
+   └─ (0 ticks later) URL sync effect fires
+      └─ setRouteImageId("three.jpg")
+         └─ router.replace("?image=three.jpg")</div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="span-6">
+          <h3>Flow C: User Navigates in Modal</h3>
+          <div class="diagram">Modal open on image 3.
+
+1. User clicks right chevron (or ArrowRight)
+2. ImageModal calls onNext (which is goNextInModal)
+3. goNextInModal:
+   └─ if modalPhase !== "open" → return (guard)
+   └─ nextIndex = 4 (or wrap to 0)
+   └─ dispatch(MODAL_NEXT, total, imageId="four.jpg")
+   └─ reducer:
+      ├─ direction = 1
+      ├─ currentIndex = 4
+      └─ selectedImageId = "four.jpg"
+
+4. Re-render:
+   ├─ PreviewImage swaps (AnimatePresence with direction=1)
+   ├─ ThumbnailStrip scrolls to index 4
+   └─ ImageModal key=filename changes → AnimatePresence animates
+      ├─ old image exits left (direction >= 0 → -100%)
+      └─ new image enters from right (+100%)</div>
+        </div>
+
+        <div class="span-6">
+          <h3>Flow D: Close Modal (3-Phase)</h3>
+          <div class="diagram">Phase 1: REQUEST_CLOSE
+  └─ Trigger: overlay click / Escape / X button
+  └─ dispatch(REQUEST_CLOSE)
+  └─ modalPhase = "closing"
+  └─ effect: isDialogOpen = false (since isDialogOpen
+     is derived: modalPhase === "open")
+
+Phase 2: Dialog animates closed
+  └─ Radix DialogContent plays exit animation
+  └─ shouldRenderModalContent = true (modalPhase !== "closed")
+     → content stays mounted during animation
+
+Phase 3: CLOSE_COMPLETE
+  └─ onAnimationEnd fires on DialogContent
+  └─ guards:
+     ├─ modalPhase === "closing" (yes)
+     ├─ event.target === event.currentTarget
+     └─ data-state === "closed"
+  └─ dispatch(CLOSE_COMPLETE)
+  └─ Reducer:
+     ├─ modalPhase = "closed"
+     ├─ selectedImageId = null
+     └─ isSlideShowPlaying = wasSlideShowPlaying (restore)
+
+  └─ URL sync: desiredImageId = null → setRouteImageId(null)
+     → router.replace("/documentary-portfolio") // clears ?image=</div>
+        </div>
+      </div>
+
+      <div class="callout bad">
+        <strong>Risk:</strong> The <code>CLOSE_COMPLETE</code> depends on <code>onAnimationEnd</code>.
+        If the animation doesn't fire (e.g., Radix DialogContent changes its CSS, or a parent
+        <code>AnimatePresence</code> interferes), the controller gets stuck in <code>"closing"</code>.
+        A timeout fallback would make this more robust.
+      </div>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "Analyze the 3-phase close lifecycle in DocumentaryGallery. The CLOSE_COMPLETE action depends
+          on an onAnimationEnd event that might not fire in all cases. Write a proposal for a fallback:
+          keep the current animationEnd approach but add a setTimeout(completeClose, 500) that fires
+          if the animation doesn't complete. What are the edge cases? (E.g., user spams close/open.)"
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 7. KEYBOARD ============================== -->
+    <section class="panel" id="keyboard-nav">
+      <h2>7. Keyboard Navigation System</h2>
+
+      <p>
+        The keyboard handler lives in <code>DocumentaryGallery.tsx</code> as a single
+        <code>useEffect</code> with <code>window.addEventListener("keydown", handler)</code>.
+      </p>
+
+      <div class="diagram">useEffect(() => {
+  const handler = (event: KeyboardEvent) => {
+    // GUARD: Don't steal focus from form elements
+    if (
+      event.target instanceof HTMLInputElement ||
+      event.target instanceof HTMLTextAreaElement ||
+      event.target instanceof HTMLSelectElement
+    ) { return; }
+
+    if (event.key === "ArrowLeft") {
+      if (isDialogOpen) {
+        goPrevInModal();
+        return;
+      }
+      if (canInteractWithGallery) goPrev();
+      return;
+    }
+
+    if (event.key === "ArrowRight") {
+      if (isDialogOpen) {
+        goNextInModal();
+        return;
+      }
+      if (canInteractWithGallery) goNext();
+    }
+  };
+
+  window.addEventListener("keydown", handler);
+  return () => window.removeEventListener("keydown", handler);
+}, [canInteractWithGallery, goNext, goNextInModal,
+    goPrev, goPrevInModal, isDialogOpen]);</div>
+
+      <h3>Decision Tree</h3>
+      <div class="diagram">KeyPress
+  ├─ Is focus in input/textarea/select? → IGNORE (guard)
+  ├─ ArrowLeft
+  │  ├─ isDialogOpen? → goPrevInModal()
+  │  └─ canInteractWithGallery? → goPrev()
+  └─ ArrowRight
+     ├─ isDialogOpen? → goNextInModal()
+     └─ canInteractWithGallery? → goNext()</div>
+
+      <div class="callout good">
+        <strong>Why this is correct:</strong> When the modal is open, left/right navigate <em>in the modal</em>.
+        When closed, they navigate the <em>gallery</em>. Escape is handled natively by Radix Dialog (no
+        competing handler). The form-element guard prevents arrow keys from interfering with typing in
+        comment inputs.
+      </div>
+
+      <div class="callout warn">
+        <strong>Dependency array note:</strong> The effect re-registers the listener whenever
+        <code>canInteractWithGallery</code> or <code>isDialogOpen</code> changes. This is necessary
+        because the handler captures these values from the closure. An alternative would be using a ref,
+        but the current approach is simpler. The cost is slight: re-registering the listener on every
+        modal open/close.
+      </div>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "Write a vitest test for the keyboard navigation handler in DocumentaryGallery.tsx.
+          Use fireEvent.keyDown(window, ...). Test four scenarios:
+          1. Dialog open + ArrowRight → goNextInModal called
+          2. Dialog closed + ArrowRight → goNext called
+          3. Focus in input + ArrowRight → neither called
+          4. Dialog closed + canInteractWithGallery=false + ArrowRight → goNext NOT called
+          Mock the controller and route state hooks."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 8. MODAL LIFECYCLE ============================== -->
+    <section class="panel" id="modal-lifecycle">
+      <h2>8. Modal Lifecycle (3-Phase Close)</h2>
+
+      <p>
+        The modal uses a <strong>3-phase state machine</strong> to handle the fact that Radix Dialog
+        animations are CSS-driven and asynchronous. The problem: if you set <code>open=false</code>
+        and immediately unmount the content, the exit animation never plays.
+      </p>
+
+      <h3>The Three Phases</h3>
+      <table>
+        <thead>
+          <tr><th>Phase</th><th>isDialogOpen</th><th>shouldRenderModalContent</th><th>selectedImageId</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>"closed"</code></td>
+            <td><code>false</code></td>
+            <td><code>false</code></td>
+            <td><code>null</code></td>
+            <td>No modal. Gallery is interactive.</td>
+          </tr>
+          <tr>
+            <td><code>"open"</code></td>
+            <td><code>true</code></td>
+            <td><code>true</code></td>
+            <td><code>"filename"</code></td>
+            <td>Modal visible. Gallery controls disabled.</td>
+          </tr>
+          <tr>
+            <td><code>"closing"</code></td>
+            <td><code>false</code></td>
+            <td><code>true</code> <span class="small">(content still mounted!)</span></td>
+            <td><code>"filename"</code></td>
+            <td>Dialog shell animates out. Content stays for teardown.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Why 3 phases instead of 2?</h3>
+      <p>
+        A 2-phase approach (<code>open</code>/<code>closed</code>) would force you to either:
+      </p>
+      <ul>
+        <li><strong>Unmount content immediately</strong> — exit animation never plays; content disappears abruptly.</li>
+        <li><strong>Delay unmounting</strong> with a <code>setTimeout</code> — race conditions, magic numbers, fragile.</li>
+      </ul>
+      <p>
+        The 3-phase approach uses Radix's own <code>onAnimationEnd</code> callback, so the only delay is
+        the actual CSS animation duration. No magic numbers, no race conditions.
+      </p>
+
+      <div class="diagram">DialogContent onAnimationEnd:
+  └─ modalPhase === "closing" ?
+  └─ event.target === event.currentTarget ?
+  └─ data-state === "closed" ?
+  └─ dispatch(CLOSE_COMPLETE)
+     └─ modalPhase = "closed"
+     └─ selectedImageId = null
+     └─ restore slideshow
+
+Without these guards:
+  ├─ onAnimationEnd fires for CHILD animations too
+  │  (event.target === event.currentTarget fixes this)
+  ├─ Could fire during OPEN animation
+  │  (data-state === "closed" fixes this)
+  └─ Could fire twice if component re-renders
+     (modalPhase !== "closing" guard fixes this)</div>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "I'm building a modal with a 3-phase close lifecycle in React. I need the modal body to stay
+          mounted during the exit animation. Write an implementation using useReducer with phases
+          'closed', 'open', and 'closing'. Include guards so CLOSE_COMPLETE only fires when
+          modalPhase is 'closing'. Use onAnimationEnd on the dialog content element."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 9. SLIDESHOW ============================== -->
+    <section class="panel" id="slideshow">
+      <h2>9. Slideshow Engine</h2>
+
+      <p>
+        The slideshow is a single <code>setInterval</code> that fires <code>goNext</code> every
+        <code>SLIDE_SHOW_INTERVAL</code> (5000ms). It's managed entirely inside the controller hook.
+      </p>
+
+      <div class="diagram">useEffect(() => {
+  if (!state.isSlideShowPlaying || images.length === 0) {
+    return;
+  }
+
+  const interval = setInterval(goNext, slideShowInterval);
+  return () => clearInterval(interval);
+}, [goNext, images.length, slideShowInterval,
+    state.isSlideShowPlaying]);</div>
+
+      <h3>Transient State Save/Restore</h3>
+      <p>
+        When the modal opens, the slideshow must pause. When the modal closes, it should resume
+        <em>if it was playing before</em>. This is the <strong>Transient State Save/Restore pattern</strong>.
+      </p>
+
+      <div class="grid">
+        <div class="span-6">
+          <h4>Save on open</h4>
+          <div class="diagram">case "OPEN":
+  return {
+    ...state,
+    wasSlideShowPlaying: state.isSlideShowPlaying,
+    isSlideShowPlaying: false,
+  };
+
+// Capture the CURRENT playing state
+// BEFORE setting it to false.
+// If it was already false, that's fine:
+// wasSlideShowPlaying = false.</div>
+        </div>
+        <div class="span-6">
+          <h4>Restore on close</h4>
+          <div class="diagram">case "CLOSE_COMPLETE":
+  return {
+    ...state,
+    modalPhase: "closed",
+    selectedImageId: null,
+    isSlideShowPlaying: state.wasSlideShowPlaying,
+  };
+
+// If wasSlideShowPlaying was true → resume
+// If wasSlideShowPlaying was false → stay paused
+// Always set wasSlideShowPlaying aside:
+// no branching needed.</div>
+        </div>
+      </div>
+
+      <div class="callout good">
+        <strong>Why a ref isn't needed here:</strong> The ARCHITECTURE.md says to use a ref for
+        transient state. But the reducer handles it naturally: <code>wasSlideShowPlaying</code> is
+        part of the reducer state. The reducer captures the value <em>at the moment of the OPEN dispatch</em>
+        (which is synchronous), so there's no stale closure issue.
+      </div>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "I have a slideshow that needs to pause when a modal opens and resume when it closes.
+          The slideshow state is in a useReducer. Write the reducer cases for OPEN and CLOSE_COMPLETE
+          that save and restore the playing state using a 'wasSlideShowPlaying' field.
+          Also write the useEffect for setInterval that depends on isSlideShowPlaying.
+          Show how this handles the edge case where slideshow was already paused before modal open."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 10. ANIMATION ============================== -->
+    <section class="panel" id="animation">
+      <h2>10. Animation Patterns</h2>
+
+      <p>The feature uses <strong>Framer Motion</strong> extensively for transitions. Here's every animation site and what it does.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Animation</th>
+            <th>Trigger</th>
+            <th>Key Prop</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>PreviewImage</code></td>
+            <td>Full-bleed background crossfade with spring motion</td>
+            <td><code>currentIndex</code> changes (key prop)</td>
+            <td><code>custom={direction}</code>, spring stiffness=180</td>
+          </tr>
+          <tr>
+            <td><code>GalleryControls</code></td>
+            <td>Left/right toolbars slide in from edges on mount</td>
+            <td>Component mount</td>
+            <td><code>initial={{ x: -20 }}, animate={{ x: 0 }}</code></td>
+          </tr>
+          <tr>
+            <td><code>InfoCard</code></td>
+            <td>Blur-in, scale-in on tab change, layout animation</td>
+            <td><code>id</code> (tab) changes</td>
+            <td><code>layout</code> prop, <code>AnimatePresence mode="wait"</code></td>
+          </tr>
+          <tr>
+            <td><code>IconButton</code></td>
+            <td>Spring scale on hover/tap</td>
+            <td>Hover, click</td>
+            <td><code>whileHover={{ scale: 1.1 }}</code></td>
+          </tr>
+          <tr>
+            <td><code>ThumbnailStrip</code></td>
+            <td>Slide up/down on idle timeout; scale on active thumbnail</td>
+            <td>4s idle timer, currentIndex change</td>
+            <td><code>variants={{ visible, idle }}</code></td>
+          </tr>
+          <tr>
+            <td><code>ImageModal image</code></td>
+            <td>Slide horizontal + blur transition on image change</td>
+            <td><code>image.filename</code> key changes</td>
+            <td><code>custom={direction}</code>, <code>AnimatePresence mode="sync"</code></td>
+          </tr>
+          <tr>
+            <td><code>ImageModal metadata</code></td>
+            <td>Fade + blur + slide-up on image change</td>
+            <td><code>image.filename</code> key changes</td>
+            <td><code>initial={{ opacity: 0.65, y: 10, filter: "blur(2px)" }}</code></td>
+          </tr>
+          <tr>
+            <td><code>ImageModal share icon</code></td>
+            <td>Crossfade between Share2 and Check icons</td>
+            <td><code>shareCopied</code> state toggle</td>
+            <td><code>AnimatePresence mode="sync"</code></td>
+          </tr>
+          <tr>
+            <td><code>ImageLikeButton heart</code></td>
+            <td>Rotate + slide on like/unlike toggle</td>
+            <td><code>isLiked</code> state change</td>
+            <td><code>AnimatePresence mode="wait"</code></td>
+          </tr>
+          <tr>
+            <td><code>DialogContent</code></td>
+            <td>CSS-driven fade + zoom-in/out</td>
+            <td>Radix <code>data-state</code> attribute</td>
+            <td>Tailwind: <code>data-[state=open]:animate-in</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout good">
+        <strong>The key prop trick:</strong> Framer Motion's <code>AnimatePresence</code> detects
+        "new" vs "leaving" children by their <code>key</code> prop. When <code>image.filename</code>
+        changes, the old element exits (plays exit animation) and the new element enters.
+        This is why <code>key={image.filename}</code> on the motion.div is essential.
+      </div>
+
+      <div class="callout warn">
+        <strong>Performance note:</strong> <code>AnimatePresence mode="sync"</code> makes the old
+        element exit and new element animate <em>simultaneously</em>. <code>mode="wait"</code> waits
+        for exit to finish before entering. The image modal uses <code>"sync"</code> (snappier feel),
+        while the info card uses <code>"wait"</code> (avoids overlapping text).
+      </div>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "I'm using Framer Motion AnimatePresence for image transitions. I want the old image to slide
+          out left and the new image to slide in from right when direction=1, and reverse when direction=-1.
+          Write the variants object with enter/center/exit that uses a custom direction prop.
+          Use mode='sync' so images don't blink. Also write a simpler version for metadata text
+          that uses mode='wait' to avoid overlapping text during transition."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 11. TESTING ============================== -->
+    <section class="panel" id="testing">
+      <h2>11. Testing Strategy</h2>
+
+      <p>Three test files cover the feature. Each targets a different layer.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Test File</th>
+            <th>Tests What</th>
+            <th>Key Techniques</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>useDocumentaryGalleryController.test.tsx</code></td>
+            <td>Controller hook integration: open image → URL sync → modal state</td>
+            <td>
+              <code>renderHook</code> with changing props (<code>routeImageId</code>),
+              <code>act</code> for dispatching, <code>waitFor</code> for effect-driven assertions.
+              Only 1 test (happy path).
+            </td>
+          </tr>
+          <tr>
+            <td><code>DocumentaryGallery.test.tsx</code></td>
+            <td>Keyboard behavior: arrow keys route to modal vs. gallery navigation</td>
+            <td>
+              Full mock of controller and route hooks. Tests verify which action functions
+              are called (not what they do). Uses <code>fireEvent.keyDown(window, ...)</code>.
+              Two tests: dialog open vs closed.
+            </td>
+          </tr>
+          <tr>
+            <td><code>ImageModal.test.tsx</code></td>
+            <td>Modal UI interactions: print toast, like path construction, share+clipboard</td>
+            <td>
+              <code>userEvent</code> for realistic clicks, <code>Object.defineProperty</code>
+              to mock <code>navigator.clipboard</code> and <code>window.location</code>.
+              Animated components are fully mocked.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Mocking Strategy</h3>
+      <ul>
+        <li><strong>Framer Motion</strong> — mocked to render plain divs/span. The mock returns the children directly (for <code>AnimatePresence</code>) or passes props through (for <code>motion.div</code>).</li>
+        <li><strong>Hooks</strong> (<code>useGalleryRouteState</code>, <code>useDocumentaryGalleryController</code>) — mocked via <code>vi.mock</code> to return configurable state.</li>
+        <li><strong>Sub-components</strong> (<code>PreviewImage</code>, <code>GalleryControls</code>, etc.) — mocked to render minimal DOM for assertions.</li>
+        <li><strong>Browser APIs</strong> (<code>navigator.clipboard</code>) — mocked with <code>Object.defineProperty</code>.</li>
+      </ul>
+
+      <div class="diagram">// Standard mock pattern for animated components:
+vi.mock("framer-motion", () => ({
+  AnimatePresence: ({ children }) =>
+    React.createElement(React.Fragment, null, children),
+  motion: {
+    div: ({ children, ...props }) =>
+      React.createElement("div", props, children),
+  },
+}));
+
+// This lets tests verify DOM structure and event handlers
+// without needing a real animation frame loop.</div>
+
+      <div class="callout good">
+        <strong>Missing test coverage:</strong>
+        <ul>
+          <li>Reducer unit tests (pure function — no rendering needed, easy to add)</li>
+          <li>Slideshow interval: does it start/stop when playing toggles?</li>
+          <li>ThumbnailStrip idle auto-hide</li>
+          <li>URL deep link on initial load (the <code>getInitialStateFromRoute</code> path)</li>
+          <li>Error states: broken metadata.json, missing image files</li>
+        </ul>
+      </div>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "Write vitest unit tests for the documentaryGalleryReducer pure function directly,
+          without any React rendering. Test every action type:
+          OPEN, REQUEST_CLOSE, CLOSE_COMPLETE (with guards), GO_NEXT (wrap-around),
+          GO_PREV (wrap-around), MODAL_NEXT, MODAL_PREV, SELECT_INDEX, TOGGLE_SLIDESHOW,
+          SYNC_FROM_ROUTE (open, close, ignore during closing phase, ignore if same state).
+          Import the reducer from useDocumentaryGalleryController.ts and verify exact state output."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 12. PATTERNS ============================== -->
+    <section class="panel" id="patterns">
+      <h2>12. Reusable Architecture Patterns</h2>
+      <p>
+        These patterns are documented in <code>ARCHITECTURE.md</code> and exemplified in this feature.
+        Learn them and you can build any modal-based UI.
+      </p>
+
+      <table>
+        <thead>
+          <tr><th>Pattern</th><th>Where Used</th><th>In One Sentence</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>URL-Driven State</strong></td>
+            <td><code>useGalleryRouteState</code> + controller URL sync</td>
+            <td>Read state from URL on mount, write state to URL on change, sync bidirectionally with a guard to prevent loops.</td>
+          </tr>
+          <tr>
+            <td><strong>Transient Save/Restore</strong></td>
+            <td><code>wasSlideShowPlaying</code> in reducer</td>
+            <td>Save a boolean <em>before</em> changing it, restore <em>after</em> the interrupting UI closes — no branching needed.</td>
+          </tr>
+          <tr>
+            <td><strong>Controlled Dialog</strong></td>
+            <td><code>&lt;Dialog open={isDialogOpen} onOpenChange={...}&gt;</code></td>
+            <td>Use <code>open</code> + <code>onOpenChange</code> props instead of <code>DialogTrigger</code> when the modal open is programmatic (not from a button near the dialog).</td>
+          </tr>
+          <tr>
+            <td><strong>Disabled Prop Cascade</strong></td>
+            <td><code>canInteractWithGallery → GalleryControls → IconButton</code></td>
+            <td>Pass a single <code>disabled</code> boolean through one level; each leaf checks it for both visual styling and click guarding.</td>
+          </tr>
+          <tr>
+            <td><strong>Keyboard Guard</strong></td>
+            <td>Window keydown handler</td>
+            <td>Early-return when focus is in an input/textarea/select to avoid stealing form interaction.</td>
+          </tr>
+          <tr>
+            <td><strong>Layered Close Paths → Single Handler</strong></td>
+            <td><code>closeModal()</code> / <code>completeClose()</code></td>
+            <td>Overlay click, Escape, close button, and URL clear all funnel into the same <code>dispatch(REQUEST_CLOSE)</code> → <code>dispatch(CLOSE_COMPLETE)</code> pipeline.</td>
+          </tr>
+          <tr>
+            <td><strong>Fire-and-Forget UX Actions</strong></td>
+            <td><code>handleShare</code> in ImageModal</td>
+            <td>try/catch around clipboard API, toast on both success and failure, lock button during async operation.</td>
+          </tr>
+          <tr>
+            <td><strong>State Machine Modal Lifecycle</strong></td>
+            <td><code>modalPhase: "closed" | "open" | "closing"</code></td>
+            <td>3 phases let the dialog exit animation play before unmounting content, with guards preventing duplicate transitions.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout agent">
+        <strong>Agentic Prompt Idea</strong>
+        <p class="small">
+          "I'm building a new feature that needs URL-driven state (shareable modal), controlled dialog,
+          disabled prop cascade, transient save/restore, and layered close paths. Read ARCHITECTURE.md
+          sections on Interaction Flow Patterns. Then generate a scaffolding starter for my new feature
+          at src/components/features/my-feature/ with the controller hook, component, route state hook,
+          and barrel file following the same structure as the documentary gallery."
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================== 13. AGENTIC ENGINEERING ============================== -->
+    <section class="panel" id="agentic">
+      <h2>13. Agentic Engineering — How to Use AI Agents Here</h2>
+
+      <p>
+        One of the goals of this document is to teach you how to leverage AI coding agents effectively
+        throughout your engineering workflow. Below is a structured approach by development phase.
+        Each "agent prompt" in this document is a starting point — adapt them as you learn.
+      </p>
+
+      <h3>Phase 1: Exploration &amp; Understanding</h3>
+      <p>When you're new to a codebase, agents can rapidly map the terrain.</p>
+      <table>
+        <thead><tr><th>Goal</th><th>Prompt to Agent</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Understand file structure</td>
+            <td><code>"List all files in the documentary-portfolio directory. For each file, read the first 3 lines of code and tell me what it exports."</code></td>
+          </tr>
+          <tr>
+            <td>Trace a prop path</td>
+            <td><code>"Trace the 'images' prop from page.tsx all the way down to GalleryImageViewport. List every intermediate component and what it does with the prop."</code></td>
+          </tr>
+          <tr>
+            <td>Find a bug pattern</td>
+            <td><code>"Find all useEffect hooks in documentary-portfolio that have missing or incorrect dependency arrays. List the file, line number, dependencies declared, and any values used inside that aren't in the array."</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Phase 2: Specification &amp; Design</h3>
+      <p>Before writing code, use agents to produce a specification.</p>
+      <table>
+        <thead><tr><th>Goal</th><th>Prompt to Agent</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Spec a new feature</td>
+            <td><code>"I want to add a full-screen mode to the documentary gallery. Write a spec following the spec-driven-development process. Include: objective, commands/behaviors, file structure changes, boundaries (what's in scope vs not), and success criteria. Reference the existing DocumentaryGallery component patterns."</code></td>
+          </tr>
+          <tr>
+            <td>Plan task breakdown</td>
+            <td><code>"Break the full-screen mode feature into implementable tasks ordered by dependency. Each task should be ~50-100 lines of code. Reference the incremental-implementation skill."</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Phase 3: Implementation</h3>
+      <p>Agents excel at writing boilerplate, tests, and repetitive patterns.</p>
+      <table>
+        <thead><tr><th>Goal</th><th>Prompt to Agent</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Write reducer tests</td>
+            <td><code>"Write vitest tests for the documentaryGalleryReducer in useDocumentaryGalleryController.ts. Test all 10 action types with guards, wrap-around, and edge cases. Use the pure function directly — no renderHook needed."</code></td>
+          </tr>
+          <tr>
+            <td>Add a new action type</td>
+            <td><code>"Add a new reducer action called RESET_SLIDESHOW that resets currentIndex to 0 and keeps the slideshow playing. Add the action type, the case in the reducer, the useCallback in the hook, and export it. Follow the exact naming conventions in useDocumentaryGalleryController.ts."</code></td>
+          </tr>
+          <tr>
+            <td>Add a new tab to InfoCard</td>
+            <td><code>"Add a new 'location' section to GalleryControls SECTIONS array and InfoCard. Create a LocationSection component that shows the image's organization and year data. Follow the pattern of CaptionsSection/ExperienceSection. Add the necessary icon from lucide-react."</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Phase 4: Debugging</h3>
+      <p>When something breaks, agents can systematically narrow down root causes.</p>
+      <table>
+        <thead><tr><th>Goal</th><th>Prompt to Agent</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Debug modal close stuck</td>
+            <td><code>"The modal gets stuck in 'closing' phase and never fully closes. Find all code paths that lead to CLOSE_COMPLETE being dispatched. Check if onAnimationEnd might not be firing. Suggest a timeout fallback."</code></td>
+          </tr>
+          <tr>
+            <td>Debug URL sync loop</td>
+            <td><code>"The URL is flickering between ?image=foo and no param in an infinite loop. Find the useEffect that writes setRouteImageId and the useEffect that dispatches SYNC_FROM_ROUTE. Are they creating a cycle? Check dependency arrays and suggest a solution."</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Phase 5: Code Review</h3>
+      <p>Always run code review before committing. Agents catch what humans miss.</p>
+      <table>
+        <thead><tr><th>Goal</th><th>Prompt to Agent</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Pre-commit review</td>
+            <td><code>"Review my uncommitted changes across all modified files in documentary-portfolio. Check five axes: correctness, readability, architecture, security, performance. List any issues by file:line with severity (high/medium/low)."</code></td>
+          </tr>
+          <tr>
+            <td>Test quality review</td>
+            <td><code>"Review the test files in documentary-portfolio. Are there missing test cases? Is the mocking too broad or too narrow? Are the assertions meaningful? Suggest specific additional tests."</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>The Meta-Skill: Prompt Engineering for Code</h3>
+      <div class="callout agent">
+        <strong>Good prompts are:</strong>
+        <ul>
+          <li><strong>Context-rich:</strong> Tell the agent about files, patterns, and conventions.</li>
+          <li><strong>Specific:</strong> "Write a test" is vague. "Write a vitest test for the reducer's GO_NEXT action that verifies wrap-around from last index to 0" is precise.</li>
+          <li><strong>Constrained:</strong> "Use the same pattern as X" or "Don't add new dependencies" or "Only modify files in src/app/(pages)/documentary-portfolio".</li>
+          <li><strong>Iterative:</strong> Start broad, then narrow. "Read the controller file. Now I want to add an action. The reducer pattern uses switch/case. Can you add a RESET action?"</li>
+        </ul>
+      </div>
+
+      <div class="callout agent">
+        <strong>Prompt anti-patterns to avoid:</strong>
+        <ul>
+          <li><strong>Doing it all at once:</strong> "Build the entire gallery feature" produces generic, pattern-broken code.</li>
+          <li><strong>No context:</strong> "Write a reducer" without specifying state shape, actions, or conventions.</li>
+          <li><strong>Ignoring errors:</strong> If an agent produces broken code, don't ask again — fix incrementally: "The type X doesn't exist, use Y instead."</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================== 14. READING ORDER ============================== -->
+    <section class="panel" id="reading">
+      <h2>14. Recommended Reading Order</h2>
+
+      <p>If you want to deeply understand this feature, read the files in this order:</p>
+      <ol>
+        <li>
+          <strong><code>ARCHITECTURE.md</code></strong> — Understand the 3-layer architecture, import conventions, and interaction patterns.
+          This is the "constitution" of the codebase.
+        </li>
+        <li>
+          <strong><code>specs/features/documentary-gallery-architecture.html</code></strong> — The companion spec to this document.
+          Focus on the interaction matrix and risk areas.
+        </li>
+        <li>
+          <strong><code>imageList.ts</code></strong> — How images become data. Pure functions, caching, filesystem reads.
+        </li>
+        <li>
+          <strong><code>page.tsx</code></strong> — The server entry point. Notice how little code is here — most logic is pushed to client components.
+        </li>
+        <li>
+          <strong><code>useGalleryRouteState.ts</code></strong> — URL I/O. Tiny file, big responsibility.
+        </li>
+        <li>
+          <strong><code>useDocumentaryGalleryController.ts</code></strong> — The brain. Read the state shape, then each action case, then the derived outputs, then the effects. This is the most important file.
+        </li>
+        <li>
+          <strong><code>DocumentaryGallery.tsx</code></strong> — The orchestrator. See how controller outputs map to JSX and event handlers.
+        </li>
+        <li>
+          <strong><code>GalleryControls.tsx</code></strong> → <strong><code>IconButton.tsx</code></strong> → <strong><code>InfoCard.tsx</code></strong> — The overlay control stack.
+        </li>
+        <li>
+          <strong><code>ThumbnailStrip.tsx</code></strong> — Note the idle timer, scroll-into-view logic, and wheel-to-scroll behavior.
+        </li>
+        <li>
+          <strong><code>ImageModal.tsx</code></strong> + <strong><code>GalleryImageViewport.tsx</code></strong> — The modal body. Pure presentation.
+        </li>
+        <li>
+          <strong><code>dialog.tsx</code></strong> + <strong><code>dot-grid.tsx</code></strong> — UI primitives. Note that dialog.tsx wraps Radix and dot-grid.tsx is a self-contained visual effect.
+        </li>
+        <li>
+          <strong><code>ImageLikeButton.tsx</code></strong> — Bonus: see how the like feature integrates via the <code>pathName</code> prop.
+        </li>
+        <li>
+          <strong>Test files</strong> — Last, read the tests. They reveal the author's assumptions and the contract for each component.
+        </li>
+      </ol>
+
+      <div class="callout good">
+        <strong>Final advice:</strong> Build this feature yourself from scratch. Create a new branch,
+        delete all the component files, and re-implement them one by one using the patterns you learned.
+          Use an AI agent for each step:
+          "Create the GalleryImage type", "Write the server-side getImageList function",
+          "Build the useReducer controller", "Write the DocumentaryGallery orchestrator",
+          "Create ImageModal with share and like", "Write tests for keyboard navigation".
+        By the end, you'll own every pattern in this document.
+      </div>
+    </section>
+
+    <!-- ============================== FOOTER ============================== -->
+    <section class="panel" style="text-align:center;border-color:rgba(127,208,255,0.2);">
+      <p class="small" style="margin:0;">
+        Generated from <code>feat/documentary-portfolio-image-modal</code> branch.
+        ~4,300 lines changed across 29 files.
+        Next.js 15 + React 19 + Supabase + Framer Motion.
+      </p>
+      <p class="small" style="margin:8px 0 0;">
+        The best way to learn is to <strong>build</strong>. Use the agent prompts here as your guide.
+      </p>
+    </section>
+  </div>
+</body>
+</html>

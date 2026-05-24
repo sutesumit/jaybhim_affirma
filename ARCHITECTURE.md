@@ -9,6 +9,9 @@
 6. [Migration Summary](#migration-summary)
 7. [Pros and Cons Analysis](#pros-and-cons-analysis)
 8. [Guidelines](#guidelines)
+9. [Interaction Flow Patterns](#interaction-flow-patterns)
+10. [Future Considerations](#future-considerations)
+11. [Conclusion](#conclusion)
 
 ---
 
@@ -514,6 +517,252 @@ src/
 
 1. Add to `src/hooks/`
 2. Export from `src/hooks/index.ts`
+
+---
+
+## Interaction Flow Patterns
+
+These patterns describe how components communicate, how transient UI state is managed, and how URL state integrates with component state. They apply across features and should be followed consistently.
+
+Reference implementation: `src/app/(pages)/documentary-portfolio/components/DocumentaryGallery/useDocumentaryGalleryController.ts` contains canonical examples of the state and URL synchronization patterns below. `DocumentaryGallery.tsx` wires that controller to Radix Dialog and gallery UI components.
+
+---
+
+### URL-Driven State (Deep Link + Bidirectional Sync)
+
+**When to use:** Any feature where UI state (modal open, tab selection, filter) should be shareable via URL and survive page refresh.
+
+**Pattern:**
+
+```
+WRITE: Component state change ──► router.replace(?param=value)
+READ:  ?param=value on mount ──► derive initial component state
+SYNC:  ?param=value changes ──► update component state (back/forward nav)
+```
+
+**Rules:**
+- Keep the route reader isolated in one hook and pass the current route value into the owning state controller.
+- Use `router.replace()`, not `router.push()`, to avoid polluting browser history with transient UI states.
+- Model open, closing, and closed as explicit phases when route updates must wait for exit animations. During `closing`, hold the current URL value until the close completes.
+- Let the controller reconcile both directions: route changes dispatch into state, and state changes write the desired route value only when it differs from the current route value.
+
+**Canonical implementation:**
+```typescript
+// Route hook owns reading and writing the URL query param.
+const { selectedImageId, setSelectedImageId } = useGalleryRouteState();
+
+// Controller owns the gallery state machine and receives route state.
+const controller = useDocumentaryGalleryController({
+  images,
+  slideShowInterval: 5000,
+  routeImageId: selectedImageId,
+  setRouteImageId: setSelectedImageId,
+});
+
+// Inside the controller: READ route changes into reducer state.
+useEffect(() => {
+  dispatch({
+    type: "SYNC_FROM_ROUTE",
+    imageId: routeImageId,
+    index: routeImageId ? imageIndexById.get(routeImageId) ?? null : null,
+  });
+}, [imageIndexById, routeImageId]);
+
+// Inside the controller: WRITE reducer state back to the URL.
+useEffect(() => {
+  const desiredImageId =
+    state.modalPhase === "open"
+      ? state.selectedImageId
+      : state.modalPhase === "closed"
+        ? null
+        : routeImageId;
+
+  if (desiredImageId !== routeImageId) {
+    setRouteImageId(desiredImageId);
+  }
+}, [routeImageId, setRouteImageId, state.modalPhase, state.selectedImageId]);
+```
+
+**Avoid:** Multiple components reading `searchParams` independently for the same UI state. Centralize URL <-> state reconciliation in the owning controller.
+
+---
+
+### Transient State Save/Restore
+
+**When to use:** Any overlay or modal that must pause background activity on open and restore it on close — slideshows, autoplay video, polling intervals, animation loops.
+
+**Pattern:**
+```
+On open:  save previous background state -> pause background work
+On close: restore the saved value after the modal reaches the closed phase
+```
+
+**Rules:**
+- Capture the previous value at the moment the overlay opens.
+- Store the saved value in the same state machine that owns the overlay lifecycle, or in a ref for smaller local components.
+- Restore only after the close is complete so exit animations and route cleanup do not race each other.
+- The saved value must be a primitive read at the moment of capture; do not capture a stale closure variable.
+
+**Canonical implementation:**
+```typescript
+case "OPEN":
+  return {
+    ...state,
+    modalPhase: "open",
+    selectedImageId: action.imageId,
+    wasSlideShowPlaying: state.isSlideShowPlaying,
+    isSlideShowPlaying: false,
+  };
+
+case "CLOSE_COMPLETE":
+  return {
+    ...state,
+    modalPhase: "closed",
+    selectedImageId: null,
+    isSlideShowPlaying: state.wasSlideShowPlaying,
+  };
+```
+
+**Edge case:** If the slideshow was already paused before the modal opened, the saved value stores `false`. On close, it restores `false`, so the slideshow correctly stays paused.
+
+---
+
+### Controlled Dialog Integration
+
+**When to use:** Any modal that is opened programmatically (button click, URL deep link, API response) rather than via a `<DialogTrigger>` click target.
+
+**Pattern:**
+```
+<Dialog open={isDialogOpen} onOpenChange={(open) => !open && requestClose()}>
+  <DialogContent onAnimationEnd={completeCloseWhenClosed}>
+    {shouldRenderModalContent && selectedContent && <ModalContent data={selectedContent} />}
+  </DialogContent>
+</Dialog>
+```
+
+**Rules:**
+- Use the controlled `open` prop (not `DialogTrigger`). The trigger is in a separate component.
+- The `onOpenChange` callback fires on overlay click and Escape key; route both to `requestClose()` via `!open && requestClose()`.
+- Complete close-side effects from a single `completeClose()` path after the closing animation finishes, with a timeout fallback for missed animation events.
+- Always include a `<DialogTitle>` for accessibility. Use `<VisuallyHidden.Root>` from `@radix-ui/react-visually-hidden` if the modal already has a visible title.
+- Guard the modal content render behind `shouldRenderModalContent && selectedContent` so data stays mounted during exit animation but unmounts after close completes.
+
+**Avoid:** Mixing controlled and uncontrolled Dialog modes. Pick one: if you need programmatic open, use `open` + `onOpenChange` exclusively; never add a `DialogTrigger` alongside.
+
+
+---
+
+### Disabled Prop Cascade
+
+**When to use:** When a modal or overlay is active and background UI controls must be non-interactive to prevent confusion.
+
+**Pattern:**
+```
+Parent (owns modal state)
+  │  disabled={modalOpen}
+  ▼
+GalleryControls
+  │  disabled={disabled}
+  ▼
+IconButton (play, pause, prev, next, info toggles)
+  onClick={() => !disabled && handler()}
+  disabled={disabled}
+```
+
+**Rules:**
+- The parent that owns the modal state passes a single `disabled` boolean down through one level of intermediate components.
+- Each leaf component guards both its visual state (`opacity-50`) and its click handler (`!disabled && ...`).
+- Avoid spreading disabled logic across each leaf independently — the cascade ensures all controls disable in lockstep.
+
+---
+
+### Keyboard Guard (Focus-Based Interception)
+
+**When to use:** When a full-screen interactive surface has global keyboard handlers that should not steal key events from form elements (inputs, textareas, selects).
+
+**Pattern:**
+```typescript
+useEffect(() => {
+  const handler = (e: KeyboardEvent) => {
+    if (
+      e.target instanceof HTMLInputElement ||
+      e.target instanceof HTMLTextAreaElement ||
+      e.target instanceof HTMLSelectElement
+    )
+      return;
+    if (e.key === "ArrowLeft") goPrev();
+    if (e.key === "ArrowRight") goNext();
+  };
+  window.addEventListener("keydown", handler);
+  return () => window.removeEventListener("keydown", handler);
+}, [goPrev, goNext]);
+```
+
+**Rules:**
+- Guard against focus on interactive elements at the **top** of the handler. Do not gate inside individual key branches.
+- Arrow keys should navigate both gallery and modal when active — do NOT block navigation when the modal is open.
+- Let the Dialog's built-in Radix handling manage Escape — do not add a competing Escape handler.
+
+---
+
+### Layered Close Paths -> Phased Close Handlers
+
+**When to use:** Any modal with multiple exit mechanisms and close animations or URL cleanup.
+
+Close triggers funnel into `requestClose()`. Close completion, URL cleanup, and background-state restoration funnel into `completeClose()`.
+
+| Trigger | Mechanism | How it reaches the handler |
+|---------|-----------|---------------------------|
+| Close button (X) | User clicks button | Direct `onClick={requestClose}` |
+| Overlay click | Radix Dialog built-in | `onOpenChange={(open) => !open && requestClose()}` |
+| Escape key | Radix Dialog built-in | `onOpenChange={(open) => !open && requestClose()}` |
+| URL parameter cleared | Browser back/forward nav | Route sync dispatches `SYNC_FROM_ROUTE` and enters `closing` |
+| Invalid image in URL | External link with bad param | Controller ignores the invalid open and route writer clears it |
+| Exit animation ends | Radix DialogContent animation event | `completeClose()` finalizes state |
+| Exit animation event is missed | Safety timeout | Timeout dispatches `CLOSE_COMPLETE` |
+
+**Rules:**
+- `requestClose()` only starts the close phase.
+- `completeClose()` handles closed state, selected-content cleanup, URL clearing, and restoring previous background state.
+- Never duplicate close-side-effect logic across multiple handlers.
+
+---
+
+### Fire-and-Forget UX Actions
+
+**When to use:** Non-blocking side effects that should not delay the user's next interaction — clipboard copy, toast notification, analytics pings.
+
+**Pattern:**
+```typescript
+const handleShare = async () => {
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    toast({ variant: "success", title: "Link Copied", description: "..." });
+  } catch {
+    toast({ variant: "destructive", title: "Copy Failed", description: "..." });
+  }
+};
+```
+
+**Rules:**
+- Use `try/catch` to handle clipboard API failures (some browsers deny permission).
+- Always provide both success and failure toast feedback — silent failures degrade trust.
+- Use `window.location.href` for the share URL (includes query params for deep linking). Do not hardcode a URL without params.
+- Import `useToast` from `@/hooks/use-toast`. Consistent toast variant keys: `"success"` and `"destructive"`.
+
+---
+
+### Pattern Quick Reference
+
+| Situation | Pattern | Key Mechanism |
+|-----------|---------|---------------|
+| Modal openable via URL | URL-Driven State | Route hook + controller reducer + explicit modal phases |
+| Modal pauses background activity | Transient Save/Restore | State machine captures previous value on open and restores on close completion |
+| Modal opened by button in another component | Controlled Dialog | `open` + `onOpenChange` props, no `DialogTrigger` |
+| Background controls must lock during modal | Disabled Prop Cascade | Parent passes `disabled` boolean to all child controls |
+| Full-screen surface has keyboard handlers | Keyboard Guard | Early return in handler when focus is on a form element |
+| Multiple ways to close a modal | Phased Close Handlers | Triggers call `requestClose()`; animation/timeout calls `completeClose()` |
+| Clipboard + toast feedback | Fire-and-Forget UX | try/catch around clipboard API, both success and error toasts |
 
 ---
 
